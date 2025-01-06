@@ -52,12 +52,7 @@ export default function Test() {
         >
           모임 만들기
         </Button>
-        <Modal
-          isOpen={isModal}
-          onClose={closeModalhandler}
-          customDimStyle="w-[260px]"
-        >
-          <h2>모임 만들기</h2>
+        <Modal isOpen={isModal} onClose={closeModalhandler}>
           <input
             placeholder="포커싱이 자동으로 되는지 테스트"
             className="w-[260px]"
