@@ -38,6 +38,7 @@ export default function Button({
   );
 
   return (
+    // eslint-disable-next-line react/button-has-type
     <button type={type} className={buttonClass} disabled={disabled} {...props}>
       {children}
     </button>
