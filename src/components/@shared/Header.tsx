@@ -1,12 +1,14 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import Button from './Button';
+
 export default function Header() {
   const [user, setUser] = useState(true);
   const [searching, setSearching] = useState(true);
-  //const router = useRouter();
+  // const router = useRouter();
   const handleLogin = () => {
     setUser(!user);
   };
@@ -27,19 +29,19 @@ export default function Header() {
               {user ? '로그인' : '로그아웃'}
             </Button>
             <Link
-              href={'/'}
+              href="/"
               className="rounded-xl px-4 py-2 transition duration-300 hover:bg-orange-700"
             >
               <p>모임 찾기</p>
             </Link>
             <Link
-              href={'/likes'}
+              href="/likes"
               className="rounded-xl  px-4 py-2 transition duration-300 hover:bg-orange-700"
             >
               <p>찜한 모임</p>
             </Link>
             <Link
-              href={'/allreview'}
+              href="/allreview"
               className="rounded-xl px-4 py-2 transition duration-300 hover:bg-orange-700"
             >
               <p>모든 리뷰</p>
@@ -50,43 +52,39 @@ export default function Header() {
             <button onClick={handleSearching}>
               {searching ? (
                 <Image
-                  src={'/Vector.png'}
+                  src="/Vector.png"
                   width={20}
                   height={20}
                   alt="검색버튼"
-                ></Image>
+                />
               ) : (
                 <Image
-                  src={'/delete.svg'}
+                  src="/delete.svg"
                   width={20}
                   height={20}
                   alt="검색닫기버튼"
-                ></Image>
+                />
               )}
             </button>
             {user ? (
-              <>
-                <div className="flex gap-7 text-base font-bold text-white">
-                  <Link href={'/login'}>
-                    <Button
-                      variant="primary"
-                      size="small"
-                      font="14"
-                      className=" border border-white"
-                    >
-                      <p>로그인/회원가입</p>
-                    </Button>
-                  </Link>
-                </div>
-              </>
+              <div className="flex gap-7 text-base font-bold text-white">
+                <Link href="/login">
+                  <Button
+                    variant="primary"
+                    size="small"
+                    font="14"
+                    className=" border border-white"
+                  >
+                    <p>로그인/회원가입</p>
+                  </Button>
+                </Link>
+              </div>
             ) : (
-              <>
-                <div className="flex text-base font-bold text-white">
-                  <Link href={'/mypage'}>
-                    <p>마이 페이지</p>
-                  </Link>
-                </div>
-              </>
+              <div className="flex text-base font-bold text-white">
+                <Link href="/mypage">
+                  <p>마이 페이지</p>
+                </Link>
+              </div>
             )}
           </div>
         </div>
