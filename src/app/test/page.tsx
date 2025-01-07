@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/@shared/Button';
-import { Input } from '@/components/@shared/Input';
+import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
 import { useState } from 'react';
