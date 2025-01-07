@@ -44,8 +44,8 @@ module.exports = {
       // 함수형 컴포넌트 정의 방식 설정
       'error',
       {
-        namedComponents: 'arrow-function', // 이름 있는 컴포넌트는 화살표 함수로
-        unnamedComponents: 'arrow-function', // 이름 없는 컴포넌트도 화살표 함수로
+        namedComponents: 'function-expression', // 이름 있는 컴포넌트는 일반 함수 표기
+        unnamedComponents: 'function-expression', // 이름 없는 컴포넌트도 일반 함수 표기
       },
     ],
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }], // JSX는 .tsx 파일에서만 허용
