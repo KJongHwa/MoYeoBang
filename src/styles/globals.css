@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/src/app/fonts/PretendardVariable.woff2') format('woff2');
+}
+
+:root {
+  --font-pretendard: 'Pretendard', sans-serif;
+}
+
 @layer base {
   html {
     @apply antialiased;
   }
-  
+
   body {
     @apply bg-white text-gray-900;
   }
@@ -16,12 +25,12 @@
   .container {
     @apply mx-auto px-4;
   }
-  
+
   .btn {
-    @apply px-4 py-2 rounded-md transition-colors duration-200;
+    @apply rounded-md px-4 py-2 transition-colors duration-200;
   }
-  
+
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-dark;
+    @apply hover:bg-primary-dark bg-primary text-white;
   }
 }
