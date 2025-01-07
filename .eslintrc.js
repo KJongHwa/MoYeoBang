@@ -14,6 +14,14 @@ module.exports = {
     'plugin:prettier/recommended', // Prettier 통합 설정
     'next/core-web-vitals', // Next.js 코어 웹 바이탈 규칙
   ],
+  overrides: [
+    {
+      files: ['next.config.js'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser', // TypeScript 구문 분석기
   parserOptions: {
     ecmaFeatures: {
@@ -44,8 +52,8 @@ module.exports = {
       // 함수형 컴포넌트 정의 방식 설정
       'error',
       {
-        namedComponents: 'function-expression', // 이름 있는 컴포넌트는 일반 함수 표기
-        unnamedComponents: 'function-expression', // 이름 없는 컴포넌트도 일반 함수 표기
+        namedComponents: 'function-declaration', // 이름 있는 컴포넌트는 선언형 함수 표기
+        unnamedComponents: 'function-expression', // 이름 없는 컴포넌트는 일반 함수 표기
       },
     ],
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }], // JSX는 .tsx 파일에서만 허용

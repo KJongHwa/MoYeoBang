@@ -28,9 +28,12 @@ export default function Modal({
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    isOpen ? dialog.showModal() : dialog.close();
-
-    isOpen && dialog.querySelector('input')?.focus();
+    if (isOpen) {
+      dialog.showModal();
+      dialog.querySelector('input')?.focus();
+    } else {
+      dialog.close();
+    }
   }, [isOpen]);
 
   // ESC 키 입력 시 모달 닫기 처리
