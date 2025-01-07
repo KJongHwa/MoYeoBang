@@ -1,20 +1,32 @@
 'use client';
 
+import { useState } from 'react';
 import Button from '@/components/@shared/Button';
+import SelectLocationDropdown, {
+  DropdownOption,
+  locationOptions,
+} from '@/components/@shared/dropdown/SelectLocationDropdown';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
-import { useState } from 'react';
 
 export default function Test() {
   const [isModal, setIsModal] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<string>(
+    locationOptions[0].value
+  );
 
   const openModalhandler = () => setIsModal(true);
   const closeModalhandler = () => setIsModal(false);
 
+  const handleLocationChange = (option: DropdownOption) => {
+    setSelectedLocation(option.value);
+  };
+
   return (
     <main className="m-10 flex flex-col items-center gap-12">
-      <h1 className=" text-lg">공통 컴포넌트 테스트 페이지</h1>
+      <h1 className="text-lg">공통 컴포넌트 테스트 페이지</h1>
+
       <section className="w-full text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Button</h2>
         <ul className="text-left">
@@ -44,6 +56,20 @@ export default function Test() {
           </li>
         </ul>
       </section>
+
+      <section className="w-full text-center">
+        <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Dropdown</h2>
+        <div className="flex justify-center gap-4">
+          <div className="flex flex-col gap-2">
+            <SelectLocationDropdown
+              defaultValue={locationOptions[0]}
+              onChange={handleLocationChange}
+              className="w-48"
+            />
+          </div>
+        </div>
+      </section>
+
       <section className="w-full text-center">
         <h2>모달</h2>
         <Button
@@ -61,6 +87,7 @@ export default function Test() {
           />
         </Modal>
       </section>
+
       <section className="flex w-full flex-col gap-4 text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">TextArea</h2>
         <TextArea placeholder="JSDoc 주석을 추가했습니다." label="label" />
@@ -71,6 +98,7 @@ export default function Test() {
           errorMessage="에러 메세지 디자인은 동일합니다."
         />
       </section>
+
       <section className="flex w-full flex-col gap-4 text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Input</h2>
         <Input
