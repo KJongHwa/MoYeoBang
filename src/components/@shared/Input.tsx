@@ -25,7 +25,7 @@ type InputProps = {
  * @param errorMessage 에러가 존재할 경우 표시할 에러 메세지
  */
 
-export const Input = function ({
+export default function Input({
   label,
   labelText,
   placeholder,
@@ -77,4 +77,4 @@ export const Input = function ({
       {isError && <p className="font-semibold text-red-600">{errorMessage}</p>}
     </div>
   );
-};
+}
