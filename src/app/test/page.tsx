@@ -2,9 +2,16 @@
 
 import Button from '@/components/@shared/Button';
 import { Input } from '@/components/@shared/Input';
+import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
+import { useState } from 'react';
 
 export default function Test() {
+  const [isModal, setIsModal] = useState(false);
+
+  const openModalhandler = () => setIsModal(true);
+  const closeModalhandler = () => setIsModal(false);
+
   return (
     <main className="m-10 flex flex-col items-center gap-12">
       <h1 className=" text-lg">공통 컴포넌트 테스트 페이지</h1>
@@ -36,6 +43,23 @@ export default function Test() {
             </Button>
           </li>
         </ul>
+      </section>
+      <section className="w-full text-center">
+        <h2>모달</h2>
+        <Button
+          variant="primary"
+          size="small"
+          font="14"
+          onClick={openModalhandler}
+        >
+          모임 만들기
+        </Button>
+        <Modal isOpen={isModal} onClose={closeModalhandler}>
+          <input
+            placeholder="포커싱이 자동으로 되는지 테스트"
+            className="w-[260px]"
+          />
+        </Modal>
       </section>
       <section className="flex w-full flex-col gap-4 text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">TextArea</h2>

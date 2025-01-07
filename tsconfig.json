@@ -20,6 +20,7 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@/components/*": ["./src/components/*"],
       "@/app/*": ["./src/app/*"],
       "@/hooks/*": ["./src/hooks/*"],
@@ -28,7 +29,8 @@
       "@/store/*": ["./src/store/*"],
       "@/types/*": ["./src/types/*"],
       "@/utils/*": ["./src/lib/*"],
-      "@/axios/*": ["./src/axios/*"]
+      "@/axios/*": ["./src/axios/*"],
+      "@/public/*": ["./public/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
