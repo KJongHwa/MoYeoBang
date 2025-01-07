@@ -18,7 +18,7 @@ export default function Test() {
       <section className="w-full text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Button</h2>
         <ul className="text-left">
-          <h3>variant="primary"</h3>
+          <h3>{`variant = "primary"`}</h3>
           <li className="my-2 flex justify-between">
             <Button variant="primary" size="small" font="14">
               생성하기
@@ -30,7 +30,7 @@ export default function Test() {
               비활성화
             </Button>
           </li>
-          <h3>variant="secondary"</h3>
+          <h3>{`variant = "secondary"`}</h3>
           <li className="my-2 flex justify-between">
             <Button variant="secondary" size="small" font="14">
               생성하기
