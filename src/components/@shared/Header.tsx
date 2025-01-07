@@ -29,6 +29,7 @@ export default function Header() {
         <div className="mx-auto flex h-[70px] w-full max-w-[1920px] items-center justify-between border-b bg-orange-600 px-5 md:h-[80px] md:px-[30px] xl:h-[100px]">
           <nav className="flex items-center gap-5 text-base font-bold text-white">
             <Button
+              type="button"
               variant="secondary"
               size="small"
               font="14"
@@ -48,18 +49,19 @@ export default function Header() {
           </nav>
 
           <div className="flex gap-5">
-            <button onClick={handleSearching}>
+            <button type="button" onClick={handleSearching}>
               <Image
                 src={searchImg.src}
                 width={20}
                 height={20}
                 alt={searchImg.alt}
-              ></Image>
+              />
             </button>
             {user ? (
               <div className="flex gap-7 text-base font-bold text-white">
                 <Link href="/login">
                   <Button
+                    type="button"
                     variant="primary"
                     size="small"
                     font="14"
