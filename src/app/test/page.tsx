@@ -12,15 +12,15 @@ import TextArea from '@/components/@shared/TextArea';
 
 export default function Test() {
   const [isModal, setIsModal] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<string>(
-    locationOptions[0].value
+  const [selectedLocation, setSelectedLocation] = useState<DropdownOption>(
+    locationOptions[0]
   );
 
   const openModalhandler = () => setIsModal(true);
   const closeModalhandler = () => setIsModal(false);
 
   const handleLocationChange = (option: DropdownOption) => {
-    setSelectedLocation(option.value);
+    setSelectedLocation(option); // option 전체를 저장
   };
 
   return (
@@ -60,13 +60,11 @@ export default function Test() {
       <section className="w-full text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Dropdown</h2>
         <div className="flex justify-center gap-4">
-          <div className="flex flex-col gap-2">
-            <SelectLocationDropdown
-              defaultValue={locationOptions[0]}
-              onChange={handleLocationChange}
-              className="w-48"
-            />
-          </div>
+          <SelectLocationDropdown
+            defaultValue={locationOptions[0]}
+            onChange={handleLocationChange}
+          />
+          <p className="text-sm">디버깅용: {selectedLocation.label}</p>
         </div>
       </section>
 
