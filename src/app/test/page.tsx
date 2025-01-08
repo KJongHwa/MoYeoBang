@@ -2,13 +2,21 @@
 
 import { useState } from 'react';
 import Button from '@/components/@shared/Button';
-import SelectLocationDropdown, {
+import Dropdown, {
   DropdownOption,
-  locationOptions,
 } from '@/components/@shared/dropdown/SelectLocationDropdown';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
+
+// 옵션 데이터 정의 예시
+const locationOptions: DropdownOption[] = [
+  { value: 'all', label: '지역 전체' },
+  { value: 'gangnam', label: '강남' },
+  { value: 'hongdae', label: '홍대' },
+  { value: 'konkuk', label: '건대' },
+  { value: 'hyehwa', label: '혜화' },
+];
 
 export default function Test() {
   const [isModal, setIsModal] = useState(false);
@@ -20,7 +28,7 @@ export default function Test() {
   const closeModalhandler = () => setIsModal(false);
 
   const handleLocationChange = (option: DropdownOption) => {
-    setSelectedLocation(option); // option 전체를 저장
+    setSelectedLocation(option);
   };
 
   return (
@@ -60,7 +68,8 @@ export default function Test() {
       <section className="w-full text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Dropdown</h2>
         <div className="flex justify-center gap-4">
-          <SelectLocationDropdown
+          <Dropdown
+            options={locationOptions}
             defaultValue={locationOptions[0]}
             onChange={handleLocationChange}
           />
