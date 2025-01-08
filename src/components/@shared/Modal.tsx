@@ -50,7 +50,7 @@ export default function Modal({
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-40 h-full w-full bg-black opacity-70" />
+        <div className="fixed inset-0 z-40 h-full w-full bg-black opacity-50" />
       )}
       <dialog
         ref={dialogRef}
