@@ -5,17 +5,43 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#f9f9f9', // 디자인 정해지면 추가
+        brand: {
+          primary: '#000000',
+          secondary: '#252525',
+          tertiary: '#2E2E2E',
+          inverse: '#FFF7ED',
         },
-        secondary: {
-          DEFAULT: '#f8f8f8', // 디자인 정해지면 추가
+        status: {
+          hover: '#C2410C',
+          focus: '#9A3412',
+          danger: '#DC2626',
+          disabled: '#535353',
+        },
+        text: {
+          primary: '#FFFFFF',
+          secondary: '#D0D0D0',
+          disabled: '#8A8A8A',
+        },
+        border: {
+          primary: '#A0A0A0',
+          secondary: '#313131',
+        },
+        point: {
+          tag: '#333333',
+          dropdown: '#2C2C2C',
+          icon: '#A8A8A8',
+        },
+        badge: {
+          primary: '#616161',
+          secondary: '#616161',
+          tertiary: '#6B6B6B',
         },
       },
       fontFamily: {
         sans: 'var(--font-pretendard), -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif',
       },
       spacing: {
+        '1/5': '20%',
         '4.5': '1.125rem', // 18px
         '5.5': '1.375rem', // 22px
         '6.5': '1.625rem', // 26px
