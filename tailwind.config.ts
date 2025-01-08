@@ -5,11 +5,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#f9f9f9', // 디자인 정해지면 추가
+        brand: {
+          primary: '#EA580C',
+          secondary: '#F97316',
+          tertiary: '#FDBA74',
+          inverse: '#F9FAFB',
         },
-        secondary: {
-          DEFAULT: '#f8f8f8', // 디자인 정해지면 추가
+        status: {
+          hover: '#C2410C',
+          focus: '#9A3412',
+          danger: '#DC2626',
+          disabled: '#9CA3AF',
+        },
+        text: {
+          title: '#111827',
+          default: '#1F2937',
+          disabled: '#9CA3AF',
+        },
+        border: {
+          primary: '#111827',
+          secondary: '#E5E7EB',
         },
       },
       fontFamily: {
@@ -51,7 +66,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss/nesting')],
+  plugins: [],
 };
 
 export default config;
