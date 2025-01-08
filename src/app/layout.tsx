@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="bg-black">
+      <body className="bg-black text-white">
         <Header />
         <Providers>{children}</Providers>
       </body>
