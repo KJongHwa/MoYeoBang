@@ -3,10 +3,10 @@ import Image from 'next/image';
 import UserIcon from '@/public/icons/User.svg';
 import { formatDate, extractHour } from '@/utils/dateUtils';
 
+import ProgressBar from '@/components/@shared/ProgressBar';
 import AlarmBadge from './AlarmBadge';
 import GatheringBadge from './GatheringBadge';
 import HeartButton from './HeartButton';
-import ProgressBar from './ProgressBar';
 
 interface GatheringCardProps {
   location: string;
