@@ -48,18 +48,23 @@ export default function Modal({
   }, [onClose]);
 
   return (
-    <dialog
-      ref={dialogRef}
-      className={`fixed inset-0 z-50 rounded-lg bg-white p-6 shadow-lg ${customDimStyle}`}
-    >
-      {children}
-      <button
-        type="button"
-        onClick={onClose}
-        className="absolute right-6 top-6"
+    <>
+      {isOpen && (
+        <div className="fixed inset-0 z-40 h-full w-full bg-black opacity-70" />
+      )}
+      <dialog
+        ref={dialogRef}
+        className={`fixed inset-0 z-50 rounded-lg bg-white p-6 shadow-lg ${customDimStyle}`}
       >
-        <Image src={DeleteIcon} alt="모달창 닫기" />
-      </button>
-    </dialog>
+        {children}
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-6 top-6"
+        >
+          <Image src={DeleteIcon} alt="모달창 닫기" />
+        </button>
+      </dialog>
+    </>
   );
 }
