@@ -7,6 +7,7 @@ import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
 import Spinner from '@/components/@shared/Spinner';
+import CustomCalendar from '@/components/@shared/CustomCalendar';
 
 // 옵션 데이터 정의 예시
 const locationOptions: DropdownOption[] = [
@@ -22,6 +23,17 @@ export default function Test() {
   const [selectedLocation, setSelectedLocation] = useState<DropdownOption>(
     locationOptions[0]
   );
+
+  // 캘린더를 열고 닫기 위한 useState 와 이벤트 핸들러
+  const [isOpen, setIsOpen] = useState(false);
+  const openCalendar = () => setIsOpen(true);
+  const closeCalendar = () => setIsOpen(false);
+
+  // 캘린더 데이터를 저장하기 위한 useState 와 이벤트 핸들러
+  const [date, setDate] = useState<string>('');
+  const handleDateChange = (newDate: string) => {
+    setDate(newDate);
+  };
 
   const openModalhandler = () => setIsModal(true);
   const closeModalhandler = () => setIsModal(false);
@@ -158,6 +170,22 @@ export default function Test() {
           isError
           errorMessage="에러 메세지 디자인은 동일합니다."
         />
+      </section>
+
+      <section>
+        <input
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="relative text-black"
+          onClick={openCalendar}
+        />
+        <div className="relative">
+          <CustomCalendar
+            onDateChange={handleDateChange}
+            isOpen={isOpen}
+            onClose={closeCalendar}
+          />
+        </div>
       </section>
     </main>
   );
