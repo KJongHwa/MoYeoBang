@@ -21,7 +21,6 @@ export default function ReviewGenreFilter({
   onGenreChange,
 }: ReviewGenreFilterProps) {
   const handleGenreClick = (value: string) => {
-    console.log('click button:', value);
     onGenreChange(value);
   };
 
