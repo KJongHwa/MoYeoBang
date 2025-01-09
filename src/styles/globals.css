@@ -34,3 +34,28 @@
     @apply hover:bg-primary-dark bg-primary text-white;
   }
 }
+
+/* text style */
+.customUnderline {
+  position: relative;
+}
+
+.customUnderline::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+}
+
+/* scrollBar style */
+.scrollbar-hidden {
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
