@@ -44,7 +44,7 @@ export default function Header() {
                 href={link.href}
                 className="hidden rounded-xl px-4 py-2 transition duration-300 hover:bg-orange-700 md:block"
               >
-                <p>{link.label}</p>
+                {link.label}
               </Link>
             ))}
           </nav>
@@ -68,7 +68,7 @@ export default function Header() {
                     font="14"
                     className=" border border-white"
                   >
-                    <p>로그인/회원가입</p>
+                    로그인/회원가입
                   </Button>
                 </Link>
               </div>

@@ -59,3 +59,73 @@
 .scrollbar-hidden::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* 캘린더 설정을 위한 CSS*/
+/* 캘린더 기본 설정 */
+.react-calendar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  width: 250px;
+  margin: auto;
+}
+
+/* 네비게이션 */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  color: #1f2937;
+  padding: 5px;
+}
+
+/* 네비게이션 타이틀 */
+.react-calendar__navigation__label {
+  font-weight: 500;
+  font-size: 14px;
+  max-width: 120px;
+}
+
+/* 네비게이션 버튼 */
+.react-calendar__navigation__arrow {
+  font-weight: 500;
+  font-size: 24px;
+  min-width: 24px;
+}
+
+/* 요일 */
+.react-calendar__month-view__weekdays abbr {
+  text-decoration: none;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  color: #1f2937;
+  height: 32px;
+}
+
+/* 날짜 */
+.react-calendar__tile {
+  font-weight: 500;
+  font-size: 14px;
+  height: 32px;
+}
+
+/* 지난달과 다음달 날짜 */
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #9ca3af;
+}
+
+/* 오늘 날짜 */
+.react-calendar__tile--now {
+  color: #ea580c;
+}
+
+/* 선택한 날짜 */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus,
+.react-calendar__tile--active {
+  border: 1px solid #ea580c;
+  border-radius: 0.4rem;
+}

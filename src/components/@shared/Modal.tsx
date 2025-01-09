@@ -1,5 +1,4 @@
 import DeleteIcon from '@/public/delete.svg';
-import Image from 'next/image';
 import { ReactNode, useEffect, useRef } from 'react';
 
 interface ModalProps {
@@ -62,7 +61,7 @@ export default function Modal({
           onClick={onClose}
           className="absolute right-6 top-6"
         >
-          <Image src={DeleteIcon} alt="모달창 닫기" />
+          <DeleteIcon />
         </button>
       </dialog>
     </>

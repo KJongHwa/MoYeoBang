@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import UserIcon from '@/public/icons/User.svg';
+import UserIcon from '@/public/icons/user.svg';
 import { formatDate, extractHour } from '@/utils/dateUtils';
 
 import ProgressBar from '@/components/@shared/ProgressBar';
