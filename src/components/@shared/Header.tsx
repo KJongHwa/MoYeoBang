@@ -25,13 +25,11 @@ export default function Header() {
 
   return (
     <div className="relative z-10">
-      <div className="fixed w-full top-0">
+      <div className="fixed top-0 w-full">
         <div className="mx-auto flex h-[70px] w-full max-w-[1920px] items-center justify-between border-b bg-orange-600 px-5 md:h-[80px] md:px-[30px] xl:h-[100px]">
-        
           {/* Navigation Links */}
           <nav className="flex items-center gap-5 text-base font-bold text-white">
-            
-          <Button
+            <Button
               type="button"
               variant="secondary"
               size="small"
@@ -44,9 +42,9 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="hidden md:block rounded-xl px-4 py-2 transition duration-300 hover:bg-orange-700"
+                className="hidden rounded-xl px-4 py-2 transition duration-300 hover:bg-orange-700 md:block"
               >
-                <p>{link.label}</p>
+                {link.label}
               </Link>
             ))}
           </nav>
@@ -70,18 +68,29 @@ export default function Header() {
                     font="14"
                     className=" border border-white"
                   >
-                    <p>로그인/회원가입</p>
+                    로그인/회원가입
                   </Button>
                 </Link>
               </div>
             ) : (
               <div className="flex text-base font-bold text-white">
                 <Link href="/mypage">
-                  <Image src={'/default_mypage.png'} width={30} height={30} alt='마이페이지 이미지'/>
+                  <Image
+                    src="/default_mypage.png"
+                    width={30}
+                    height={30}
+                    alt="마이페이지 이미지"
+                  />
                 </Link>
               </div>
             )}
-            <Image src={'/hamburger.png'} width={20} height={20} alt='모바일네비게이션바' className='md:hidden'/>
+            <Image
+              src="/hamburger.png"
+              width={20}
+              height={20}
+              alt="모바일네비게이션바"
+              className="md:hidden"
+            />
           </div>
         </div>
       </div>

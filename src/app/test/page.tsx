@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import Button from '@/components/@shared/Button';
-import Dropdown, {
-  DropdownOption,
-} from '@/components/@shared/dropdown/SelectLocationDropdown';
+import Dropdown, { DropdownOption } from '@/components/@shared/Dropdown';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
+import Spinner from '@/components/@shared/Spinner';
+import CustomCalendar from '@/components/@shared/CustomCalendar';
 
 // 옵션 데이터 정의 예시
 const locationOptions: DropdownOption[] = [
@@ -24,6 +24,17 @@ export default function Test() {
     locationOptions[0]
   );
 
+  // 캘린더를 열고 닫기 위한 useState 와 이벤트 핸들러
+  const [isOpen, setIsOpen] = useState(false);
+  const openCalendar = () => setIsOpen(true);
+  const closeCalendar = () => setIsOpen(false);
+
+  // 캘린더 데이터를 저장하기 위한 useState 와 이벤트 핸들러
+  const [date, setDate] = useState<string>('');
+  const handleDateChange = (newDate: string) => {
+    setDate(newDate);
+  };
+
   const openModalhandler = () => setIsModal(true);
   const closeModalhandler = () => setIsModal(false);
 
@@ -34,7 +45,6 @@ export default function Test() {
   return (
     <main className="m-10 flex flex-col items-center gap-12">
       <h1 className="text-lg">공통 컴포넌트 테스트 페이지</h1>
-
       <section className="w-full text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Button</h2>
         <ul className="text-left">
@@ -64,7 +74,6 @@ export default function Test() {
           </li>
         </ul>
       </section>
-
       <section className="w-full text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Dropdown</h2>
         <div className="flex justify-center gap-4">
@@ -77,6 +86,43 @@ export default function Test() {
         </div>
       </section>
 
+      <section className="w-full text-center">
+        <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Spinner</h2>
+
+        {/* 크기 예시 */}
+        <div className="mb-8">
+          <h3 className="mb-2 text-sm">Sizes</h3>
+          <div className="flex items-center justify-center gap-4">
+            <Spinner size="xs" />
+            <Spinner size="sm" />
+            <Spinner size="md" />
+            <Spinner size="lg" />
+            <Spinner size="xl" />
+          </div>
+        </div>
+
+        {/* 색상 예시 */}
+        <div className="mb-8">
+          <h3 className="mb-2 text-sm">Colors</h3>
+          <div className="flex items-center justify-center gap-4">
+            <Spinner color="primary" />
+            <Spinner color="secondary" />
+            <Spinner color="success" />
+            <Spinner color="danger" />
+            <Spinner color="warning" />
+          </div>
+        </div>
+
+        {/* 투명도 예시 */}
+        <div className="mb-8">
+          <h3 className="mb-2 text-sm">Opacity</h3>
+          <div className="flex items-center justify-center gap-4">
+            <Spinner opacity="light" />
+            <Spinner opacity="medium" />
+            <Spinner opacity="dark" />
+          </div>
+        </div>
+      </section>
       <section className="w-full text-center">
         <h2>모달</h2>
         <Button
@@ -94,7 +140,6 @@ export default function Test() {
           />
         </Modal>
       </section>
-
       <section className="flex w-full flex-col gap-4 text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">TextArea</h2>
         <TextArea placeholder="JSDoc 주석을 추가했습니다." label="label" />
@@ -105,7 +150,6 @@ export default function Test() {
           errorMessage="에러 메세지 디자인은 동일합니다."
         />
       </section>
-
       <section className="flex w-full flex-col gap-4 text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Input</h2>
         <Input
@@ -126,6 +170,22 @@ export default function Test() {
           isError
           errorMessage="에러 메세지 디자인은 동일합니다."
         />
+      </section>
+
+      <section>
+        <input
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="relative text-black"
+          onClick={openCalendar}
+        />
+        <div className="relative">
+          <CustomCalendar
+            onDateChange={handleDateChange}
+            isOpen={isOpen}
+            onClose={closeCalendar}
+          />
+        </div>
       </section>
     </main>
   );
