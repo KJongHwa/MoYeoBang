@@ -1,14 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-
-import Button from '@/components/@shared/Button';
-
-import MyGathering from '../../components/mypage/myGathering';
+import { mockUser } from '@/data/mockUser';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
+import { useState } from 'react';
+import Button from '@/components/@shared/Button';
+import MyGathering from '../../components/mypage/myGathering';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
-import { mockUser } from '@/data/mockUser';
 
 export default function MyPage() {
   const user = mockUser;

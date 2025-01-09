@@ -42,7 +42,7 @@ export default function Gathering() {
         </section>
         <button
           type="button"
-          className="xl:right-1/5 fixed bottom-12 right-8 xl:bottom-16"
+          className="fixed bottom-12 right-8 xl:bottom-16 xl:right-1/5"
         >
           <Image
             src="/icons/creator.svg"
