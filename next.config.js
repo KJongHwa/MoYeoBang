@@ -8,6 +8,7 @@ const nextConfig = {
       'www.xphobia.net',
       'secretgardenescape.com',
       'www.dumbndumber.kr',
+      'search.pstatic.net',
     ],
   },
   webpack(config) {
