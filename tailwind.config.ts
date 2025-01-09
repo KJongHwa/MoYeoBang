@@ -31,11 +31,17 @@ const config: Config = {
           dropdown: '#2C2C2C',
           icon: '#A8A8A8',
         },
+        badge: {
+          primary: '#616161',
+          secondary: '#616161',
+          tertiary: '#6B6B6B',
+        },
       },
       fontFamily: {
         sans: 'var(--font-pretendard), -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif',
       },
       spacing: {
+        '1/5': '20%',
         '4.5': '1.125rem', // 18px
         '5.5': '1.375rem', // 22px
         '6.5': '1.625rem', // 26px
