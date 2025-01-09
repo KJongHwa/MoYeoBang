@@ -33,7 +33,7 @@ export default function MyPage() {
   };
 
   return (
-    <main className="mx-[150px] my-[130px] flex flex-col justify-center ">
+    <main className="relative top-[142px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
       <div className="mb-12 mt-8 flex h-[130px] items-center justify-around rounded-[25px] border bg-orange-600">
         <div className="text-text-primary">
@@ -58,12 +58,12 @@ export default function MyPage() {
         />
       </div>
       <div className="mx-12">
-        <nav className="flex gap-5">
+        <nav className="flex gap-6">
           {navLinks.map((link) => (
             <button
               key={link.label}
               type="button"
-              className={`text-lg font-bold ${
+              className={`pb-3 text-lg font-bold ${
                 activeTab === link.label ? 'border-b-2 border-white' : ''
               }`}
               onClick={() => navClick(link.label)}
@@ -72,7 +72,7 @@ export default function MyPage() {
             </button>
           ))}
         </nav>
-        <div className="mt-8">{renderActiveComponent()}</div>
+        <div className="mx-3 mt-8">{renderActiveComponent()}</div>
       </div>
     </main>
   );
