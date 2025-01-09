@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Button from '@/components/@shared/Button';
 
 import MyGathering from '../../components/mypage/myGathering';
-import MyLike from '../../components/mypage/myLike';
+import MyCreateGathering from '@/components/mypage/myCreateGathering';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import { mockUser } from '@/data/mockUser';
@@ -19,8 +19,8 @@ export default function MyPage() {
 
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
-    { label: '나의 리뷰', component: <MyLike /> },
-    { label: '내가 만든 모임', component: <MyReview /> },
+    { label: '나의 리뷰', component: <MyReview /> },
+    { label: '내가 만든 모임', component: <MyCreateGathering /> },
   ];
 
   const [activeTab, setActiveTab] = useState(navLinks[0].label);
