@@ -19,3 +19,9 @@ export const yearMonthDay = (dateString: string) => {
   const date = new Date(dateString);
   return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
 };
+
+// Ex) 2025-01-08
+export const hyphenYearMonthDay = (dateString: string) => {
+  const date = new Date(dateString);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+};

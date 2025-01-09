@@ -23,7 +23,7 @@ export default function Button({
     {
       'bg-orange-600 text-white hover:bg-orange-500 focus:bg-orange-700':
         !disabled && variant === 'primary',
-      'border-[1px] border-orange-600 bg-white text-orange-600 hover:border-orange-500 hover:text-orange-500 focus:border-orange-700 focus:text-orange-700':
+      'border-[1px] border-orange-600 bg-white py-[9px] text-orange-600 hover:border-orange-500 hover:text-orange-500 focus:border-orange-700 focus:text-orange-700':
         !disabled && variant === 'secondary',
       'bg-gray-400 text-white': disabled && variant === 'primary',
       'border-[1px] border-gray-400 text-gray-400':
