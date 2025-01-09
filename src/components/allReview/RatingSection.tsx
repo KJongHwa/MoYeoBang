@@ -12,7 +12,10 @@ export default function RatingSection({ selectedGenre }: RatingSectionProps) {
       {mockReviewRatings
         .filter((rating) => rating.genre === selectedGenre)
         .map((rating) => (
-          <div className="flex w-[294px] items-center justify-between gap-5 md:w-[550px] xl:w-[610px]">
+          <div
+            className="flex w-[294px] items-center justify-between gap-5 md:w-[550px] xl:w-[610px]"
+            key={selectedGenre}
+          >
             <div className="flex flex-col items-center justify-center gap-2">
               <p className="flex gap-1">
                 <span className="text-2xl font-semibold text-white">
