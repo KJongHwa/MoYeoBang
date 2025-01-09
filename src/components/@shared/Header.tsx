@@ -20,15 +20,18 @@ export default function Header() {
     { label: '모든 리뷰', href: '/allreview' },
   ];
   const searchImg = searching
-    ? { src: '/Vector.png', alt: '검색버튼' }
-    : { src: '/delete.svg', alt: '검색닫기버튼' };
+    ? { src: '/search.png', alt: '검색버튼' }
+    : { src: '/search_delete.png', alt: '검색닫기버튼' };
 
   return (
     <div className="relative z-10">
-      <div className="fixed w-full">
+      <div className="fixed w-full top-0">
         <div className="mx-auto flex h-[70px] w-full max-w-[1920px] items-center justify-between border-b bg-orange-600 px-5 md:h-[80px] md:px-[30px] xl:h-[100px]">
+        
+          {/* Navigation Links */}
           <nav className="flex items-center gap-5 text-base font-bold text-white">
-            <Button
+            
+          <Button
               type="button"
               variant="secondary"
               size="small"
@@ -41,7 +44,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-xl px-4 py-2 transition duration-300 hover:bg-orange-700"
+                className="hidden md:block rounded-xl px-4 py-2 transition duration-300 hover:bg-orange-700"
               >
                 <p>{link.label}</p>
               </Link>
@@ -74,10 +77,11 @@ export default function Header() {
             ) : (
               <div className="flex text-base font-bold text-white">
                 <Link href="/mypage">
-                  <p>마이 페이지</p>
+                  <Image src={'/default_mypage.png'} width={30} height={30} alt='마이페이지 이미지'/>
                 </Link>
               </div>
             )}
+            <Image src={'/hamburger.png'} width={20} height={20} alt='모바일네비게이션바' className='md:hidden'/>
           </div>
         </div>
       </div>
