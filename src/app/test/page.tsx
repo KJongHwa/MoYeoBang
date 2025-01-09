@@ -2,9 +2,7 @@
 
 import { useState } from 'react';
 import Button from '@/components/@shared/Button';
-import Dropdown, {
-  DropdownOption,
-} from '@/components/@shared/dropdown/SelectLocationDropdown';
+import Dropdown, { DropdownOption } from '@/components/@shared/Dropdown';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
