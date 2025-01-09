@@ -1,150 +1,81 @@
-'use client'
-import Button from "@/components/@shared/Button";
-import MyGathering from "./myGathering";
-import MyLike from "./myLike";
-import MyReview from "./myReview";
-import { useState } from "react";
-import Modal from "@/components/@shared/Modal";
-import Input from "@/components/@shared/Input";
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+
+import Button from '@/components/@shared/Button';
+
+import MyGathering from '../../components/mypage/myGathering';
+import MyCreateGathering from '@/components/mypage/myCreateGathering';
+import MyReview from '../../components/mypage/myReview';
+import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
+import { mockUser } from '@/data/mockUser';
+
 export default function MyPage() {
-  const user=
-    {
-      userId: 0,
-      email: "janggh1012@naver.com", //사용자 아이디
-        nickname: "jisoleil", //사용자 별명
-      image: "", //사용자 이미지
-      createdAt: "2025-01-03T02:49:27.832Z", //사용자 생성일
-      updatedAt: "2025-01-03T02:49:27.832Z" //사용자 수정일
-    }
-    const [isModal, setIsModal] = useState(false);
-    const [img, setImg] = useState<string | null>(null); 
+  const user = mockUser;
+
+  const [isModal, setIsModal] = useState(false);
 
   const openModalhandler = () => setIsModal(true);
-  const closeModalhandler = () => {
-    setIsModal(false)
-    setImg(null) 
+
+  const navLinks = [
+    { label: '나의 모임', component: <MyGathering /> },
+    { label: '나의 리뷰', component: <MyReview /> },
+    { label: '내가 만든 모임', component: <MyCreateGathering /> },
+  ];
+
+  const [activeTab, setActiveTab] = useState(navLinks[0].label);
+
+  const navClick = (label: string) => {
+    setActiveTab(label);
   };
-    const navLinks = [
-      { label: "나의 모임", component: <MyGathering /> },
-      { label: "나의 리뷰", component: <MyLike /> },
-      { label: "내가 만든 모임", component: <MyReview /> },
-    ];
-    const [activeTab, setActiveTab] = useState(navLinks[0].label);
 
-    const navClick = (label: string) => {
-      setActiveTab(label);
-    };
-  
-    const renderActiveComponent = () => {
-      const activeLink = navLinks.find((link) => link.label === activeTab);
-      return activeLink?.component;
-    };
-
-     //파일 선택 변경 이벤트 핸들러 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-
-    //파일이 없다면 
-    if (!file) return;
-
-    //파일이 영어 이름으로만 되어 있다면 
-    const isEnglishName = /^[a-zA-Z0-9._-]+$/.test(file.name);
-    if (!isEnglishName) {
-      alert("파일 이름은 영어로만 이루어져야 합니다.");
-      return;
-    }
-
-    //파일이 5MB 이하라면
-    const maxSizeInBytes = 5 * 1024 * 1024;
-    if (file.size > maxSizeInBytes) {
-      alert("파일 크기는 5MB 이하여야만 합니다.");
-      return;
-    }
-
-   // 이미지 미리보기 로직 추가 (로컬 URL 생성)
-   const previewUrl = URL.createObjectURL(file);
-   setImg(previewUrl);
-  };
-  const triggerFileInput = () => {
-    const fileInput = document.getElementById("profile_image-input") as HTMLInputElement;
-    if (fileInput) fileInput.click();
+  const renderActiveComponent = () => {
+    const activeLink = navLinks.find((link) => link.label === activeTab);
+    return activeLink?.component;
   };
 
   return (
-    <main className="my-[130px] mx-[150px] flex flex-col justify-center ">
+    <main className="mx-[150px] my-[130px] flex flex-col justify-center ">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="mt-8 mb-12 h-[130px] border rounded-[25px] bg-orange-600 items-center flex justify-around">
+      <div className="mb-12 mt-8 flex h-[130px] items-center justify-around rounded-[25px] border bg-orange-600">
         <div className="text-text-primary">
           <p>{user.nickname}</p>
           <p>{user.email}</p>
         </div>
         <Button
-                  type="button"
-                            variant="primary"
-                            size="small"
-                            font="14"
-                            className=" border border-text-primary "
-                            onClick={openModalhandler}
-                          >
-                            <p>프로필 편집</p>
+          type="button"
+          variant="primary"
+          size="small"
+          font="14"
+          className="border "
+          onClick={openModalhandler}
+        >
+          프로필 편집
         </Button>
-        <Modal isOpen={isModal} onClose={closeModalhandler} customDimStyle="w-[400px]">
-          <div className="flex flex-col gap-5">
-            <p className="text-base font-bold">프로필 수정하기</p>
-            
-            {/* 프로필 이미지 수정 input */}
-            
-            <div className="rounded-full w-[65px] h-[65px]">
-              <div className={`overflow-hidden relative flex items-center justify-center ${img? "w-65 h-65 rounded-full":""}`}>
-              <Image
-                  src={img || "/profile_image_default.png"}
-                  width={65}
-                  height={65}
-                  alt="프로필 이미지 미리보기"
-                  className={img ? "h-[65px] rounded-full" : ""}
-                />
-              </div>
-              <button onClick={triggerFileInput}>
-                <Image src={'/edit.png'} width={30} height={30} alt="프로필이미지 수정 버튼 이미지" className="absolute bottom-[180px] left-[65px]"/>
-              </button>
-              <input type="file" id="profile_image-input" accept="image/*" className="hidden" onChange={handleFileChange}/>
-            </div>
-            
-
-
-
-
-
-            
-            <Input placeholder={user.nickname} label="닉네임" fontSize="14" gap="8" />
-            <div className="justify-center flex gap-3">
-              <Button variant="secondary" size="large" font="14" >취소하기</Button>
-              <Button variant="primary" size="large" font="14" disabled>수정하기</Button>
-            </div>
-          </div>
-        </Modal>
+        <MyProfileEditModal
+          isModal={isModal}
+          setIsModal={setIsModal}
+          nickname={user.nickname}
+          image={user.image}
+        />
       </div>
       <div className="mx-12">
         <nav className="flex gap-5">
-          {
-            navLinks.map((link)=>(
-              <button
+          {navLinks.map((link) => (
+            <button
               key={link.label}
+              type="button"
               className={`text-lg font-bold ${
-                activeTab === link.label ? "border-b-2 border-black" : ""
+                activeTab === link.label ? 'border-b-2 border-white' : ''
               }`}
               onClick={() => navClick(link.label)}
             >
               {link.label}
             </button>
-            ))
-          }
+          ))}
         </nav>
-        <div className="mt-8">{renderActiveComponent()}</div>      
+        <div className="mt-8">{renderActiveComponent()}</div>
       </div>
-     
-
     </main>
   );
 }
