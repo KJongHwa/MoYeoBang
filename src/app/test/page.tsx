@@ -25,10 +25,12 @@ export default function Test() {
     locationOptions[0]
   );
 
+  // 캘린더를 열고 닫기 위한 useState 와 이벤트 핸들러
   const [isOpen, setIsOpen] = useState(false);
   const openCalendar = () => setIsOpen(true);
   const closeCalendar = () => setIsOpen(false);
 
+  // 캘린더 데이터를 저장하기 위한 useState 와 이벤트 핸들러
   const [date, setDate] = useState<string>('');
   const handleDateChange = (newDate: string) => {
     setDate(newDate);

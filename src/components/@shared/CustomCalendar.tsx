@@ -1,7 +1,7 @@
 'use client';
 
 import { hyphenYearMonthDay } from '@/utils/dateUtils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import Button from './Button';
 
@@ -42,6 +42,17 @@ export default function CustomCalendar({
     onDateChange(date);
     onClose();
   };
+
+  // ESC 키 입력 시 캘린더 닫기 처리
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   return (
     <div
