@@ -25,6 +25,10 @@ export default function Test() {
     locationOptions[0]
   );
 
+  const [isOpen, setIsOpen] = useState(false);
+  const openCalendar = () => setIsOpen(true);
+  const closeCalendar = () => setIsOpen(false);
+
   const [date, setDate] = useState<string>('');
   const handleDateChange = (newDate: string) => {
     setDate(newDate);
@@ -138,9 +142,16 @@ export default function Test() {
         <input
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="text-black"
+          className="relative text-black"
+          onClick={openCalendar}
         />
-        <CustomCalendar onDateChange={handleDateChange} />
+        <div className="relative">
+          <CustomCalendar
+            onDateChange={handleDateChange}
+            isOpen={isOpen}
+            onClose={closeCalendar}
+          />
+        </div>
       </section>
     </main>
   );
