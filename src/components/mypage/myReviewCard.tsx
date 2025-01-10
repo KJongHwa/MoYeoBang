@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Rating from '../@shared/Rating';
 import Button from '../@shared/Button';
 import MyReviewModal from './myReviewModal';
+import DeleteModal from './deleteModal';
 
 export default function MyReviewCard({
   score,
@@ -16,10 +17,13 @@ export default function MyReviewCard({
   Gathering,
   User,
 }: ReviewDto['get']) {
-  const [isModal, setIsModal] = useState(false);
-
-  const openModalHandler = () => {
-    setIsModal(true);
+  const [isEditModal, setEditIsModal] = useState(false);
+  const [isDeleteModal, setDeleteIsModal] = useState(false);
+  const openEditModalHandler = () => {
+    setEditIsModal(true);
+  };
+  const openDeleteModalHandler = () => {
+    setDeleteIsModal(true);
   };
   return (
     <article className="flex w-full flex-col gap-6 rounded-[20px] bg-[#2e2e2e] md:flex-row md:gap-5">
@@ -44,21 +48,27 @@ export default function MyReviewCard({
             variant="secondary"
             size="large"
             font="14"
-            onClick={() => openModalHandler()}
+            onClick={() => openEditModalHandler()}
           >
             수정하기
           </Button>
-          <Button variant="primary" size="large" font="14" disabled>
+          <Button
+            variant="primary"
+            size="large"
+            font="14"
+            onClick={() => openDeleteModalHandler()}
+          >
             삭제하기
           </Button>
         </div>
       </div>
       <MyReviewModal
-        isModal={isModal}
-        setIsModal={setIsModal}
+        isModal={isEditModal}
+        setIsModal={setEditIsModal}
         comment={comment}
         score={score}
       />
+      <DeleteModal isModal={isDeleteModal} setIsModal={setDeleteIsModal} />
     </article>
   );
 }
