@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/Button';
 import TextArea from '../@shared/TextArea';
@@ -13,6 +11,7 @@ interface MyReviewModalProps {
   score?: number;
   comment?: string;
 }
+
 export default function MyReviewModal({
   isModal,
   setIsModal,
@@ -35,14 +34,14 @@ export default function MyReviewModal({
         </p>
         <div className="flex flex-col gap-3">
           <p className="text-sm font-bold">만족스러운 경험이었나요?</p>
-          <Rating rating={score ? score : 0} width={120} height={24} />
+          <Rating rating={score || 0} width={120} height={24} />
         </div>
         <div className="flex flex-col gap-3">
           <p className="text-sm font-bold">경험에 대해 남겨주세요.</p>
           <TextArea
-            placeholder={comment ? comment : '리뷰를 입력해주세요.'}
+            placeholder={comment || '리뷰를 입력해주세요.'}
             label="리뷰코멘트란"
-            inputProps={{ value: comment ? comment : '' }}
+            inputProps={{ value: comment || '' }}
           />
         </div>
         <div className="flex justify-center gap-3">
