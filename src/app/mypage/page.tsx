@@ -21,7 +21,10 @@ export default function MyPage() {
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
     { label: '나의 리뷰', component: <MyReview /> },
-    { label: '내가 만든 모임', component: <MyCreateGathering /> },
+    {
+      label: '내가 만든 모임',
+      component: <MyCreateGathering userID={user.userID} />,
+    },
   ];
 
   const [activeTab, setActiveTab] = useState(navLinks[0].label);
