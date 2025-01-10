@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import { mockUser } from '@/data/mockUser';
@@ -57,6 +59,7 @@ export default function MyPage() {
           font="14"
           className="border "
           onClick={openModalhandler}
+          style={{ width: '115px' }}
         >
           <div className="flex">
             <Image
