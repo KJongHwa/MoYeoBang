@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 
+import useCustomForm from '@/hooks/useCustomForm';
 import { GatheringRequestBody } from '@/types/gathering.types';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
-import { themeList } from '@/data/themeList';
+import { themeList } from '@/constants/themeList';
+import { INIT_GATHRING } from '@/constants/initialValues';
 
 import LocationSelector from './LocationSelector';
 import CapacitySelector from './CapacitySelector';
@@ -24,19 +25,9 @@ export default function CreateGatheringModal({
     register,
     handleSubmit,
     setValue,
-    watch,
+    watchFields,
     formState: { isValid },
-  } = useForm<GatheringRequestBody['post']>({
-    mode: 'onChange',
-    defaultValues: {
-      name: '',
-      dateTime: '',
-      registrationEnd: '',
-      capacity: 2,
-      location: '',
-      themeName: '',
-    },
-  });
+  } = useCustomForm<GatheringRequestBody['post']>(INIT_GATHRING.POST);
 
   const [location, setLocation] = useState<string>('');
   const [inputThemeName, setInputThemeName] = useState<string>('');
@@ -45,15 +36,12 @@ export default function CreateGatheringModal({
   const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const themeName = watch('themeName');
-  const capacity = watch('capacity');
-  const dateTime = watch('dateTime');
-  const registrationEnd = watch('registrationEnd');
-
-  const onSubmit = (data: GatheringRequestBody['post']) => {
-    console.log('formData:', data);
-    onClose();
-  };
+  const { themeName, capacity, dateTime, registrationEnd } = watchFields([
+    'themeName',
+    'capacity',
+    'dateTime',
+    'registrationEnd',
+  ]);
 
   const handleLocationClick = (selectedLocation: string) => {
     setLocation(selectedLocation);
@@ -91,13 +79,13 @@ export default function CreateGatheringModal({
 
   // 마감 날짜 검증
   useEffect(() => {
-    if (dateTime && registrationEnd) {
-      if (new Date(registrationEnd) >= new Date(dateTime)) {
-        setErrorMessage('마감 날짜는 모임 날짜보다 이전이어야 합니다.');
-        setValue('registrationEnd', '');
-      } else {
-        setErrorMessage('');
-      }
+    if (!(dateTime && registrationEnd)) return;
+
+    if (new Date(registrationEnd) >= new Date(dateTime)) {
+      setErrorMessage('마감 날짜는 모임 날짜보다 이전이어야 합니다.');
+      setValue('registrationEnd', '');
+    } else {
+      setErrorMessage('');
     }
   }, [dateTime, registrationEnd, setValue]);
 
@@ -105,7 +93,7 @@ export default function CreateGatheringModal({
     <Modal isOpen={isOpen} onClose={onClose}>
       <h1 className="mb-10 text-lg font-bold">모임 만들기</h1>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(() => onClose())}
         className="flex w-[472px] flex-col gap-6"
       >
         <Input
