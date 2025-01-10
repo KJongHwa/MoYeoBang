@@ -1,9 +1,16 @@
 /* eslint-disable prettier/prettier */
+
+'use client';
+
+import { useState } from 'react';
+
 import Image from 'next/image';
 
 import { formatDate, extractHour } from '@/utils/dateUtils';
 
 import GatheringBadge from '../gathering/GatheringBadge';
+import Button from '../@shared/Button';
+import MyReviewModal from './myReviewModal';
 
 interface MyGatheringCardProps {
   location: string;
@@ -33,9 +40,13 @@ export default function MyGatheringCard({
     const targetDate = new Date(targetdateTime);
     return targetDate > currentDate ? '모임 예정' : '모임 완료';
   }
+  const [isEditModal, setEditIsModal] = useState(false);
+  const openEditModalHandler = () => {
+    setEditIsModal(true);
+  };
 
   return (
-    <figure className="bg-brand-tertiary relative flex max-h-32 w-full gap-2 rounded-xl md:max-h-[170px]">
+    <figure className="bg-brand-tertiary relative flex max-h-32 w-full flex-col gap-2 rounded-xl md:max-h-[170px] md:flex-row">
       <Image
         src={image}
         alt="방탈출 테마 이미지"
@@ -73,6 +84,19 @@ export default function MyGatheringCard({
             <p>
               {participantCount}/{capacity}
             </p>
+            <Button
+              variant="secondary"
+              size="small"
+              font="14"
+              onClick={() => openEditModalHandler()}
+              style={{
+                position: 'absolute',
+                right: '10px',
+              }}
+            >
+              작성하기
+            </Button>
+            <MyReviewModal isModal={isEditModal} setIsModal={setEditIsModal} />
           </div>
         </div>
       </div>

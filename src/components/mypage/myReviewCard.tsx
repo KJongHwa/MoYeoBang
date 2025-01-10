@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import { useState } from 'react';
@@ -26,16 +28,17 @@ export default function MyReviewCard({
     setDeleteIsModal(true);
   };
   return (
-    <article className="flex w-full flex-col gap-6 rounded-[20px] bg-[#2e2e2e] md:flex-row md:gap-5">
-      <div className="relative h-[156px] w-full md:h-[172px] md:w-[320px]">
-        <Image
-          src={Gathering.image}
-          alt={Gathering.themeName}
-          fill
-          className="rounded-[20px]"
-        />
-      </div>
-      <div className="flex flex-col justify-center gap-[13px] p-4 md:w-[723px] md:p-0 md:px-10">
+    <article className="relative flex max-h-[170px] w-full flex-col gap-6 rounded-xl bg-[#2e2e2e] md:flex-row md:gap-5">
+      <Image
+        src={Gathering.image}
+        alt={Gathering.themeName}
+        width={240}
+        height={170}
+        quality={100}
+        className="bg-brand-secondary w-28 rounded-l-xl md:w-60"
+      />
+
+      <div className="mx-3 my-2 flex flex-1 flex-col justify-between md:mx-6 md:my-4">
         <div className="flex flex-col gap-[7px]">
           <Rating rating={score} width={120} height={24} />
           <h2 className="text-xs font-medium text-[#b5b5b5]">
@@ -46,7 +49,7 @@ export default function MyReviewCard({
         <div className="mt-3 flex gap-3">
           <Button
             variant="secondary"
-            size="large"
+            size="small"
             font="14"
             onClick={() => openEditModalHandler()}
           >
@@ -54,7 +57,7 @@ export default function MyReviewCard({
           </Button>
           <Button
             variant="primary"
-            size="large"
+            size="small"
             font="14"
             onClick={() => openDeleteModalHandler()}
           >
