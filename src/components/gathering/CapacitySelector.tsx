@@ -9,16 +9,9 @@ export default function CapacitySelector({
   capacity,
   setCapacity,
 }: CapacitySelectorProps) {
-  const incrementCapacity = () => {
-    if (capacity < 6) {
-      setCapacity(capacity + 1);
-    }
-  };
-
-  const decrementCapacity = () => {
-    if (capacity > 2) {
-      setCapacity(capacity - 1);
-    }
+  const updateCapacity = (type: 'increment' | 'decrement') => {
+    const newCapacity = capacity + (type === 'increment' ? 1 : -1);
+    if (newCapacity >= 2 && newCapacity <= 6) setCapacity(newCapacity);
   };
 
   return (
@@ -32,8 +25,8 @@ export default function CapacitySelector({
           alt="마이너스 아이콘"
           width={24}
           height={24}
-          onClick={decrementCapacity}
-          className={`cursor-pointer ${capacity <= 2 ? 'cursor-auto opacity-50' : ''}`}
+          onClick={() => updateCapacity('decrement')}
+          className={`${capacity <= 2 ? 'cursor-default opacity-50' : 'cursor-pointer'}`}
         />
         <span className="mx-5 text-5xl font-bold">{capacity}</span>
         <Image
@@ -41,8 +34,8 @@ export default function CapacitySelector({
           alt="플러스 아이콘"
           width={24}
           height={24}
-          onClick={incrementCapacity}
-          className={`cursor-pointer ${capacity >= 6 ? 'cursor-auto opacity-50' : ''}`}
+          onClick={() => updateCapacity('increment')}
+          className={`${capacity >= 6 ? 'cursor-default opacity-50' : 'cursor-pointer'}`}
         />
       </div>
     </div>
