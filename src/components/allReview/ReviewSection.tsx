@@ -4,21 +4,27 @@ import ReviewFilters from './ReviewFilters';
 
 interface ReviewSectionProps {
   selectedGenre: string;
+  selectedLocation: string;
+  onLocatingChange: (value: string) => void;
 }
 
 export default function ReviewSection({
   selectedGenre = 'all',
+  selectedLocation = 'all',
+  onLocatingChange,
 }: ReviewSectionProps) {
-  const filteredReviews =
-    selectedGenre === 'all'
-      ? mockReviews
-      : mockReviews.filter((review) => {
-          return review.Gathering.genre === selectedGenre;
-        });
+  const filteredReviews = mockReviews.filter((review) => {
+    const genreMatches =
+      selectedGenre === 'all' || review.Gathering.genre === selectedGenre;
+    const locationMatches =
+      selectedLocation === 'all' ||
+      review.Gathering.location === selectedLocation;
+    return genreMatches && locationMatches;
+  });
 
   return (
     <>
-      <ReviewFilters />
+      <ReviewFilters onLocatingChange={onLocatingChange} />
       <div key={selectedGenre} className="mt-10 flex flex-col gap-6">
         {filteredReviews.map((review) => (
           <ReviewCard
