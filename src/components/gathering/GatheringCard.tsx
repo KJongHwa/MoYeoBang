@@ -2,13 +2,13 @@ import Image from 'next/image';
 
 import UserIcon from '@/public/icons/user.svg';
 import { formatDate, extractHour } from '@/utils/dateUtils';
-
 import ProgressBar from '@/components/@shared/ProgressBar';
 import AlarmBadge from './AlarmBadge';
 import GatheringBadge from './GatheringBadge';
 import HeartButton from './HeartButton';
 
 interface GatheringCardProps {
+  gatheringId: number;
   location: string;
   dateTime: string;
   registrationEnd: string;
@@ -21,6 +21,7 @@ interface GatheringCardProps {
 }
 
 export default function GatheringCard({
+  gatheringId,
   location,
   dateTime,
   registrationEnd,
@@ -57,7 +58,20 @@ export default function GatheringCard({
               {formatDate(dateTime)}
             </GatheringBadge>
           </div>
-          <HeartButton />
+          <HeartButton
+            gathering={{
+              gatheringId,
+              location,
+              dateTime,
+              registrationEnd,
+              level,
+              name,
+              themeName,
+              capacity,
+              participantCount,
+              image,
+            }}
+          />
         </div>
         <div>
           <p className="text-sm font-semibold md:text-lg">{name}</p>
