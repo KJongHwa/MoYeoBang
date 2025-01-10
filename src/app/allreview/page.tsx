@@ -27,7 +27,7 @@ export default function AllReview() {
       </section>
 
       <section className="relative top-12 pb-10">
-        <ReviewSection />
+        <ReviewSection selectedGenre={selectedGenre} />
       </section>
     </main>
   );

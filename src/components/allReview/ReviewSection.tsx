@@ -2,12 +2,25 @@ import { mockReviews } from '@/data/mockReviews';
 import ReviewCard from './ReviewCard';
 import ReviewFilters from './ReviewFilters';
 
-export default function ReviewSection() {
+interface ReviewSectionProps {
+  selectedGenre: string;
+}
+
+export default function ReviewSection({
+  selectedGenre = 'all',
+}: ReviewSectionProps) {
+  const filteredReviews =
+    selectedGenre === 'all'
+      ? mockReviews
+      : mockReviews.filter((review) => {
+          return review.Gathering.genre === selectedGenre;
+        });
+
   return (
     <>
       <ReviewFilters />
-      <div className="mt-10 flex flex-col gap-6">
-        {mockReviews.map((review) => (
+      <div key={selectedGenre} className="mt-10 flex flex-col gap-6">
+        {filteredReviews.map((review) => (
           <ReviewCard
             key={review.reviewId}
             score={review.score}
