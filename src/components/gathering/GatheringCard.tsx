@@ -3,22 +3,11 @@ import Image from 'next/image';
 import UserIcon from '@/public/icons/user.svg';
 import { formatDate, extractHour } from '@/utils/dateUtils';
 import ProgressBar from '@/components/@shared/ProgressBar';
+import { GatheringProps } from '@/types/gathering.types';
+
 import AlarmBadge from './AlarmBadge';
 import GatheringBadge from './GatheringBadge';
 import HeartButton from './HeartButton';
-
-interface GatheringCardProps {
-  gatheringId: number;
-  location: string;
-  dateTime: string;
-  registrationEnd: string;
-  level: string;
-  name: string;
-  themeName: string;
-  capacity: string;
-  participantCount: string;
-  image: string;
-}
 
 export default function GatheringCard({
   gatheringId,
@@ -31,7 +20,7 @@ export default function GatheringCard({
   capacity,
   participantCount,
   image,
-}: GatheringCardProps) {
+}: GatheringProps['card']) {
   return (
     <figure className="relative flex max-h-32 w-full rounded-xl bg-brand-tertiary md:max-h-[170px]">
       <AlarmBadge hour={extractHour(registrationEnd)} />

@@ -2,26 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
+import { GatheringProps } from '@/types/gathering.types';
 import HeartFullIcon from '@/public/icons/heart_full.svg';
 import HeartEmptyIcon from '@/public/icons/heart_empty.svg';
-
-interface GatheringCardProps {
-  gatheringId: number;
-  location: string;
-  dateTime: string;
-  registrationEnd: string;
-  level: string;
-  name: string;
-  themeName: string;
-  capacity: string;
-  participantCount: string;
-  image: string;
-}
 
 export default function HeartButton({
   gathering,
 }: {
-  gathering: GatheringCardProps;
+  gathering: GatheringProps['card'];
 }) {
   const [isFavorited, setIsFavorited] = useState(false);
 
@@ -30,7 +18,8 @@ export default function HeartButton({
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     setIsFavorited(
       favorites.some(
-        (fav: GatheringCardProps) => fav.gatheringId === gathering.gatheringId
+        (fav: GatheringProps['card']) =>
+          fav.gatheringId === gathering.gatheringId
       )
     );
   }, [gathering]);
@@ -43,7 +32,7 @@ export default function HeartButton({
       if (newFavorited) {
         if (
           !favorites.some(
-            (fav: GatheringCardProps) =>
+            (fav: GatheringProps['card']) =>
               fav.gatheringId === gathering.gatheringId
           )
         ) {
@@ -51,7 +40,8 @@ export default function HeartButton({
         }
       } else {
         const updatedFavorites = favorites.filter(
-          (fav: GatheringCardProps) => fav.gatheringId !== gathering.gatheringId
+          (fav: GatheringProps['card']) =>
+            fav.gatheringId !== gathering.gatheringId
         );
         localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
         return false;
