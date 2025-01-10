@@ -24,7 +24,9 @@ export default function HeartButton({
     );
   }, [gathering]);
 
-  const handleFavoriteToggle = () => {
+  const handleFavoriteToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
     setIsFavorited((prev) => {
       const newFavorited = !prev;
       const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
@@ -53,8 +55,10 @@ export default function HeartButton({
   };
 
   return (
-    <button type="button" onClick={handleFavoriteToggle}>
-      {isFavorited ? <HeartFullIcon /> : <HeartEmptyIcon />}
-    </button>
+    <div className="absolute right-2 top-1 md:right-6 md:top-4 ">
+      <button type="button" onClick={handleFavoriteToggle}>
+        {isFavorited ? <HeartFullIcon /> : <HeartEmptyIcon />}
+      </button>
+    </div>
   );
 }
