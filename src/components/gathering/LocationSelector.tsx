@@ -1,5 +1,5 @@
 import Button from '@/components/@shared/Button';
-import { themeList } from '@/data/themeList';
+import { themeList } from '@/constants/themeList';
 
 interface LocationSelectorProps {
   location: string;
