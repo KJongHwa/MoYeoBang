@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Button from '@/components/@shared/Button';
+import IconButton from '@/components/@shared/IconButton';
 import Dropdown, { DropdownOption } from '@/components/@shared/Dropdown';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
@@ -110,6 +111,16 @@ export default function Test() {
           </li>
         </ul>
       </section>
+
+      <section className="w-full text-center">
+        <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">IconButton</h2>
+        <div className="flex justify-center gap-4">
+          <IconButton src="/icons/pencil.svg" alt="연필 아이콘">
+            프로필 편집
+          </IconButton>
+        </div>
+      </section>
+
       <section className="w-full text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Dropdown</h2>
         <div className="flex justify-center gap-4">
