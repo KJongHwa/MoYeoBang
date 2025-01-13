@@ -42,7 +42,7 @@ export default function RatingSection({ selectedGenre }: RatingSectionProps) {
                     <ProgressBar
                       value={count}
                       max={rating.totalScore}
-                      progressColor="bg-[#111827]"
+                      progressColor="bg-default-primary"
                     />
                     <p className="min-w-10 flex-shrink-0 pl-4 text-left text-sm font-medium text-gray-100">
                       {count}
