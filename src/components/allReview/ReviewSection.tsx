@@ -2,7 +2,7 @@ import { mockReviews } from '@/data/mockReviews';
 import { hyphenYearMonthDay } from '@/utils/dateUtils';
 import ReviewCard from './ReviewCard';
 import ReviewFilters from './ReviewFilters';
-import EmptyReview from './EmptyReview';
+import EmptyElement from '../@shared/EmptyElement';
 
 interface ReviewSectionProps {
   selectedGenre: string;
@@ -59,7 +59,7 @@ export default function ReviewSection({
       />
       <div key={selectedGenre} className="mt-10 flex flex-col gap-6">
         {filteredReviews.length === 0 ? (
-          <EmptyReview />
+          <EmptyElement>아직 리뷰가 없어요</EmptyElement>
         ) : (
           filteredReviews.map((review) => (
             <ReviewCard

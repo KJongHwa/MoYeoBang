@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import PuzzleImage from '@/public/puzzle_empty.png';
+import { ReactNode } from 'react';
 
-export default function EmptyReview() {
+interface EmptyElementProps {
+  children: ReactNode;
+}
+
+export default function EmptyElement({ children }: EmptyElementProps) {
   return (
     <div className="relative mt-20 h-[187px] text-center md:h-[260px] xl:h-[306px]">
-      <p className="text-base font-medium text-text-secondary">
-        아직 리뷰가 없어요
-      </p>
+      <p className="text-base font-medium text-text-secondary">{children}</p>
       <Image
         src={PuzzleImage}
         alt="퍼즐 캐릭터"
