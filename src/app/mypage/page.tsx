@@ -48,7 +48,7 @@ export default function MyPage() {
             width={66}
             height={66}
             alt="프로필 이미지 미리보기"
-            className={'h-[56px] w-[56px] rounded-full md:h-[66px] md:w-[66px]'}
+            className="h-[56px] w-[56px] rounded-full md:h-[66px] md:w-[66px]"
           />
           <div>
             <p className="text-base font-bold md:text-2xl">{user.nickname}</p>
@@ -101,7 +101,7 @@ export default function MyPage() {
             </button>
           ))}
         </nav>
-        <div className="mx-3 mt-8">{renderActiveComponent()}</div>
+        <div className="mx-3 mb-10 mt-8">{renderActiveComponent()}</div>
       </div>
     </main>
   );

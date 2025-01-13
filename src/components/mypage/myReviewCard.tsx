@@ -56,7 +56,7 @@ export default function MyReviewCard({
                 alt="드롭다운 클릭 버튼"
                 className="cursor-pointer"
               />
-              <ul className="bg-secondary-80 -right-15 absolute top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block">
+              <ul className="bg-secondary-80 absolute -right-10 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-28">
                 {liDropdowns.map((liDropdown) => (
                   <li key={liDropdown.label}>
                     <button
