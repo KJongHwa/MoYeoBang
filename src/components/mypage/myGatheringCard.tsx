@@ -46,14 +46,14 @@ export default function MyGatheringCard({
   };
 
   return (
-    <figure className="bg-brand-tertiary relative flex max-h-32 w-full flex-col gap-2 rounded-xl md:max-h-[170px] md:flex-row">
+    <figure className="bg-brand-tertiary relative flex w-full flex-col gap-2 rounded-xl md:max-h-[170px] md:flex-row">
       <Image
         src={image}
         alt="방탈출 테마 이미지"
-        width={240}
-        height={170}
+        width={330}
+        height={185}
         quality={100}
-        className="bg-brand-secondary w-28 rounded-l-xl md:w-60"
+        className="bg-brand-secondary rounded-l-xl md:w-60"
       />
       <div className="mx-3 my-2 flex flex-1 flex-col justify-between md:mx-6 md:my-4">
         <div className="flex justify-between">
@@ -63,7 +63,19 @@ export default function MyGatheringCard({
               {formatDateStatus(dateTime)}
             </GatheringBadge>
             <GatheringBadge variant="primary">
-              {participantCount === capacity ? '일정 확정' : '일정 미확정'}
+              {participantCount === capacity ? (
+                <span>
+                  <Image
+                    src="/check.png"
+                    width={16}
+                    height={16}
+                    alt="체크 이미지"
+                  />
+                  일정 확정
+                </span>
+              ) : (
+                '일정 미확정'
+              )}
             </GatheringBadge>
           </div>
         </div>
@@ -94,7 +106,7 @@ export default function MyGatheringCard({
                 right: '10px',
               }}
             >
-              작성하기
+              리뷰쓰기
             </Button>
             <MyReviewModal isModal={isEditModal} setIsModal={setEditIsModal} />
           </div>
