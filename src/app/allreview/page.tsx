@@ -7,6 +7,8 @@ import { useState } from 'react';
 
 export default function AllReview() {
   const [selectedGenre, setSelectedGenre] = useState<string>('all');
+  const [selectedLocation, setSelectedLocation] = useState<string>('all');
+  const [selectedDate, setSelectedDate] = useState<string>('');
 
   return (
     <main className="relative top-[142px] mx-10 xl:mx-auto xl:w-[1166px]">
@@ -27,7 +29,13 @@ export default function AllReview() {
       </section>
 
       <section className="relative top-12 pb-10">
-        <ReviewSection />
+        <ReviewSection
+          selectedGenre={selectedGenre}
+          selectedLocation={selectedLocation}
+          selectedDate={selectedDate}
+          onLocatingChange={setSelectedLocation}
+          onDateChange={setSelectedDate}
+        />
       </section>
     </main>
   );
