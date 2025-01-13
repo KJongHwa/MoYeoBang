@@ -9,9 +9,10 @@ export default function AllReview() {
   const [selectedGenre, setSelectedGenre] = useState<string>('all');
   const [selectedLocation, setSelectedLocation] = useState<string>('all');
   const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedSort, setSelectedSort] = useState<string>('createdAt');
 
   return (
-    <main className="relative top-[142px] mx-10 xl:mx-auto xl:w-[1166px]">
+    <main className="relative top-[142px] mx-10 mb-5 h-full xl:mx-auto xl:w-[1166px]">
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold">모든 리뷰</h1>
         <p className="text-sm font-medium">모여방 리뷰를 확인해 보세요</p>
@@ -33,8 +34,10 @@ export default function AllReview() {
           selectedGenre={selectedGenre}
           selectedLocation={selectedLocation}
           selectedDate={selectedDate}
+          selectedSort={selectedSort}
           onLocatingChange={setSelectedLocation}
           onDateChange={setSelectedDate}
+          onSortingChange={setSelectedSort}
         />
       </section>
     </main>

@@ -1,5 +1,6 @@
 'use client';
 
+import { formatDate } from '@/utils/dateUtils';
 import { useState } from 'react';
 import { clsx } from 'clsx';
 import Image from 'next/image';
@@ -11,9 +12,15 @@ interface DateDropdownProps {
 
 export default function DateDropdown({ onDateChange }: DateDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [date, setDate] = useState<string>('날짜 전체');
 
   const handleChange = () => {
     setIsOpen((prevState) => !prevState);
+  };
+
+  const handleDateChange = (newDate: string) => {
+    setDate(formatDate(newDate));
+    onDateChange(newDate);
   };
 
   return (
@@ -32,7 +39,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
           'gap-[2px]'
         )}
       >
-        <p className="flex-1 text-sm font-medium text-white">날짜 전체</p>
+        <p className="flex-1 text-sm font-medium text-white">{date}</p>
         <Image
           src="/chevron-down.svg"
           width={16}
@@ -49,7 +56,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
         <CustomCalendar
           isOpen={isOpen}
           onClose={handleChange}
-          onDateChange={onDateChange}
+          onDateChange={handleDateChange}
           layout="top-12"
         />
       )}

@@ -8,7 +8,7 @@ interface RatingSectionProps {
 
 export default function RatingSection({ selectedGenre }: RatingSectionProps) {
   return (
-    <div className="flex h-[180px] items-center justify-center rounded-[20px] bg-[#383838]">
+    <div className="bg-secondary-80 flex h-[180px] items-center justify-center rounded-[20px]">
       {mockReviewRatings
         .filter((rating) => rating.genre === selectedGenre)
         .map((rating) => (
@@ -18,7 +18,7 @@ export default function RatingSection({ selectedGenre }: RatingSectionProps) {
           >
             <div className="flex flex-col items-center justify-center gap-2">
               <p className="flex gap-1">
-                <span className="text-2xl font-semibold text-white">
+                <span className="text-2xl font-semibold">
                   {rating.averageScore}
                 </span>
                 <span className="text-2xl font-semibold text-gray-400">/5</span>

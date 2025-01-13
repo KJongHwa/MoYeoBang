@@ -1,14 +1,17 @@
 import DateDropdown from './DateDropdown';
 import LocationDropdown from './LocationDropdown';
+import SortDropdown from './SortDropdown';
 
 interface ReviewFiltersProps {
   onLocatingChange: (value: string) => void;
   onDateChange: (value: string) => void;
+  onSortingChange: (value: string) => void;
 }
 
 export default function ReviewFilters({
   onLocatingChange,
   onDateChange,
+  onSortingChange,
 }: ReviewFiltersProps) {
   return (
     <div className="flex justify-between">
@@ -16,9 +19,7 @@ export default function ReviewFilters({
         <LocationDropdown onLocatingChange={onLocatingChange} />
         <DateDropdown onDateChange={onDateChange} />
       </div>
-      <ul className="flex h-10 w-[90px] items-center justify-center rounded-lg border-2 border-[#313131] bg-[#2c2c2c] text-sm font-medium text-[#d0d0d0]">
-        최신순
-      </ul>
+      <SortDropdown onSortingChange={onSortingChange} />
     </div>
   );
 }
