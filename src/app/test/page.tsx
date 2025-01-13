@@ -116,7 +116,7 @@ export default function Test() {
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">IconButton</h2>
         <div className="flex justify-center gap-4">
           <IconButton src="/icons/pencil.svg" alt="연필 아이콘">
-            프로필 편집
+            이미지를 자유롭게 넣을 수 있어요
           </IconButton>
         </div>
       </section>
