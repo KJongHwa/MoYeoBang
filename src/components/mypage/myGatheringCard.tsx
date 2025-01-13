@@ -46,14 +46,14 @@ export default function MyGatheringCard({
   };
 
   return (
-    <figure className="bg-brand-tertiary relative flex w-full flex-col gap-2 rounded-xl md:max-h-[170px] md:flex-row">
+    <figure className="bg-default-tertiary relative flex w-full flex-col gap-2 rounded-xl md:max-h-[170px] md:flex-row">
       <Image
         src={image}
         alt="방탈출 테마 이미지"
         width={330}
         height={185}
         quality={100}
-        className="bg-brand-secondary rounded-l-xl md:w-60"
+        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:rounded-l-xl md:rounded-t-none"
       />
       <div className="mx-3 my-2 flex flex-1 flex-col justify-between md:mx-6 md:my-4">
         <div className="flex justify-between">
