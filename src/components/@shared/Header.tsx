@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import Image from 'next/image';
@@ -26,23 +28,20 @@ export default function Header() {
   return (
     <div className="relative z-10">
       <div className="fixed top-0 w-full">
-        <div className="mx-auto flex h-[70px] w-full max-w-[1920px] items-center justify-between border-b bg-orange-600 px-5 md:h-[80px] md:px-[30px] xl:h-[100px]">
+        <div className="bg-secondary-bg mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:h-[60px] xl:px-[200px]">
           {/* Navigation Links */}
-          <nav className="flex items-center gap-5 text-base font-bold text-white">
-            <Button
-              type="button"
-              variant="secondary"
-              size="small"
-              font="14"
-              onClick={handleLogin}
-            >
-              {user ? '로그인' : '로그아웃'}
-            </Button>
+          <nav className="text-text-default flex items-center gap-8 text-base">
+            <Image
+              src="/Logo_Large.png"
+              width={100}
+              height={23}
+              alt="로고 이미지"
+            />
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="hidden rounded-xl px-4 py-2 transition duration-300 hover:bg-orange-700 md:block"
+                className="hover:bg-primary-40 hidden rounded-xl px-4 py-1 transition duration-300 md:block"
               >
                 {link.label}
               </Link>
@@ -53,8 +52,8 @@ export default function Header() {
             <button type="button" onClick={handleSearching}>
               <Image
                 src={searchImg.src}
-                width={20}
-                height={20}
+                width={24}
+                height={24}
                 alt={searchImg.alt}
               />
             </button>
@@ -67,7 +66,12 @@ export default function Header() {
                     size="small"
                     font="14"
                     className=" border border-white"
-                    style={{ width: '120px' }}
+                    style={{
+                      width: '120px',
+                      padding: '10px 5px',
+                      backgroundColor: '#17171C',
+                    }}
+                    onClick={handleLogin}
                   >
                     로그인/회원가입
                   </Button>
@@ -77,9 +81,9 @@ export default function Header() {
               <div className="flex text-base font-bold text-white">
                 <Link href="/mypage">
                   <Image
-                    src="/default_mypage.png"
-                    width={30}
-                    height={30}
+                    src="/profile_image_default.png"
+                    width={40}
+                    height={40}
                     alt="마이페이지 이미지"
                   />
                 </Link>
