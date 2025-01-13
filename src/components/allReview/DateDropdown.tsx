@@ -1,7 +1,6 @@
 'use client';
 
-import { formatDate } from '@/utils/dateUtils';
-import { useState } from 'react';
+import { useCalendar } from '@/hooks/useCalendar';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import CustomCalendar from '../@shared/CustomCalendar';
@@ -11,23 +10,15 @@ interface DateDropdownProps {
 }
 
 export default function DateDropdown({ onDateChange }: DateDropdownProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [date, setDate] = useState<string>('날짜 전체');
-
-  const handleChange = () => {
-    setIsOpen((prevState) => !prevState);
-  };
-
-  const handleDateChange = (newDate: string) => {
-    setDate(formatDate(newDate));
-    onDateChange(newDate);
-  };
+  const { isOpen, date, handleChange, handleDateChange } = useCalendar({
+    onDateChange,
+  });
 
   return (
     <div className={clsx('relative min-w-[120px]')}>
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleChange}
         className={clsx(
           'h-[42px] w-[120px]',
           'relative',
@@ -39,7 +30,9 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
           'gap-[2px]'
         )}
       >
-        <p className="flex-1 text-sm font-medium text-white">{date}</p>
+        <p className="flex-1 text-sm font-medium text-white">
+          {date === '' ? '날짜 전체' : date}
+        </p>
         <Image
           src="/chevron-down.svg"
           width={16}
@@ -55,9 +48,10 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
       {isOpen && (
         <CustomCalendar
           isOpen={isOpen}
+          selectedDate={date}
           onClose={handleChange}
           onDateChange={handleDateChange}
-          layout="top-12"
+          layout="top-12 right-[-100px] md:left-0"
         />
       )}
     </div>

@@ -1,7 +1,7 @@
 import Dropdown from '../@shared/dropdown/SelectLocationDropdown';
 
 const locationList = [
-  { value: 'all', label: '지역 전체' },
+  { value: 'all', label: '모든 지역' },
   { value: 'geondae', label: '건대' },
   { value: 'hongdae', label: '홍대' },
   { value: 'hyehwa', label: '혜화' },

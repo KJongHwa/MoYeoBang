@@ -12,7 +12,7 @@ export default function AllReview() {
   const [selectedSort, setSelectedSort] = useState<string>('createdAt');
 
   return (
-    <main className="relative top-[142px] mx-10 mb-5 h-full xl:mx-auto xl:w-[1166px]">
+    <main className="relative mx-10 mb-5 mt-[142px] h-full xl:mx-auto xl:w-[1166px]">
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold">모든 리뷰</h1>
         <p className="text-sm font-medium">모여방 리뷰를 확인해 보세요</p>
