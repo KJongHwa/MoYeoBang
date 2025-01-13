@@ -25,18 +25,7 @@ export default function Gathering() {
 
         <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
           {mockGatherings.map((gathering: any) => (
-            <GatheringCard
-              registrationEnd={gathering.registrationEnd}
-              key={gathering.gatheringId}
-              location={gathering.location}
-              dateTime={gathering.dateTime}
-              level={gathering.level.toString()}
-              capacity={gathering.capacity}
-              name={gathering.name}
-              themeName={gathering.themeName}
-              image={gathering.image}
-              participantCount={gathering.participantCount.toString()}
-            />
+            <GatheringCard key={gathering.gatheringId} {...gathering} />
           ))}
         </section>
         <CreateGatheringBtn />

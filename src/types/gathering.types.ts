@@ -49,3 +49,26 @@ export interface GatheringRequestBody {
     gatheringId: number;
   };
 }
+
+// Component's props
+export interface GatheringProps {
+  card: {
+    gatheringId: number;
+    location: string;
+    dateTime: string;
+    registrationEnd: string;
+    level: string;
+    name: string;
+    themeName: string;
+    capacity: string;
+    participantCount: string;
+    image: string;
+  };
+  badge: {
+    icon?: '고급' | '중급' | '초급';
+    shape?: 'default' | 'round';
+    variant?: 'primary' | 'secondary' | 'tertiary';
+    className?: string;
+    children: React.ReactNode;
+  };
+}
