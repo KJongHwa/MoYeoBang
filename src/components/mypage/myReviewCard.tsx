@@ -28,7 +28,7 @@ export default function MyReviewCard({
     setDeleteIsModal(true);
   };
 
-  const li_dropdowns = [
+  const liDropdowns = [
     { label: '수정하기', clickHandler: openEditModalHandler },
     { label: '삭제하기', clickHandler: openDeleteModalHandler },
   ];
@@ -50,20 +50,22 @@ export default function MyReviewCard({
             <Rating rating={score} width={120} height={24} />
             <div className="relative">
               <Image
-                src={'/see_more_icon.png'}
+                src="/see_more_icon.png"
                 width={24}
                 height={24}
                 alt="드롭다운 클릭 버튼"
                 className="cursor-pointer"
               />
               <ul className="bg-secondary-80 -right-15 absolute top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block">
-                {li_dropdowns.map((li_dropdown) => (
-                  <li
-                    key={li_dropdown.label}
-                    onClick={li_dropdown.clickHandler}
-                    className="hover:bg-secondary-60 cursor-pointer px-4 py-2"
-                  >
-                    {li_dropdown.label}
+                {liDropdowns.map((liDropdown) => (
+                  <li key={liDropdown.label}>
+                    <button
+                      onClick={liDropdown.clickHandler}
+                      type="button"
+                      className="hover:bg-secondary-60 w-full px-4 py-2 text-left"
+                    >
+                      {liDropdown.label}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -75,24 +77,6 @@ export default function MyReviewCard({
           </h2>
           <p className="text-sm font-medium text-white md:mt-5">{comment}</p>
         </div>
-        {/* <div className="mt-3 flex gap-3">
-          <Button
-            variant="secondary"
-            size="small"
-            font="14"
-            onClick={() => openEditModalHandler()}
-          >
-            수정하기
-          </Button>
-          <Button
-            variant="primary"
-            size="small"
-            font="14"
-            onClick={() => openDeleteModalHandler()}
-          >
-            삭제하기
-          </Button>
-        </div> */}
       </div>
       <MyReviewModal
         isModal={isEditModal}
