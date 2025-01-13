@@ -32,7 +32,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
           'gap-[2px]'
         )}
       >
-        <p className="flex-1 text-sm font-medium text-white">날짜 전체</p>
+        <p className="flex-1 text-sm font-medium text-white">모든 날짜</p>
         <Image
           src="/chevron-down.svg"
           width={16}
