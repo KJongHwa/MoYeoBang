@@ -31,7 +31,7 @@ export interface GatheringDto {
 export interface GatheringRequestBody {
   post: {
     name: string;
-    location: '건대' | '홍대' | '강남' | '혜화';
+    location: string;
     themeName: string;
     dateTime: string;
     registrationEnd: string;
@@ -40,7 +40,7 @@ export interface GatheringRequestBody {
   patch: {
     gatheringId: number;
     name: string;
-    location: '건대' | '홍대' | '강남' | '혜화';
+    location: string;
     themeName: string;
     dateTime: string;
     registrationEnd: string;

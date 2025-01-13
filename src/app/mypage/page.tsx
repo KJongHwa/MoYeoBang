@@ -1,8 +1,11 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import { mockUser } from '@/data/mockUser';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
 import { useState } from 'react';
+import Image from 'next/image';
 import Button from '@/components/@shared/Button';
 import MyGathering from '../../components/mypage/myGathering';
 import MyReview from '../../components/mypage/myReview';
@@ -18,7 +21,10 @@ export default function MyPage() {
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
     { label: '나의 리뷰', component: <MyReview /> },
-    { label: '내가 만든 모임', component: <MyCreateGathering /> },
+    {
+      label: '내가 만든 모임',
+      component: <MyCreateGathering userID={user.userID} />,
+    },
   ];
 
   const [activeTab, setActiveTab] = useState(navLinks[0].label);
@@ -33,12 +39,21 @@ export default function MyPage() {
   };
 
   return (
-    <main className="mx-[150px] my-[130px] flex flex-col justify-center ">
+    <main className="relative top-[142px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="mb-12 mt-8 flex h-[130px] items-center justify-around rounded-[25px] border bg-orange-600">
-        <div className="text-text-primary">
-          <p>{user.nickname}</p>
-          <p>{user.email}</p>
+      <div className="mb-10 mt-8 flex items-center justify-between rounded-[25px] border bg-orange-600 px-10 py-8">
+        <div className="text-text-primary flex flex-col gap-3">
+          <Image
+            src={user.image || '/profile_image_default.png'}
+            width={70}
+            height={70}
+            alt="프로필 이미지 미리보기"
+            className={user.image ? 'h-[65px] rounded-full' : ''}
+          />
+          <div>
+            <p className="text-2xl font-bold">{user.nickname}</p>
+            <p>{user.email}</p>
+          </div>
         </div>
         <Button
           type="button"
@@ -47,8 +62,17 @@ export default function MyPage() {
           font="14"
           className="border "
           onClick={openModalhandler}
+          style={{ width: '115px' }}
         >
-          프로필 편집
+          <div className="flex">
+            <Image
+              src="/edit_icon.png"
+              alt="프로필편집아이콘"
+              width={20}
+              height={20}
+            />
+            <span className="hidden pl-1 md:block ">프로필 편집</span>
+          </div>
         </Button>
         <MyProfileEditModal
           isModal={isModal}
@@ -58,12 +82,12 @@ export default function MyPage() {
         />
       </div>
       <div className="mx-12">
-        <nav className="flex gap-5">
+        <nav className="flex gap-6">
           {navLinks.map((link) => (
             <button
               key={link.label}
               type="button"
-              className={`text-lg font-bold ${
+              className={`pb-3 text-lg font-bold ${
                 activeTab === link.label ? 'border-b-2 border-white' : ''
               }`}
               onClick={() => navClick(link.label)}
@@ -72,7 +96,7 @@ export default function MyPage() {
             </button>
           ))}
         </nav>
-        <div className="mt-8">{renderActiveComponent()}</div>
+        <div className="mx-3 mt-8">{renderActiveComponent()}</div>
       </div>
     </main>
   );

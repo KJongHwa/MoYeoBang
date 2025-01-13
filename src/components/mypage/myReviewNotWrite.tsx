@@ -1,7 +1,7 @@
 import { mockGatherings } from '@/data/mockGatherings';
 import MyGatheringCard from './myGatheringCard';
 
-export default function MyGathering() {
+export default function MyReviewNotWrite() {
   return (
     <div className="flex flex-col gap-5">
       {mockGatherings.map((gathering: any) => (
