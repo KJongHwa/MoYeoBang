@@ -6,7 +6,7 @@ import Dropdown, { DropdownOption } from '@/components/@shared/Dropdown';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
-import Spinner from '@/components/@shared/Spinner';
+// import Spinner from '@/components/@shared/Spinner';
 import CustomCalendar from '@/components/@shared/CustomCalendar';
 
 // 옵션 데이터 정의 예시
@@ -50,25 +50,61 @@ export default function Test() {
         <ul className="text-left">
           <h3>{`variant = "primary"`}</h3>
           <li className="my-2 flex justify-between">
-            <Button variant="primary" size="small" font="14">
+            <Button variant="primary" padding="8" fontSize="14">
               생성하기
             </Button>
-            <Button variant="primary" size="large">
+            <Button variant="primary" padding="10">
               생성하기
             </Button>
-            <Button variant="primary" disabled>
+            <Button variant="primary" padding="12" disabled>
+              비활성화
+            </Button>
+          </li>
+          <h3>{`variant = "primary-gray"`}</h3>
+          <li className="my-2 flex justify-between">
+            <Button variant="primary-gray" padding="8" fontSize="14">
+              생성하기
+            </Button>
+            <Button variant="primary-gray" padding="10">
+              생성하기
+            </Button>
+            <Button variant="primary-gray" padding="12" disabled>
               비활성화
             </Button>
           </li>
           <h3>{`variant = "secondary"`}</h3>
           <li className="my-2 flex justify-between">
-            <Button variant="secondary" size="small" font="14">
+            <Button variant="secondary" padding="8" fontSize="14">
               생성하기
             </Button>
-            <Button variant="secondary" size="large" className="bg-gray-50">
+            <Button variant="secondary" padding="10">
               생성하기
             </Button>
-            <Button variant="secondary" disabled>
+            <Button variant="secondary" padding="12" disabled>
+              비활성화
+            </Button>
+          </li>
+          <h3>{`variant = "tertiary"`}</h3>
+          <li className="my-2 flex justify-between">
+            <Button variant="tertiary" padding="8" fontSize="14">
+              생성하기
+            </Button>
+            <Button variant="tertiary" padding="10" className="bg-gray-50">
+              생성하기
+            </Button>
+            <Button variant="tertiary" padding="12" disabled>
+              비활성화
+            </Button>
+          </li>
+          <h3>{`variant = "grayscale"`}</h3>
+          <li className="my-2 flex justify-between">
+            <Button variant="grayscale" padding="8" fontSize="14">
+              생성하기
+            </Button>
+            <Button variant="grayscale" padding="10">
+              생성하기
+            </Button>
+            <Button variant="grayscale" padding="12" disabled>
               비활성화
             </Button>
           </li>
@@ -86,10 +122,11 @@ export default function Test() {
         </div>
       </section>
 
+      {/* 
       <section className="w-full text-center">
         <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Spinner</h2>
 
-        {/* 크기 예시 */}
+        크기 예시 
         <div className="mb-8">
           <h3 className="mb-2 text-sm">Sizes</h3>
           <div className="flex items-center justify-center gap-4">
@@ -101,7 +138,7 @@ export default function Test() {
           </div>
         </div>
 
-        {/* 색상 예시 */}
+        색상 예시 
         <div className="mb-8">
           <h3 className="mb-2 text-sm">Colors</h3>
           <div className="flex items-center justify-center gap-4">
@@ -113,7 +150,7 @@ export default function Test() {
           </div>
         </div>
 
-        {/* 투명도 예시 */}
+        투명도 예시 
         <div className="mb-8">
           <h3 className="mb-2 text-sm">Opacity</h3>
           <div className="flex items-center justify-center gap-4">
@@ -122,15 +159,11 @@ export default function Test() {
             <Spinner opacity="dark" />
           </div>
         </div>
-      </section>
+      </section> */}
+
       <section className="w-full text-center">
-        <h2>모달</h2>
-        <Button
-          variant="primary"
-          size="small"
-          font="14"
-          onClick={openModalhandler}
-        >
+        <h2 className="mb-3 bg-slate-200 p-1 font-extrabold">Modal</h2>
+        <Button variant="primary" fontSize="14" onClick={openModalhandler}>
           모임 만들기
         </Button>
         <Modal isOpen={isModal} onClose={closeModalhandler}>
