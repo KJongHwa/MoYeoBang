@@ -5,47 +5,74 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          primary: '#000000',
-          secondary: '#252525',
-          tertiary: '#2E2E2E',
-          inverse: '#FFF7ED',
+        default: {
+          primary: '#6659F4',
+          secondary: '#E8E6FE',
+          tertiary: '#252730',
+          inverse: '#FFFFFF',
+        },
+        primary: {
+          0: '#F6F5FE',
+          5: '#E8E6FE',
+          10: '#C9C4FC',
+          20: '#A49DFB',
+          30: '#887EFB',
+          40: '#6659F4',
+          50: '#4C41CD',
+          60: '#3E35A6',
+          70: '#302A80',
+          80: '#282469',
+        },
+        secondary: {
+          bg: '#17171C',
+          0: '#F7F7FA',
+          5: '#F7F7FA',
+          10: '#F0F0F5',
+          20: '#E8E8EE',
+          30: '#E1E1E8',
+          40: '#CDCED6',
+          50: '#A9ABB8',
+          60: '#858899',
+          70: '#525463',
+          80: '#3E404C',
+          90: '#2B2D36',
+          100: '#252730',
         },
         status: {
-          hover: '#C2410C',
-          focus: '#9A3412',
+          hover: '#000000',
+          focus: '#282469',
           danger: '#FF7171',
-          disabled: '#535353',
+          disabled: '#A9ABB8',
+          disabledAuth: '#282469',
         },
         text: {
-          primary: '#FFFFFF',
-          secondary: '#D0D0D0',
-          disabled: '#8A8A8A',
+          default: '#FFFFFF',
+          secondary: '#E5E7EB',
+          tertiary: '#CDCED6',
+          disabled: '#A9ABB8',
         },
         border: {
-          primary: '#A0A0A0',
-          secondary: '#313131',
+          default: '#858899',
         },
         point: {
-          tag: '#333333',
-          dropdown: '#2C2C2C',
-          icon: '#A8A8A8',
+          tag: '#252730',
+          dropdown: '#252730',
         },
         badge: {
-          primary: '#616161',
-          secondary: '#616161',
-          tertiary: '#6B6B6B',
+          default: '#887EFB80',
+          secondary: '#F5F7FD',
         },
       },
       fontFamily: {
         sans: 'var(--font-pretendard), -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif',
       },
       spacing: {
+        '1/10': '10%',
         '1/5': '20%',
-        '4.5': '1.125rem', // 18px
-        '5.5': '1.375rem', // 22px
-        '6.5': '1.625rem', // 26px
-        '7.5': '1.875rem', // 30px
+        '4.5': '1.125rem',
+        '5.5': '1.375rem',
+        '6.5': '1.625rem',
+        '7.5': '1.875rem',
       },
       borderRadius: {
         xs: '0.125rem', // 2px
@@ -65,8 +92,8 @@ const config: Config = {
         '2xl': '1536px',
       },
       maxWidth: {
-        '8xl': '88rem', // 1408px
-        '9xl': '96rem', // 1536px
+        '8xl': '88rem',
+        '9xl': '96rem',
       },
       zIndex: {
         '60': '60',
