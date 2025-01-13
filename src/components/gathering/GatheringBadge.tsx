@@ -28,7 +28,7 @@ export default function GatheringBadge({
       'bg-badge-default': variant === 'primary',
       'bg-default-inverse': variant === 'secondary',
       'bg-default-tertiary': variant === 'tertiary',
-      'border-default-secondary border-[1px]': border === 'primary',
+      'border-[1px] border-default-secondary': border === 'primary',
       'text-default-primary': fontColor === 'primary',
       'text-badge-secondary': fontColor === 'secondary',
     }

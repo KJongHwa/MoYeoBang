@@ -27,7 +27,7 @@ export default function GatheringCard({
   return (
     <figure className="relative">
       <Link href={`/gathering/${gatheringId}`}>
-        <div className="bg-default-tertiary flex max-h-32 w-full rounded-xl md:max-h-[170px]">
+        <div className="flex max-h-32 w-full rounded-xl bg-default-tertiary md:max-h-[170px]">
           <AlarmBadge hour={extractHour(registrationEnd)} />
           <Image
             src={image}
@@ -35,7 +35,7 @@ export default function GatheringCard({
             width={240}
             height={170}
             quality={100}
-            className="w-28 rounded-l-xl bg-brand-secondary md:w-60"
+            className="bg-brand-secondary w-28 rounded-l-xl md:w-60"
           />
           <div className="mx-3 my-2 flex flex-1 flex-col justify-between md:mx-6 md:my-4">
             <div className="flex justify-between">
@@ -58,10 +58,10 @@ export default function GatheringCard({
               </div>
             </div>
             <div>
-              <p className="text-secondary-5 text-sm font-semibold md:text-lg">
+              <p className="text-sm font-semibold text-secondary-5 md:text-lg">
                 {name}
               </p>
-              <p className="text-secondary-50 text-xs font-light md:text-sm">
+              <p className="text-xs font-light text-secondary-50 md:text-sm">
                 {themeName}
               </p>
             </div>
