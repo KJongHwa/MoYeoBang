@@ -39,20 +39,20 @@ export default function MyPage() {
   };
 
   return (
-    <main className="relative top-[142px] mx-10 xl:mx-auto xl:w-[1166px]">
+    <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="mb-10 mt-8 flex items-center justify-between rounded-[25px] border bg-orange-600 px-10 py-8">
+      <div className="bg-primary-30 mb-5 mt-8 flex items-center justify-between rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary flex flex-col gap-3">
           <Image
             src={user.image || '/profile_image_default.png'}
-            width={70}
-            height={70}
+            width={66}
+            height={66}
             alt="프로필 이미지 미리보기"
-            className={user.image ? 'h-[65px] rounded-full' : ''}
+            className={'h-[56px] w-[56px] rounded-full md:h-[66px] md:w-[66px]'}
           />
           <div>
-            <p className="text-2xl font-bold">{user.nickname}</p>
-            <p>{user.email}</p>
+            <p className="text-base font-bold md:text-2xl">{user.nickname}</p>
+            <p className="text-sm md:text-base">{user.email}</p>
           </div>
         </div>
         <Button
@@ -62,7 +62,11 @@ export default function MyPage() {
           font="14"
           className="border "
           onClick={openModalhandler}
-          style={{ width: '115px' }}
+          style={{
+            width: '115px',
+            backgroundColor: '#17171C',
+            color: '#FFFFFF',
+          }}
         >
           <div className="flex">
             <Image
@@ -81,13 +85,14 @@ export default function MyPage() {
           image={user.image}
         />
       </div>
-      <div className="mx-12">
-        <nav className="flex gap-6">
+      <hr className="mb-7" />
+      <div className="mx-2 md:mx-12">
+        <nav className="flex gap-8 md:gap-6">
           {navLinks.map((link) => (
             <button
               key={link.label}
               type="button"
-              className={`pb-3 text-lg font-bold ${
+              className={`pb-3 text-base font-bold md:text-lg ${
                 activeTab === link.label ? 'border-b-2 border-white' : ''
               }`}
               onClick={() => navClick(link.label)}
