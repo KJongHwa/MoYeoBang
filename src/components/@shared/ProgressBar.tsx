@@ -10,8 +10,8 @@ interface ProgressBarProps {
 export default function ProgressBar({
   value,
   max = 100,
-  bgColor = 'bg-gray-200',
-  progressColor = 'bg-text-disabled',
+  bgColor = 'bg-default-secondary',
+  progressColor = 'bg-default-primary',
 }: ProgressBarProps) {
   const numericValue = stringToNumber(value);
   const numericMax = stringToNumber(max);
