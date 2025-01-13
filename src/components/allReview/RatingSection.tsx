@@ -8,7 +8,7 @@ interface RatingSectionProps {
 
 export default function RatingSection({ selectedGenre }: RatingSectionProps) {
   return (
-    <div className="bg-secondary-80 flex h-[180px] items-center justify-center rounded-[20px]">
+    <div className="flex h-[180px] items-center justify-center rounded-[20px] bg-secondary-80">
       {mockReviewRatings
         .filter((rating) => rating.genre === selectedGenre)
         .map((rating) => (
