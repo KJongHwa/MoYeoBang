@@ -3,11 +3,11 @@ interface Theme {
   theme: string[];
 }
 
-interface ThemeList {
+interface ThemeNameList {
   [key: string]: Theme;
 }
 
-export const themeList: ThemeList = {
+export const themeNameList: ThemeNameList = {
   geondae: {
     label: '건대',
     theme: [
@@ -66,3 +66,24 @@ export const themeList: ThemeList = {
     ],
   },
 };
+
+export const locationList = [
+  { value: 'all', label: '지역 전체' },
+  { value: 'geondae', label: '건대' },
+  { value: 'hongdae', label: '홍대' },
+  { value: 'hyehwa', label: '혜화' },
+  { value: 'gangnam', label: '강남' },
+];
+
+export const genres = [
+  { label: '#전체', value: 'all' },
+  { label: '#미스터리', value: 'mystery' },
+  { label: '#공포', value: 'horror' },
+  { label: '#판타지', value: 'fantasy' },
+  { label: '#코믹', value: 'comic' },
+  { label: '#SF', value: 'sci-fi' },
+  { label: '#드라마', value: 'drama' },
+  { label: '#스릴러', value: 'thriller' },
+  { label: '#로맨스', value: 'romance' },
+  { label: '#잠입', value: 'stealth' },
+];
