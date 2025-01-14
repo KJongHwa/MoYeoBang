@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
-import CreateGatheringModal from './CreateGatheringModal';
+import GatheringModal from './GatheringModal';
 
 export default function CreateGatheringBtn() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -24,7 +24,9 @@ export default function CreateGatheringBtn() {
         />
       </button>
 
-      {isOpen && <CreateGatheringModal isOpen={isOpen} onClose={closeModal} />}
+      {isOpen && (
+        <GatheringModal isOpen={isOpen} onClose={closeModal} isEdit={true} />
+      )}
     </>
   );
 }
