@@ -88,7 +88,7 @@ export default function GatheringModal({
     const selectedDateTime = new Date(dateTime);
 
     if (selectedDateTime < today) {
-      setDateTimeError('모임 날짜는 오늘 이후여야 합니다.');
+      setDateTimeError('오늘 이전 날짜를 모임 날짜로 설정할 수 없습니다.');
       setValue('dateTime', '');
       setRegistrationEndError('');
     } else {
@@ -104,7 +104,9 @@ export default function GatheringModal({
     const selectedDateTime = new Date(dateTime);
 
     if (selectedRegistrationEnd < today) {
-      setRegistrationEndError('마감 날짜는 오늘 이후여야 합니다.');
+      setRegistrationEndError(
+        '오늘 이전 날짜를 마감 날짜로 설정할 수 없습니다.'
+      );
       setValue('registrationEnd', '');
     } else if (selectedRegistrationEnd >= selectedDateTime) {
       setRegistrationEndError('마감 날짜는 모임 날짜보다 이전이어야 합니다.');
@@ -115,7 +117,11 @@ export default function GatheringModal({
   }, [registrationEnd, dateTime, setValue]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} customDimStyle="md:w-[542px]">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      customDimStyle="w-full md:w-[542px]"
+    >
       <h1 className="mb-10 text-lg font-bold">
         {isEdit ? '모임 수정하기' : '모임 만들기'}
       </h1>
@@ -183,7 +189,7 @@ export default function GatheringModal({
           disabled={
             !isValid || !themeName || !!registrationEndError || !!dateTimeError
           }
-          className="mt-4 w-full"
+          className="mb-4 mt-14 w-full md:mt-6"
         >
           {isEdit ? '수정' : '생성'}
         </Button>

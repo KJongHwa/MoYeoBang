@@ -24,9 +24,7 @@ export default function CreateGatheringBtn() {
         />
       </button>
 
-      {isOpen && (
-        <GatheringModal isOpen={isOpen} onClose={closeModal} isEdit={true} />
-      )}
+      {isOpen && <GatheringModal isOpen={isOpen} onClose={closeModal} />}
     </>
   );
 }

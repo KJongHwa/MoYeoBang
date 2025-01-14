@@ -26,7 +26,7 @@ export default function ThemeSelector({
   searchAttempted,
 }: ThemeSelectorProps) {
   return (
-    <div className="text-md flex w-full flex-col items-start gap-3">
+    <div className="text-md flex flex-1 flex-col items-start gap-3">
       <h2 className="font-semibold text-gray-800">{`${themeNameList[location].label}의 방탈출 테마`}</h2>
       <div className="flex w-full items-center gap-2 md:gap-3">
         <Input
@@ -37,7 +37,12 @@ export default function ThemeSelector({
             onChange: (e) => setInputThemeName(e.target.value),
           }}
         />
-        <Button size="small" variant="secondary" onClick={searchThemes}>
+        <Button
+          padding="12"
+          variant="tertiary"
+          onClick={searchThemes}
+          className="w-[70px] md:w-24"
+        >
           검색
         </Button>
       </div>
@@ -51,10 +56,10 @@ export default function ThemeSelector({
                 setSelectedThemeName(filteredTheme);
                 setThemeName(filteredTheme);
               }}
-              className={`rounded-full bg-slate-200 px-2 text-left ${
+              className={`rounded-full px-3 py-1 text-left ${
                 selectedThemeName === filteredTheme
-                  ? 'bg-brand-primary text-white'
-                  : 'bg-brand-inverse text-black'
+                  ? ' bg-default-primary text-white'
+                  : 'bg-primary-5 text-default-primary'
               }`}
             >
               {filteredTheme}
