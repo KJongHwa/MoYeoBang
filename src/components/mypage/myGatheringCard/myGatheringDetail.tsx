@@ -33,7 +33,7 @@ export default function MyGatheringDetail({
   } = useModal();
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 px-4 pb-7 pt-5 md:py-4 ">
       <div className="flex justify-between">
         <div className="flex items-center gap-1 text-sm md:gap-[6px]">
           <GatheringBadge variant="primary" fontColor="secondary">

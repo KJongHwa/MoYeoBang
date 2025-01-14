@@ -44,8 +44,8 @@ export default function MyCreateGatheringDetail({
   ];
 
   return (
-    <div className="flex w-full flex-row justify-between">
-      <div className="flex flex-col gap-5">
+    <div className="flex w-full justify-between md:pr-3 md:pt-3">
+      <div className="flex flex-col gap-5 px-4 py-5 md:py-3">
         <div className="flex items-center gap-1 text-sm md:gap-[6px]">
           <GatheringBadge variant="primary" fontColor="secondary">
             {findLabelByValue(location, locationList)}

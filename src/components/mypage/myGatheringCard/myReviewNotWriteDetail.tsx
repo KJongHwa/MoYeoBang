@@ -28,7 +28,7 @@ export default function MyReviewNotWriteDetail({
   } = useModal();
 
   return (
-    <div className="flex flex-col justify-evenly gap-5">
+    <div className="md: flex flex-col justify-evenly gap-5 px-4 pb-7 pt-5 md:py-5">
       <div>
         <p className="text-sm font-semibold md:text-lg">{name}</p>
         <p className="text-xs font-light md:text-sm">{themeName}</p>

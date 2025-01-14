@@ -39,10 +39,10 @@ export default function MyReviewCard({
         width={240}
         height={170}
         quality={100}
-        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:rounded-l-xl md:rounded-t-none"
+        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:rounded-l-xl md:rounded-r-none"
       />
 
-      <div className="mx-3 my-2 flex flex-1 flex-col justify-between md:mx-6 md:my-4">
+      <div className="mx-4 my-5 flex flex-1 flex-col justify-between md:mx-6 md:my-5">
         <div className="flex flex-col gap-[7px]">
           <div className="group relative flex items-center justify-between">
             <Rating rating={score} width={120} height={24} />

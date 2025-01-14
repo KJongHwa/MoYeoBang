@@ -21,7 +21,7 @@ export default function MyGatheringCard({
         width={330}
         height={185}
         quality={100}
-        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:rounded-l-xl md:rounded-t-none"
+        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:rounded-l-xl md:rounded-r-none"
       />
       {children}
     </figure>
