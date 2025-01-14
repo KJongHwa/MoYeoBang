@@ -6,17 +6,20 @@ import { mockUser } from '@/data/mockUser';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
 import { useState } from 'react';
 import Image from 'next/image';
-import Button from '@/components/@shared/Button';
-import MyGathering from '../../components/mypage/myGathering';
+import IconButton from '@/components/@shared/IconButton';
+import { useModal } from '@/hooks/useModal';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
+import MyGathering from '../../components/mypage/myGathering';
 
 export default function MyPage() {
   const user = mockUser;
 
-  const [isModal, setIsModal] = useState(false);
-
-  const openModalhandler = () => setIsModal(true);
+  const {
+    isOpen: isEditModal,
+    openModal: openEditModal,
+    closeModal: closeEditModal,
+  } = useModal();
 
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
@@ -55,32 +58,16 @@ export default function MyPage() {
             <p className="text-sm md:text-base">{user.email}</p>
           </div>
         </div>
-        <Button
-          type="button"
-          variant="primary"
-          size="small"
-          font="14"
-          className="border "
-          onClick={openModalhandler}
-          style={{
-            width: '115px',
-            backgroundColor: '#17171C',
-            color: '#FFFFFF',
-          }}
+        <IconButton
+          src="/icons/pencil.svg"
+          alt="연필 아이콘"
+          onClick={openEditModal}
         >
-          <div className="flex">
-            <Image
-              src="/edit_icon.png"
-              alt="프로필편집아이콘"
-              width={20}
-              height={20}
-            />
-            <span className="hidden pl-1 md:block ">프로필 편집</span>
-          </div>
-        </Button>
+          프로필 편집
+        </IconButton>
         <MyProfileEditModal
-          isModal={isModal}
-          setIsModal={setIsModal}
+          isModal={isEditModal}
+          setIsModal={closeEditModal}
           nickname={user.nickname}
           image={user.image}
         />

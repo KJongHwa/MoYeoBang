@@ -14,13 +14,13 @@ export default function MyReview() {
     <>
       <div className="mb-8 flex gap-4">
         <Button
-          variant={isWritingReview ? 'secondary' : 'primary'}
+          variant={isWritingReview ? 'primary' : 'secondary'}
           onClick={() => handleButtonClick(true)}
         >
           작성 가능한 리뷰
         </Button>
         <Button
-          variant={!isWritingReview ? 'secondary' : 'primary'}
+          variant={!isWritingReview ? 'primary' : 'secondary'}
           onClick={() => handleButtonClick(false)}
         >
           작성한 리뷰

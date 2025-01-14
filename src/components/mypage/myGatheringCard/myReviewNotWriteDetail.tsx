@@ -47,9 +47,9 @@ export default function MyReviewNotWriteDetail({
             {participantCount}/{capacity}
           </p>
           <Button
-            variant="secondary"
-            size="small"
-            font="14"
+            variant="primary"
+            padding="12"
+            fontSize="14"
             onClick={openEditModal}
             style={{
               position: 'absolute',

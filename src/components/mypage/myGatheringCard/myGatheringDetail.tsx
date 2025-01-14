@@ -5,6 +5,8 @@ import Button from '@/components/@shared/Button';
 import { formatDate } from '@/utils/dateUtils';
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
+import { findLabelByValue } from '@/utils/mappingUtils';
+import { locationList } from '@/constants/themeList';
 import DeleteModal from '../deleteModal';
 
 interface MyGatheringDetailProps {
@@ -34,11 +36,13 @@ export default function MyGatheringDetail({
     <div className="flex flex-col gap-5">
       <div className="flex justify-between">
         <div className="flex items-center gap-1 text-sm md:gap-[6px]">
-          <GatheringBadge variant="secondary">{location}</GatheringBadge>
-          <GatheringBadge variant="tertiary">
+          <GatheringBadge variant="primary" fontColor="secondary">
+            {findLabelByValue(location, locationList)}
+          </GatheringBadge>
+          <GatheringBadge variant="secondary" fontColor="primary">
             {new Date(dateTime) > new Date() ? '모임 예정' : '모임 완료'}
           </GatheringBadge>
-          <GatheringBadge variant="primary">
+          <GatheringBadge variant="secondary" fontColor="primary">
             {participantCount === capacity ? (
               <span>
                 <Image
@@ -73,11 +77,12 @@ export default function MyGatheringDetail({
             {participantCount}/{capacity}
           </p>
           <Button
-            variant="secondary"
-            size="small"
-            font="14"
+            variant="grayscale"
+            padding="10"
+            fontSize="14"
             onClick={openDeleteModal}
             style={{
+              backgroundColor: '#525463',
               position: 'absolute',
               right: '10px',
             }}

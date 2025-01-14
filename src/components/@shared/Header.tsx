@@ -69,8 +69,8 @@ export default function Header() {
                   <Button
                     type="button"
                     variant="primary"
-                    size="small"
-                    font="14"
+                    padding="8"
+                    fontSize="14"
                     className=" border border-white"
                     style={{
                       width: '120px',
