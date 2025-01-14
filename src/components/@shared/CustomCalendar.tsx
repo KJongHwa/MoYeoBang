@@ -10,8 +10,10 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface CustomCalendarProps {
   isOpen: boolean;
+  selectedDate: string;
   onClose(): void;
   onDateChange(date: string): void;
+  layout?: string;
 }
 
 /**
@@ -19,23 +21,26 @@ interface CustomCalendarProps {
  * @param isOpen 캘린더의 열린 상태 (true), 닫힌 상태 (false)를 가지는 boolean state
  * @param onClose 캘린더의 닫는 기능을 실행하는 함수
  * @param onDateChange 캘린더의 값을 교환하는 함수
+ * @param layout 캘린더의 레이아웃을 수정하기 위한 tailwind css className
  */
 
 export default function CustomCalendar({
   isOpen,
+  selectedDate,
   onClose,
   onDateChange,
+  layout,
 }: CustomCalendarProps) {
-  const initialValue = new Date();
-  const [date, setDate] = useState<string>(String(initialValue));
+  const [date, setDate] = useState<string>(selectedDate);
 
   const handleDateChange = (newDate: Value) => {
     setDate(hyphenYearMonthDay(String(newDate)));
   };
 
   const handleReset = () => {
-    setDate(hyphenYearMonthDay(String(initialValue)));
-    onDateChange(hyphenYearMonthDay(String(initialValue)));
+    setDate('');
+    onDateChange('');
+    onClose();
   };
 
   const handleSubmit = () => {
@@ -56,7 +61,7 @@ export default function CustomCalendar({
 
   return (
     <div
-      className={`${isOpen ? '' : 'hidden'} border-1 absolute top-2 flex h-[326px] w-[336px] flex-col rounded-lg border-gray-200 bg-white px-6 py-[10px] text-black shadow-xl`}
+      className={`${isOpen ? '' : 'hidden'} ${layout} border-1 absolute z-100 flex h-[326px] w-[336px] flex-col rounded-lg border-gray-200 bg-white px-6 py-[10px] text-black shadow-xl`}
     >
       <Calendar
         onChange={handleDateChange}
@@ -69,10 +74,20 @@ export default function CustomCalendar({
         minDetail="year"
       />
       <div className="mx-auto flex w-[250px] items-center justify-between">
-        <Button className="w-[122px]" variant="secondary" onClick={handleReset}>
+        <Button
+          className="w-[122px]"
+          variant="secondary"
+          onClick={handleReset}
+          disabled={date === ''}
+        >
           초기화
         </Button>
-        <Button className="w-[122px]" onClick={handleSubmit}>
+        <Button
+          className="w-[122px]"
+          variant="primary"
+          onClick={handleSubmit}
+          disabled={date === ''}
+        >
           적용
         </Button>
       </div>
