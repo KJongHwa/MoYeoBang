@@ -8,7 +8,7 @@ import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import TextArea from '@/components/@shared/TextArea';
 // import Spinner from '@/components/@shared/Spinner';
-import CustomCalendar from '@/components/@shared/CustomCalendar';
+// import CustomCalendar from '@/components/@shared/CustomCalendar';
 
 // 옵션 데이터 정의 예시
 const locationOptions: DropdownOption[] = [
@@ -224,11 +224,11 @@ export default function Test() {
           onClick={openCalendar}
         />
         <div className="relative">
-          <CustomCalendar
+          {/* <CustomCalendar
             onDateChange={handleDateChange}
             isOpen={isOpen}
             onClose={closeCalendar}
-          />
+          /> */}
         </div>
       </section>
     </main>
