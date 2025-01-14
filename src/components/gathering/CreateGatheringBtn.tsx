@@ -11,7 +11,7 @@ export default function CreateGatheringBtn() {
     <>
       <button
         type="button"
-        className="fixed bottom-12 right-8 xl:bottom-16 xl:right-1/5"
+        className="fixed bottom-12 right-8 xl:bottom-16 xl:right-1/10"
         onClick={openModal}
       >
         <Image

@@ -1,5 +1,5 @@
 import Button from '@/components/@shared/Button';
-import { themeList } from '@/constants/themeList';
+import { themeNameList } from '@/constants/themeList';
 
 interface LocationSelectorProps {
   location: string;
@@ -14,7 +14,7 @@ export default function LocationSelector({
     <div className="text-md flex w-full flex-col items-start gap-3">
       <h3 className="font-semibold text-gray-800">장소</h3>
       <div className="flex w-full gap-3">
-        {Object.entries(themeList).map(([locationKey, { label }]) => (
+        {Object.entries(themeNameList).map(([locationKey, { label }]) => (
           <Button
             size="full"
             key={locationKey}

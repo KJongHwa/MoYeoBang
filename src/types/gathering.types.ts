@@ -68,6 +68,8 @@ export interface GatheringProps {
     icon?: '고급' | '중급' | '초급';
     shape?: 'default' | 'round';
     variant?: 'primary' | 'secondary' | 'tertiary';
+    border?: 'primary';
+    fontColor?: 'primary' | 'secondary';
     className?: string;
     children: React.ReactNode;
   };

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import clsx from 'clsx';
 
 import { GatheringProps } from '@/types/gathering.types';
@@ -13,6 +14,8 @@ export default function GatheringBadge({
   icon,
   shape = 'default',
   variant = 'primary',
+  border,
+  fontColor = 'secondary',
   className,
   children,
   ...props
@@ -22,9 +25,12 @@ export default function GatheringBadge({
     {
       'rounded-full': shape === 'round',
       'rounded-md': shape === 'default',
-      'bg-badge-primary': variant === 'primary',
-      'bg-badge-secondary': variant === 'secondary',
-      'bg-badge-tertiary': variant === 'tertiary',
+      'bg-badge-default': variant === 'primary',
+      'bg-default-inverse': variant === 'secondary',
+      'bg-default-tertiary': variant === 'tertiary',
+      'border-[1px] border-default-secondary': border === 'primary',
+      'text-default-primary': fontColor === 'primary',
+      'text-badge-secondary': fontColor === 'secondary',
     }
   );
 
@@ -36,7 +42,7 @@ export default function GatheringBadge({
           alt={levelIcons[icon].alt}
           width={24}
           height={24}
-          className="mr-1 h-2 w-2 md:h-4 md:w-4 xl:h-3 xl:w-3"
+          className="mr-1 h-2 w-2 text-text-secondary md:h-4 md:w-4 xl:h-3 xl:w-3"
         />
       )}
       {children}

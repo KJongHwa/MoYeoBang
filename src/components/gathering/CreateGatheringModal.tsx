@@ -5,7 +5,7 @@ import { GatheringRequestBody } from '@/types/gathering.types';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
-import { themeList } from '@/constants/themeList';
+import { themeNameList } from '@/constants/themeList';
 import { INIT_GATHRING } from '@/constants/initialValues';
 
 import LocationSelector from './LocationSelector';
@@ -55,7 +55,7 @@ export default function CreateGatheringModal({
 
   const searchThemes = () => {
     if (inputThemeName.length > 0 && location) {
-      const filtered = themeList[location]?.theme.filter((theme) =>
+      const filtered = themeNameList[location]?.theme.filter((theme) =>
         theme.toLowerCase().includes(inputThemeName.toLowerCase())
       );
       setSearchAttempted(true);
