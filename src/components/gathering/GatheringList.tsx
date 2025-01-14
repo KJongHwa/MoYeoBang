@@ -9,7 +9,7 @@ import GatheringCard from '@/components/gathering/GatheringCard';
 import DateDropdown from '@/components/allReview/DateDropdown';
 import LocationDropdown from '@/components/allReview/LocationDropdown';
 import LevelDropdown from '@/components/gathering/LevelDropdown';
-import SortDropdown from '../allReview/SortDropdown';
+import SortDropdown from '@/components/@shared/SortDropdown';
 import GenreFilter from './GenreFilter';
 
 interface GatheringListProps {
