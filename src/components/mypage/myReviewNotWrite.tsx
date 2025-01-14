@@ -1,22 +1,20 @@
 import { mockGatherings } from '@/data/mockGatherings';
 import MyGatheringCard from './myGatheringCard';
+import MyReviewNotWriteDetail from './myGatheringCard/myReviewNotWriteDetail';
 
 export default function MyReviewNotWrite() {
   return (
     <div className="flex flex-col gap-5">
       {mockGatherings.map((gathering: any) => (
-        <MyGatheringCard
-          registrationEnd={gathering.registrationEnd}
-          key={gathering.gatheringId}
-          location={gathering.location}
-          dateTime={gathering.dateTime}
-          level={gathering.level.toString()}
-          capacity={gathering.capacity}
-          name={gathering.name}
-          themeName={gathering.themeName}
-          image={gathering.image}
-          participantCount={gathering.participantCount.toString()}
-        />
+        <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
+          <MyReviewNotWriteDetail
+            dateTime={gathering.dateTime}
+            name={gathering.name}
+            themeName={gathering.themeName}
+            capacity={gathering.capacity}
+            participantCount={gathering.participantCount}
+          />
+        </MyGatheringCard>
       ))}
     </div>
   );

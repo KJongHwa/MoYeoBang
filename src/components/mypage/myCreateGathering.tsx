@@ -1,12 +1,12 @@
 import { mockGatherings } from '@/data/mockGatherings';
 import MyGatheringCard from './myGatheringCard';
+import MyCreateGatheringDetail from './myGatheringCard/myCreateGatheringDetail';
 
 interface MyCreateGatheringProps {
   userID: number; //
 }
 
 export default function MyCreateGathering({ userID }: MyCreateGatheringProps) {
-  console.log(userID);
   const userGatherings = mockGatherings.filter(
     (gathering: any) => gathering.userId === userID
   );
@@ -14,18 +14,16 @@ export default function MyCreateGathering({ userID }: MyCreateGatheringProps) {
   return (
     <div className="flex flex-col gap-5">
       {userGatherings.map((gathering: any) => (
-        <MyGatheringCard
-          registrationEnd={gathering.registrationEnd}
-          key={gathering.gatheringId}
-          location={gathering.location}
-          dateTime={gathering.dateTime}
-          level={gathering.level.toString()}
-          capacity={gathering.capacity}
-          name={gathering.name}
-          themeName={gathering.themeName}
-          image={gathering.image}
-          participantCount={gathering.participantCount.toString()}
-        />
+        <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
+          <MyCreateGatheringDetail
+            location={gathering.location}
+            dateTime={gathering.dateTime}
+            name={gathering.name}
+            themeName={gathering.themeName}
+            capacity={gathering.capacity}
+            participantCount={gathering.participantCount}
+          />
+        </MyGatheringCard>
       ))}
     </div>
   );

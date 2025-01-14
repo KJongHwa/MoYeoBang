@@ -5,10 +5,8 @@
 import { useState } from 'react';
 
 import { ReviewDto } from '@/types/review.types';
-import { yearMonthDay } from '@/utils/dateUtils';
 import Image from 'next/image';
 import Rating from '../@shared/Rating';
-import Button from '../@shared/Button';
 import MyReviewModal from './myReviewModal';
 import DeleteModal from './deleteModal';
 
