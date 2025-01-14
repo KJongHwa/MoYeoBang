@@ -35,7 +35,7 @@ export default function GatheringCard({
             width={240}
             height={170}
             quality={100}
-            className="bg-brand-secondary w-28 rounded-l-xl md:w-60"
+            className="w-28 rounded-l-xl bg-default-tertiary md:w-60"
           />
           <div className="mx-3 my-2 flex flex-1 flex-col justify-between md:mx-6 md:my-4">
             <div className="flex justify-between">
