@@ -1,3 +1,5 @@
+import { sortList } from '@/constants/sortList';
+
 import DateDropdown from './DateDropdown';
 import LocationDropdown from './LocationDropdown';
 import SortDropdown from './SortDropdown';
@@ -19,7 +21,10 @@ export default function ReviewFilters({
         <LocationDropdown onLocatingChange={onLocatingChange} />
         <DateDropdown onDateChange={onDateChange} />
       </div>
-      <SortDropdown onSortingChange={onSortingChange} />
+      <SortDropdown
+        onSortingChange={onSortingChange}
+        sortList={sortList.review}
+      />
     </div>
   );
 }
