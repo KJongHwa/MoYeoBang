@@ -3,7 +3,7 @@
 import GatheringBadge from '@/components/gathering/GatheringBadge';
 import { formatDate } from '@/utils/dateUtils';
 import Image from 'next/image';
-import CreateGatheringModal from '@/components/gathering/CreateGatheringModal';
+import GatheringModal from '@/components/gathering/GatheringModal';
 import { useModal } from '@/hooks/useModal';
 import { findLabelByValue } from '@/utils/mappingUtils';
 import { locationList } from '@/constants/themeList';
@@ -110,7 +110,7 @@ export default function MyCreateGatheringDetail({
         </ul>
       </div>
 
-      <CreateGatheringModal
+      <GatheringModal
         isOpen={isGatheringEditModal}
         onClose={closeGatheringEditModal}
       />
