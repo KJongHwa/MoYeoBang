@@ -1,8 +1,10 @@
 'use client';
 
+import HeaderTitle from '@/components/@shared/HeaderTitle';
+import PageContainer from '@/components/@shared/PageContainer';
 import RatingSection from '@/components/allReview/RatingSection';
-import ReviewGenreFilter from '@/components/allReview/ReviewGenreFilter';
 import ReviewSection from '@/components/allReview/ReviewSection';
+import GenreFilter from '@/components/@shared/GenreFilter';
 import { useState } from 'react';
 
 export default function AllReview() {
@@ -12,20 +14,17 @@ export default function AllReview() {
   const [selectedSort, setSelectedSort] = useState<string>('createdAt');
 
   return (
-    <main className="relative mx-10 mb-5 mt-[142px] h-full xl:mx-auto xl:w-[1166px]">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold">모든 리뷰</h1>
-        <p className="text-sm font-medium">모여방 리뷰를 확인해 보세요</p>
-      </header>
+    <PageContainer>
+      <HeaderTitle title="모든 리뷰" content="모여방 리뷰를 확인해 보세요" />
 
       <section className="relative py-12">
-        <ReviewGenreFilter
-          selectedGenre={selectedGenre}
+        <GenreFilter
           onGenreChange={setSelectedGenre}
+          selectedGenre={selectedGenre}
         />
       </section>
 
-      <section className="relative">
+      <section className="relative border-b-[1px] border-solid border-[#646464] pb-4 md:pb-6">
         <RatingSection selectedGenre={selectedGenre} />
       </section>
 
@@ -40,6 +39,6 @@ export default function AllReview() {
           onSortingChange={setSelectedSort}
         />
       </section>
-    </main>
+    </PageContainer>
   );
 }
