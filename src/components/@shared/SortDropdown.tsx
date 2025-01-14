@@ -1,6 +1,6 @@
 import Dropdown, {
   DropdownOption,
-} from '../@shared/dropdown/SelectLocationDropdown';
+} from '@/components/@shared/dropdown/SelectLocationDropdown';
 
 interface SortDropdownProps {
   sortList: DropdownOption[];
@@ -20,7 +20,7 @@ export default function SortDropdown({
       options={sortList}
       onChange={handleChange}
       defaultValue={sortList[0]}
-      icon="/refresh.png"
+      icon="/icons/sort.svg"
     />
   );
 }
