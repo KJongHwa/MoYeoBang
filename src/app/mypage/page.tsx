@@ -85,8 +85,6 @@ export default function MyPage() {
         <Button
           type="button"
           variant="primary"
-          size="small"
-          font="14"
           className="border-text-primary "
           onClick={openModalhandler}
         >
@@ -139,10 +137,8 @@ export default function MyPage() {
               gap="8"
             />
             <div className="flex justify-center gap-3">
-              <Button variant="secondary" size="large" font="14">
-                취소하기
-              </Button>
-              <Button variant="primary" size="large" font="14" disabled>
+              <Button variant="secondary">취소하기</Button>
+              <Button variant="primary" disabled>
                 수정하기
               </Button>
             </div>
@@ -155,7 +151,6 @@ export default function MyPage() {
             <button
               type="button"
               key={link.label}
-              type="button"
               className={`text-lg font-bold ${
                 activeTab === link.label ? 'border-b-2 border-black' : ''
               }`}

@@ -4,7 +4,7 @@ import SignUpForm from '@/components/signup/SignUpForm';
 
 export default function SignUpPage() {
   return (
-    <main className="min-h-screen bg-brand-primary">
+    <main className="bg-brand-primary min-h-screen">
       <SignUpForm />
     </main>
   );

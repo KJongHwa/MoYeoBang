@@ -17,7 +17,7 @@
   }
 
   body {
-    @apply bg-white text-gray-900;
+    @apply bg-secondary-bg text-text-default;
   }
 }
 
@@ -119,13 +119,13 @@
 
 /* 오늘 날짜 */
 .react-calendar__tile--now {
-  color: #ea580c;
+  color: #6659f4;
 }
 
 /* 선택한 날짜 */
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus,
 .react-calendar__tile--active {
-  border: 1px solid #ea580c;
-  border-radius: 0.4rem;
+  background-color: #e8e6fe;
+  border-radius: 8px;
 }

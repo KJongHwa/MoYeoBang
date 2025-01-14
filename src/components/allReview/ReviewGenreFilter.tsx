@@ -1,15 +1,4 @@
-const genres = [
-  { label: '#전체', value: 'all' },
-  { label: '#미스터리', value: 'mystery' },
-  { label: '#공포', value: 'horror' },
-  { label: '#판타지', value: 'fantasy' },
-  { label: '#코믹', value: 'comic' },
-  { label: '#SF', value: 'sci-fi' },
-  { label: '#드라마', value: 'drama' },
-  { label: '#스릴러', value: 'thriller' },
-  { label: '#로맨스', value: 'romance' },
-  { label: '#잠입', value: 'stealth' },
-];
+import { genres } from '@/constants/themeList';
 
 interface ReviewGenreFilterProps {
   selectedGenre: string;

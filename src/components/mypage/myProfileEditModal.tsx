@@ -95,15 +95,10 @@ export default function MyProfileEditModal({
         </div>
         <Input placeholder={nickname} label="닉네임" fontSize="14" gap="8" />
         <div className="flex justify-center gap-3">
-          <Button
-            variant="secondary"
-            size="large"
-            font="14"
-            onClick={closeModalhandler}
-          >
+          <Button variant="secondary" onClick={closeModalhandler}>
             취소하기
           </Button>
-          <Button variant="primary" size="large" font="14" disabled>
+          <Button variant="primary" disabled>
             수정하기
           </Button>
         </div>

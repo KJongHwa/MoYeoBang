@@ -29,13 +29,7 @@ export default function Header() {
         <div className="mx-auto flex h-[70px] w-full max-w-[1920px] items-center justify-between border-b bg-orange-600 px-5 md:h-[80px] md:px-[30px] xl:h-[100px]">
           {/* Navigation Links */}
           <nav className="flex items-center gap-5 text-base font-bold text-white">
-            <Button
-              type="button"
-              variant="secondary"
-              size="small"
-              font="14"
-              onClick={handleLogin}
-            >
+            <Button type="button" variant="secondary" onClick={handleLogin}>
               {user ? '로그인' : '로그아웃'}
             </Button>
             {navLinks.map((link) => (
@@ -64,8 +58,6 @@ export default function Header() {
                   <Button
                     type="button"
                     variant="primary"
-                    size="small"
-                    font="14"
                     className=" border border-white"
                   >
                     로그인/회원가입
