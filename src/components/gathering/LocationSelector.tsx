@@ -13,16 +13,16 @@ export default function LocationSelector({
   return (
     <div className="text-md flex w-full flex-col items-start gap-3">
       <h3 className="font-semibold text-gray-800">장소</h3>
-      <div className="flex w-full gap-3">
+      <div className="flex w-full gap-2">
         {Object.entries(themeNameList).map(([locationKey, { label }]) => (
           <Button
-            size="full"
+            padding="12"
             key={locationKey}
             onClick={() => handleLocationClick(locationKey)}
             className={
               locationKey === location
-                ? 'bg-brand-primary text-white'
-                : 'bg-gray-400 text-white'
+                ? 'w-full bg-default-primary text-white'
+                : 'w-full bg-default-secondary text-default-primary hover:bg-primary-0 hover:text-primary-30'
             }
           >
             {label}
