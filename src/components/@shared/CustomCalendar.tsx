@@ -10,6 +10,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface CustomCalendarProps {
   isOpen: boolean;
+  selectedDate: string;
   onClose(): void;
   onDateChange(date: string): void;
   layout?: string;
@@ -25,20 +26,21 @@ interface CustomCalendarProps {
 
 export default function CustomCalendar({
   isOpen,
+  selectedDate,
   onClose,
   onDateChange,
   layout,
 }: CustomCalendarProps) {
-  const initialValue = new Date();
-  const [date, setDate] = useState<string>(String(initialValue));
+  const [date, setDate] = useState<string>(selectedDate);
 
   const handleDateChange = (newDate: Value) => {
     setDate(hyphenYearMonthDay(String(newDate)));
   };
 
   const handleReset = () => {
-    setDate(hyphenYearMonthDay(String(initialValue)));
-    onDateChange(hyphenYearMonthDay(String(initialValue)));
+    setDate('');
+    onDateChange('');
+    onClose();
   };
 
   const handleSubmit = () => {
@@ -72,10 +74,20 @@ export default function CustomCalendar({
         minDetail="year"
       />
       <div className="mx-auto flex w-[250px] items-center justify-between">
-        <Button className="w-[122px]" variant="secondary" onClick={handleReset}>
+        <Button
+          className="w-[122px]"
+          variant="secondary"
+          onClick={handleReset}
+          disabled={date === ''}
+        >
           초기화
         </Button>
-        <Button className="w-[122px]" onClick={handleSubmit}>
+        <Button
+          className="w-[122px]"
+          variant="primary"
+          onClick={handleSubmit}
+          disabled={date === ''}
+        >
           적용
         </Button>
       </div>
