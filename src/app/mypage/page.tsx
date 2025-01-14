@@ -3,6 +3,7 @@
 'use client';
 
 import { mockUser } from '@/data/mockUser';
+import { mockGatherings } from '@/data/mockGatherings';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -14,7 +15,7 @@ import MyGathering from '../../components/mypage/myGathering';
 
 export default function MyPage() {
   const user = mockUser;
-
+  const levelImage = mockGatherings.length;
   const {
     isOpen: isEditModal,
     openModal: openEditModal,
@@ -44,7 +45,7 @@ export default function MyPage() {
   return (
     <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="bg-primary-30 mb-5 mt-8 flex items-center justify-between rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
+      <div className="bg-primary-30 relative mb-5 mt-8 flex items-center justify-between rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary flex flex-col gap-3">
           <Image
             src={user.image || '/profile_image_default.png'}
@@ -58,6 +59,13 @@ export default function MyPage() {
             <p className="text-sm md:text-base">{user.email}</p>
           </div>
         </div>
+        <Image
+          src={`/myprofile_bg/L/${levelImage}.png`}
+          width={612}
+          height={224}
+          alt="프로필 배경"
+          className="-z-0 md:-my-8"
+        />
         <IconButton
           src="/icons/pencil.svg"
           alt="연필 아이콘"
