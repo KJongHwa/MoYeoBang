@@ -8,7 +8,7 @@ interface RatingSectionProps {
 
 export default function RatingSection({ selectedGenre }: RatingSectionProps) {
   return (
-    <div className="flex h-[180px] items-center justify-center rounded-[20px] bg-[#383838]">
+    <div className="flex h-[180px] items-center justify-center rounded-[20px] bg-secondary-80">
       {mockReviewRatings
         .filter((rating) => rating.genre === selectedGenre)
         .map((rating) => (
@@ -18,7 +18,7 @@ export default function RatingSection({ selectedGenre }: RatingSectionProps) {
           >
             <div className="flex flex-col items-center justify-center gap-2">
               <p className="flex gap-1">
-                <span className="text-2xl font-semibold text-white">
+                <span className="text-2xl font-semibold">
                   {rating.averageScore}
                 </span>
                 <span className="text-2xl font-semibold text-gray-400">/5</span>
@@ -42,7 +42,7 @@ export default function RatingSection({ selectedGenre }: RatingSectionProps) {
                     <ProgressBar
                       value={count}
                       max={rating.totalScore}
-                      progressColor="bg-[#111827]"
+                      progressColor="bg-default-primary"
                     />
                     <p className="min-w-10 flex-shrink-0 pl-4 text-left text-sm font-medium text-gray-100">
                       {count}

@@ -18,6 +18,7 @@ interface DropdownProps {
   onChange?: (option: DropdownOption) => void;
   // 추가 스타일링 클래스
   className?: string;
+  icon?: string;
 }
 
 /**
@@ -33,6 +34,7 @@ export default function Dropdown({
   defaultValue,
   onChange,
   className,
+  icon = '/chevron-down.svg',
 }: DropdownProps) {
   const [selectedOption, setSelectedOption] = useState<DropdownOption>(
     defaultValue || options[0]
@@ -46,7 +48,13 @@ export default function Dropdown({
   };
 
   return (
-    <div className={clsx('relative min-w-[120px]', className)}>
+    <div
+      className={clsx(
+        'relative',
+        { 'min-w-0 md:min-w-[120px]': icon !== '/chevron-down.svg' },
+        { 'min-w-[120px]': icon === '/chevron-down.svg' }
+      )}
+    >
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -58,14 +66,18 @@ export default function Dropdown({
           'px-4 py-2',
           'bg-[#2C2C2C]',
           'flex items-center',
-          'gap-[2px]'
+          'gap-[2px]',
+          { 'w-full flex-row-reverse': icon !== '/chevron-down.svg' },
+          className
         )}
       >
-        <span className="flex-1 text-sm font-medium text-white">
+        <span
+          className={`${icon !== '/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-sm font-medium text-white`}
+        >
           {selectedOption.label}
         </span>
         <Image
-          src="/chevron-down.svg"
+          src={icon}
           width={16}
           height={8}
           alt="dropdown arrow"
@@ -79,7 +91,7 @@ export default function Dropdown({
       {isOpen && (
         <ul
           className={clsx(
-            'absolute left-0 z-10 w-[90px]',
+            'absolute right-0 z-10 w-[120px]',
             'mt-2',
             'rounded-xl',
             'bg-[#404048]',

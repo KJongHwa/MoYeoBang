@@ -27,7 +27,7 @@ export default function GatheringCard({
   return (
     <figure className="relative">
       <Link href={`/gathering/${gatheringId}`}>
-        <div className="flex max-h-32 w-full rounded-xl bg-default-tertiary md:max-h-[170px]">
+        <div className="bg-brand-tertiary flex max-h-32 w-full rounded-xl md:max-h-[170px]">
           <AlarmBadge hour={extractHour(registrationEnd)} />
           <Image
             src={image}
