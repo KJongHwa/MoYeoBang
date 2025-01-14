@@ -5,8 +5,10 @@ import Link from 'next/link';
 
 import UserIcon from '@/public/icons/user.svg';
 import { formatDate, extractHour } from '@/utils/dateUtils';
+import { findLabelByValue } from '@/utils/mappingUtils';
 import ProgressBar from '@/components/@shared/ProgressBar';
 import { GatheringProps } from '@/types/gathering.types';
+import { locationList } from '@/constants/themeList';
 
 import AlarmBadge from './AlarmBadge';
 import GatheringBadge from './GatheringBadge';
@@ -42,20 +44,28 @@ export default function GatheringCard({
               <div className="flex items-center gap-1 text-sm md:gap-[6px]">
                 <GatheringBadge
                   icon={level as '고급' | '중급' | '초급'}
-                  variant="primary"
+                  variant="secondary"
                   shape="round"
+                  border="primary"
+                  fontColor="primary"
                 >
                   {level}
                 </GatheringBadge>
-                <GatheringBadge variant="secondary">{location}</GatheringBadge>
-                <GatheringBadge variant="tertiary">
+                <GatheringBadge variant="primary" fontColor="secondary">
+                  {findLabelByValue(location, locationList)}
+                </GatheringBadge>
+                <GatheringBadge variant="primary" fontColor="secondary">
                   {formatDate(dateTime)}
                 </GatheringBadge>
               </div>
             </div>
             <div>
-              <p className="text-sm font-semibold md:text-lg">{name}</p>
-              <p className="text-xs font-light md:text-sm">{themeName}</p>
+              <p className="text-sm font-semibold text-secondary-5 md:text-lg">
+                {name}
+              </p>
+              <p className="text-xs font-light text-secondary-50 md:text-sm">
+                {themeName}
+              </p>
             </div>
             <div className="flex flex-col gap-1">
               <div className="text-text-secondary flex items-center gap-1 text-[10px] md:text-sm">

@@ -1,14 +1,14 @@
 import { genres } from '@/constants/themeList';
 
-interface ReviewGenreFilterProps {
-  selectedGenre: string;
+interface GenreFilterProps {
   onGenreChange: (value: string) => void;
+  selectedGenre: string;
 }
 
-export default function ReviewGenreFilter({
-  selectedGenre,
+export default function GenreFilter({
   onGenreChange,
-}: ReviewGenreFilterProps) {
+  selectedGenre,
+}: GenreFilterProps) {
   const handleGenreClick = (value: string) => {
     onGenreChange(value);
   };

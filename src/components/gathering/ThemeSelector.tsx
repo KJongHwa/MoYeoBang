@@ -1,6 +1,6 @@
 import Input from '@/components/@shared/Input';
 import Button from '@/components/@shared/Button';
-import { themeList } from '@/constants/themeList';
+import { themeNameList } from '@/constants/themeList';
 
 interface ThemeSelectorProps {
   location: string;
@@ -27,7 +27,7 @@ export default function ThemeSelector({
 }: ThemeSelectorProps) {
   return (
     <div className="text-md flex w-full flex-col items-start gap-3">
-      <h2 className="font-semibold text-gray-800">{`${themeList[location].label}의 방탈출 테마`}</h2>
+      <h2 className="font-semibold text-gray-800">{`${themeNameList[location].label}의 방탈출 테마`}</h2>
       <div className="flex w-full items-center gap-2 md:gap-3">
         <Input
           placeholder="테마 제목을 입력하세요."

@@ -1,17 +1,8 @@
-import Dropdown from '../@shared/dropdown/SelectLocationDropdown';
+import Dropdown, {
+  DropdownOption,
+} from '@/components/@shared/dropdown/SelectLocationDropdown';
 
-const locationList = [
-  { value: 'all', label: '지역 전체' },
-  { value: 'geondae', label: '건대' },
-  { value: 'hongdae', label: '홍대' },
-  { value: 'hyehwa', label: '혜화' },
-  { value: 'gangnam', label: '강남' },
-];
-
-interface DropdownOption {
-  value: string;
-  label: string;
-}
+import { locationList } from '@/constants/themeList';
 
 interface LocationDropdownProps {
   onLocatingChange: (value: string) => void;
