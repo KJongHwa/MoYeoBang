@@ -60,17 +60,19 @@ const config: Config = {
         },
         badge: {
           default: '#887EFB80',
+          secondary: '#F5F7FD',
         },
       },
       fontFamily: {
         sans: 'var(--font-pretendard), -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif',
       },
       spacing: {
+        '1/10': '10%',
         '1/5': '20%',
-        '4.5': '1.125rem', // 18px
-        '5.5': '1.375rem', // 22px
-        '6.5': '1.625rem', // 26px
-        '7.5': '1.875rem', // 30px
+        '4.5': '1.125rem',
+        '5.5': '1.375rem',
+        '6.5': '1.625rem',
+        '7.5': '1.875rem',
       },
       borderRadius: {
         xs: '0.125rem', // 2px
@@ -90,8 +92,8 @@ const config: Config = {
         '2xl': '1536px',
       },
       maxWidth: {
-        '8xl': '88rem', // 1408px
-        '9xl': '96rem', // 1536px
+        '8xl': '88rem',
+        '9xl': '96rem',
       },
       zIndex: {
         '60': '60',
