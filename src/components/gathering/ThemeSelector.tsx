@@ -47,7 +47,7 @@ export default function ThemeSelector({
         </Button>
       </div>
       {filteredThemes.length > 0 ? (
-        <div className="mt-1 flex flex-wrap gap-1">
+        <div className="-my-1 flex w-full flex-col flex-wrap gap-1 rounded-lg bg-secondary-5 p-1">
           {filteredThemes.map((filteredTheme) => (
             <button
               type="button"
@@ -56,10 +56,10 @@ export default function ThemeSelector({
                 setSelectedThemeName(filteredTheme);
                 setThemeName(filteredTheme);
               }}
-              className={`rounded-full px-3 py-1 text-left ${
+              className={`w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap px-2 py-[6px] text-left text-sm font-medium text-secondary-80 ${
                 selectedThemeName === filteredTheme
-                  ? ' bg-default-primary text-white'
-                  : 'bg-primary-5 text-default-primary'
+                  ? 'rounded-md bg-primary-5'
+                  : 'hover:rounded-md hover:bg-primary-5'
               }`}
             >
               {filteredTheme}
@@ -68,7 +68,9 @@ export default function ThemeSelector({
         </div>
       ) : (
         searchAttempted && (
-          <div className="mb-2 mt-1 text-gray-500">검색 결과가 없습니다.</div>
+          <p className="w-full rounded-lg bg-secondary-20 px-3 py-2 text-secondary-5 text-secondary-80">
+            검색어가 없어요. 다시 입력해 주세요.
+          </p>
         )
       )}
     </div>
