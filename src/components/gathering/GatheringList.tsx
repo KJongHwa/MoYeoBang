@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,7 +12,7 @@ import DateDropdown from '@/components/allReview/DateDropdown';
 import LocationDropdown from '@/components/allReview/LocationDropdown';
 import LevelDropdown from '@/components/gathering/LevelDropdown';
 import SortDropdown from '@/components/@shared/SortDropdown';
-import GenreFilter from './GenreFilter';
+import GenreFilter from '../@shared/GenreFilter';
 
 interface GatheringListProps {
   gatherings: any;
@@ -68,7 +70,7 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
             onGenreChange={(value) => handleFilterChange('genre', value)}
             selectedGenre={filters.genre}
           />
-          <div className="flex justify-between text-text-secondary">
+          <div className="text-text-secondary flex justify-between">
             <div className="flex justify-between">
               <div className="flex gap-2">
                 <LocationDropdown
