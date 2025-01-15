@@ -38,3 +38,7 @@ export const getToday = () => {
   today.setHours(0, 0, 0, 0);
   return today;
 };
+
+export const getDateTime = (dateString?: string): number => {
+  return dateString ? new Date(dateString).getTime() : 0;
+};

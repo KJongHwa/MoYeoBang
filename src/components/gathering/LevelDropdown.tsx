@@ -1,6 +1,8 @@
 'use client';
 
-import Dropdown, { DropdownOption } from '@/components/@shared/Dropdown';
+import Dropdown, {
+  DropdownOption,
+} from '@/components/@shared/dropdown/SelectLocationDropdown';
 import { levels } from '@/constants/themeList';
 
 interface LevelDropdownProps {

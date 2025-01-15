@@ -12,7 +12,7 @@ import { locationList } from '@/constants/themeList';
 
 import AlarmBadge from './AlarmBadge';
 import GatheringBadge from './GatheringBadge';
-import HeartButton from './HeartButton';
+import PuzzleButton from './PuzzleButton';
 
 export default function GatheringCard({
   gatheringId,
@@ -85,7 +85,7 @@ export default function GatheringCard({
           </div>
         </div>
       </Link>
-      <HeartButton
+      <PuzzleButton
         gathering={{
           gatheringId,
           location,
