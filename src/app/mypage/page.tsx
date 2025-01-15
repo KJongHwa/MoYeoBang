@@ -5,7 +5,7 @@
 import { mockUser } from '@/data/mockUser';
 import { mockGatherings } from '@/data/mockGatherings';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/IconButton';
 import { useModal } from '@/hooks/useModal';
@@ -32,6 +32,7 @@ export default function MyPage() {
   ];
 
   const [activeTab, setActiveTab] = useState(navLinks[0].label);
+  const [isMobile, setIsMobile] = useState(false);
 
   const navClick = (label: string) => {
     setActiveTab(label);
@@ -42,11 +43,24 @@ export default function MyPage() {
     return activeLink?.component;
   };
 
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
   return (
     <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="bg-primary-30 relative mb-5 mt-8 flex items-center justify-between rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
-        <div className="text-text-primary flex flex-col gap-3">
+      <div className="bg-primary-30 relative -z-20 mb-5 mt-8 flex items-center justify-between overflow-hidden rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
+        <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
             src={user.image || '/profile_image_default.png'}
             width={66}
@@ -60,16 +74,17 @@ export default function MyPage() {
           </div>
         </div>
         <Image
-          src={`/myprofile_bg/L/${levelImage}.png`}
-          width={612}
-          height={224}
+          src={`/myprofile_bg/${isMobile ? 's' : 'l'}/${levelImage}.svg`}
+          width={isMobile ? 241 : 612}
+          height={isMobile ? 121 : 224}
           alt="프로필 배경"
-          className="-z-0 md:-my-8"
+          className="absolute left-16 top-3 -z-10 md:-top-6 md:left-64"
         />
         <IconButton
           src="/icons/pencil.svg"
           alt="연필 아이콘"
           onClick={openEditModal}
+          className="z-10"
         >
           프로필 편집
         </IconButton>
