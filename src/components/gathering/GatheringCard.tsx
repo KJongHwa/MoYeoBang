@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -66,7 +68,7 @@ export default function GatheringCard({
               </p>
             </div>
             <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-1 text-[10px] text-text-secondary md:text-sm">
+              <div className="text-text-secondary flex items-center gap-1 text-[10px] md:text-sm">
                 <UserIcon />
                 <p>
                   {participantCount}/{capacity}
