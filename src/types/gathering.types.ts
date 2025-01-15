@@ -73,6 +73,14 @@ export interface GatheringProps {
     className?: string;
     children: React.ReactNode;
   };
+  slot: {
+    gatheringId: number;
+    registrationEnd: string;
+    name: string;
+    capacity: string;
+    participantCount: string;
+    image: string;
+  };
 }
 
 export interface LikesGatheringListProps {
