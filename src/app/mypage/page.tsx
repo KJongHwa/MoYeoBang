@@ -15,7 +15,7 @@ import MyGathering from '../../components/mypage/myGathering';
 
 export default function MyPage() {
   const user = mockUser;
-  const levelImage = mockGatherings.length;
+  const levelImage = 6;
   const {
     isOpen: isEditModal,
     openModal: openEditModal,
@@ -78,7 +78,7 @@ export default function MyPage() {
           width={isMobile ? 241 : 612}
           height={isMobile ? 121 : 224}
           alt="프로필 배경"
-          className="absolute left-16 top-3 -z-10 md:-top-6 md:left-64"
+          className="absolute left-16 top-3 -z-10 md:-top-1 md:left-64"
         />
         <IconButton
           src="/icons/pencil.svg"
