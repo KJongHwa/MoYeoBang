@@ -59,7 +59,7 @@ export default function MyPage() {
   return (
     <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="bg-primary-30 relative -z-20 mb-5 mt-8 flex items-center justify-between overflow-hidden rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
+      <div className="bg-primary-30 relative z-0 mb-5 mt-8 flex items-center justify-between overflow-hidden rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
             src={user.image || '/profile_image_default.png'}
@@ -78,13 +78,13 @@ export default function MyPage() {
           width={isMobile ? 241 : 612}
           height={isMobile ? 121 : 224}
           alt="프로필 배경"
-          className="absolute left-16 top-3 -z-10 md:-top-1 md:left-64"
+          className="pointer-events-none absolute left-16 top-3 -z-10 md:-top-1 md:left-64"
         />
         <IconButton
           src="/icons/pencil.svg"
           alt="연필 아이콘"
           onClick={openEditModal}
-          className="z-10"
+          className="relative z-20"
         >
           프로필 편집
         </IconButton>
