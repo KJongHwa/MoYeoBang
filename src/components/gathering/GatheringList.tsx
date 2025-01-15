@@ -1,20 +1,25 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+
 import { matchFilter } from '@/utils/filterUtils';
+import { sortGatherings } from '@/utils/sortUtils';
+import { sortList } from '@/constants/sortList';
 
 import EmptyElement from '@/components/@shared/EmptyElement';
 import GatheringCard from '@/components/gathering/GatheringCard';
 import DateDropdown from '@/components/allReview/DateDropdown';
 import LocationDropdown from '@/components/allReview/LocationDropdown';
 import LevelDropdown from '@/components/gathering/LevelDropdown';
-import GenreFilter from '../@shared/GenreFilter';
+import SortDropdown from '@/components/@shared/SortDropdown';
+import GenreFilter from './GenreFilter';
 
 interface GatheringListProps {
   gatherings: any;
 }
 
 export default function GatheringList({ gatherings }: GatheringListProps) {
+  const [selectedSort, setSelectedSort] = useState('createdAt');
   const [filteredGatherings, setFilteredGatherings] = useState(gatherings);
   const [filters, setFilters] = useState({
     genre: 'all',
@@ -41,16 +46,20 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
       return matches.every(Boolean);
     });
 
-    setFilteredGatherings(filtered);
+    setFilteredGatherings(sortGatherings(filtered, selectedSort));
   };
 
   useEffect(() => {
     filterGatherings();
-  }, [filters]);
+  }, [filters, selectedSort]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
     filterGatherings();
+  };
+
+  const onSortingChange = (sortOption: string) => {
+    setSelectedSort(sortOption);
   };
 
   return (
@@ -77,7 +86,10 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
                 />
               </div>
             </div>
-            <ul>정렬</ul>
+            <SortDropdown
+              onSortingChange={onSortingChange}
+              sortList={sortList.gathering}
+            />
           </div>
         </div>
       </section>

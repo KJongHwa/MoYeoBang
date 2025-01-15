@@ -93,7 +93,13 @@ export default function MyProfileEditModal({
             onChange={handleFileChange}
           />
         </div>
-        <Input placeholder={nickname} label="닉네임" fontSize="14" gap="8" />
+        <Input
+          placeholder={nickname}
+          label="닉네임"
+          fontSize="14"
+          gap="8"
+          inputProps={{ value: nickname }}
+        />
         <div className="flex justify-center gap-3">
           <Button
             variant="secondary"

@@ -1,18 +1,17 @@
 import { mockGatherings } from '@/data/mockGatherings';
 import MyGatheringCard from './myGatheringCard';
-import MyGatheringDetail from './myGatheringCard/myGatheringDetail';
+import MyReviewNotWriteDetail from './myGatheringCard/myReviewNotWriteDetail';
 import EmptyElement from '../@shared/EmptyElement';
 
-export default function MyGathering() {
+export default function MyReviewNotWrite() {
   return (
     <div className="flex flex-col gap-5">
       {mockGatherings.length === 0 ? (
-        <EmptyElement>신청한 모임이 아직 없어요</EmptyElement>
+        <EmptyElement>아직 작성 가능한 리뷰가 없어요</EmptyElement>
       ) : (
         mockGatherings.map((gathering: any) => (
           <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
-            <MyGatheringDetail
-              location={gathering.location}
+            <MyReviewNotWriteDetail
               dateTime={gathering.dateTime}
               name={gathering.name}
               themeName={gathering.themeName}
