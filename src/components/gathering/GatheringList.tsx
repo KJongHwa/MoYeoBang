@@ -12,7 +12,7 @@ import DateDropdown from '@/components/allReview/DateDropdown';
 import LocationDropdown from '@/components/allReview/LocationDropdown';
 import LevelDropdown from '@/components/gathering/LevelDropdown';
 import SortDropdown from '@/components/@shared/SortDropdown';
-import GenreFilter from './GenreFilter';
+import GenreFilter from '@/components/@shared/GenreFilter';
 
 interface GatheringListProps {
   gatherings: any;
