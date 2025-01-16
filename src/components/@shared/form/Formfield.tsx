@@ -1,68 +1,77 @@
+// FormField.tsx
+import { useState } from 'react';
 import Image from 'next/image';
+import Input from '@/components/@shared/Input';
 
-/**
- * 폼 필드 컴포넌트의 Props 인터페이스
- * @interface FormFieldProps
- */
 interface FormFieldProps {
-  /** 입력 필드의 고유 식별자 */
   id: string;
-  /** 입력 필드의 레이블 텍스트 */
   label: string;
-  /** 입력 필드의 타입 (기본값: 'text') */
   type?: 'text' | 'email' | 'password';
-  /** 입력 필드의 placeholder 텍스트 */
   placeholder: string;
-  /** 비밀번호 토글 아이콘 표시 여부 */
   showPasswordIcon?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  isError?: boolean;
+  errorMessage?: string;
 }
 
-/**
- * 재사용 가능한 폼 입력 필드 컴포넌트
- * @param {string} id - 입력 필드의 고유 식별자
- * @param {string} label - 입력 필드의 레이블
- * @param {('text'|'email'|'password')} [type='text'] - 입력 필드의 타입
- * @param {string} placeholder - 입력 필드의 placeholder 텍스트
- * @param {boolean} [showPasswordIcon=false] - 비밀번호 토글 아이콘 표시 여부
- */
 export default function FormField({
   id,
   label,
   type = 'text',
   placeholder,
   showPasswordIcon = false,
+  onChange,
+  value,
+  isError,
+  errorMessage,
+  ...props
 }: FormFieldProps) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <div className="space-y-1">
-      <label htmlFor={id} className="block text-sm text-text-secondary">
-        {label}
-        <div className={`${showPasswordIcon ? 'relative' : ''} mt-1`}>
-          <input
-            id={id}
-            type={type}
-            name={id}
-            aria-label={`${label} 입력`}
-            placeholder={placeholder}
-            className="bg-brand-tertiary text-text-primary w-full rounded px-4 py-2.5 placeholder:text-text-disabled focus:outline-none focus:ring-1 focus:ring-status-focus"
+    <div className="relative">
+      <Input
+        label={label}
+        varient="elevated"
+        fontSize="14"
+        placeholder={placeholder}
+        inputProps={{
+          id,
+          type: showPassword ? 'text' : type,
+          onChange,
+          value,
+          name: id,
+          ...props,
+        }}
+        isError={isError}
+        errorMessage={errorMessage}
+      />
+      {showPasswordIcon && type === 'password' && (
+        <button
+          type="button"
+          onClick={handleTogglePassword}
+          aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
+          className="absolute right-3 top-[50px] -translate-y-1/2"
+        >
+          <Image
+            src={
+              showPassword
+                ? '/icons/visibility_on.svg'
+                : '/icons/visibility_off.svg'
+            }
+            width={24}
+            height={24}
+            alt=""
+            aria-hidden="true"
+            className="object-contain"
           />
-          {/* 비밀번호 관련 필드에만 토글 아이콘 표시 */}
-          {showPasswordIcon && type === 'password' && (
-            <button
-              type="button"
-              aria-label="비밀번호 보기/숨기기"
-              className="absolute right-3 top-1/2 -translate-y-1/2"
-            >
-              <Image
-                src="/password-hide.svg"
-                alt="비밀번호 보기/숨기기"
-                width={24}
-                height={24}
-                className="object-contain"
-              />
-            </button>
-          )}
-        </div>
-      </label>
+        </button>
+      )}
     </div>
   );
 }

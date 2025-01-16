@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import useCustomForm from '@/hooks/useCustomForm';
+import { getToday } from '@/utils/dateUtils';
 import { GatheringRequestBody } from '@/types/gathering.types';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/Button';
@@ -12,15 +13,17 @@ import LocationSelector from './LocationSelector';
 import CapacitySelector from './CapacitySelector';
 import ThemeSelector from './ThemeSelector';
 
-interface CreateGatheringModalProps {
+interface GatheringModalProps {
   isOpen: boolean;
   onClose: () => void;
+  isEdit?: boolean;
 }
 
-export default function CreateGatheringModal({
+export default function GatheringModal({
   isOpen,
   onClose,
-}: CreateGatheringModalProps) {
+  isEdit = false,
+}: GatheringModalProps) {
   const {
     register,
     handleSubmit,
@@ -34,7 +37,8 @@ export default function CreateGatheringModal({
   const [selectedThemeName, setSelectedThemeName] = useState<string>('');
   const [filteredThemes, setFilteredThemes] = useState<string[]>([]);
   const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [dateTimeError, setDateTimeError] = useState<string>('');
+  const [registrationEndError, setRegistrationEndError] = useState<string>('');
 
   const { themeName, capacity, dateTime, registrationEnd } = watchFields([
     'themeName',
@@ -77,24 +81,53 @@ export default function CreateGatheringModal({
     }
   }, [location, setValue]);
 
+  // 모임 날짜 검증
+  useEffect(() => {
+    const today = getToday();
+    if (!dateTime) return;
+    const selectedDateTime = new Date(dateTime);
+
+    if (selectedDateTime < today) {
+      setDateTimeError('오늘 이전 날짜를 모임 날짜로 설정할 수 없습니다.');
+      setValue('dateTime', '');
+      setRegistrationEndError('');
+    } else {
+      setDateTimeError('');
+    }
+  }, [dateTime, setValue]);
+
   // 마감 날짜 검증
   useEffect(() => {
-    if (!(dateTime && registrationEnd)) return;
+    const today = getToday();
+    if (!(registrationEnd && dateTime)) return;
+    const selectedRegistrationEnd = new Date(registrationEnd);
+    const selectedDateTime = new Date(dateTime);
 
-    if (new Date(registrationEnd) >= new Date(dateTime)) {
-      setErrorMessage('마감 날짜는 모임 날짜보다 이전이어야 합니다.');
+    if (selectedRegistrationEnd < today) {
+      setRegistrationEndError(
+        '오늘 이전 날짜를 마감 날짜로 설정할 수 없습니다.'
+      );
+      setValue('registrationEnd', '');
+    } else if (selectedRegistrationEnd >= selectedDateTime) {
+      setRegistrationEndError('마감 날짜는 모임 날짜보다 이전이어야 합니다.');
       setValue('registrationEnd', '');
     } else {
-      setErrorMessage('');
+      setRegistrationEndError('');
     }
-  }, [dateTime, registrationEnd, setValue]);
+  }, [registrationEnd, dateTime, setValue]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <h1 className="mb-10 text-lg font-bold">모임 만들기</h1>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      customDimStyle="w-full md:w-[542px]"
+    >
+      <h1 className="mb-10 text-lg font-bold">
+        {isEdit ? '모임 수정하기' : '모임 만들기'}
+      </h1>
       <form
         onSubmit={handleSubmit(() => onClose())}
-        className="flex w-[472px] flex-col gap-6"
+        className="flex flex-col gap-6"
       >
         <Input
           label="name"
@@ -129,8 +162,10 @@ export default function CreateGatheringModal({
               type: 'date',
               ...register('dateTime', { required: true }),
             }}
+            isError={!!dateTimeError}
+            errorMessage={dateTimeError}
           />
-          {dateTime && (
+          {dateTime && !dateTimeError && (
             <Input
               label="registrationEnd"
               labelText="마감 날짜"
@@ -138,8 +173,8 @@ export default function CreateGatheringModal({
                 type: 'date',
                 ...register('registrationEnd', { required: true }),
               }}
-              isError={!!errorMessage}
-              errorMessage={errorMessage}
+              isError={!!registrationEndError}
+              errorMessage={registrationEndError}
             />
           )}
         </div>
@@ -153,7 +188,7 @@ export default function CreateGatheringModal({
           disabled={!isValid || !themeName || errorMessage.length > 0}
           className="mt-4"
         >
-          생성
+          {isEdit ? '수정' : '생성'}
         </Button>
       </form>
     </Modal>

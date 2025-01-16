@@ -31,7 +31,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
         )}
       >
         <p className="flex-1 text-sm font-medium text-white">
-          {date === '' ? '날짜 전체' : date}
+          {date === '' ? '모든 날짜' : date}
         </p>
         <Image
           src="/chevron-down.svg"

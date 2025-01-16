@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import Image from 'next/image';
@@ -52,14 +54,12 @@ export default function MyPage() {
     //  파일이 영어 이름으로만 되어 있다면
     const isEnglishName = /^[a-zA-Z0-9._-]+$/.test(file.name);
     if (!isEnglishName) {
-      alert('파일 이름은 영어로만 이루어져야 합니다.');
       return;
     }
 
     //  파일이 5MB 이하라면
     const maxSizeInBytes = 5 * 1024 * 1024;
     if (file.size > maxSizeInBytes) {
-      alert('파일 크기는 5MB 이하여야만 합니다.');
       return;
     }
 
@@ -75,17 +75,26 @@ export default function MyPage() {
   };
 
   return (
-    <main className="mx-[150px] my-[130px] flex flex-col justify-center ">
+    <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="mb-12 mt-8 flex h-[130px] items-center justify-around rounded-[25px] border bg-orange-600">
-        <div className="text-text-primary">
-          <p>{user.nickname}</p>
-          <p>{user.email}</p>
+      <div className="relative mb-5 mt-8 flex items-center justify-between rounded-[25px] border bg-primary-30 px-3 py-8 md:mb-7 md:px-10">
+        <div className="text-text-primary flex flex-col gap-3">
+          <Image
+            src={user.image || '/profile_image_default.png'}
+            width={66}
+            height={66}
+            alt="프로필 이미지 미리보기"
+            className="h-[56px] w-[56px] rounded-full md:h-[66px] md:w-[66px]"
+          />
+          <div>
+            <p className="text-base font-bold md:text-2xl">{user.nickname}</p>
+            <p className="text-sm md:text-base">{user.email}</p>
+          </div>
         </div>
         <Button
           type="button"
           variant="primary"
-          className="border-text-primary "
+          className="border-text-primary"
           onClick={openModalhandler}
         >
           <p>프로필 편집</p>
@@ -145,8 +154,9 @@ export default function MyPage() {
           </div>
         </Modal>
       </div>
-      <div className="mx-12">
-        <nav className="flex gap-5">
+      <hr className="mb-7" />
+      <div className="mx-2 md:mx-12">
+        <nav className="flex gap-8 md:gap-6">
           {navLinks.map((link) => (
             <button
               type="button"
@@ -160,7 +170,7 @@ export default function MyPage() {
             </button>
           ))}
         </nav>
-        <div className="mt-8">{renderActiveComponent()}</div>
+        <div className="mx-3 mb-10 mt-8">{renderActiveComponent()}</div>
       </div>
     </main>
   );

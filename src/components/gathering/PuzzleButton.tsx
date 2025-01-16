@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 import { GatheringProps } from '@/types/gathering.types';
-import HeartFullIcon from '@/public/icons/heart_full.svg';
-import HeartEmptyIcon from '@/public/icons/heart_empty.svg';
 
-export default function HeartButton({
+export default function PuzzleButton({
   gathering,
 }: {
   gathering: GatheringProps['card'];
@@ -55,9 +54,18 @@ export default function HeartButton({
   };
 
   return (
-    <div className="absolute right-2 top-1 md:right-6 md:top-4 ">
+    <div className="absolute right-2 top-1 md:right-6 md:top-4">
       <button type="button" onClick={handleFavoriteToggle}>
-        {isFavorited ? <HeartFullIcon /> : <HeartEmptyIcon />}
+        <Image
+          src={
+            isFavorited ? '/icons/puzzle_full.svg' : '/icons/puzzle_line.svg'
+          }
+          alt="퍼즐 아이콘"
+          width={24}
+          height={24}
+          quality={100}
+          className="m-1 h-4 w-4 md:m-0 md:h-6 md:w-6"
+        />
       </button>
     </div>
   );

@@ -1,32 +1,54 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { matchFilter } from '@/utils/filterUtils';
-
 import DateDropdown from '@/components/allReview/DateDropdown';
 import LocationDropdown from '@/components/allReview/LocationDropdown';
 import LevelDropdown from '@/components/gathering/LevelDropdown';
-import GenreFilter from './GenreFilter';
+import GenreFilter from '../@shared/GenreFilter';
+
+interface Gathering {
+  gatheringId: string;
+  genre: string;
+  location: string;
+  dateTime: string;
+  level: string;
+}
+
+interface Filters {
+  genre: string;
+  location: string;
+  date: string;
+  level: string;
+}
+
+interface FilterCondition {
+  option: string;
+  target: string;
+  isDate?: boolean;
+}
 
 interface GatheringFiltersProps {
-  gatherings: any;
-  setFilteredGatherings: (gatherings: any[]) => void;
+  gatherings: Gathering[];
+  setFilteredGatherings: (gatherings: Gathering[]) => void;
 }
 
 export default function GatheringFilters({
   gatherings,
   setFilteredGatherings,
 }: GatheringFiltersProps) {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     genre: 'all',
     location: 'all',
     date: '',
     level: 'all',
   });
 
-  const filterGatherings = () => {
+  const filterGatherings = useCallback(() => {
+    if (!gatherings) return; // gatherings가 undefined일 때 처리
+
     const { genre, location, date, level } = filters;
 
-    const filtered = gatherings.filter((gathering: any) => {
-      const filterConditions = [
+    const filtered = gatherings.filter((gathering: Gathering) => {
+      const filterConditions: FilterCondition[] = [
         { option: genre, target: gathering.genre },
         { option: location, target: gathering.location },
         { option: date, target: gathering.dateTime, isDate: true },
@@ -41,16 +63,18 @@ export default function GatheringFilters({
     });
 
     setFilteredGatherings(filtered);
-  };
+  }, [filters, gatherings, setFilteredGatherings]);
 
   useEffect(() => {
     filterGatherings();
-  }, [filters]);
+  }, [filterGatherings]);
 
-  const handleFilterChange = (key: string, value: string) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
-    filterGatherings();
-  };
+  const handleFilterChange = useCallback(
+    (key: keyof Filters, value: string) => {
+      setFilters((prev) => ({ ...prev, [key]: value }));
+    },
+    []
+  );
 
   return (
     <section className="mx-1 flex flex-col xl:mx-5">
