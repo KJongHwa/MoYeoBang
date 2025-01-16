@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   const navLinks = [
-    { label: '모임 찾기', href: '/' },
+    { label: '모임 찾기', href: '/gathering' },
     { label: '찜한 모임', href: '/likes' },
     { label: '모든 리뷰', href: '/allreview' },
   ];

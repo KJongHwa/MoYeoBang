@@ -74,7 +74,7 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
           />
           <div className="text-text-secondary flex justify-between">
             <div className="flex justify-between">
-              <div className="flex gap-2">
+              <div className="mr-2 flex gap-2">
                 <LocationDropdown
                   onLocatingChange={(value) =>
                     handleFilterChange('location', value)
