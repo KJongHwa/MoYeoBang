@@ -33,7 +33,6 @@ export default function SignUpForm() {
 
   return (
     <div className="relative flex h-full min-h-screen w-full items-center justify-center bg-[#17171c] pt-72">
-      {/* 배경 이미지 */}
       <div className="absolute inset-0 z-0">
         <div className="hidden min-[1920px]:block">
           <Image
@@ -62,7 +61,6 @@ export default function SignUpForm() {
         </div>
       </div>
 
-      {/* 회원가입 폼 */}
       <div className="relative z-10 flex h-auto w-full max-w-md flex-col items-center justify-center rounded-lg bg-[#2b2d36] px-6 py-8 shadow-lg">
         <h2 className="text-2xl font-bold text-white">회원가입</h2>
 
