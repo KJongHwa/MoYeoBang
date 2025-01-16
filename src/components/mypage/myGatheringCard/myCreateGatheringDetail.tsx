@@ -40,7 +40,7 @@ export default function MyCreateGatheringDetail({
 
   const liDropdowns = [
     { label: '수정하기', clickHandler: openGatheringEditModal },
-    { label: '삭제하기', clickHandler: openDeleteModal },
+    { label: '모임취소', clickHandler: openDeleteModal },
   ];
 
   return (
@@ -101,7 +101,7 @@ export default function MyCreateGatheringDetail({
               <button
                 onClick={liDropdown.clickHandler}
                 type="button"
-                className="hover:bg-secondary-60 w-full px-4 py-2 text-left"
+                className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
               >
                 {liDropdown.label}
               </button>
@@ -114,7 +114,11 @@ export default function MyCreateGatheringDetail({
         isOpen={isGatheringEditModal}
         onClose={closeGatheringEditModal}
       />
-      <DeleteModal isModal={isDeleteModal} setIsModal={closeDeleteModal} />
+      <DeleteModal
+        isModal={isDeleteModal}
+        setIsModal={closeDeleteModal}
+        classification="cancel"
+      />
     </div>
   );
 }

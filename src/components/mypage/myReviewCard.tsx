@@ -82,7 +82,11 @@ export default function MyReviewCard({
         comment={comment}
         score={score}
       />
-      <DeleteModal isModal={isDeleteModal} setIsModal={setDeleteIsModal} />
+      <DeleteModal
+        isModal={isDeleteModal}
+        setIsModal={setDeleteIsModal}
+        classification="delete"
+      />
     </article>
   );
 }
