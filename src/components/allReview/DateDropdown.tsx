@@ -22,10 +22,10 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
         className={clsx(
           'h-[42px] max-w-[120px]',
           'relative',
-          'border-2 border-[#808080]',
+          'border-2 border-default-tertiary',
           'rounded-xl',
           'px-4 py-2',
-          'bg-[#2C2C2C]',
+          'bg-default-tertiary',
           'flex items-center',
           'gap-1'
         )}
