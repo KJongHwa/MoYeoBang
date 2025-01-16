@@ -1,7 +1,10 @@
+/* eslint-disable prettier/prettier */
+
 import Modal from '@/components/@shared/Modal';
 import { GatheringCreaterDTO } from '@/types/gathering.types';
 import Image from 'next/image';
 import GatheringCreaterProfileGatheringList from './GatheringCreaterProfileGatheringList';
+
 interface GatheringCreaterProfileModalProps {
   isModal: boolean;
   onClose: () => void;

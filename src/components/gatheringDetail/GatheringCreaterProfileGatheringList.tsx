@@ -1,8 +1,7 @@
-import { mockGatherings } from '@/data/mockGatherings';
+import { GatheringCreaterDTO } from '@/types/gathering.types';
 import MyGatheringCard from '../mypage/myGatheringCard';
 import EmptyElement from '../@shared/EmptyElement';
 import MyCreateGatheringDetail from '../mypage/myGatheringCard/myCreateGatheringDetail';
-import { GatheringCreaterDTO } from '@/types/gathering.types';
 
 interface GatheringCreaterProfileGatheringListProps {
   createrGatheringList: GatheringCreaterDTO['get']['gatherings'];

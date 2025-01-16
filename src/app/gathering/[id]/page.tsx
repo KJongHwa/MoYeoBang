@@ -1,11 +1,13 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import Button from '@/components/@shared/Button';
-import IconButton from '@/components/@shared/IconButton';
 import GatheringCreaterProfileModal from '@/components/gatheringDetail/GatheringCreaterProfileModal';
 import { mockGatheringCreater } from '@/data/mockGatheringCreater';
 import { useModal } from '@/hooks/useModal';
 import Image from 'next/image';
+
 export default function GatheringDetail({ params }: any) {
   const { id } = params;
   const createrProfile = mockGatheringCreater;
@@ -40,7 +42,7 @@ export default function GatheringDetail({ params }: any) {
         >
           프로필 보기
         </Button>
-        <button onClick={openModal} className="block md:hidden">
+        <button onClick={openModal} type="button" className="block md:hidden">
           <Image
             src="/icons/right.svg"
             width={24}
