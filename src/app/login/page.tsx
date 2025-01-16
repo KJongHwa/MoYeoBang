@@ -1,7 +1,11 @@
-export default function Login() {
+'use client';
+
+import LoginForm from '@/components/login/LoginForm';
+
+export default function SignUpPage() {
   return (
-    <div>
-      <p>오정협 - 로그인</p>
-    </div>
+    <main className="flex min-h-screen bg-[#17171c]">
+      <LoginForm />
+    </main>
   );
 }

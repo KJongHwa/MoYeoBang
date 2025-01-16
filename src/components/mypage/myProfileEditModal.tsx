@@ -70,7 +70,7 @@ export default function MyProfileEditModal({
     >
       <div className="flex flex-col gap-5">
         <p className="text-base font-bold">프로필 수정하기</p>
-        <div className="rounded-full ">
+        <div className="rounded-full">
           <div
             className={`relative flex items-center justify-center overflow-hidden ${
               img ? 'w-118 h-118 rounded-full' : ''
