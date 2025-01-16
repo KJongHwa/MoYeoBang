@@ -40,7 +40,7 @@ export default function NearDeadlines({ gatherings }: GatheringListProps) {
               className="mt-auto hidden max-h-full md:block xl:hidden"
             />
           </div>
-          <div className="grid grid-cols-1 grid-rows-1 gap-7 md:grid-cols-2">
+          <div className="grid grid-cols-1 grid-rows-1 gap-3 md:grid-cols-2 md:gap-7">
             {currentItems.map((gathering: any) => (
               <GatheringSlot
                 key={gathering.gatheringId}
