@@ -184,9 +184,12 @@ export default function GatheringModal({
         />
         <Button
           type="submit"
-          variant="primary"
-          disabled={!isValid || !themeName || errorMessage.length > 0}
-          className="mt-4"
+          variant="primary-gray"
+          padding="10"
+          disabled={
+            !isValid || !themeName || !!registrationEndError || !!dateTimeError
+          }
+          className="mb-4 mt-14 w-full md:mt-6"
         >
           {isEdit ? '수정' : '생성'}
         </Button>

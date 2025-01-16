@@ -1,16 +1,20 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import { useState, useEffect } from 'react';
+
 import { matchFilter } from '@/utils/filterUtils';
 import { sortGatherings } from '@/utils/sortUtils';
 import { sortList } from '@/constants/sortList';
 
+import EmptyElement from '@/components/@shared/EmptyElement';
 import GatheringCard from '@/components/gathering/GatheringCard';
 import DateDropdown from '@/components/allReview/DateDropdown';
 import LocationDropdown from '@/components/allReview/LocationDropdown';
 import LevelDropdown from '@/components/gathering/LevelDropdown';
 import SortDropdown from '@/components/@shared/SortDropdown';
-import GenreFilter from './GatheringFilters';
+import GenreFilter from '@/components/@shared/GenreFilter';
 
 interface GatheringListProps {
   gatherings: any;
@@ -68,9 +72,9 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
             onGenreChange={(value) => handleFilterChange('genre', value)}
             selectedGenre={filters.genre}
           />
-          <div className="flex justify-between text-text-secondary">
+          <div className="text-text-secondary flex justify-between">
             <div className="flex justify-between">
-              <div className="flex gap-2">
+              <div className="mr-2 flex gap-2">
                 <LocationDropdown
                   onLocatingChange={(value) =>
                     handleFilterChange('location', value)
@@ -93,10 +97,20 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
       </section>
 
       <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
-        {filteredGatherings.map((gathering: any) => (
-          <GatheringCard key={gathering.gatheringId} {...gathering} />
-        ))}
+        {filteredGatherings.length > 0
+          ? filteredGatherings.map((gathering: any) => (
+              <GatheringCard key={gathering.gatheringId} {...gathering} />
+            ))
+          : null}
       </section>
+
+      {filteredGatherings.length === 0 && (
+        <EmptyElement>
+          아직 모임이 없어요,
+          <br />
+          지금 바로 모임을 만들어보세요
+        </EmptyElement>
+      )}
     </>
   );
 }

@@ -16,6 +16,7 @@ export default function LocationSelector({
       <div className="flex w-full gap-2">
         {Object.entries(themeNameList).map(([locationKey, { label }]) => (
           <Button
+            padding="12"
             key={locationKey}
             onClick={() => handleLocationClick(locationKey)}
             className={

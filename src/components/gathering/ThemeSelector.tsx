@@ -37,7 +37,12 @@ export default function ThemeSelector({
             onChange: (e) => setInputThemeName(e.target.value),
           }}
         />
-        <Button variant="secondary" onClick={searchThemes}>
+        <Button
+          padding="12"
+          variant="tertiary"
+          onClick={searchThemes}
+          className="w-[70px] md:w-24"
+        >
           검색
         </Button>
       </div>

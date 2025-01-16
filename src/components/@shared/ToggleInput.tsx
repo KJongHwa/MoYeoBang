@@ -52,7 +52,9 @@ export default function ToggleInput({
           id={inputId}
           type={isVisible ? 'text' : 'password'}
           placeholder={placeholder}
-          className={`w-full rounded-lg bg-secondary-100 px-4 py-[10px] outline outline-1 placeholder:text-secondary-70 ${isVisible ? 'text-text-default' : 'text-gray-500'} ${isError ? 'outline-status-danger focus-within:outline-status-danger' : 'outline-transparent focus-within:outline-default-primary'}`}
+          className={`w-full rounded-lg bg-secondary-100 px-4 py-[10px] outline outline-1 placeholder:text-secondary-70 
+            ${isVisible ? 'text-text-default' : 'text-gray-500'}
+            ${isError ? 'outline-status-danger focus-within:outline-status-danger' : 'outline-transparent focus-within:outline-default-primary'}`}
           {...inputProps}
         />
         <Image
@@ -60,7 +62,7 @@ export default function ToggleInput({
           alt={isVisible ? '숨김 아이콘' : '보기 아이콘'}
           width={24}
           height={24}
-          className="absolute right-3 top-1/2 -translate-y-1/2 transform cursor-pointer"
+          className="absolute right-3 top-1/2 -translate-y-1/2 transform  cursor-pointer"
           onClick={toggleVisibility}
         />
       </div>

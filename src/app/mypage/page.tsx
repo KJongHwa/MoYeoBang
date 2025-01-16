@@ -2,37 +2,35 @@
 
 'use client';
 
-import Image from 'next/image';
-import Button from '@/components/@shared/Button';
+import { mockUser } from '@/data/mockUser';
+import { mockGatherings } from '@/data/mockGatherings';
+import MyCreateGathering from '@/components/mypage/myCreateGathering';
 import { useState } from 'react';
-import Modal from '@/components/@shared/Modal';
-import Input from '@/components/@shared/Input';
-import MyGathering from './myGathering';
-import MyLike from './myLike';
-import MyReview from './myReview';
+import Image from 'next/image';
+import IconButton from '@/components/@shared/IconButton';
+import { useModal } from '@/hooks/useModal';
+import MyReview from '../../components/mypage/myReview';
+import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
+import MyGathering from '../../components/mypage/myGathering';
 
 export default function MyPage() {
-  const user = {
-    userId: 0,
-    email: 'janggh1012@naver.com',
-    nickname: 'jisoleil',
-    image: '',
-    createdAt: '2025-01-03T02:49:27.832Z',
-    updatedAt: '2025-01-03T02:49:27.832Z',
-  };
-  const [isModal, setIsModal] = useState(false);
-  const [img, setImg] = useState<string | null>(null);
+  const user = mockUser;
+  const levelImage = Math.min(mockGatherings.length, 6);
+  const {
+    isOpen: isEditModal,
+    openModal: openEditModal,
+    closeModal: closeEditModal,
+  } = useModal();
 
-  const openModalhandler = () => setIsModal(true);
-  const closeModalhandler = () => {
-    setIsModal(false);
-    setImg(null);
-  };
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
-    { label: '나의 리뷰', component: <MyLike /> },
-    { label: '내가 만든 모임', component: <MyReview /> },
+    { label: '나의 리뷰', component: <MyReview /> },
+    {
+      label: '내가 만든 모임',
+      component: <MyCreateGathering userID={user.userID} />,
+    },
   ];
+
   const [activeTab, setActiveTab] = useState(navLinks[0].label);
 
   const navClick = (label: string) => {
@@ -44,41 +42,11 @@ export default function MyPage() {
     return activeLink?.component;
   };
 
-  //  파일 선택 변경 이벤트 핸들러
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-
-    //  파일이 없다면
-    if (!file) return;
-
-    //  파일이 영어 이름으로만 되어 있다면
-    const isEnglishName = /^[a-zA-Z0-9._-]+$/.test(file.name);
-    if (!isEnglishName) {
-      return;
-    }
-
-    //  파일이 5MB 이하라면
-    const maxSizeInBytes = 5 * 1024 * 1024;
-    if (file.size > maxSizeInBytes) {
-      return;
-    }
-
-    // 이미지 미리보기 로직 추가 (로컬 URL 생성)
-    const previewUrl = URL.createObjectURL(file);
-    setImg(previewUrl);
-  };
-  const triggerFileInput = () => {
-    const fileInput = document.getElementById(
-      'profile_image-input'
-    ) as HTMLInputElement;
-    if (fileInput) fileInput.click();
-  };
-
   return (
     <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="relative mb-5 mt-8 flex items-center justify-between rounded-[25px] border bg-primary-30 px-3 py-8 md:mb-7 md:px-10">
-        <div className="text-text-primary flex flex-col gap-3">
+      <div className="bg-primary-30 relative z-0 mb-5 mt-8 flex items-center justify-between overflow-hidden rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
+        <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
             src={user.image || '/profile_image_default.png'}
             width={66}
@@ -91,78 +59,51 @@ export default function MyPage() {
             <p className="text-sm md:text-base">{user.email}</p>
           </div>
         </div>
-        <Button
-          type="button"
-          variant="primary"
-          className="border-text-primary"
-          onClick={openModalhandler}
+        <Image
+          src={`/myprofile_bg/l/${levelImage}.svg`}
+          width={612}
+          height={224}
+          alt="프로필 배경"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden lg:-top-1 lg:left-64 lg:block"
+        />
+        <Image
+          src={`/myprofile_bg/l/${levelImage}.svg`}
+          width={540}
+          height={224}
+          alt="프로필 배경"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden md:-top-1 md:left-40 md:block lg:hidden"
+        />
+        <Image
+          src={`/myprofile_bg/s/${levelImage}.svg`}
+          width={241}
+          height={121}
+          alt="프로필 배경"
+          className="pointer-events-none absolute left-16 top-3 -z-10 md:hidden"
+        />
+        <IconButton
+          src="/icons/pencil.svg"
+          alt="연필 아이콘"
+          onClick={openEditModal}
+          className="relative z-20"
         >
-          <p>프로필 편집</p>
-        </Button>
-        <Modal
-          isOpen={isModal}
-          onClose={closeModalhandler}
-          customDimStyle="w-[400px]"
-        >
-          <div className="flex flex-col gap-5">
-            <p className="text-base font-bold">프로필 수정하기</p>
-
-            {/* 프로필 이미지 수정 input */}
-
-            <div className="h-[65px] w-[65px] rounded-full">
-              <div
-                className={`relative flex items-center justify-center overflow-hidden ${img ? 'w-65 h-65 rounded-full' : ''}`}
-              >
-                <Image
-                  src={img || '/profile_image_default.png'}
-                  width={65}
-                  height={65}
-                  alt="프로필 이미지 미리보기"
-                  className={img ? 'h-[65px] rounded-full' : ''}
-                />
-              </div>
-              <button type="button" onClick={triggerFileInput}>
-                <Image
-                  src="/edit.png"
-                  width={30}
-                  height={30}
-                  alt="프로필이미지 수정 버튼 이미지"
-                  className="absolute bottom-[180px] left-[65px]"
-                />
-              </button>
-              <input
-                type="file"
-                id="profile_image-input"
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileChange}
-              />
-            </div>
-
-            <Input
-              placeholder={user.nickname}
-              label="닉네임"
-              fontSize="14"
-              gap="8"
-            />
-            <div className="flex justify-center gap-3">
-              <Button variant="secondary">취소하기</Button>
-              <Button variant="primary" disabled>
-                수정하기
-              </Button>
-            </div>
-          </div>
-        </Modal>
+          프로필 편집
+        </IconButton>
+        <MyProfileEditModal
+          isModal={isEditModal}
+          setIsModal={closeEditModal}
+          nickname={user.nickname}
+          image={user.image}
+        />
       </div>
       <hr className="mb-7" />
       <div className="mx-2 md:mx-12">
         <nav className="flex gap-8 md:gap-6">
           {navLinks.map((link) => (
             <button
-              type="button"
               key={link.label}
-              className={`text-lg font-bold ${
-                activeTab === link.label ? 'border-b-2 border-black' : ''
+              type="button"
+              className={`pb-3 text-base font-bold md:text-lg ${
+                activeTab === link.label ? 'border-b-2 border-white' : ''
               }`}
               onClick={() => navClick(link.label)}
             >

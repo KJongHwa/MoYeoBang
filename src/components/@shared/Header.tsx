@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   const navLinks = [
-    { label: '모임 찾기', href: '/' },
+    { label: '모임 찾기', href: '/gathering' },
     { label: '찜한 모임', href: '/likes' },
     { label: '모든 리뷰', href: '/allreview' },
   ];
@@ -26,22 +26,26 @@ export default function Header() {
     ? { src: '/search.png', alt: '검색버튼' }
     : { src: '/search_delete.png', alt: '검색닫기버튼' };
 
-  const liDropdowns = [{ label: '마이페이지' }, { label: '로그아웃' }];
-
   return (
     <div className="relative z-10">
       <div className="fixed top-0 w-full">
-        <div className="mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b bg-secondary-bg px-5 md:h-[60px] md:px-[30px] xl:h-[60px] xl:px-[200px]">
+        <div className="bg-secondary-bg mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:h-[60px] xl:px-[200px]">
           {/* Navigation Links */}
-          <nav className="flex items-center gap-5 text-base font-bold text-white">
-            <Button type="button" variant="secondary" onClick={handleLogin}>
-              {user ? '로그인' : '로그아웃'}
-            </Button>
+          <nav className="text-text-default flex items-center gap-8 text-base">
+            <Link href="/">
+              <Image
+                src="/Logo_Large.png"
+                width={100}
+                height={23}
+                alt="로고 이미지"
+              />
+            </Link>
+
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="hidden rounded-xl px-4 py-1 transition duration-300 hover:bg-primary-40 md:block"
+                className="hover:bg-primary-40 hidden rounded-xl px-4 py-1 transition duration-300 md:block"
               >
                 {link.label}
               </Link>
@@ -63,7 +67,9 @@ export default function Header() {
                   <Button
                     type="button"
                     variant="primary"
-                    className="border border-white"
+                    padding="8"
+                    fontSize="14"
+                    className=" border border-white"
                     style={{
                       width: '120px',
                       padding: '10px 5px',
@@ -86,29 +92,26 @@ export default function Header() {
                     className="cursor-pointer"
                   />
                 </Link>
-                <ul className="absolute -right-11 top-full z-50 mt-2 hidden w-32 rounded-md bg-secondary-80 shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
-                  {liDropdowns.map((liDropdown) => (
-                    <li key={liDropdown.label}>
-                      {liDropdown.label === '마이페이지' ? (
-                        <Link href="/mypage">
-                          <button
-                            type="button"
-                            className="w-full px-4 py-2 text-left hover:bg-secondary-60"
-                          >
-                            {liDropdown.label}
-                          </button>
-                        </Link>
-                      ) : (
-                        <button
-                          onClick={handleLogin}
-                          type="button"
-                          className="w-full px-4 py-2 text-left hover:bg-secondary-60"
-                        >
-                          {liDropdown.label}
-                        </button>
-                      )}
-                    </li>
-                  ))}
+                <ul className="bg-secondary-80 absolute -right-11 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
+                  <li>
+                    <Link href="/mypage">
+                      <button
+                        type="button"
+                        className="hover:bg-secondary-60 w-full rounded-t-md px-4 py-2 text-left"
+                      >
+                        마이페이지
+                      </button>
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      className="hover:bg-secondary-60 w-full rounded-b-md px-4 py-2 text-left"
+                      onClick={handleLogin}
+                    >
+                      로그아웃
+                    </button>
+                  </li>
                 </ul>
               </div>
             )}
