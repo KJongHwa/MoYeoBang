@@ -15,7 +15,7 @@ import MyGathering from '../../components/mypage/myGathering';
 
 export default function MyPage() {
   const user = mockUser;
-  const levelImage = mockGatherings.length;
+  const levelImage = Math.min(mockGatherings.length, 6);
   const {
     isOpen: isEditModal,
     openModal: openEditModal,
@@ -45,8 +45,8 @@ export default function MyPage() {
   return (
     <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
       <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="bg-primary-30 relative mb-5 mt-8 flex items-center justify-between rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
-        <div className="text-text-primary flex flex-col gap-3">
+      <div className="bg-primary-30 relative z-0 mb-5 mt-8 flex items-center justify-between overflow-hidden rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
+        <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
             src={user.image || '/profile_image_default.png'}
             width={66}
@@ -60,16 +60,31 @@ export default function MyPage() {
           </div>
         </div>
         <Image
-          src={`/myprofile_bg/L/${levelImage}.png`}
+          src={`/myprofile_bg/l/${levelImage}.svg`}
           width={612}
           height={224}
           alt="프로필 배경"
-          className="-z-0 md:-my-8"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden lg:-top-1 lg:left-64 lg:block"
+        />
+        <Image
+          src={`/myprofile_bg/l/${levelImage}.svg`}
+          width={540}
+          height={224}
+          alt="프로필 배경"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden md:-top-1 md:left-40 md:block lg:hidden"
+        />
+        <Image
+          src={`/myprofile_bg/s/${levelImage}.svg`}
+          width={241}
+          height={121}
+          alt="프로필 배경"
+          className="pointer-events-none absolute left-16 top-3 -z-10 md:hidden"
         />
         <IconButton
           src="/icons/pencil.svg"
           alt="연필 아이콘"
           onClick={openEditModal}
+          className="relative z-20"
         >
           프로필 편집
         </IconButton>

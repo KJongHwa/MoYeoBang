@@ -21,11 +21,16 @@ export default function MyProfileEditModal({
   image,
 }: MyProfileEditModalProps) {
   const [img, setImg] = useState<string | null>(null);
+  const [updatedNickname, setUpdatedNickname] = useState<string>(nickname);
 
   const closeModalhandler = () => {
     setIsModal(false);
     setImg(null);
+    setUpdatedNickname(nickname);
   };
+
+  const isModified =
+    nickname !== updatedNickname && updatedNickname.trim() !== '';
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -53,6 +58,9 @@ export default function MyProfileEditModal({
     ) as HTMLInputElement;
     if (fileInput) fileInput.click();
   };
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdatedNickname(e.target.value);
+  };
 
   return (
     <Modal
@@ -62,27 +70,27 @@ export default function MyProfileEditModal({
     >
       <div className="flex flex-col gap-5">
         <p className="text-base font-bold">프로필 수정하기</p>
-        <div className="h-[65px] w-[65px] rounded-full">
+        <div className="rounded-full ">
           <div
             className={`relative flex items-center justify-center overflow-hidden ${
-              img ? 'w-65 h-65 rounded-full' : ''
+              img ? 'w-118 h-118 rounded-full' : ''
             }`}
           >
             <Image
               src={img || '/profile_image_default.png'}
-              width={65}
-              height={65}
+              width={118}
+              height={118}
               alt="프로필 이미지 미리보기"
-              className={img ? 'h-[65px] rounded-full' : ''}
+              className={img ? 'h-[118px] rounded-full' : ''}
             />
           </div>
           <button type="button" onClick={triggerFileInput}>
             <Image
               src="/edit.png"
-              width={30}
-              height={30}
+              width={37}
+              height={37}
               alt="프로필이미지 수정 버튼 이미지"
-              className="absolute bottom-[180px] left-[65px]"
+              className="absolute bottom-[200px] left-[230px]"
             />
           </button>
           <input
@@ -94,22 +102,19 @@ export default function MyProfileEditModal({
           />
         </div>
         <Input
-          placeholder={nickname}
           label="닉네임"
           fontSize="14"
           gap="8"
-          inputProps={{ value: nickname }}
+          inputProps={{
+            value: updatedNickname,
+            onChange: handleNicknameChange,
+          }}
         />
-        <div className="flex justify-center gap-3">
-          <Button
-            variant="secondary"
-            size="large"
-            font="14"
-            onClick={closeModalhandler}
-          >
+        <div className="flex w-full justify-center gap-3">
+          <Button variant="tertiary" fontSize="16" onClick={closeModalhandler}>
             취소하기
           </Button>
-          <Button variant="primary" size="large" font="14" disabled>
+          <Button variant="primary-gray" fontSize="16" disabled={!isModified}>
             수정하기
           </Button>
         </div>

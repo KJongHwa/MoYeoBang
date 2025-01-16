@@ -26,8 +26,6 @@ export default function Header() {
     ? { src: '/search.png', alt: '검색버튼' }
     : { src: '/search_delete.png', alt: '검색닫기버튼' };
 
-  const liDropdowns = [{ label: '마이페이지' }, { label: '로그아웃' }];
-
   return (
     <div className="relative z-10">
       <div className="fixed top-0 w-full">
@@ -95,28 +93,25 @@ export default function Header() {
                   />
                 </Link>
                 <ul className="bg-secondary-80 absolute -right-11 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
-                  {liDropdowns.map((liDropdown) => (
-                    <li key={liDropdown.label}>
-                      {liDropdown.label === '마이페이지' ? (
-                        <Link href="/mypage">
-                          <button
-                            type="button"
-                            className="hover:bg-secondary-60 w-full px-4 py-2 text-left"
-                          >
-                            {liDropdown.label}
-                          </button>
-                        </Link>
-                      ) : (
-                        <button
-                          onClick={handleLogin}
-                          type="button"
-                          className="hover:bg-secondary-60 w-full px-4 py-2 text-left"
-                        >
-                          {liDropdown.label}
-                        </button>
-                      )}
-                    </li>
-                  ))}
+                  <li>
+                    <Link href="/mypage">
+                      <button
+                        type="button"
+                        className="hover:bg-secondary-60 w-full rounded-t-md px-4 py-2 text-left"
+                      >
+                        마이페이지
+                      </button>
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      className="hover:bg-secondary-60 w-full rounded-b-md px-4 py-2 text-left"
+                      onClick={handleLogin}
+                    >
+                      로그아웃
+                    </button>
+                  </li>
                 </ul>
               </div>
             )}

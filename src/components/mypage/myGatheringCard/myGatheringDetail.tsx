@@ -89,7 +89,11 @@ export default function MyGatheringDetail({
           >
             예약취소하기
           </Button>
-          <DeleteModal isModal={isDeleteModal} setIsModal={closeDeleteModal} />
+          <DeleteModal
+            isModal={isDeleteModal}
+            setIsModal={closeDeleteModal}
+            classification="cancel"
+          />
         </div>
       </div>
     </div>

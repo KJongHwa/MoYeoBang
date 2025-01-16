@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -70,7 +72,7 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
             onGenreChange={(value) => handleFilterChange('genre', value)}
             selectedGenre={filters.genre}
           />
-          <div className="flex justify-between text-text-secondary">
+          <div className="text-text-secondary flex justify-between">
             <div className="flex justify-between">
               <div className="flex gap-2">
                 <LocationDropdown
