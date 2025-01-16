@@ -30,7 +30,7 @@ export default function SignUpForm() {
       [name]: value,
     }));
   };
-
+  // 퍼즐 디자인 공부
   return (
     <div className="relative flex h-full min-h-screen w-full items-center justify-center bg-[#17171c] pt-72">
       <div className="absolute inset-0 z-0">
