@@ -1,12 +1,12 @@
 'use client';
 
-import { hyphenYearMonthDay } from '@/utils/dateUtils';
+import { hyphenYearMonthDay, slashYearMonthDay } from '@/utils/dateUtils';
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import Button from './Button';
+import '@/styles/customCalendar.css';
 
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+type CalendarValue = Date | null | [Date | null, Date | null];
 
 interface CustomCalendarProps {
   isOpen: boolean;
@@ -33,7 +33,7 @@ export default function CustomCalendar({
 }: CustomCalendarProps) {
   const [date, setDate] = useState<string>(selectedDate);
 
-  const handleDateChange = (newDate: Value) => {
+  const handleDateChange = (newDate: CalendarValue) => {
     setDate(hyphenYearMonthDay(String(newDate)));
   };
 
@@ -44,20 +44,20 @@ export default function CustomCalendar({
   };
 
   const handleSubmit = () => {
-    onDateChange(date);
+    onDateChange(slashYearMonthDay(date));
     onClose();
   };
 
   // ESC 키 입력 시 캘린더 닫기 처리
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (isOpen && e.key === 'Escape') {
         onClose();
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, [isOpen, onClose]);
 
   return (
     <div

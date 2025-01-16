@@ -55,6 +55,7 @@ const config: Config = {
           default: '#858899',
         },
         point: {
+          label: '#1F2937',
           tag: '#252730',
           dropdown: '#252730',
         },

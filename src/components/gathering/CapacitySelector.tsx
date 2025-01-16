@@ -26,7 +26,7 @@ export default function CapacitySelector({
           width={24}
           height={24}
           onClick={() => updateCapacity('decrement')}
-          className={`${capacity <= 2 ? 'cursor-default opacity-50' : 'cursor-pointer'}`}
+          className={`${capacity <= 2 ? 'cursor-default opacity-20' : 'cursor-pointer'}`}
         />
         <span className="mx-5 text-5xl font-bold">{capacity}</span>
         <Image
@@ -35,7 +35,7 @@ export default function CapacitySelector({
           width={24}
           height={24}
           onClick={() => updateCapacity('increment')}
-          className={`${capacity >= 6 ? 'cursor-default opacity-50' : 'cursor-pointer'}`}
+          className={`${capacity >= 6 ? 'cursor-default opacity-20' : 'cursor-pointer'}`}
         />
       </div>
     </div>

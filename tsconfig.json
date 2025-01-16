@@ -30,7 +30,8 @@
       "@/types/*": ["./src/types/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/axios/*": ["./src/axios/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+      "@/styles/*": ["./src/styles/*"]
     }
   },
   "include": [
