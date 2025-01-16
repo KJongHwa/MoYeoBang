@@ -1,14 +1,15 @@
 'use client';
 
-import { hyphenYearMonthDay, slashYearMonthDay } from '@/utils/dateUtils';
+import { hyphenYearMonthDay } from '@/utils/dateUtils';
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
+import '@/styles/dateTimeCalendar.css';
+import ScrollTimePicker from './ScrollTimePicker';
 import Button from './Button';
-import '@/styles/customCalendar.css';
 
 type CalendarValue = Date | null | [Date | null, Date | null];
 
-interface CustomCalendarProps {
+interface DateTimeCalendarProps {
   isOpen: boolean;
   selectedDate: string;
   onClose(): void;
@@ -17,21 +18,26 @@ interface CustomCalendarProps {
 }
 
 /**
- * 공통 Calendar 컴포넌트
+ * 공통 DateTime Calendar 컴포넌트
  * @param isOpen 캘린더의 열린 상태 (true), 닫힌 상태 (false)를 가지는 boolean state
  * @param onClose 캘린더의 닫는 기능을 실행하는 함수
  * @param onDateChange 캘린더의 값을 교환하는 함수
  * @param layout 캘린더의 레이아웃을 수정하기 위한 tailwind css className
  */
 
-export default function CustomCalendar({
+export default function DateTimeCalendar({
   isOpen,
   selectedDate,
   onClose,
   onDateChange,
   layout,
-}: CustomCalendarProps) {
+}: DateTimeCalendarProps) {
   const [date, setDate] = useState<string>(selectedDate);
+  const [selectedHour, setSelectedHour] = useState(9);
+  const [selectedMinute, setSelectedMinute] = useState(0);
+  const [selectedPeriod, setSelectedPeriod] = useState('PM');
+
+  const formatDate = `${date} ${selectedPeriod} ${selectedHour.toString().padStart(2, '0')}:${selectedMinute.toString().padStart(2, '0')}`;
 
   const handleDateChange = (newDate: CalendarValue) => {
     setDate(hyphenYearMonthDay(String(newDate)));
@@ -44,7 +50,7 @@ export default function CustomCalendar({
   };
 
   const handleSubmit = () => {
-    onDateChange(slashYearMonthDay(date));
+    onDateChange(formatDate);
     onClose();
   };
 
@@ -61,18 +67,28 @@ export default function CustomCalendar({
 
   return (
     <div
-      className={`${isOpen ? '' : 'hidden'} ${layout} border-1 absolute z-100 flex h-[326px] w-[336px] flex-col rounded-lg border-gray-200 bg-white px-6 py-[10px] text-black shadow-xl`}
+      className={`${isOpen ? '' : 'hidden'} ${layout} border-1 absolute z-100 flex flex-col rounded-[10px] border-default-tertiary bg-default-tertiary py-5 pl-6 pr-6 text-black shadow-xl md:pr-0`}
     >
-      <Calendar
-        onChange={handleDateChange}
-        value={date}
-        calendarType="gregory"
-        locale="en-us"
-        className="custom-calendar"
-        next2Label={null}
-        prev2Label={null}
-        minDetail="year"
-      />
+      <div className="flex flex-col md:h-[332px] md:flex-row">
+        <Calendar
+          onChange={handleDateChange}
+          value={date}
+          calendarType="gregory"
+          locale="en-us"
+          next2Label={null}
+          prev2Label={null}
+          minDetail="year"
+        />
+        <ScrollTimePicker
+          selectedHour={selectedHour}
+          selectedMinute={selectedMinute}
+          selectedPeriod={selectedPeriod}
+          onHourChange={setSelectedHour}
+          onMinuteChange={setSelectedMinute}
+          onPeriodChange={setSelectedPeriod}
+        />
+      </div>
+
       <div className="mx-auto flex w-[250px] items-center justify-between">
         <Button
           className="w-[122px]"

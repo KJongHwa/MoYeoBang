@@ -3,16 +3,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+
 import { matchFilter } from '@/utils/filterUtils';
 import { sortGatherings } from '@/utils/sortUtils';
 import { sortList } from '@/constants/sortList';
 
+import EmptyElement from '@/components/@shared/EmptyElement';
 import GatheringCard from '@/components/gathering/GatheringCard';
 import DateDropdown from '@/components/allReview/DateDropdown';
 import LocationDropdown from '@/components/allReview/LocationDropdown';
 import LevelDropdown from '@/components/gathering/LevelDropdown';
 import SortDropdown from '@/components/@shared/SortDropdown';
-import GenreFilter from '../@shared/GenreFilter';
+import GenreFilter from '@/components/@shared/GenreFilter';
 
 interface GatheringListProps {
   gatherings: any;
@@ -95,10 +97,20 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
       </section>
 
       <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
-        {filteredGatherings.map((gathering: any) => (
-          <GatheringCard key={gathering.gatheringId} {...gathering} />
-        ))}
+        {filteredGatherings.length > 0
+          ? filteredGatherings.map((gathering: any) => (
+              <GatheringCard key={gathering.gatheringId} {...gathering} />
+            ))
+          : null}
       </section>
+
+      {filteredGatherings.length === 0 && (
+        <EmptyElement>
+          아직 모임이 없어요,
+          <br />
+          지금 바로 모임을 만들어보세요
+        </EmptyElement>
+      )}
     </>
   );
 }
