@@ -101,22 +101,3 @@ export interface LikesGatheringListProps {
     participantCount: number;
   }[];
 }
-
-export interface LikesGatheringListProps {
-  likesGatherings: {
-    gatheringId: number;
-    userId: number;
-    name: string;
-    location: string;
-    themeName: string;
-    image: string;
-    level: string;
-    genre: string;
-    playtime: number;
-    map: string;
-    dateTime: string;
-    registrationEnd: string;
-    capacity: number;
-    participantCount: number;
-  }[];
-}
