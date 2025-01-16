@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { matchFilter } from '@/utils/filterUtils';
-
 import DateDropdown from '@/components/allReview/DateDropdown';
 import LocationDropdown from '@/components/allReview/LocationDropdown';
 import LevelDropdown from '@/components/gathering/LevelDropdown';
-import GenreFilter from './GenreFilter';
+import GenreFilter from '../@shared/GenreFilter';
 
 interface GatheringFiltersProps {
   gatherings: any;

@@ -31,3 +31,14 @@ export const slashYearMonthDay = (dateString: string) => {
   const date = new Date(dateString);
   return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
 };
+
+// EX) 00:00:00
+export const getToday = () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+};
+
+export const getDateTime = (dateString?: string): number => {
+  return dateString ? new Date(dateString).getTime() : 0;
+};

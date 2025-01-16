@@ -12,6 +12,7 @@ type TextAreaProps = {
 /**
  * TextAreaProps Details
  *
+ * @param label
  * @param labelText label 값과 화면에 표시되는 문구를 다르게 설정할 경우 사용
  * @param isError 에러 존재 여부
  * @param errorMessage 에러가 존재할 경우 표시할 에러 메세지
@@ -44,17 +45,21 @@ export default function TextArea({
         </label>
       )}
       <div
-        className={`relative h-[120px] w-full overflow-hidden rounded-lg border-2 bg-gray-50 px-4 py-[10px] ${isError ? 'border-red-600 focus-within:border-red-600' : 'border-gray-50 focus-within:border-gray-200'}`}
+        className={`relative h-[120px] w-full overflow-hidden rounded-lg bg-secondary-5 px-4 py-[10px] outline outline-1 ${isError ? 'outline-status-danger focus-within:outline-status-danger' : 'outline-transparent focus-within:outline-default-primary'}`}
       >
         <textarea
           ref={textAreaRef}
           id={textAreaId}
           placeholder={placeholder}
-          className="min-h-[100px] w-full resize-none overflow-auto bg-transparent leading-6 text-gray-700 outline-none"
+          className="min-h-[100px] w-full resize-none overflow-auto bg-transparent font-medium leading-6 text-secondary-70 outline-none placeholder:text-secondary-50"
           {...inputProps}
         />
       </div>
-      {isError && <p className="font-semibold text-red-600">{errorMessage}</p>}
+      {isError && (
+        <p className="text-xs font-semibold text-status-danger md:text-sm">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 }
