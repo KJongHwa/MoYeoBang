@@ -1,10 +1,20 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import HeaderTitle from '@/components/@shared/HeaderTitle';
 import PageContainer from '@/components/@shared/PageContainer';
 import LikesGatheringList from '@/components/likes/LikesGatheringList';
-import { mockGatherings } from '@/data/mockGatherings';
 
 export default function LikeGathering() {
-  const likesGatherings = mockGatherings;
+  const [likesGatherings, setLikesGatherings] = useState([]);
+
+  useEffect(() => {
+    const getLocalStorageItem = localStorage.getItem('favorites');
+    const getLocalStorageArray = getLocalStorageItem
+      ? JSON.parse(getLocalStorageItem)
+      : [];
+    setLikesGatherings(getLocalStorageArray);
+  }, []);
 
   return (
     <PageContainer>
