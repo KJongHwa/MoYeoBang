@@ -36,7 +36,6 @@ export default function NearDeadlines({ gatherings }: GatheringListProps) {
               width={204}
               height={158}
               quality={100}
-              layout="fit"
               className="mt-auto hidden max-h-full md:block xl:hidden"
             />
           </div>
@@ -70,7 +69,6 @@ export default function NearDeadlines({ gatherings }: GatheringListProps) {
           quality={100}
           width={487}
           height={466}
-          layout="responsive"
           className="mt-auto hidden md:hidden xl:block xl:max-h-[466px] xl:max-w-[457px]"
         />
       </div>
