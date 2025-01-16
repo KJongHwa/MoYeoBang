@@ -61,10 +61,10 @@ export default function Dropdown({
         className={clsx(
           'h-[42px] w-[120px]',
           'relative',
-          'border-2 border-[#808080]',
+          'border-2 border-default-tertiary',
           'rounded-xl',
           'px-4 py-2',
-          'bg-[#2C2C2C]',
+          'bg-default-tertiary',
           'flex items-center',
           'gap-[2px]',
           { 'w-full flex-row-reverse': icon !== '/chevron-down.svg' },
@@ -72,7 +72,7 @@ export default function Dropdown({
         )}
       >
         <span
-          className={`${icon !== '/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-sm font-medium text-white`}
+          className={`${icon !== '/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-sm font-medium text-secondary-40`}
         >
           {selectedOption.label}
         </span>
@@ -94,18 +94,18 @@ export default function Dropdown({
             'absolute right-0 z-10 w-[120px]',
             'mt-2',
             'rounded-xl',
-            'bg-[#404048]',
+            'bg-secondary-80',
             'overflow-hidden shadow-lg'
           )}
         >
           {options.map((option) => (
-            <li key={option.value} className="p-0">
+            <li key={option.value} className="relative p-0">
               <button
                 type="button"
                 onClick={() => handleSelect(option)}
                 className={clsx(
                   'w-full cursor-pointer px-4 py-2 text-left text-sm',
-                  'text-white hover:bg-[#4A4A52]',
+                  'text-white-lg rounded-[9px] hover:rounded-[9px] hover:bg-default-primary',
                   'transition-colors duration-150'
                 )}
               >
