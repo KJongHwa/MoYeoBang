@@ -39,7 +39,21 @@ export default function GatheringSlot({
           {name}
         </p>
       </Link>
-      <PuzzleButton layout="slot" gatheringId={gatheringId} />
+      <PuzzleButton
+        layout="slot"
+        gathering={{
+          gatheringId,
+          registrationEnd,
+          name,
+          capacity,
+          participantCount,
+          image,
+          dateTime: '',
+          level: '',
+          themeName: '',
+          location: '',
+        }}
+      />
     </figure>
   );
 }
