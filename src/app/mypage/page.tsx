@@ -5,7 +5,7 @@
 import { mockUser } from '@/data/mockUser';
 import { mockGatherings } from '@/data/mockGatherings';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/IconButton';
 import { useModal } from '@/hooks/useModal';
@@ -15,7 +15,7 @@ import MyGathering from '../../components/mypage/myGathering';
 
 export default function MyPage() {
   const user = mockUser;
-  const levelImage = 6;
+  const levelImage = Math.min(mockGatherings.length, 6);
   const {
     isOpen: isEditModal,
     openModal: openEditModal,
@@ -32,7 +32,6 @@ export default function MyPage() {
   ];
 
   const [activeTab, setActiveTab] = useState(navLinks[0].label);
-  const [isMobile, setIsMobile] = useState(false);
 
   const navClick = (label: string) => {
     setActiveTab(label);
@@ -42,19 +41,6 @@ export default function MyPage() {
     const activeLink = navLinks.find((link) => link.label === activeTab);
     return activeLink?.component;
   };
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-
-    return () => {
-      window.removeEventListener('resize', checkScreenSize);
-    };
-  }, []);
 
   return (
     <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
@@ -74,11 +60,25 @@ export default function MyPage() {
           </div>
         </div>
         <Image
-          src={`/myprofile_bg/${isMobile ? 's' : 'l'}/${levelImage}.svg`}
-          width={isMobile ? 241 : 612}
-          height={isMobile ? 121 : 224}
+          src={`/myprofile_bg/l/${levelImage}.svg`}
+          width={612}
+          height={224}
           alt="프로필 배경"
-          className="pointer-events-none absolute left-16 top-3 -z-10 md:-top-1 md:left-64"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden lg:-top-1 lg:left-64 lg:block"
+        />
+        <Image
+          src={`/myprofile_bg/l/${levelImage}.svg`}
+          width={540}
+          height={224}
+          alt="프로필 배경"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden md:-top-1 md:left-40 md:block lg:hidden"
+        />
+        <Image
+          src={`/myprofile_bg/s/${levelImage}.svg`}
+          width={241}
+          height={121}
+          alt="프로필 배경"
+          className="pointer-events-none absolute left-16 top-3 -z-10 md:hidden"
         />
         <IconButton
           src="/icons/pencil.svg"
