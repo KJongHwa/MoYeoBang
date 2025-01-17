@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import Link from 'next/link';
 
 export default function HeaderNavBar({ onClose }: { onClose: () => void }) {
