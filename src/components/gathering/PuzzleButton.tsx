@@ -73,8 +73,8 @@ export default function PuzzleButton({
           height={24}
           quality={100}
           className={clsx('object-contain', {
-            'm-1 h-4 w-4 md:m-0 md:h-6 md:w-6': layout === 'card',
-            'm-4 h-6 w-6 md:m-0': layout === 'slot',
+            'h-4 w-4 p-1 md:h-6 md:w-6 md:p-0': layout === 'card',
+            'h-6 w-6 p-4 md:p-0': layout === 'slot',
           })}
         />
       </button>
