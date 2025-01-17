@@ -1,11 +1,12 @@
-name: Sync dev branch
+name: Sync dev and main branches
 
 on:
-  pull_request:
-    - dev # dev 브랜치에 PR이 올라올 때
+  push:
+    branches:
+      - dev # dev에 변경사항이 있는 경우
 
 jobs:
-  sync-dev:
+  sync-branches:
     runs-on: ubuntu-latest
     steps:
       # 원격 레포지토리 체크아웃
@@ -16,11 +17,20 @@ jobs:
           ref: dev # 원본 dev 브랜치를 가져옴
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      # 개인 레포지토리로 푸시
-      - name: Push changes to forked repository
+      # 개인 레포지토리 dev 브랜치로 푸시
+      - name: Push changes to forked dev branch
         run: |
           git config user.name "KJongHwa"
           git config user.email "dblls0724@naver.com"
           git remote add forked https://github.com/KJongHwa/MoYeoBang.git
           git checkout dev
           git push forked dev --force
+
+      # 개인 레포지토리 main 브랜치로 동기화
+      - name: Push changes to forked main branch
+        run: |
+          git config user.name "KJongHwa"
+          git config user.email "dblls0724@naver.com"
+          git checkout main || git checkout -b main
+          git merge dev --no-edit
+          git push forked main --force
