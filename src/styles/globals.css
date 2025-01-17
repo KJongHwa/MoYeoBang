@@ -72,6 +72,18 @@
   background: #887efb;
 }
 
+.scrollbar-hidden {
+  overflow-x: auto;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;
+}
+
 @layer utilities {
   .bg-secondary-80 {
     background-color: #3e404c;
