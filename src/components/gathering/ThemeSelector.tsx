@@ -68,7 +68,7 @@ export default function ThemeSelector({
         </div>
       ) : (
         searchAttempted && (
-          <p className="w-full rounded-lg bg-secondary-20 px-3 py-2 text-secondary-5 text-secondary-80">
+          <p className="w-full rounded-lg bg-secondary-20 px-3 py-2 text-secondary-80">
             검색어가 없어요. 다시 입력해 주세요.
           </p>
         )
