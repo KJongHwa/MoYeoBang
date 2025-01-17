@@ -6,15 +6,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import Button from './Button';
+import HeaderNavBar from './HeaderNavbar';
 
 export default function Header() {
   const [user, setUser] = useState(true);
   const [searching, setSearching] = useState(true);
+  const [mobileNav, setMobileNav] = useState(false);
   const handleLogin = () => {
     setUser(!user);
   };
   const handleSearching = () => {
     setSearching(!searching);
+  };
+  const handleMobileNav = () => {
+    setMobileNav(!mobileNav);
+  };
+
+  const closeMobileNav = () => {
+    setMobileNav(false);
   };
 
   const navLinks = [
@@ -23,108 +32,109 @@ export default function Header() {
     { label: '모든 리뷰', href: '/allreview' },
   ];
   const searchImg = searching
-    ? { src: '/search.png', alt: '검색버튼' }
-    : { src: '/search_delete.png', alt: '검색닫기버튼' };
+    ? { src: '/icons/search.svg', alt: '검색버튼' }
+    : { src: '/icons/ic_delete.svg', alt: '검색닫기버튼' };
 
   return (
-    <div className="relative z-10">
-      <div className="fixed top-0 w-full">
-        <div className="bg-secondary-bg mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:h-[60px] xl:px-[200px]">
-          {/* Navigation Links */}
-          <nav className="text-text-default flex items-center gap-8 text-base">
-            <Link href="/">
-              <Image
-                src="/Logo_Large.png"
-                width={100}
-                height={23}
-                alt="로고 이미지"
-              />
-            </Link>
-
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="hover:bg-primary-40 hidden rounded-xl px-4 py-1 transition duration-300 md:block"
-              >
-                {link.label}
+    <div>
+      <div className="relative z-50">
+        <div className="fixed top-0 w-full">
+          <div className="bg-secondary-bg border-secondary-70 mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:px-[200px]">
+            {/* Navigation Links */}
+            <nav className="text-text-default flex items-center gap-8 text-base">
+              <Link href="/">
+                <Image
+                  src="/Logo_Large.png"
+                  width={100}
+                  height={23}
+                  alt="로고 이미지"
+                />
               </Link>
-            ))}
-          </nav>
 
-          <div className="flex gap-5">
-            <button type="button" onClick={handleSearching}>
-              <Image
-                src={searchImg.src}
-                width={24}
-                height={24}
-                alt={searchImg.alt}
-              />
-            </button>
-            {user ? (
-              <div className="flex gap-7 text-base font-bold text-white">
-                <Link href="/login">
-                  <Button
-                    type="button"
-                    variant="primary"
-                    padding="8"
-                    fontSize="14"
-                    className=" border border-white"
-                    style={{
-                      width: '120px',
-                      padding: '10px 5px',
-                      backgroundColor: '#17171C',
-                    }}
-                    onClick={handleLogin}
-                  >
-                    로그인/회원가입
-                  </Button>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="hover:bg-primary-40 hidden rounded-xl px-4 py-1 transition duration-300 md:block"
+                >
+                  {link.label}
                 </Link>
-              </div>
-            ) : (
-              <div className="group relative flex text-base font-bold text-white">
-                <Link href="/mypage">
-                  <Image
-                    src="/profile_image_default.png"
-                    width={40}
-                    height={40}
-                    alt="마이페이지 이미지"
-                    className="cursor-pointer"
-                  />
-                </Link>
-                <ul className="bg-secondary-80 absolute -right-11 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
-                  <li>
-                    <Link href="/mypage">
-                      <button
-                        type="button"
-                        className="hover:bg-secondary-60 w-full rounded-t-md px-4 py-2 text-left"
-                      >
-                        마이페이지
-                      </button>
-                    </Link>
-                  </li>
-                  <li>
-                    <button
+              ))}
+            </nav>
+
+            <div className="flex items-center gap-5">
+              <button type="button" onClick={handleSearching}>
+                <Image
+                  src={searchImg.src}
+                  width={24}
+                  height={24}
+                  alt={searchImg.alt}
+                />
+              </button>
+              {user ? (
+                <div className="flex gap-7 text-base font-bold text-white">
+                  <Link href="/login">
+                    <Button
                       type="button"
-                      className="hover:bg-secondary-60 w-full rounded-b-md px-4 py-2 text-left"
+                      variant="tertiary-gray"
+                      padding="8"
+                      fontSize="14"
                       onClick={handleLogin}
                     >
-                      로그아웃
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            )}
-            <Image
-              src="/hamburger.png"
-              width={20}
-              height={20}
-              alt="모바일네비게이션바"
-              className="md:hidden"
-            />
+                      로그인/회원가입
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                <div className="group relative flex text-base font-bold text-white">
+                  <Link href="/mypage">
+                    <Image
+                      src="/profile_image_default.png"
+                      width={24}
+                      height={24}
+                      alt="마이페이지 이미지"
+                      className="cursor-pointer"
+                    />
+                  </Link>
+                  <ul className="bg-secondary-80 absolute -right-11 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
+                    <li>
+                      <Link href="/mypage">
+                        <button
+                          type="button"
+                          className="hover:bg-secondary-60 w-full rounded-t-md px-4 py-2 text-left"
+                        >
+                          마이페이지
+                        </button>
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="hover:bg-secondary-60 w-full rounded-b-md px-4 py-2 text-left"
+                        onClick={handleLogin}
+                      >
+                        로그아웃
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+              <button type="button" onClick={handleMobileNav}>
+                <Image
+                  src={
+                    mobileNav ? '/icons/ic_delete.svg' : '/icons/mobile_nav.svg'
+                  }
+                  width={24}
+                  height={24}
+                  alt="모바일네비게이션바"
+                  className="md:hidden"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      {mobileNav && <HeaderNavBar onClose={closeMobileNav} />}
     </div>
   );
 }
