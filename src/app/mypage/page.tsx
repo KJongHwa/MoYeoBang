@@ -43,9 +43,9 @@ export default function MyPage() {
   };
 
   return (
-    <main className="relative top-[100px] mx-10 xl:mx-auto xl:w-[1166px]">
-      <p className="text-xl font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="bg-primary-30 relative z-0 mb-5 mt-8 flex items-center justify-between overflow-hidden rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
+    <main className="relative top-[100px] mx-4 md:mx-6 xl:mx-auto xl:w-[1166px]">
+      <p className="text-[18px] font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
+      <div className="bg-primary-30 relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
             src={user.image || '/profile_image_default.png'}
@@ -80,30 +80,36 @@ export default function MyPage() {
           alt="프로필 배경"
           className="pointer-events-none absolute left-12 top-2 -z-10 md:hidden"
         />
-        <IconButton
-          src="/icons/pencil.svg"
-          alt="연필 아이콘"
-          onClick={openEditModal}
-          className="relative z-20"
-        >
-          프로필 편집
-        </IconButton>
-        <MyProfileEditModal
-          isModal={isEditModal}
-          setIsModal={closeEditModal}
-          nickname={user.nickname}
-          image={user.image}
-        />
+
+        <div className="mt-20">
+          <IconButton
+            src="/icons/pencil.svg"
+            alt="연필 아이콘"
+            onClick={openEditModal}
+            className="absolute z-20 mt-10"
+          >
+            프로필 편집
+          </IconButton>
+          <MyProfileEditModal
+            isModal={isEditModal}
+            setIsModal={closeEditModal}
+            nickname={user.nickname}
+            image={user.image}
+          />
+        </div>
       </div>
-      <hr className="mb-7" />
-      <div className="mx-2 md:mx-12">
-        <nav className="flex gap-8 md:gap-6">
+
+      <hr className="mb-9 border-[#646464]" />
+      <div className="">
+        <nav className="ml-3 flex items-center gap-8 md:gap-6">
           {navLinks.map((link) => (
             <button
               key={link.label}
               type="button"
-              className={`pb-3 text-base font-bold md:text-lg ${
-                activeTab === link.label ? 'border-b-2 border-white' : ''
+              className={`text-secondary-60 pb-2 text-[18px] font-bold ${
+                activeTab === link.label
+                  ? 'border-b-2 border-white !text-white'
+                  : ''
               }`}
               onClick={() => navClick(link.label)}
             >
@@ -111,7 +117,7 @@ export default function MyPage() {
             </button>
           ))}
         </nav>
-        <div className="mx-3 mb-10 mt-8">{renderActiveComponent()}</div>
+        <div className=" mb-10 mt-8">{renderActiveComponent()}</div>
       </div>
     </main>
   );
