@@ -1,9 +1,9 @@
 name: Sync dev and main branches
 
 on:
-  push:
+  pull_request:
     branches:
-      - dev # dev에 변경사항이 있는 경우
+      - dev # dev 붙이려는 PR이 등록 될 때
 
 jobs:
   sync-branches:
