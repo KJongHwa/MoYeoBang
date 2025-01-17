@@ -54,7 +54,7 @@
 /* scrollbar style */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 12px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -63,13 +63,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6659f4;
+  background: #565295;
   border-radius: 24px;
-  border: 2px solid #252730;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #887efb;
+  border: 1px solid #252730;
 }
 
 .scrollbar-hidden {
