@@ -70,7 +70,7 @@ export default function MyReviewCard({
             </div>
           </div>
 
-          <h2 className="text-xs font-medium text-[#b5b5b5]">
+          <h2 className="text-secondary-40 text-xs font-medium">
             {Gathering.themeName}
           </h2>
           <p className="text-sm font-medium text-white md:mt-5">{comment}</p>
