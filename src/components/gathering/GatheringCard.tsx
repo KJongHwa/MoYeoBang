@@ -8,7 +8,7 @@ import { formatDate, extractHour } from '@/utils/dateUtils';
 import { findLabelByValue } from '@/utils/mappingUtils';
 import ProgressBar from '@/components/@shared/ProgressBar';
 import { GatheringProps } from '@/types/gathering.types';
-import { locationList } from '@/constants/themeList';
+import { locationList, levelToKorean } from '@/constants/themeList';
 
 import AlarmBadge from './UI/AlarmBadge';
 import GatheringBadge from './UI/GatheringBadge';
@@ -43,13 +43,13 @@ export default function GatheringCard({
             <div className="flex justify-between">
               <div className="flex items-center gap-1 text-sm md:gap-[6px]">
                 <GatheringBadge
-                  icon={level as '고급' | '중급' | '초급'}
+                  icon={level as 'high' | 'middle' | 'low'}
                   variant="secondary"
                   shape="round"
                   border="primary"
                   fontColor="primary"
                 >
-                  {level}
+                  {levelToKorean[level]}
                 </GatheringBadge>
                 <GatheringBadge variant="primary" fontColor="secondary">
                   {findLabelByValue(location, locationList)}

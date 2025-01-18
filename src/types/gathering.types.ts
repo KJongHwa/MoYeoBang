@@ -54,10 +54,10 @@ export interface GatheringRequestBody {
 export interface GatheringProps {
   card: {
     gatheringId: number;
-    location: string;
+    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
     dateTime: string;
     registrationEnd: string;
-    level: string;
+    level: 'high' | 'middle' | 'low';
     name: string;
     themeName: string;
     capacity: string;
@@ -65,7 +65,7 @@ export interface GatheringProps {
     image: string;
   };
   badge: {
-    icon?: '고급' | '중급' | '초급';
+    icon?: 'high' | 'middle' | 'low';
     shape?: 'default' | 'round';
     variant?: 'primary' | 'secondary' | 'tertiary';
     border?: 'primary';
