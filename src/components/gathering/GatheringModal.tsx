@@ -9,9 +9,9 @@ import Input from '@/components/@shared/Input';
 import { themeNameList } from '@/constants/themeList';
 import { INIT_GATHRING } from '@/constants/initialValues';
 
-import LocationSelector from './LocationSelector';
-import CapacitySelector from './CapacitySelector';
-import ThemeSelector from './ThemeSelector';
+import LocationSelector from './selector/LocationSelector';
+import CapacitySelector from './selector/CapacitySelector';
+import ThemeSelector from './selector/ThemeSelector';
 
 interface GatheringModalProps {
   isOpen: boolean;
@@ -39,6 +39,7 @@ export default function GatheringModal({
   const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
   const [dateTimeError, setDateTimeError] = useState<string>('');
   const [registrationEndError, setRegistrationEndError] = useState<string>('');
+  const [searchMessage, setSearchMessage] = useState<string>('');
 
   const { themeName, capacity, dateTime, registrationEnd } = watchFields([
     'themeName',
@@ -58,15 +59,26 @@ export default function GatheringModal({
   };
 
   const searchThemes = () => {
-    if (inputThemeName.length > 0 && location) {
+    setSearchAttempted(true);
+
+    if (inputThemeName.length < 2) {
+      setSearchMessage('2글자 이상 입력해주세요.');
+      setFilteredThemes([]);
+      return;
+    }
+
+    if (location) {
       const filtered = themeNameList[location]?.theme.filter((theme) =>
         theme.toLowerCase().includes(inputThemeName.toLowerCase())
       );
-      setSearchAttempted(true);
+
+      if (filtered.length === 0) {
+        setSearchMessage('검색어가 없어요. 다시 입력해 주세요.');
+      } else {
+        setSearchMessage('');
+      }
+
       setFilteredThemes(filtered);
-    } else {
-      setSearchAttempted(false);
-      setFilteredThemes([]);
     }
   };
 
@@ -143,6 +155,7 @@ export default function GatheringModal({
         />
         {location && (
           <ThemeSelector
+            searchMessage={searchMessage}
             location={location}
             inputThemeName={inputThemeName}
             setInputThemeName={setInputThemeName}

@@ -10,8 +10,8 @@ import ProgressBar from '@/components/@shared/ProgressBar';
 import { GatheringProps } from '@/types/gathering.types';
 import { locationList } from '@/constants/themeList';
 
-import AlarmBadge from './AlarmBadge';
-import GatheringBadge from './GatheringBadge';
+import AlarmBadge from './UI/AlarmBadge';
+import GatheringBadge from './UI/GatheringBadge';
 import PuzzleButton from './PuzzleButton';
 
 export default function GatheringCard({
