@@ -1,30 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import FormField from '@/components/@shared/form/Formfield';
+import { authApi } from '@/axios/auth';
 
 interface LoginFormData {
   email: string;
   password: string;
 }
 
-export default function LoginForm() {
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: '',
-    password: '',
+function LoginForm() {
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    mode: 'onSubmit',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await authApi.login({
+        email: data.email,
+        password: data.password,
+      });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // 로그인 처리 로직
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem(
+        'userInfo',
+        JSON.stringify({
+          email: data.email,
+          nickname: response.data.nickname, // API 응답에서 받아온 닉네임
+        })
+      );
+      router.push('/');
+    } catch (error) {
+      // 에러 처리 제외
+    }
   };
 
   return (
@@ -32,14 +48,24 @@ export default function LoginForm() {
       <div className="relative z-10 flex h-auto w-full max-w-md flex-col items-center justify-center rounded-lg bg-[#2b2d36] px-6 py-8 shadow-lg">
         <h2 className="text-2xl font-bold text-white">로그인</h2>
 
-        <form onSubmit={handleSubmit} className="mt-6 w-full space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-6 w-full space-y-4"
+        >
           <FormField
             id="email"
             label="이메일"
             type="email"
             placeholder="이메일을 입력해주세요."
-            value={formData.email}
-            onChange={handleChange}
+            {...register('email', {
+              required: true,
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: '올바른 이메일 형식이 아닙니다',
+              },
+            })}
+            isError={!!errors.email}
+            errorMessage={errors.email ? '이메일을 입력해주세요' : ''}
           />
           <FormField
             id="password"
@@ -47,8 +73,9 @@ export default function LoginForm() {
             type="password"
             placeholder="비밀번호를 입력해주세요."
             showPasswordIcon
-            value={formData.password}
-            onChange={handleChange}
+            {...register('password', { required: true })}
+            isError={!!errors.password}
+            errorMessage={errors.password ? '비밀번호를 입력해주세요' : ''}
           />
 
           <button
@@ -61,11 +88,16 @@ export default function LoginForm() {
 
         <p className="mt-4 text-sm text-secondary-50">
           아직 계정이 없으신가요?{' '}
-          <a href="/signup" className="text-primary-20 hover:text-status-hover">
+          <Link
+            href="/signup"
+            className="text-primary-20 hover:text-status-hover"
+          >
             회원가입
-          </a>
+          </Link>
         </p>
       </div>
     </div>
   );
 }
+
+export default LoginForm;
