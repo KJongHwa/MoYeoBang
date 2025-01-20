@@ -4,16 +4,19 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import useToast from '@/hooks/useToast';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from './Button';
 import HeaderNavBar from './HeaderNavbar';
+import Toast from './Toast';
 
 export default function Header() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searching, setSearching] = useState(true);
   const [mobileNav, setMobileNav] = useState(false);
+  const { toastMessage, toastVisible, toastType, handleSuccess } = useToast();
 
   useEffect(() => {
     const checkLoginStatus = () => {
@@ -51,7 +54,7 @@ export default function Header() {
     localStorage.removeItem('userInfo');
     setIsLoggedIn(false);
     closeMobileNav();
-    alert('로그아웃 되었습니다.');
+    handleSuccess('로그아웃 되었습니다.');
     router.push('/');
   };
 
@@ -68,9 +71,9 @@ export default function Header() {
     <div>
       <div className="relative z-50">
         <div className="fixed top-0 w-full">
-          <div className="bg-secondary-bg border-secondary-70 mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:px-[200px]">
+          <div className="mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b border-secondary-70 bg-secondary-bg px-5 md:h-[60px] md:px-[30px] xl:px-[200px]">
             {/* Navigation Links */}
-            <nav className="text-text-default flex items-center gap-8 text-base">
+            <nav className="flex items-center gap-8 text-base text-text-default">
               <Link href="/" onClick={closeMobileNav}>
                 <Image
                   src="/Logo.svg"
@@ -84,7 +87,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="hover:bg-primary-40 hidden rounded-xl px-4 py-1 transition duration-300 md:block"
+                  className="hidden rounded-xl px-4 py-1 transition duration-300 hover:bg-primary-40 md:block"
                 >
                   {link.label}
                 </Link>
@@ -124,12 +127,12 @@ export default function Header() {
                     height={24}
                     alt="마이페이지 이미지"
                   />
-                  <ul className="bg-secondary-80 absolute -right-10 z-50 mt-8 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block group-hover:duration-100">
+                  <ul className="absolute -right-10 z-50 mt-8 hidden w-32 rounded-md bg-secondary-80 shadow-md group-hover:pointer-events-auto group-hover:block group-hover:duration-100">
                     <li>
                       <Link href="/mypage" onClick={closeMobileNav}>
                         <button
                           type="button"
-                          className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
+                          className="w-full rounded-md px-4 py-2 text-left hover:bg-secondary-60"
                         >
                           마이페이지
                         </button>
@@ -138,7 +141,7 @@ export default function Header() {
                     <li>
                       <button
                         type="button"
-                        className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
+                        className="w-full rounded-md px-4 py-2 text-left hover:bg-secondary-60"
                         onClick={handleLogout}
                       >
                         로그아웃
@@ -163,6 +166,7 @@ export default function Header() {
         </div>
       </div>
       {mobileNav && <HeaderNavBar onClose={closeMobileNav} />}
+      {toastVisible && <Toast message={toastMessage} type={toastType} />}
     </div>
   );
 }
