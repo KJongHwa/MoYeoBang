@@ -42,7 +42,7 @@ export default function Header() {
           <div className="bg-secondary-bg border-secondary-70 mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:px-[200px]">
             {/* Navigation Links */}
             <nav className="text-text-default flex items-center gap-8 text-base">
-              <Link href="/">
+              <Link href="/" onClick={closeMobileNav}>
                 <Image
                   src="/Logo.svg"
                   width={100}
@@ -89,21 +89,18 @@ export default function Header() {
                 </div>
               ) : (
                 <div className="group relative flex text-base font-bold text-white">
-                  <Link href="/mypage">
-                    <Image
-                      src="/profile_image_default.png"
-                      width={24}
-                      height={24}
-                      alt="마이페이지 이미지"
-                      className="cursor-pointer"
-                    />
-                  </Link>
-                  <ul className="bg-secondary-80 absolute -right-11 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
+                  <Image
+                    src="/profile_image_default.png"
+                    width={24}
+                    height={24}
+                    alt="마이페이지 이미지"
+                  />
+                  <ul className="bg-secondary-80 absolute -right-10 z-50 mt-8 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block group-hover:duration-100">
                     <li>
-                      <Link href="/mypage">
+                      <Link href="/mypage" onClick={closeMobileNav}>
                         <button
                           type="button"
-                          className="hover:bg-secondary-60 w-full rounded-t-md px-4 py-2 text-left"
+                          className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
                         >
                           마이페이지
                         </button>
@@ -112,7 +109,7 @@ export default function Header() {
                     <li>
                       <button
                         type="button"
-                        className="hover:bg-secondary-60 w-full rounded-b-md px-4 py-2 text-left"
+                        className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
                         onClick={handleLogin}
                       >
                         로그아웃

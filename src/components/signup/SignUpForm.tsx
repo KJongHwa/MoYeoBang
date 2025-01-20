@@ -38,7 +38,7 @@ function SignUpForm() {
         nickname: data.nickname,
       });
 
-      if (signupResponse?.data) {
+      if (signupResponse.status === 200) {
         localStorage.setItem('accessToken', signupResponse.data.accessToken);
         localStorage.setItem(
           'userInfo',
