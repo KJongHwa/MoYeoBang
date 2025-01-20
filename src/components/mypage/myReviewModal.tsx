@@ -70,7 +70,7 @@ export default function MyReviewModal({
             variant="tertiary"
             fontSize="16"
             onClick={closeModalhandler}
-            style={{ width: '280px' }}
+            className="w-full"
           >
             취소하기
           </Button>
@@ -78,7 +78,7 @@ export default function MyReviewModal({
             variant="primary-gray"
             fontSize="16"
             disabled={!isModified}
-            style={{ width: '280px' }}
+            className="w-full"
           >
             리뷰등록
           </Button>

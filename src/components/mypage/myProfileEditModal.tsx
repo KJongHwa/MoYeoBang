@@ -115,9 +115,7 @@ export default function MyProfileEditModal({
             variant="tertiary"
             fontSize="16"
             onClick={closeModalhandler}
-            style={{
-              width: '10000px',
-            }}
+            className="w-full"
           >
             취소하기
           </Button>
@@ -125,9 +123,7 @@ export default function MyProfileEditModal({
             variant="primary-gray"
             fontSize="16"
             disabled={!isModified}
-            style={{
-              width: '10000px',
-            }}
+            className="w-full"
           >
             수정하기
           </Button>

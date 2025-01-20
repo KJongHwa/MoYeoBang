@@ -33,11 +33,11 @@ export default function DeleteModal({
             variant="tertiary"
             fontSize="16"
             onClick={closeModalhandler}
-            style={{ width: '10000px' }}
+            className="w-full"
           >
             취소하기
           </Button>
-          <Button variant="primary" fontSize="16" style={{ width: '10000px' }}>
+          <Button variant="primary" fontSize="16" className="w-full">
             {classification === 'cancel' ? '모임취소' : '리뷰삭제'}
           </Button>
         </div>
