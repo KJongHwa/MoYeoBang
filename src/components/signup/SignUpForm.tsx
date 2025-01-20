@@ -50,7 +50,7 @@ function SignUpForm() {
         router.push('/login');
       }
     } catch (error) {
-      // API 호출 실패 시 임시 회원가입 및 로그인 처리 (MVP 시연용)
+      // 에러
     }
   };
   return (
