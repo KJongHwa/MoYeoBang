@@ -99,7 +99,7 @@ export default function Header() {
                   </Link>
                   <ul className="bg-secondary-80 absolute -right-10 z-50 mt-8 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block group-hover:duration-100">
                     <li>
-                      <Link href="/mypage">
+                      <Link href="/mypage" onClick={closeMobileNav}>
                         <button
                           type="button"
                           className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
