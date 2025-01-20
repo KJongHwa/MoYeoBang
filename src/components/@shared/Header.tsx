@@ -4,17 +4,38 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Button from './Button';
 import HeaderNavBar from './HeaderNavbar';
 
 export default function Header() {
-  const [user, setUser] = useState(true);
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searching, setSearching] = useState(true);
   const [mobileNav, setMobileNav] = useState(false);
-  const handleLogin = () => {
-    setUser(!user);
-  };
+
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const userInfo = localStorage.getItem('userInfo');
+      setIsLoggedIn(!!userInfo);
+    };
+
+    checkLoginStatus();
+
+    const handleLocalStorageChange = () => {
+      checkLoginStatus();
+    };
+
+    window.addEventListener('localStorageChange', handleLocalStorageChange);
+
+    return () => {
+      window.removeEventListener(
+        'localStorageChange',
+        handleLocalStorageChange
+      );
+    };
+  }, []);
   const handleSearching = () => {
     setSearching(!searching);
   };
@@ -24,6 +45,14 @@ export default function Header() {
 
   const closeMobileNav = () => {
     setMobileNav(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userInfo');
+    setIsLoggedIn(false);
+    closeMobileNav();
+    alert('로그아웃 되었습니다.');
+    router.push('/');
   };
 
   const navLinks = [
@@ -71,7 +100,7 @@ export default function Header() {
                   alt={searchImg.alt}
                 />
               </button>
-              {user ? (
+              {!isLoggedIn ? (
                 <div className="flex gap-7 text-base font-bold text-white">
                   <Link href="/login">
                     <Button
@@ -79,9 +108,9 @@ export default function Header() {
                       variant="tertiary-gray"
                       padding="8"
                       fontSize="14"
-                      onClick={handleLogin}
                       className="text-[12px]"
                       shape="round"
+                      onClick={closeMobileNav}
                     >
                       로그인/회원가입
                     </Button>
@@ -110,7 +139,7 @@ export default function Header() {
                       <button
                         type="button"
                         className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
-                        onClick={handleLogin}
+                        onClick={handleLogout}
                       >
                         로그아웃
                       </button>

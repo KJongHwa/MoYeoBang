@@ -42,3 +42,14 @@ export const getToday = () => {
 export const getDateTime = (dateString?: string): number => {
   return dateString ? new Date(dateString).getTime() : 0;
 };
+
+export const isToday = (date: any) => {
+  const today = getToday();
+  const dateToCompare = new Date(date);
+  // 한국 시간으로 변환
+  const koreaOffset = dateToCompare.getTimezoneOffset() * 60000;
+  const koreaDateToCompare = new Date(
+    dateToCompare.getTime() + koreaOffset + 9 * 60 * 60 * 1000
+  ); // UTC+9
+  return today.toDateString() === koreaDateToCompare.toDateString();
+};
