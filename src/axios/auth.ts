@@ -13,5 +13,5 @@ interface LoginRequest {
 
 export const authApi = {
   signup: (data: SignUpRequest) => axiosInstance.post('/auth/signup', data),
-  login: (data: LoginRequest) => axiosInstance.post('/auth/login', data),
+  login: (data: LoginRequest) => axiosInstance.post('/login', data),
 };

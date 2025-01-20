@@ -128,3 +128,23 @@ export interface GatheringCreaterDTO {
     // ];
   };
 }
+
+export interface GatheringDetailDTO {
+  get: {
+    gatheringId: number;
+    hostId: number;
+    name: string;
+    location: string;
+    themeName: string;
+    synopsis: string;
+    image: string;
+    level: string;
+    genre: string;
+    playtime: number;
+    map: string;
+    dateTime: string;
+    registrationEnd: string;
+    capacity: number;
+    participantCount: number;
+  }[];
+}
