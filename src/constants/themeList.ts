@@ -95,7 +95,7 @@ export const levels = [
   { value: 'high', label: '고급' },
 ];
 
-export const levelToKorean = {
+export const levelToKorean: Record<string, string> = {
   high: '고급',
   middle: '중급',
   low: '초급',

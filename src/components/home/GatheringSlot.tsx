@@ -48,9 +48,9 @@ export default function GatheringSlot({
           participantCount,
           image,
           dateTime: '',
-          level: 'high',
+          level: '',
           themeName: '',
-          location: 'geondae',
+          location: '',
         }}
       />
     </figure>

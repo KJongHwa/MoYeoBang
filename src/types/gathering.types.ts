@@ -54,10 +54,10 @@ export interface GatheringRequestBody {
 export interface GatheringProps {
   card: {
     gatheringId: number;
-    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
+    location: string;
     dateTime: string;
     registrationEnd: string;
-    level: 'high' | 'middle' | 'low';
+    level: string;
     name: string;
     themeName: string;
     capacity: string;
