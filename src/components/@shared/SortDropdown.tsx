@@ -34,7 +34,7 @@ export default function SortDropdown({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex max-h-[42px] items-center gap-2 rounded-full bg-default-tertiary p-[10px] md:rounded-xl md:px-4 md:py-2"
+        className="flex max-h-[42px] items-center gap-2 rounded-full bg-default-tertiary px-[6px] py-1 md:rounded-xl md:px-4 md:py-2"
       >
         <Image
           src="/icons/sort.svg"

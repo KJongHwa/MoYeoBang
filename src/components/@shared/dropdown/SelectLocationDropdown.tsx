@@ -64,20 +64,20 @@ export default function Dropdown({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          'h-[42px]',
+          'h-7 md:h-[42px]',
           'relative',
           'border-2 border-default-tertiary',
           'rounded-xl',
-          'px-4 py-2',
+          'px-3 py-2 md:px-4',
           'bg-default-tertiary',
           'flex items-center',
-          'gap-1',
+          'gap-2',
           { 'w-full flex-row-reverse': icon !== '/chevron-down.svg' },
           className
         )}
       >
         <span
-          className={`${icon !== '/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-sm font-medium text-secondary-40`}
+          className={`${icon !== '/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-xs font-medium text-secondary-40 md:text-sm`}
         >
           {selectedOption.label}
         </span>
@@ -109,7 +109,7 @@ export default function Dropdown({
                 type="button"
                 onClick={() => handleSelect(option)}
                 className={clsx(
-                  'w-full cursor-pointer px-4 py-2 text-left text-sm',
+                  'w-full cursor-pointer px-4 py-2 text-left text-xs md:text-sm',
                   'text-white-lg rounded-[9px] hover:rounded-[9px] hover:bg-default-primary',
                   'transition-colors duration-150'
                 )}
