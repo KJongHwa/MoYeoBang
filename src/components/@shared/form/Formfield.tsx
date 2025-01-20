@@ -1,7 +1,7 @@
 // FormField.tsx
 import { forwardRef, useState } from 'react';
 import Image from 'next/image';
-import Input from '@/components/@shared/Input';
+import LoginInput from './LoginInput';
 
 interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
@@ -14,16 +14,19 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
-  ({
-    id,
-    label,
-    type = 'text',
-    placeholder,
-    showPasswordIcon = false,
-    isError,
-    errorMessage,
-    ...rest
-  }) => {
+  (
+    {
+      id,
+      label,
+      type = 'text',
+      placeholder,
+      showPasswordIcon = false,
+      isError,
+      errorMessage,
+      ...rest
+    },
+    ref
+  ) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleTogglePassword = () => {
@@ -32,7 +35,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
 
     return (
       <div className="relative">
-        <Input
+        <LoginInput
           label={label}
           varient="elevated"
           fontSize="14"
@@ -42,6 +45,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
             id,
             type: showPassword ? 'text' : type,
             name: id,
+            ref,
           }}
           isError={isError}
           errorMessage={errorMessage}
