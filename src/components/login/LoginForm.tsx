@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -36,6 +38,9 @@ function LoginForm() {
             email: data.email,
           })
         );
+        const event = new Event('localStorageChange');
+        window.dispatchEvent(event);
+        alert('로그인 성공');
         router.push('/');
       }
     } catch (error) {
@@ -96,7 +101,7 @@ function LoginForm() {
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-secondary-50">
+        <p className="text-secondary-50 mt-4 text-sm">
           아직 계정이 없으신가요?{' '}
           <Link
             href="/signup"
