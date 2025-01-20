@@ -79,6 +79,9 @@ export default function MyReviewModal({
             fontSize="16"
             disabled={!isModified}
             className="w-full"
+            onClick={() => {
+              alert('아직 사용할 수 없는 기능입니다ㅜ');
+            }}
           >
             리뷰등록
           </Button>
