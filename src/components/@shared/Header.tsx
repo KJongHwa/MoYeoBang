@@ -7,9 +7,9 @@ import Link from 'next/link';
 import useToast from '@/hooks/useToast';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Toast from '@/components/@shared/Toast';
 import Button from './Button';
 import HeaderNavBar from './HeaderNavbar';
-import Toast from './Toast';
 
 export default function Header() {
   const router = useRouter();
