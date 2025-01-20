@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -37,6 +39,9 @@ function LoginForm() {
             email: data.email,
           })
         );
+        const event = new Event('localStorageChange');
+        window.dispatchEvent(event);
+        alert('로그인 성공');
         router.push('/');
       }
     } catch (error) {
@@ -89,7 +94,6 @@ function LoginForm() {
               isError={!!errors.password}
               errorMessage={errors.password ? '비밀번호를 입력해주세요' : ''}
             />
-
             <button
               type="submit"
               className="!mt-[46px] w-full rounded-lg bg-[#282469] py-2.5 text-white hover:bg-[#6659F4]"
