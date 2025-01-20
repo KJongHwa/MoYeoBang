@@ -37,7 +37,14 @@ export default function DeleteModal({
           >
             취소하기
           </Button>
-          <Button variant="primary" fontSize="16" className="w-full">
+          <Button
+            variant="primary"
+            fontSize="16"
+            className="w-full"
+            onClick={() => {
+              alert('아직 사용할 수 없는 기능입니다ㅜ');
+            }}
+          >
             {classification === 'cancel' ? '모임취소' : '리뷰삭제'}
           </Button>
         </div>
