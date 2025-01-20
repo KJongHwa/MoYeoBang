@@ -34,7 +34,6 @@ function LoginForm() {
           'userInfo',
           JSON.stringify({
             email: data.email,
-            nickname: response.data.nickname || data.email.split('@')[0],
           })
         );
         router.push('/');
@@ -44,7 +43,6 @@ function LoginForm() {
         'userInfo',
         JSON.stringify({
           email: data.email,
-          nickname: data.email.split('@')[0],
         })
       );
       router.push('/');
