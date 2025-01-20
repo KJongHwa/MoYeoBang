@@ -66,9 +66,9 @@ export default function MyProfileEditModal({
     <Modal
       isOpen={isModal}
       onClose={closeModalhandler}
-      customDimStyle="w-[400px]"
+      customDimStyle="w-[307px] md:w-[472px]"
     >
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col justify-between gap-5">
         <p className="text-base font-bold">프로필 수정하기</p>
         <div className="rounded-full">
           <div
@@ -77,20 +77,20 @@ export default function MyProfileEditModal({
             }`}
           >
             <Image
-              src={img || '/profile_image_default.png'}
-              width={118}
-              height={118}
+              src={img || '/icons/profile_image_default.svg'}
+              width={117}
+              height={117}
               alt="프로필 이미지 미리보기"
               className={img ? 'h-[118px] rounded-full' : ''}
             />
           </div>
           <button type="button" onClick={triggerFileInput}>
             <Image
-              src="/edit.png"
+              src="/icons/btn_edit.svg"
               width={37}
               height={37}
               alt="프로필이미지 수정 버튼 이미지"
-              className="absolute bottom-[200px] left-[230px]"
+              className="absolute bottom-[200px] left-[175px] md:bottom-[200px] md:left-[260px]"
             />
           </button>
           <input
@@ -110,11 +110,21 @@ export default function MyProfileEditModal({
             onChange: handleNicknameChange,
           }}
         />
-        <div className="flex w-full justify-center gap-3">
-          <Button variant="tertiary" fontSize="16" onClick={closeModalhandler}>
+        <div className="flex w-full gap-3 ">
+          <Button
+            variant="tertiary"
+            fontSize="16"
+            onClick={closeModalhandler}
+            className="w-full"
+          >
             취소하기
           </Button>
-          <Button variant="primary-gray" fontSize="16" disabled={!isModified}>
+          <Button
+            variant="primary-gray"
+            fontSize="16"
+            disabled={!isModified}
+            className="w-full"
+          >
             수정하기
           </Button>
         </div>

@@ -29,10 +29,15 @@ export default function DeleteModal({
           하시겠습니까?
         </p>
         <div className="flex justify-center gap-3">
-          <Button variant="tertiary" fontSize="16" onClick={closeModalhandler}>
+          <Button
+            variant="tertiary"
+            fontSize="16"
+            onClick={closeModalhandler}
+            className="w-full"
+          >
             취소하기
           </Button>
-          <Button variant="primary" fontSize="16">
+          <Button variant="primary" fontSize="16" className="w-full">
             {classification === 'cancel' ? '모임취소' : '리뷰삭제'}
           </Button>
         </div>
