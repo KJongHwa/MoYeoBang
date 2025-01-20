@@ -95,15 +95,14 @@ export default function Header() {
                       width={24}
                       height={24}
                       alt="마이페이지 이미지"
-                      className="cursor-pointer"
                     />
                   </Link>
-                  <ul className="bg-secondary-80 absolute -right-11 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
+                  <ul className="bg-secondary-80 absolute -right-10 z-50 mt-8 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block group-hover:duration-100">
                     <li>
                       <Link href="/mypage">
                         <button
                           type="button"
-                          className="hover:bg-secondary-60 w-full rounded-t-md px-4 py-2 text-left"
+                          className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
                         >
                           마이페이지
                         </button>
@@ -112,7 +111,7 @@ export default function Header() {
                     <li>
                       <button
                         type="button"
-                        className="hover:bg-secondary-60 w-full rounded-b-md px-4 py-2 text-left"
+                        className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
                         onClick={handleLogin}
                       >
                         로그아웃
