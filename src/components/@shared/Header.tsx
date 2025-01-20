@@ -4,17 +4,38 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Button from './Button';
 import HeaderNavBar from './HeaderNavbar';
 
 export default function Header() {
-  const [user, setUser] = useState(true);
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searching, setSearching] = useState(true);
   const [mobileNav, setMobileNav] = useState(false);
-  const handleLogin = () => {
-    setUser(!user);
-  };
+
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const userInfo = localStorage.getItem('userInfo');
+      setIsLoggedIn(!!userInfo);
+    };
+
+    checkLoginStatus();
+
+    const handleLocalStorageChange = () => {
+      checkLoginStatus();
+    };
+
+    window.addEventListener('localStorageChange', handleLocalStorageChange);
+
+    return () => {
+      window.removeEventListener(
+        'localStorageChange',
+        handleLocalStorageChange
+      );
+    };
+  }, []);
   const handleSearching = () => {
     setSearching(!searching);
   };
@@ -24,6 +45,14 @@ export default function Header() {
 
   const closeMobileNav = () => {
     setMobileNav(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userInfo');
+    setIsLoggedIn(false);
+    closeMobileNav();
+    alert('로그아웃 되었습니다.');
+    router.push('/');
   };
 
   const navLinks = [
@@ -42,7 +71,7 @@ export default function Header() {
           <div className="bg-secondary-bg border-secondary-70 mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:px-[200px]">
             {/* Navigation Links */}
             <nav className="text-text-default flex items-center gap-8 text-base">
-              <Link href="/">
+              <Link href="/" onClick={closeMobileNav}>
                 <Image
                   src="/Logo.svg"
                   width={100}
@@ -71,7 +100,7 @@ export default function Header() {
                   alt={searchImg.alt}
                 />
               </button>
-              {user ? (
+              {!isLoggedIn ? (
                 <div className="flex gap-7 text-base font-bold text-white">
                   <Link href="/login">
                     <Button
@@ -79,9 +108,9 @@ export default function Header() {
                       variant="tertiary-gray"
                       padding="8"
                       fontSize="14"
-                      onClick={handleLogin}
                       className="text-[12px]"
                       shape="round"
+                      onClick={closeMobileNav}
                     >
                       로그인/회원가입
                     </Button>
@@ -89,21 +118,18 @@ export default function Header() {
                 </div>
               ) : (
                 <div className="group relative flex text-base font-bold text-white">
-                  <Link href="/mypage">
-                    <Image
-                      src="/profile_image_default.png"
-                      width={24}
-                      height={24}
-                      alt="마이페이지 이미지"
-                      className="cursor-pointer"
-                    />
-                  </Link>
-                  <ul className="bg-secondary-80 absolute -right-11 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
+                  <Image
+                    src="/profile_image_default.png"
+                    width={24}
+                    height={24}
+                    alt="마이페이지 이미지"
+                  />
+                  <ul className="bg-secondary-80 absolute -right-10 z-50 mt-8 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block group-hover:duration-100">
                     <li>
-                      <Link href="/mypage">
+                      <Link href="/mypage" onClick={closeMobileNav}>
                         <button
                           type="button"
-                          className="hover:bg-secondary-60 w-full rounded-t-md px-4 py-2 text-left"
+                          className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
                         >
                           마이페이지
                         </button>
@@ -112,8 +138,8 @@ export default function Header() {
                     <li>
                       <button
                         type="button"
-                        className="hover:bg-secondary-60 w-full rounded-b-md px-4 py-2 text-left"
-                        onClick={handleLogin}
+                        className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
+                        onClick={handleLogout}
                       >
                         로그아웃
                       </button>
