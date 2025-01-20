@@ -11,24 +11,23 @@ jobs:
     steps:
       # 원격 레포지토리 체크아웃
       - name: Checkout source repository
-        run: |
-          git clone https://github.com/Codeit-FESI-06-Team2/Project.git
-          cd Project
-          git checkout dev
+        uses: actions/checkout@v3
+        with:
+          repository: Codeit-FESI-06-Team2/Project
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: dev
 
       # 개인 레포지토리 dev 브랜치로 푸시
       - name: Push changes to forked dev branch
         run: |
-          cd Project
           git config user.name "KJongHwa"
           git config user.email "dblls0724@naver.com"
-          git remote add forked https://github.com/KJongHwa/MoYeoBang.git
+          git remote add forked https://KJongHwa:${{ secrets.GITHUB_TOKEN }}@github.com/KJongHwa/MoYeoBang.git
           git push forked dev --force
 
       # 개인 레포지토리 main 브랜치로 동기화
       - name: Push changes to forked main branch
         run: |
-          cd Project
           git config user.name "KJongHwa"
           git config user.email "dblls0724@naver.com"
           git fetch forked main || true
