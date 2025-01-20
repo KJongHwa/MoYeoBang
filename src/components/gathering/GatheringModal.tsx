@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 
 import useCustomForm from '@/hooks/useCustomForm';
+import useToast from '@/hooks/useToast';
 import { getToday } from '@/utils/dateUtils';
 import { GatheringRequestBody } from '@/types/gathering.types';
+import Toast from '@/components/@shared/Toast';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
@@ -43,6 +45,9 @@ export default function GatheringModal({
   const [dateTimeError, setDateTimeError] = useState<string>('');
   const [registrationEndError, setRegistrationEndError] = useState<string>('');
   const [searchMessage, setSearchMessage] = useState<string>('');
+
+  const { toastMessage, toastVisible, toastType, handleSuccess, handleError } =
+    useToast();
 
   const { themeName, capacity, dateTime, registrationEnd } = watchFields([
     'themeName',
@@ -172,109 +177,125 @@ export default function GatheringModal({
     };
 
     console.log('Submitted Data:', submissionData);
-    onClose();
+
+    const isSuccess = false;
+
+    // onClose();
+
+    if (isSuccess) {
+      handleSuccess('성공적으로 처리되었습니다!');
+    } else {
+      handleError('아직 구현되지 않은 기능입니다.');
+    }
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      customDimStyle="w-full md:w-[542px] overflow-visible"
-    >
-      <h1 className="mb-10 text-lg font-bold">
-        {isEdit ? '모임 수정하기' : '모임 만들기'}
-      </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-        <Input
-          label="name"
-          labelText="모임 이름"
-          placeholder="모임 이름을 입력하세요."
-          inputProps={{
-            ...register('name', { required: true }),
-          }}
-        />
-        <LocationSelector
-          location={location}
-          handleLocationClick={handleLocationClick}
-        />
-        {location && (
-          <ThemeSelector
-            searchMessage={searchMessage}
-            location={location}
-            inputThemeName={inputThemeName}
-            setInputThemeName={setInputThemeName}
-            searchThemes={searchThemes}
-            filteredThemes={filteredThemes}
-            setThemeName={(newName) => setValue('themeName', newName)}
-            selectedThemeName={selectedThemeName}
-            setSelectedThemeName={setSelectedThemeName}
-            searchAttempted={searchAttempted}
-          />
-        )}
-        <div className="relative flex flex-col gap-2">
-          <DateInput
-            label="dateTime"
-            labelText="모임 날짜"
-            placeholder="YYYY-MM-DD 00:00 AM"
+    <>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        customDimStyle="w-full md:w-[542px] overflow-visible"
+      >
+        <h1 className="mb-10 text-lg font-bold">
+          {isEdit ? '모임 수정하기' : '모임 만들기'}
+        </h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+          <Input
+            label="name"
+            labelText="모임 이름"
+            placeholder="모임 이름을 입력하세요."
             inputProps={{
-              readOnly: true,
-              onClick: toggleCalendar,
-              value: selectedDate || '',
-              ...register('dateTime', { required: true }),
+              ...register('name', { required: true }),
             }}
-            isError={!!dateTimeError}
-            errorMessage={dateTimeError}
           />
-          {isCalendarOpen && (
-            <DateTimeCalendar
-              isOpen={isCalendarOpen}
-              selectedDate={selectedDate}
-              onClose={toggleCalendar}
-              onDateChange={handleDateChange}
-              layout="top-24 z-90"
+          <LocationSelector
+            location={location}
+            handleLocationClick={handleLocationClick}
+          />
+          {location && (
+            <ThemeSelector
+              searchMessage={searchMessage}
+              location={location}
+              inputThemeName={inputThemeName}
+              setInputThemeName={setInputThemeName}
+              searchThemes={searchThemes}
+              filteredThemes={filteredThemes}
+              setThemeName={(newName) => setValue('themeName', newName)}
+              selectedThemeName={selectedThemeName}
+              setSelectedThemeName={setSelectedThemeName}
+              searchAttempted={searchAttempted}
             />
           )}
-          {dateTime && !dateTimeError && (
+          <div className="relative flex flex-col gap-2">
             <DateInput
-              label="registrationEnd"
-              labelText="마감 날짜"
+              label="dateTime"
+              labelText="모임 날짜"
               placeholder="YYYY-MM-DD 00:00 AM"
               inputProps={{
                 readOnly: true,
-                onClick: toggleEndDateCalendar,
-                value: selectedEndDate || '',
-                ...register('registrationEnd', { required: true }),
+                onClick: toggleCalendar,
+                value: selectedDate || '',
+                ...register('dateTime', { required: true }),
               }}
-              isError={!!registrationEndError}
-              errorMessage={registrationEndError}
+              isError={!!dateTimeError}
+              errorMessage={dateTimeError}
             />
-          )}
-          {isEndDateCalendarOpen && (
-            <DateTimeCalendar
-              isOpen={isEndDateCalendarOpen}
-              selectedDate={selectedEndDate}
-              onClose={toggleEndDateCalendar}
-              onDateChange={handleEndDateChange}
-              layout="top-44"
-            />
-          )}
-        </div>
-        <CapacitySelector
-          capacity={capacity}
-          setCapacity={(newCapacity) => setValue('capacity', newCapacity)}
-        />
-        <Button
-          type="submit"
-          variant="primary-gray"
-          padding="10"
-          disabled={
-            !isValid || !themeName || !!registrationEndError || !!dateTimeError
-          }
-          className="mb-4 mt-14 w-full md:mt-6"
-        >
-          {isEdit ? '수정' : '생성'}
-        </Button>
-      </form>
-    </Modal>
+            {isCalendarOpen && (
+              <DateTimeCalendar
+                isOpen={isCalendarOpen}
+                selectedDate={selectedDate}
+                onClose={toggleCalendar}
+                onDateChange={handleDateChange}
+                layout="top-24 z-90"
+              />
+            )}
+            {dateTime && !dateTimeError && (
+              <DateInput
+                label="registrationEnd"
+                labelText="마감 날짜"
+                placeholder="YYYY-MM-DD 00:00 AM"
+                inputProps={{
+                  readOnly: true,
+                  onClick: toggleEndDateCalendar,
+                  value: selectedEndDate || '',
+                  ...register('registrationEnd', { required: true }),
+                }}
+                isError={!!registrationEndError}
+                errorMessage={registrationEndError}
+              />
+            )}
+            {isEndDateCalendarOpen && (
+              <DateTimeCalendar
+                isOpen={isEndDateCalendarOpen}
+                selectedDate={selectedEndDate}
+                onClose={toggleEndDateCalendar}
+                onDateChange={handleEndDateChange}
+                layout="top-44"
+              />
+            )}
+          </div>
+          <CapacitySelector
+            capacity={capacity}
+            setCapacity={(newCapacity) => setValue('capacity', newCapacity)}
+          />
+          <Button
+            type="submit"
+            variant="primary-gray"
+            padding="10"
+            disabled={
+              !isValid ||
+              !themeName ||
+              !!registrationEndError ||
+              !!dateTimeError
+            }
+            className="mb-4 mt-14 w-full md:mt-6"
+          >
+            {isEdit ? '수정' : '생성'}
+          </Button>
+        </form>
+      </Modal>
+
+      {toastVisible && <Toast message={toastMessage} type={toastType} />}
+    </>
   );
 }
