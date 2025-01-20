@@ -40,7 +40,6 @@ function LoginForm() {
         router.push('/');
       }
     } catch (error) {
-      // API 호출 실패 시 임시 로그인 처리 (MVP 시연용)
       localStorage.setItem(
         'userInfo',
         JSON.stringify({
