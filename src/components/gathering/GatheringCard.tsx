@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import UserIcon from '@/public/icons/user.svg';
-import { formatDate, extractHour } from '@/utils/dateUtils';
+import { formatDate, extractHour, isToday } from '@/utils/dateUtils';
 import { findLabelByValue } from '@/utils/mappingUtils';
 import ProgressBar from '@/components/@shared/ProgressBar';
 import { GatheringProps } from '@/types/gathering.types';
@@ -26,11 +26,15 @@ export default function GatheringCard({
   participantCount,
   image,
 }: GatheringProps['card']) {
+  const isRegistrationEndToday = isToday(registrationEnd);
+
   return (
     <figure className="relative">
       <Link href={`/gathering/${gatheringId}`}>
         <div className="flex max-h-28 w-full rounded-xl bg-default-tertiary md:max-h-[170px]">
-          <AlarmBadge hour={extractHour(registrationEnd)} />
+          {isRegistrationEndToday && (
+            <AlarmBadge hour={extractHour(registrationEnd)} />
+          )}
           <Image
             src={image}
             alt="방탈출 테마 이미지"
