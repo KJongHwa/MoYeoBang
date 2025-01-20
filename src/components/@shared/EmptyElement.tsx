@@ -15,7 +15,7 @@ export default function EmptyElement({ children }: EmptyElementProps) {
         alt="퍼즐 캐릭터"
         width={232}
         height={256}
-        className="absolute right-10 top-10 h-[137px] w-[125px] md:right-1/5 md:h-[210px] md:w-[191px] xl:h-[256px] xl:w-[232px]"
+        className="absolute right-10 top-16 h-[137px] w-[125px] md:right-1/5 md:h-[210px] md:w-[191px] xl:h-[256px] xl:w-[232px]"
       />
     </div>
   );

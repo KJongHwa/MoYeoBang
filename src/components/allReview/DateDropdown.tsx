@@ -15,7 +15,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
   });
 
   return (
-    <div className={clsx('relative max-w-[120px]')}>
+    <div className={clsx('relative flex max-w-[120px]')}>
       <button
         type="button"
         onClick={handleChange}
@@ -51,7 +51,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
           selectedDate={date}
           onClose={handleChange}
           onDateChange={handleDateChange}
-          layout="top-12 -right-full -left-full md:left-0"
+          layout="top-12 -left-16 md:left-0"
         />
       )}
     </div>

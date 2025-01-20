@@ -1,0 +1,21 @@
+name: BuildTest
+
+on:
+  pull_request: # 모든 PR이 등록 될 때
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint # lint 테스트
+
+      - name: Run build
+        run: npm run build # build 테스트
