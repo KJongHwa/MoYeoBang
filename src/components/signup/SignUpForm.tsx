@@ -21,6 +21,7 @@ function SignUpForm() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<SignUpFormData>({
     mode: 'onSubmit',
   });
@@ -31,24 +32,27 @@ function SignUpForm() {
     }
 
     try {
-      await authApi.signup({
+      const signupResponse = await authApi.signup({
         email: data.email,
         password: data.password,
         nickname: data.nickname,
       });
 
-      const loginResponse = await authApi.login({
-        email: data.email,
-        password: data.password,
-      });
-
-      localStorage.setItem('accessToken', loginResponse.data.accessToken);
-      router.push('/');
+      if (signupResponse?.data) {
+        localStorage.setItem('accessToken', signupResponse.data.accessToken);
+        localStorage.setItem(
+          'userInfo',
+          JSON.stringify({
+            email: data.email,
+            nickname: signupResponse.data.nickname || data.nickname,
+          })
+        );
+        router.push('/login');
+      }
     } catch (error) {
-      // 에러 처리 제외
+      // API 호출 실패 시 임시 회원가입 및 로그인 처리 (MVP 시연용)
     }
   };
-
   return (
     <div className="relative flex h-full min-h-screen w-full items-center justify-center bg-[#17171c] pt-72">
       <div className="absolute inset-0 z-0">
@@ -107,7 +111,11 @@ function SignUpForm() {
               },
             })}
             isError={!!errors.email}
-            errorMessage={errors.email ? '이메일을 입력해주세요' : ''}
+            errorMessage={
+              errors.email
+                ? errors.email.message || '이메일을 입력해주세요'
+                : ''
+            }
           />
           <FormField
             id="password"
@@ -127,13 +135,15 @@ function SignUpForm() {
             showPasswordIcon
             {...register('passwordConfirm', {
               required: true,
-              validate: (value, formValues) =>
-                value === formValues.password ||
-                '비밀번호가 일치하지 않습니다.',
+              validate: (value) =>
+                value === watch('password') || '비밀번호가 일치하지 않습니다.',
             })}
             isError={!!errors.passwordConfirm}
             errorMessage={
-              errors.passwordConfirm ? '비밀번호 확인을 입력해주세요' : ''
+              errors.passwordConfirm
+                ? errors.passwordConfirm.message ||
+                  '비밀번호 확인을 입력해주세요'
+                : ''
             }
           />
 

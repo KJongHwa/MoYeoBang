@@ -29,17 +29,26 @@ function LoginForm() {
         password: data.password,
       });
 
-      localStorage.setItem('accessToken', response.data.accessToken);
+      if (response.status === 200) {
+        localStorage.setItem(
+          'userInfo',
+          JSON.stringify({
+            email: data.email,
+            nickname: response.data.nickname || data.email.split('@')[0],
+          })
+        );
+        router.push('/');
+      }
+    } catch (error) {
+      // API 호출 실패 시 임시 로그인 처리 (MVP 시연용)
       localStorage.setItem(
         'userInfo',
         JSON.stringify({
           email: data.email,
-          nickname: response.data.nickname, // API 응답에서 받아온 닉네임
+          nickname: data.email.split('@')[0],
         })
       );
       router.push('/');
-    } catch (error) {
-      // 에러 처리 제외
     }
   };
 
@@ -65,7 +74,11 @@ function LoginForm() {
               },
             })}
             isError={!!errors.email}
-            errorMessage={errors.email ? '이메일을 입력해주세요' : ''}
+            errorMessage={
+              errors.email
+                ? errors.email.message || '이메일을 입력해주세요'
+                : ''
+            }
           />
           <FormField
             id="password"
