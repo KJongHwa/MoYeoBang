@@ -56,11 +56,10 @@ export default function GatheringModal({
     isOpen: isCalendarOpen,
     date: selectedDate,
     handleChange: toggleCalendar,
-    handleDateChange: handleDateChange,
+    handleDateChange,
   } = useCalendar({
     onDateChange: (newDate) => {
       setValue('dateTime', newDate || '');
-      if (isEndDateCalendarOpen) toggleEndDateCalendar();
     },
   });
 
@@ -73,7 +72,6 @@ export default function GatheringModal({
   } = useCalendar({
     onDateChange: (newDate) => {
       setValue('registrationEnd', newDate || '');
-      if (isCalendarOpen) toggleCalendar();
     },
   });
 

@@ -42,23 +42,27 @@ export default function DateTimeCalendar({
   // 날짜만 hyphenYearMonthDay로 변환
   const formatDate = () => {
     const dateObject = new Date(date);
-    if (!date || isNaN(dateObject.getTime())) return '';
+    if (!date || Number.isNaN(dateObject.getTime())) return '';
     return hyphenYearMonthDay(dateObject.toISOString());
   };
 
   const handleDateChange = (newDate: CalendarValue) => {
-    let selectedDate: string;
+    let newSelectedDate: string;
 
     if (Array.isArray(newDate)) {
-      selectedDate = newDate[0]?.toISOString() || '';
+      newSelectedDate = newDate[0]?.toISOString() || '';
     } else {
-      selectedDate = newDate?.toISOString() || '';
+      newSelectedDate = newDate?.toISOString() || '';
     }
 
-    setDate(selectedDate);
+    setDate(newSelectedDate);
 
     // 새로운 날짜가 유효하면 YYYY-MM-DD 형식으로 변환하여 부모에 전달
-    if (newDate && newDate instanceof Date && !isNaN(newDate.getTime())) {
+    if (
+      newDate &&
+      newDate instanceof Date &&
+      !Number.isNaN(newDate.getTime())
+    ) {
       const formattedDate = formatDate(); // YYYY-MM-DD 형식으로 변환
       const formattedDateTime = `${formattedDate} ${selectedHour.toString().padStart(2, '0')}:${selectedMinute.toString().padStart(2, '0')} ${selectedPeriod}`;
       onDateChange(formattedDateTime); // YYYY-MM-DD hh:mm A 형식으로 전달
