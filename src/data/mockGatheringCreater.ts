@@ -21,7 +21,7 @@ export const mockGatheringCreater: GatheringCreaterDTO['get'] = {
       location: 'hongdae',
       themeName: 'And I met E',
       image: 'https://xdungeon.net/file/theme/18/18_5563125084.png',
-      dateTime: '2025-01-20T18:00:00.000Z',
+      dateTime: '2025-01-20T12:00:00.000Z',
       capacity: 6,
       participantCount: 1,
     },

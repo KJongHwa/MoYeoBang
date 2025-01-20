@@ -51,13 +51,33 @@
   left: 0;
 }
 
-/* scrollBar style */
+/* scrollbar style */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #252730;
+  border-radius: 24px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #565295;
+  border-radius: 24px;
+  border: 1px solid #252730;
+}
+
 .scrollbar-hidden {
-  scrollbar-width: none; /* Firefox */
+  overflow-x: auto;
 }
 
 .scrollbar-hidden::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;
 }
 
 @layer utilities {

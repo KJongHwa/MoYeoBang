@@ -16,24 +16,23 @@ export default function LinkCard({
   description,
 }: LinkCardProps) {
   return (
-    <div className="flex flex-1 justify-center rounded-3xl bg-primary-5 pl-4 md:pl-6">
-      <div className="flex flex-1 flex-col justify-between py-6">
-        <p className="text-sm font-semibold text-secondary-100 md:text-2xl md:text-base">
+    <div className="flex flex-1 justify-center rounded-3xl bg-primary-5 pl-4 pr-3 md:pl-10 md:pr-9 xl:pl-6 xl:pr-5">
+      <div className="flex flex-1 flex-col justify-between py-3 md:py-6">
+        <p className="text-sm font-semibold text-secondary-100 md:text-xl xl:text-2xl">
           {description}
         </p>
         <LinkButton href={href} variant="light" size="short">
           바로가기
         </LinkButton>
       </div>
-      <div className="mt-auto max-h-[180px] max-w-[200px]">
+      <div className="mt-2 max-h-[180px] max-w-[200px]">
         <Image
           src={src}
           alt={alt}
           width={200}
           height={180}
           quality={100}
-          layout="responsive"
-          className="max-h-fit max-w-fit"
+          className="h-24 w-28 object-cover md:h-36 md:w-40 xl:h-full xl:w-full"
         />
       </div>
     </div>

@@ -29,9 +29,9 @@ export default function MyReviewNotWriteDetail({
 
   return (
     <div className="md: flex flex-col justify-evenly gap-5 px-4 pb-7 pt-5 md:py-5">
-      <div>
-        <p className="text-sm font-semibold md:text-lg">{name}</p>
-        <p className="text-xs font-light md:text-sm">{themeName}</p>
+      <div className="flex flex-col gap-[1px]">
+        <p className="text-[18px] font-semibold">{name}</p>
+        <p className="text-secondary-40 text-[14px] font-light">{themeName}</p>
       </div>
       <div className="flex flex-col gap-1">
         <div className="text-text-secondary flex items-center gap-1 text-[10px] md:text-sm">
