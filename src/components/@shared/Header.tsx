@@ -89,14 +89,12 @@ export default function Header() {
                 </div>
               ) : (
                 <div className="group relative flex text-base font-bold text-white">
-                  <Link href="/mypage">
-                    <Image
-                      src="/profile_image_default.png"
-                      width={24}
-                      height={24}
-                      alt="마이페이지 이미지"
-                    />
-                  </Link>
+                  <Image
+                    src="/profile_image_default.png"
+                    width={24}
+                    height={24}
+                    alt="마이페이지 이미지"
+                  />
                   <ul className="bg-secondary-80 absolute -right-10 z-50 mt-8 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block group-hover:duration-100">
                     <li>
                       <Link href="/mypage" onClick={closeMobileNav}>
