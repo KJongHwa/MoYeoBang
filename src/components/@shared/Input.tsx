@@ -1,7 +1,8 @@
-import React, { ForwardedRef } from 'react';
+import React from 'react';
+
 import clsx from 'clsx';
 
-interface InputProps {
+type InputProps = {
   label?: string;
   labelText?: string;
   fontSize?: '14' | '16';
@@ -10,12 +11,21 @@ interface InputProps {
   placeholder?: string;
   isError?: boolean;
   errorMessage?: string;
-  inputProps: React.InputHTMLAttributes<HTMLInputElement> & {
-    ref?: ForwardedRef<HTMLInputElement>;
-  };
-}
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+};
 
-function Input({
+/**
+ * InputProps Details
+ *
+ * @param labelText label값과 화면에 표시되는 Text를 다르게 설정할 경우 사용
+ * @param fontSize 전체 글자 사이즈
+ * @param varient label과 input의 테마, default와 elevated 중 설정 가능
+ * @param gap label, input, errorMessage 세 요소 사이의 간격
+ * @param isError 에러 존재 여부
+ * @param errorMessage 에러가 존재할 경우 표시할 에러 메세지
+ */
+
+export default function Input({
   label,
   labelText,
   placeholder,
@@ -75,5 +85,3 @@ function Input({
     </div>
   );
 }
-
-export default Input;

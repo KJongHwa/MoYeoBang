@@ -14,19 +14,16 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
-  (
-    {
-      id,
-      label,
-      type = 'text',
-      placeholder,
-      showPasswordIcon = false,
-      isError,
-      errorMessage,
-      ...rest
-    },
-    ref
-  ) => {
+  ({
+    id,
+    label,
+    type = 'text',
+    placeholder,
+    showPasswordIcon = false,
+    isError,
+    errorMessage,
+    ...rest
+  }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleTogglePassword = () => {
@@ -45,7 +42,6 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
             id,
             type: showPassword ? 'text' : type,
             name: id,
-            ref,
           }}
           isError={isError}
           errorMessage={errorMessage}
