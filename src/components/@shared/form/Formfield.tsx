@@ -3,14 +3,12 @@ import { forwardRef, useState } from 'react';
 import Image from 'next/image';
 import Input from '@/components/@shared/Input';
 
-interface FormFieldProps {
+interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string;
   type?: 'text' | 'email' | 'password';
   placeholder: string;
   showPasswordIcon?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
   isError?: boolean;
   errorMessage?: string;
 }
@@ -22,11 +20,9 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
     type = 'text',
     placeholder,
     showPasswordIcon = false,
-    onChange,
-    value,
     isError,
     errorMessage,
-    ...props
+    ...rest
   }) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -42,12 +38,10 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
           fontSize="14"
           placeholder={placeholder}
           inputProps={{
+            ...rest,
             id,
             type: showPassword ? 'text' : type,
-            onChange,
-            value,
             name: id,
-            ...props,
           }}
           isError={isError}
           errorMessage={errorMessage}
