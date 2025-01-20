@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 
 import useCustomForm from '@/hooks/useCustomForm';
+import useToast from '@/hooks/useToast';
 import { getToday } from '@/utils/dateUtils';
 import { GatheringRequestBody } from '@/types/gathering.types';
+import Toast from '@/components/@shared/Toast';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
@@ -43,6 +45,9 @@ export default function GatheringModal({
   const [dateTimeError, setDateTimeError] = useState<string>('');
   const [registrationEndError, setRegistrationEndError] = useState<string>('');
   const [searchMessage, setSearchMessage] = useState<string>('');
+
+  const { toastMessage, toastVisible, toastType, handleSuccess, handleError } =
+    useToast();
 
   const { themeName, capacity, dateTime, registrationEnd } = watchFields([
     'themeName',
@@ -172,7 +177,16 @@ export default function GatheringModal({
     };
 
     console.log('Submitted Data:', submissionData);
-    onClose();
+
+    const isSuccess = false;
+
+    // onClose();
+
+    if (isSuccess) {
+      handleSuccess('성공적으로 처리되었습니다!');
+    } else {
+      handleError('아직 구현되지 않은 기능입니다.');
+    }
   };
 
   return (
@@ -275,6 +289,7 @@ export default function GatheringModal({
           {isEdit ? '수정' : '생성'}
         </Button>
       </form>
+      {toastVisible && <Toast message={toastMessage} type={toastType} />}
     </Modal>
   );
 }
