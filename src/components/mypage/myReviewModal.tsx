@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/Button';
+import useToast from '@/hooks/useToast';
 import TextArea from '../@shared/TextArea';
 import RatingInput from '../@shared/RatingInput';
+import Toast from '../@shared/Toast';
 
 interface MyReviewModalProps {
   isModal: boolean;
@@ -21,6 +23,7 @@ export default function MyReviewModal({
 }: MyReviewModalProps) {
   const [updatedScore, setUpdatedScore] = useState<number>(score || 0);
   const [updatedComment, setUpdatedComment] = useState<string>(comment || '');
+  const { toastMessage, toastVisible, toastType, handleError } = useToast();
   const closeModalhandler = () => {
     setIsModal(false);
   };
@@ -80,12 +83,13 @@ export default function MyReviewModal({
             disabled={!isModified}
             className="w-full"
             onClick={() => {
-              alert('아직 사용할 수 없는 기능입니다ㅜ');
+              handleError('아직 구현되지 않은 기능입니다.');
             }}
           >
             리뷰등록
           </Button>
         </div>
+        {toastVisible && <Toast message={toastMessage} type={toastType} />}
       </div>
     </Modal>
   );

@@ -1,13 +1,13 @@
-/* eslint-disable prettier/prettier */
-
 'use client';
 
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import useToast from '@/hooks/useToast';
 import Link from 'next/link';
 import FormField from '@/components/@shared/form/Formfield';
 import { authApi } from '@/axios/auth';
 import LoginImages from './LoginImages';
+import Toast from '../@shared/Toast';
 
 interface LoginFormData {
   email: string;
@@ -16,6 +16,7 @@ interface LoginFormData {
 
 function LoginForm() {
   const router = useRouter();
+  const { toastMessage, toastVisible, toastType, handleError } = useToast();
 
   const {
     register,
@@ -41,17 +42,10 @@ function LoginForm() {
         );
         const event = new Event('localStorageChange');
         window.dispatchEvent(event);
-        alert('로그인 성공');
         router.push('/');
       }
     } catch (error) {
-      localStorage.setItem(
-        'userInfo',
-        JSON.stringify({
-          email: data.email,
-        })
-      );
-      router.push('/');
+      handleError('로그인 실패');
     }
   };
 
@@ -114,6 +108,7 @@ function LoginForm() {
         </div>
         <LoginImages />
       </div>
+      {toastVisible && <Toast message={toastMessage} type={toastType} />}
     </div>
   );
 }
