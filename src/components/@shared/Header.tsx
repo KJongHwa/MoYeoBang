@@ -42,7 +42,7 @@ export default function Header() {
           <div className="bg-secondary-bg border-secondary-70 mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:px-[200px]">
             {/* Navigation Links */}
             <nav className="text-text-default flex items-center gap-8 text-base">
-              <Link href="/">
+              <Link href="/" onClick={closeMobileNav}>
                 <Image
                   src="/Logo.svg"
                   width={100}
