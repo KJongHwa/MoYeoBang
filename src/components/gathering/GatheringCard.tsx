@@ -4,14 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import UserIcon from '@/public/icons/user.svg';
-import { formatDate, extractHour } from '@/utils/dateUtils';
+import { formatDate, extractHour, isToday } from '@/utils/dateUtils';
 import { findLabelByValue } from '@/utils/mappingUtils';
 import ProgressBar from '@/components/@shared/ProgressBar';
 import { GatheringProps } from '@/types/gathering.types';
-import { locationList } from '@/constants/themeList';
+import { locationList, levelToKorean } from '@/constants/themeList';
 
-import AlarmBadge from './AlarmBadge';
-import GatheringBadge from './GatheringBadge';
+import AlarmBadge from './UI/AlarmBadge';
+import GatheringBadge from './UI/GatheringBadge';
 import PuzzleButton from './PuzzleButton';
 
 export default function GatheringCard({
@@ -26,11 +26,15 @@ export default function GatheringCard({
   participantCount,
   image,
 }: GatheringProps['card']) {
+  const isRegistrationEndToday = isToday(registrationEnd);
+
   return (
     <figure className="relative">
       <Link href={`/gathering/${gatheringId}`}>
-        <div className="flex max-h-32 w-full rounded-xl bg-default-tertiary md:max-h-[170px]">
-          <AlarmBadge hour={extractHour(registrationEnd)} />
+        <div className="flex max-h-28 w-full rounded-xl bg-default-tertiary md:max-h-[170px]">
+          {isRegistrationEndToday && (
+            <AlarmBadge hour={extractHour(registrationEnd)} />
+          )}
           <Image
             src={image}
             alt="방탈출 테마 이미지"
@@ -43,13 +47,13 @@ export default function GatheringCard({
             <div className="flex justify-between">
               <div className="flex items-center gap-1 text-sm md:gap-[6px]">
                 <GatheringBadge
-                  icon={level as '고급' | '중급' | '초급'}
+                  icon={level as 'high' | 'middle' | 'low'}
                   variant="secondary"
                   shape="round"
                   border="primary"
                   fontColor="primary"
                 >
-                  {level}
+                  {levelToKorean[level]}
                 </GatheringBadge>
                 <GatheringBadge variant="primary" fontColor="secondary">
                   {findLabelByValue(location, locationList)}
@@ -59,7 +63,7 @@ export default function GatheringCard({
                 </GatheringBadge>
               </div>
             </div>
-            <div>
+            <div className="flex flex-col gap-[2px]">
               <p className="text-sm font-semibold text-secondary-5 md:text-lg">
                 {name}
               </p>

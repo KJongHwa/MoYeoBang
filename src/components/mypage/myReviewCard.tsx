@@ -46,15 +46,14 @@ export default function MyReviewCard({
         <div className="flex flex-col gap-[7px]">
           <div className="group relative flex items-center justify-between">
             <Rating rating={score} width={120} height={24} />
-            <div className="relative">
+            <div className="group relative">
               <Image
                 src="/see_more_icon.png"
                 width={24}
                 height={24}
                 alt="드롭다운 클릭 버튼"
-                className="cursor-pointer"
               />
-              <ul className="bg-secondary-80 absolute -right-10 top-full z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-28">
+              <ul className="bg-secondary-80 absolute -right-6 z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-20">
                 {liDropdowns.map((liDropdown) => (
                   <li key={liDropdown.label}>
                     <button
@@ -70,7 +69,7 @@ export default function MyReviewCard({
             </div>
           </div>
 
-          <h2 className="text-xs font-medium text-[#b5b5b5]">
+          <h2 className="text-secondary-40 text-xs font-medium">
             {Gathering.themeName}
           </h2>
           <p className="text-sm font-medium text-white md:mt-5">{comment}</p>
