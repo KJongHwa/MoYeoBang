@@ -44,7 +44,7 @@ export default function Header() {
             <nav className="text-text-default flex items-center gap-8 text-base">
               <Link href="/">
                 <Image
-                  src="/Logo_Large.png"
+                  src="/Logo.svg"
                   width={100}
                   height={23}
                   alt="로고 이미지"
@@ -80,6 +80,8 @@ export default function Header() {
                       padding="8"
                       fontSize="14"
                       onClick={handleLogin}
+                      className="text-[12px]"
+                      shape="round"
                     >
                       로그인/회원가입
                     </Button>

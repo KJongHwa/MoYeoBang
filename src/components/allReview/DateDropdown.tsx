@@ -15,7 +15,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
   });
 
   return (
-    <div className={clsx('relative max-w-[120px]')}>
+    <div className={clsx('relative flex max-w-[120px]')}>
       <button
         type="button"
         onClick={handleChange}
@@ -30,7 +30,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
           'gap-1'
         )}
       >
-        <p className="flex-1 text-sm font-medium text-white">
+        <p className="flex-1 text-sm font-medium text-text-tertiary">
           {date === '' ? '날짜' : date}
         </p>
         <Image
@@ -51,7 +51,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
           selectedDate={date}
           onClose={handleChange}
           onDateChange={handleDateChange}
-          layout="top-12 md:left-0"
+          layout="top-12 -right-full -left-full md:left-0"
         />
       )}
     </div>
