@@ -2,7 +2,7 @@
 
 import { AllReviewListProps } from '@/types/review.types';
 import { useState } from 'react';
-import { hyphenYearMonthDay } from '@/utils/dateUtils';
+import { slashYearMonthDay } from '@/utils/dateUtils';
 import ReviewCard from './ReviewCard';
 import ReviewFilters from './ReviewFilters';
 import EmptyElement from '../@shared/EmptyElement';
@@ -24,7 +24,7 @@ export default function AllReviewList({ allReviews }: AllReviewListProps) {
         review.Gathering.location === selectedLocation;
       const dateMatches =
         selectedDate === '' ||
-        hyphenYearMonthDay(review.createdAt) === selectedDate;
+        slashYearMonthDay(review.createdAt) === selectedDate;
       return genreMatches && locationMatches && dateMatches;
     })
     .sort((a, b) => {
