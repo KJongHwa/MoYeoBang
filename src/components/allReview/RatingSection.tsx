@@ -1,5 +1,5 @@
 import { mockReviewRatings } from '@/data/mockReviewRatings';
-import Rating from '../@shared/Rating';
+import Rating from '../@shared/rating/Rating';
 import ProgressBar from '../@shared/ProgressBar';
 
 interface RatingSectionProps {

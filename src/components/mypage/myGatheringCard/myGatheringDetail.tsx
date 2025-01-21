@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import GatheringBadge from '@/components/gathering/UI/GatheringBadge';
-import Button from '@/components/@shared/Button';
+import Button from '@/components/@shared/button/Button';
 import { formatDate } from '@/utils/dateUtils';
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
@@ -61,7 +61,7 @@ export default function MyGatheringDetail({
       </div>
       <div className="flex flex-col gap-[1px]">
         <p className="text-[18px] font-semibold">{name}</p>
-        <p className="text-secondary-40 text-[14px] font-light">{themeName}</p>
+        <p className="text-[14px] font-light text-secondary-40">{themeName}</p>
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-1 text-[10px] text-text-secondary md:text-sm">

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Modal from '@/components/@shared/Modal';
-import Button from '@/components/@shared/Button';
+import Button from '@/components/@shared/button/Button';
 import useToast from '@/hooks/useToast';
 import TextArea from '../@shared/TextArea';
 import RatingInput from '../@shared/RatingInput';

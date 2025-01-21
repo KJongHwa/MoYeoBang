@@ -3,7 +3,7 @@
 import { useCalendar } from '@/hooks/useCalendar';
 import { clsx } from 'clsx';
 import Image from 'next/image';
-import CustomCalendar from '../@shared/CustomCalendar';
+import CustomCalendar from '@/components/@shared/calendar/CustomCalendar';
 
 interface DateDropdownProps {
   onDateChange(date: string): void;
@@ -34,7 +34,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
           {date === '' ? '날짜' : date}
         </p>
         <Image
-          src="/chevron-down.svg"
+          src="/icons/chevron-down.svg"
           width={16}
           height={8}
           alt="dropdown arrow"

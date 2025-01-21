@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import '@/styles/dateTimeCalendar.css';
 import ScrollTimePicker from './ScrollTimePicker';
-import Button from './Button';
+import Button from './button/Button';
 
 type CalendarValue = Date | null | [Date | null, Date | null];
 

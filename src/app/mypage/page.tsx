@@ -7,7 +7,7 @@ import { mockGatherings } from '@/data/mockGatherings';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
 import { useState } from 'react';
 import Image from 'next/image';
-import IconButton from '@/components/@shared/IconButton';
+import IconButton from '@/components/@shared/button/IconButton';
 import { useModal } from '@/hooks/useModal';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
@@ -45,7 +45,7 @@ export default function MyPage() {
   return (
     <main className="relative top-[100px] mx-4 md:mx-6 xl:mx-auto xl:w-[1166px]">
       <p className="text-[18px] font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
-      <div className="bg-primary-30 relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] px-3 py-8 md:mb-7 md:px-10">
+      <div className="relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] bg-primary-30 px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
             src={user.image || '/profile_image_default.png'}
@@ -60,21 +60,21 @@ export default function MyPage() {
           </div>
         </div>
         <Image
-          src={`/myprofile_bg/l/${levelImage}.svg`}
+          src={`/images/myprofile_bg/l/${levelImage}.svg`}
           width={612}
           height={224}
           alt="프로필 배경"
           className="pointer-events-none absolute left-16 top-3 -z-10 hidden lg:-top-1 lg:left-64 lg:block"
         />
         <Image
-          src={`/myprofile_bg/l/${levelImage}.svg`}
+          src={`/images//myprofile_bg/l/${levelImage}.svg`}
           width={540}
           height={224}
           alt="프로필 배경"
           className="pointer-events-none absolute left-16 top-3 -z-10 hidden md:-top-1 md:left-40 md:block lg:hidden"
         />
         <Image
-          src={`/myprofile_bg/s/${levelImage}.svg`}
+          src={`/images//myprofile_bg/s/${levelImage}.svg`}
           width={241}
           height={121}
           alt="프로필 배경"
@@ -106,7 +106,7 @@ export default function MyPage() {
             <button
               key={link.label}
               type="button"
-              className={`text-secondary-60 pb-2 text-[18px] font-bold ${
+              className={`pb-2 text-[18px] font-bold text-secondary-60 ${
                 activeTab === link.label
                   ? 'border-b-2 border-white !text-white'
                   : ''

@@ -1,6 +1,6 @@
 import { sortList } from '@/constants/sortList';
 
-import SortDropdown from '@/components/@shared/SortDropdown';
+import SortDropdown from '@/components/@shared/dropdown/SortDropdown';
 import DateDropdown from './DateDropdown';
 import LocationDropdown from './LocationDropdown';
 
