@@ -138,7 +138,7 @@ export default function Header() {
                     />
                   </button>
                   {isMenuOpen && (
-                    <ul className="bg-secondary-80 absolute right-0 z-50 mt-8 w-32 rounded-md shadow-md">
+                    <ul className="bg-secondary-80 absolute -right-12 z-50 mt-8 w-32 rounded-md shadow-md">
                       <li>
                         <Link href="/mypage" onClick={closeMenu}>
                           <button
