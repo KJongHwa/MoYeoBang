@@ -2,6 +2,8 @@
 
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/Button';
+import useToast from '@/hooks/useToast';
+import Toast from '../@shared/Toast';
 
 interface DeleteModalProps {
   isModal: boolean;
@@ -14,6 +16,7 @@ export default function DeleteModal({
   setIsModal,
   classification,
 }: DeleteModalProps) {
+  const { toastMessage, toastVisible, toastType, handleError } = useToast();
   const closeModalhandler = () => {
     setIsModal(false);
   };
@@ -42,12 +45,13 @@ export default function DeleteModal({
             fontSize="16"
             className="w-full"
             onClick={() => {
-              alert('아직 사용할 수 없는 기능입니다ㅜ');
+              handleError('아직 구현되지 않은 기능입니다.');
             }}
           >
             {classification === 'cancel' ? '모임취소' : '리뷰삭제'}
           </Button>
         </div>
+        {toastVisible && <Toast message={toastMessage} type={toastType} />}
       </div>
     </Modal>
   );

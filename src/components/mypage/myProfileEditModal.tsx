@@ -6,6 +6,8 @@ import Image from 'next/image';
 import Modal from '@/components/@shared/Modal';
 import Input from '@/components/@shared/Input';
 import Button from '@/components/@shared/Button';
+import useToast from '@/hooks/useToast';
+import Toast from '../@shared/Toast';
 
 interface MyProfileEditModalProps {
   isModal: boolean;
@@ -22,6 +24,7 @@ export default function MyProfileEditModal({
 }: MyProfileEditModalProps) {
   const [img, setImg] = useState<string | null>(null);
   const [updatedNickname, setUpdatedNickname] = useState<string>(nickname);
+  const { toastMessage, toastVisible, toastType, handleError } = useToast();
 
   const closeModalhandler = () => {
     setIsModal(false);
@@ -38,13 +41,13 @@ export default function MyProfileEditModal({
 
     const isEnglishName = /^[a-zA-Z0-9._-]+$/.test(file.name);
     if (!isEnglishName) {
-      alert('파일 이름은 영어로만 이루어져야 합니다.');
+      handleError('파일 이름은 영어로만 이루어져야 합니다.');
       return;
     }
 
     const maxSizeInBytes = 5 * 1024 * 1024;
     if (file.size > maxSizeInBytes) {
-      alert('파일 크기는 5MB 이하여야만 합니다.');
+      handleError('파일 크기는 5MB 이하여야만 합니다.');
       return;
     }
 
@@ -125,12 +128,13 @@ export default function MyProfileEditModal({
             disabled={!isModified}
             className="w-full"
             onClick={() => {
-              alert('아직 사용할 수 없는 기능입니다ㅜ');
+              handleError('아직 구현되지 않은 기능입니다.');
             }}
           >
             수정하기
           </Button>
         </div>
+        {toastVisible && <Toast message={toastMessage} type={toastType} />}
       </div>
     </Modal>
   );

@@ -1,61 +1,73 @@
 'use client';
 
-import Button from '@/components/@shared/Button';
-import GatheringCreaterProfileModal from '@/components/gatheringDetail/GatheringCreaterProfileModal';
+import GatheringDetailSection from '@/components/gatheringDetail/GatheringDetailSection';
+import GatheringMainSection from '@/components/gatheringDetail/GatheringMainSection';
+import GatheringReviewSection from '@/components/gatheringDetail/GatheringReviewSection';
+import JoinBoxSection from '@/components/gatheringDetail/JoinBoxSection';
+import ProfileSection from '@/components/gatheringDetail/ProfileSection';
 import { mockGatheringCreater } from '@/data/mockGatheringCreater';
+import { mockGatheringDetails } from '@/data/mockGatheringDetail';
 import { useModal } from '@/hooks/useModal';
-import Image from 'next/image';
 
 export default function GatheringDetail({ params }: any) {
   const { id } = params;
+  const gatheringData = mockGatheringDetails.find(
+    (gathering) => gathering.gatheringId === Number(id)
+  );
   const createrProfile = mockGatheringCreater;
   const { isOpen, openModal, closeModal } = useModal();
 
+  if (!gatheringData) return null;
+
   return (
-    <div>
-      {/* TEST: id 값을 정상적으로 로드 */}
-      <h1 className="mt-36">Gathering ID: {id}</h1>
-      <p>오정협 - 모임 상세페이지</p>
-      <div className="flex h-[66px] w-full items-center justify-between rounded-2xl border border-default-inverse px-7 py-2 md:h-[90px]">
-        <div className="flex items-center gap-3">
-          <Image
-            src={createrProfile.image || '/profile_image_default.png'}
-            width={52}
-            height={52}
-            alt="모임주최자 프로필 이미지"
+    <div className="mx-auto max-w-screen-xl px-4">
+      <div className="mt-36">
+        {/* 1. 이미지와 기본 정보를 포함하는 섹션 */}
+        <div className="flex gap-6">
+          <GatheringMainSection
+            image={gatheringData.image}
+            name={gatheringData.name}
+            themeName={gatheringData.themeName}
+            synopsis={gatheringData.synopsis}
+            location={gatheringData.location}
           />
-          <div>
-            <p className="text-xl font-bold">{createrProfile.nickname}</p>
-            <p className="text-sm">
-              모집글 ({createrProfile.gatherings.length})
-            </p>
-          </div>
+          <JoinBoxSection
+            name={gatheringData.name}
+            themeName={gatheringData.themeName}
+            participantCount={gatheringData.participantCount}
+            capacity={gatheringData.capacity}
+          />
         </div>
-        <Button
-          variant="primary"
-          fontSize="14"
-          padding="12"
-          className="hidden md:block"
-          onClick={openModal}
-        >
-          프로필 보기
-        </Button>
-        <button onClick={openModal} type="button" className="block md:hidden">
-          <Image
-            src="/icons/right.svg"
-            width={24}
-            height={24}
-            alt="모임 주최자 프로필 상세보기 버튼"
+        {/* 2. 모임 세부 정보 섹션 */}
+        <div className="mt-16">
+          <GatheringDetailSection
+            level={gatheringData.level}
+            genre={gatheringData.genre}
+            themeName={gatheringData.themeName}
+            playtime={gatheringData.playtime}
+            dateTime={gatheringData.dateTime}
+            registrationEnd={gatheringData.registrationEnd}
+            capacity={gatheringData.capacity}
+            participantCount={gatheringData.participantCount}
+            map={gatheringData.map}
           />
-        </button>
+        </div>
+
+        {/* 3. 프로필 섹션 */}
+        <div className="mt-16">
+          <ProfileSection
+            createrProfile={createrProfile}
+            isOpen={isOpen}
+            openModal={openModal}
+            closeModal={closeModal}
+          />
+        </div>
+
+        {/* 4. 리뷰 섹션 */}
+        <div className="mb-20 mt-16">
+          <GatheringReviewSection gatheringId={Number(id)} />
+        </div>
       </div>
-      {isOpen && (
-        <GatheringCreaterProfileModal
-          isModal={isOpen}
-          onClose={closeModal}
-          createrProfile={createrProfile}
-        />
-      )}
     </div>
   );
 }
