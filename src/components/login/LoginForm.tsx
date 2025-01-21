@@ -4,10 +4,11 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import useToast from '@/hooks/useToast';
 import Link from 'next/link';
+
+import Toast from '@/components/@shared/Toast';
 import FormField from '@/components/@shared/form/Formfield';
 import { authApi } from '@/axios/auth';
 import LoginImages from './LoginImages';
-import Toast from '../@shared/Toast';
 
 interface LoginFormData {
   email: string;
@@ -96,7 +97,7 @@ function LoginForm() {
             </button>
           </form>
 
-          <p className="mt-6 text-sm text-secondary-50">
+          <p className="text-secondary-50 mt-6 text-sm">
             모여방이 처음이신가요?{' '}
             <Link
               href="/signup"
