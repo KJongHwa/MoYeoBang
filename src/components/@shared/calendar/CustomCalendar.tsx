@@ -3,7 +3,7 @@
 import { hyphenYearMonthDay, slashYearMonthDay } from '@/utils/dateUtils';
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import Button from './button/Button';
+import Button from '@/components/@shared/button/Button';
 import '@/styles/customCalendar.css';
 
 type CalendarValue = Date | null | [Date | null, Date | null];

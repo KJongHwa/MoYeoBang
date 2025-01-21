@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import MyReviewModal from '../mypage/myReviewModal';
-import DeleteModal from '../mypage/deleteModal';
+import MyReviewModal from '@/components/mypage/myReviewModal';
+import DeleteModal from '@/components/mypage/deleteModal';
 
 interface ReviewEditDropdownProps {
   comment: string;

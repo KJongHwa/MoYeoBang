@@ -4,9 +4,9 @@ import { useState } from 'react';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/button/Button';
 import useToast from '@/hooks/useToast';
-import TextArea from '../@shared/TextArea';
-import RatingInput from '../@shared/RatingInput';
-import Toast from '../@shared/Toast';
+import TextArea from '@/components/@shared/input/TextArea';
+import RatingInput from '@/components/@shared/rating/RatingInput';
+import Toast from '@/components/@shared/Toast';
 
 interface MyReviewModalProps {
   isModal: boolean;

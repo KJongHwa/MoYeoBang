@@ -4,8 +4,8 @@ import { hyphenYearMonthDay } from '@/utils/dateUtils';
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import '@/styles/dateTimeCalendar.css';
-import ScrollTimePicker from './ScrollTimePicker';
-import Button from './button/Button';
+import ScrollTimePicker from '@/components/@shared/calendar/ScrollTimePicker';
+import Button from '@/components/@shared/button/Button';
 
 type CalendarValue = Date | null | [Date | null, Date | null];
 
