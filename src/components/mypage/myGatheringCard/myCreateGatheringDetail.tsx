@@ -97,7 +97,7 @@ export default function MyCreateGatheringDetail({
           height={24}
           alt="드롭다운 클릭 버튼"
         />
-        <ul className="bg-secondary-80 absolute -right-3 z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10">
+        <ul className="bg-secondary-80 absolute -right-1 z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10 md:-right-3">
           {liDropdowns.map((liDropdown) => (
             <li key={liDropdown.label}>
               <button

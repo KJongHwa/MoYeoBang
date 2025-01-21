@@ -7,9 +7,9 @@ import Link from 'next/link';
 import useToast from '@/hooks/useToast';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Toast from '@/components/@shared/Toast';
 import Button from './Button';
 import HeaderNavBar from './HeaderNavbar';
+import Toast from './Toast';
 
 export default function Header() {
   const router = useRouter();
@@ -138,7 +138,7 @@ export default function Header() {
                     />
                   </button>
                   {isMenuOpen && (
-                    <ul className="bg-secondary-80 absolute -right-10 z-50 mt-8 w-32 rounded-md shadow-md">
+                    <ul className="bg-secondary-80 absolute right-0 z-50 mt-8 w-32 rounded-md shadow-md">
                       <li>
                         <Link href="/mypage" onClick={closeMenu}>
                           <button
