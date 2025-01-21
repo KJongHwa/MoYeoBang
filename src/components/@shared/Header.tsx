@@ -5,6 +5,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import useToast from '@/hooks/useToast';
+import { useDropdown } from '@/hooks/useDropdown';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from './Button';
@@ -14,10 +15,15 @@ import Toast from './Toast';
 export default function Header() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searching, setSearching] = useState(true);
   const [mobileNav, setMobileNav] = useState(false);
   const { toastMessage, toastVisible, toastType, handleSuccess } = useToast();
+  const {
+    isOpen: isMenuOpen,
+    openDropdown,
+    closeDropdown,
+    toggleDropdown,
+  } = useDropdown();
 
   useEffect(() => {
     const checkLoginStatus = () => {
@@ -57,14 +63,6 @@ export default function Header() {
     closeMobileNav();
     handleSuccess('로그아웃 되었습니다.');
     router.push('/');
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
   };
 
   const navLinks = [
@@ -129,7 +127,7 @@ export default function Header() {
                 </div>
               ) : (
                 <div className="relative flex text-base font-bold text-white">
-                  <button type="button" onClick={toggleMenu}>
+                  <button type="button" onClick={toggleDropdown}>
                     <Image
                       src="/profile_image_default.png"
                       width={24}
@@ -140,7 +138,7 @@ export default function Header() {
                   {isMenuOpen && (
                     <ul className="bg-secondary-80 absolute -right-12 z-50 mt-8 w-32 rounded-md shadow-md">
                       <li>
-                        <Link href="/mypage" onClick={closeMenu}>
+                        <Link href="/mypage" onClick={closeDropdown}>
                           <button
                             type="button"
                             className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
@@ -153,7 +151,10 @@ export default function Header() {
                         <button
                           type="button"
                           className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
-                          onClick={handleLogout}
+                          onClick={() => {
+                            handleLogout();
+                            closeDropdown();
+                          }}
                         >
                           로그아웃
                         </button>
