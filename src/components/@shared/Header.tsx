@@ -163,7 +163,13 @@ export default function Header() {
                   )}
                 </div>
               )}
-              <button type="button" onClick={handleMobileNav}>
+              <button
+                type="button"
+                onClick={() => {
+                  handleMobileNav();
+                  closeDropdown();
+                }}
+              >
                 <Image
                   src={
                     mobileNav ? '/icons/ic_delete.svg' : '/icons/mobile_nav.svg'
