@@ -49,7 +49,8 @@ export default function GatheringModal({
   const { toastMessage, toastVisible, toastType, handleSuccess, handleError } =
     useToast();
 
-  const { themeName, capacity, dateTime, registrationEnd } = watchFields([
+  const { name, themeName, capacity, dateTime, registrationEnd } = watchFields([
+    'name',
     'themeName',
     'capacity',
     'dateTime',
@@ -240,13 +241,15 @@ export default function GatheringModal({
             errorMessage={dateTimeError}
           />
           {isCalendarOpen && (
-            <DateTimeCalendar
-              isOpen={isCalendarOpen}
-              selectedDate={selectedDate}
-              onClose={toggleCalendar}
-              onDateChange={handleDateChange}
-              layout="top-24 z-90"
-            />
+            <div className="fixed inset-0 z-90 flex items-center justify-center bg-black bg-opacity-50">
+              <DateTimeCalendar
+                isOpen={isCalendarOpen}
+                selectedDate={selectedDate}
+                onClose={toggleCalendar}
+                onDateChange={handleDateChange}
+                layout="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-90"
+              />
+            </div>
           )}
           {dateTime && !dateTimeError && (
             <DateInput
@@ -264,13 +267,15 @@ export default function GatheringModal({
             />
           )}
           {isEndDateCalendarOpen && (
-            <DateTimeCalendar
-              isOpen={isEndDateCalendarOpen}
-              selectedDate={selectedEndDate}
-              onClose={toggleEndDateCalendar}
-              onDateChange={handleEndDateChange}
-              layout="top-44"
-            />
+            <div className="fixed inset-0 z-90 flex items-center justify-center bg-black bg-opacity-50">
+              <DateTimeCalendar
+                isOpen={isEndDateCalendarOpen}
+                selectedDate={selectedEndDate}
+                onClose={toggleEndDateCalendar}
+                onDateChange={handleEndDateChange}
+                layout="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-90"
+              />
+            </div>
           )}
         </div>
         <CapacitySelector
