@@ -15,16 +15,16 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
   });
 
   return (
-    <div className={clsx('relative flex max-w-[120px]')}>
+    <div className={clsx('relative flex')}>
       <button
         type="button"
         onClick={handleChange}
         className={clsx(
-          'h-7 max-w-[120px] md:h-[42px]',
+          'h-7 md:h-[42px]',
           'relative',
           'border-2 border-default-tertiary',
           'rounded-xl',
-          'px-4 py-2',
+          'py-2 pl-4 pr-3',
           'bg-default-tertiary',
           'flex items-center',
           'gap-2'
