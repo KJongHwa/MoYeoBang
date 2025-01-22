@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 
+import type { GatheringRequestBody } from '@/types/gathering.types';
 import useCustomForm from '@/hooks/useCustomForm';
 import useToast from '@/hooks/useToast';
 import { getToday } from '@/utils/dateUtils';
-import { GatheringRequestBody } from '@/types/gathering.types';
+import { postGathering } from '@/axios/gathering/apis';
 import Toast from '@/components/@shared/Toast';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/button/Button';
@@ -29,13 +30,8 @@ export default function GatheringModal({
   onClose,
   isEdit = false,
 }: GatheringModalProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watchFields,
-    formState: { isValid },
-  } = useCustomForm<GatheringRequestBody['post']>(INIT_GATHRING.POST);
+  const { trigger, register, handleSubmit, setValue, watchFields, formState } =
+    useCustomForm<GatheringRequestBody['post']>(INIT_GATHRING.POST);
 
   const [location, setLocation] = useState<string>('');
   const [inputThemeName, setInputThemeName] = useState<string>('');
@@ -164,7 +160,7 @@ export default function GatheringModal({
   }, [registrationEnd, dateTime, setValue]);
 
   // 폼 제출 시 날짜 형식 포맷
-  const onSubmit = (data: GatheringRequestBody['post']) => {
+  const onSubmit = async (data: GatheringRequestBody['post']) => {
     const dateTimeString = data.dateTime;
     const registrationEndString = data.registrationEnd;
 
@@ -217,18 +213,32 @@ export default function GatheringModal({
       registrationEnd: isoRegistrationEnd,
     };
 
-    console.log('Submitted Data:', submissionData);
-
-    const isSuccess = false;
-
-    // onClose();
-
-    if (isSuccess) {
-      handleSuccess('성공적으로 처리되었습니다!');
-    } else {
-      handleError('아직 구현되지 않은 기능입니다.');
+    try {
+      await postGathering(submissionData);
+      handleSuccess('모임이 생성되었습니다!');
+      onClose();
+    } catch (error) {
+      console.error('Error:', error);
+      handleError('모임 생성에 실패했습니다. 다시 시도해 주세요.');
     }
   };
+
+  // 유효성 검사 강제 수행
+  useEffect(() => {
+    const validateForm = async () => {
+      await trigger();
+    };
+
+    validateForm();
+  }, [
+    name,
+    themeName,
+    dateTime,
+    registrationEnd,
+    registrationEndError,
+    dateTimeError,
+    trigger,
+  ]);
 
   return (
     <Modal
@@ -245,8 +255,19 @@ export default function GatheringModal({
           labelText="모임 이름"
           placeholder="모임 이름을 입력하세요."
           inputProps={{
-            ...register('name', { required: true }),
+            ...register('name', {
+              required: {
+                value: true,
+                message: '모임 이름을 입력해주세요.',
+              },
+              maxLength: {
+                value: 12,
+                message: '모임 이름은 12글자 이하로 입력해주세요.',
+              },
+            }),
           }}
+          isError={!!formState.errors.name}
+          errorMessage={formState.errors.name?.message}
         />
         <LocationSelector
           location={location}
@@ -326,10 +347,8 @@ export default function GatheringModal({
           type="submit"
           variant="primary-gray"
           padding="10"
-          disabled={
-            !isValid || !themeName || !!registrationEndError || !!dateTimeError
-          }
-          className="mb-4 mt-14 w-full md:mt-6"
+          disabled={!formState.isValid}
+          className="mb-4 mt-3 w-full"
         >
           {isEdit ? '수정' : '생성'}
         </Button>
