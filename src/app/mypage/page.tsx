@@ -17,51 +17,28 @@ import { UserTypes } from '@/types/mypage.types';
 import { useQuery } from '@tanstack/react-query';
 
 export default function MyPage() {
-  const user = mockUser;
-
-  // const {
-  //   data: user,
-  //   isLoading,
-  //   error,
-  // } = useQuery<UserTypes>({
-  //   queryKey: ['myProfile'], // 쿼리 키
-  //   queryFn: getMyProfile, // 데이터 페칭 함수
-  // });
-
-  // // 로딩 상태 처리
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // // 에러 상태 처리
-  // if (error) {
-  //   return (
-  //     <p>Error: {error instanceof Error ? error.message : 'Unknown error'}</p>
-  //   );
-  // }
-  // async function fetchData() {
-  //   const userInfo = await getMyProfile();
-  //   console.log(userInfo);
-  // }
-  // fetchData();
-
-  const levelImage = Math.min(Math.max(1, mockGatherings.length), 6); // levelImage는 최소 1부터 최대 6까지만
   const {
     isOpen: isEditModal,
     openModal: openEditModal,
     closeModal: closeEditModal,
   } = useModal();
 
+  const { data: user, isLoading } = useQuery<UserTypes>({
+    queryKey: ['myProfile'],
+    queryFn: getMyProfile,
+  });
+  // 유저 데이터가 로드된 이후 navLinks 정의
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
     { label: '나의 리뷰', component: <MyReview /> },
     {
       label: '내가 만든 모임',
-      component: <MyCreateGathering userID={user.userID} />,
+      component: <MyCreateGathering userID={user?.userID ?? 0} />, // user.userID는 안전하게 사용 가능
     },
   ];
 
-  const [activeTab, setActiveTab] = useState(navLinks[0].label);
+  // activeTab 초기값은 navLinks가 안전하게 설정된 이후에만 참조
+  const [activeTab, setActiveTab] = useState(navLinks[0]?.label || '');
 
   const navClick = (label: string) => {
     setActiveTab(label);
@@ -71,6 +48,23 @@ export default function MyPage() {
     const activeLink = navLinks.find((link) => link.label === activeTab);
     return activeLink?.component;
   };
+
+  const levelImage = Math.min(Math.max(1, mockGatherings.length), 6); // levelImage는 최소 1부터 최대 6까지만
+  // 로딩 상태 처리
+  if (isLoading) {
+    return (
+      <div className="flex h-dvh items-center justify-center">Loading...</div>
+    );
+  }
+
+  // 유저 정보가 없을 때 처리
+  if (!user) {
+    return (
+      <div className="flex h-dvh items-center justify-center">
+        유저 정보를 불러올 수 없습니다.
+      </div>
+    );
+  }
 
   return (
     <main className="relative top-[100px] mx-4 md:mx-6 xl:mx-auto xl:w-[1166px]">
