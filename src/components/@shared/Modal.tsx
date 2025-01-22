@@ -1,4 +1,4 @@
-import DeleteIcon from '@/public/delete.svg';
+import DeleteIcon from '@/public/icons/delete.svg';
 import { ReactNode, useEffect, useRef } from 'react';
 
 interface ModalProps {

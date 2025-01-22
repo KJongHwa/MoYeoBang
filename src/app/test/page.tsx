@@ -1,14 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '@/components/@shared/Button';
-import IconButton from '@/components/@shared/IconButton';
-import Dropdown, { DropdownOption } from '@/components/@shared/Dropdown';
-import Input from '@/components/@shared/Input';
-import TextArea from '@/components/@shared/TextArea';
-import ToggleInput from '@/components/@shared/ToggleInput';
+import Button from '@/components/@shared/button/Button';
+import IconButton from '@/components/@shared/button/IconButton';
+import Dropdown, {
+  DropdownOption,
+} from '@/components/@shared/dropdown/Dropdown';
+import Input from '@/components/@shared/input/Input';
+import TextArea from '@/components/@shared/input/TextArea';
+import ToggleInput from '@/components/@shared/input/ToggleInput';
 import Modal from '@/components/@shared/Modal';
-import DateTimeCalendar from '@/components/@shared/DateTimeCalendar';
+import DateTimeCalendar from '@/components/@shared/calendar/DateTimeCalendar';
 import { useCalendar } from '@/hooks/useCalendar';
 // import Spinner from '@/components/@shared/Spinner';
 // import CustomCalendar from '@/components/@shared/CustomCalendar';

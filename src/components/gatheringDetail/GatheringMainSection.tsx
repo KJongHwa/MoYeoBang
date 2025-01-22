@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { locationList } from '@/constants/themeList';
-import Button from '@/components/@shared/Button';
+import Button from '@/components/@shared/button/Button';
 
 interface GatheringMainSectionProps {
   image: string;

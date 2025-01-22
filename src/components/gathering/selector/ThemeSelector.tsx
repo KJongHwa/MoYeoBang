@@ -1,5 +1,5 @@
-import Input from '@/components/@shared/Input';
-import Button from '@/components/@shared/Button';
+import Input from '@/components/@shared/input/Input';
+import Button from '@/components/@shared/button/Button';
 import { themeNameList } from '@/constants/themeList';
 
 interface ThemeSelectorProps {

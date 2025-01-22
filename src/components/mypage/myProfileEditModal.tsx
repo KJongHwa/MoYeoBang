@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import Modal from '@/components/@shared/Modal';
-import Input from '@/components/@shared/Input';
-import Button from '@/components/@shared/Button';
+import Input from '@/components/@shared/input/Input';
+import Button from '@/components/@shared/button/Button';
 import useToast from '@/hooks/useToast';
 import Toast from '../@shared/Toast';
 
