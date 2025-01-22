@@ -2,10 +2,6 @@ import { axiosInstance } from '@/axios/axiosInstance';
 
 type HttpMethod = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
-type Params = {
-  [key: string]: string | number | boolean | null | undefined;
-};
-
 // 공통 apiCall 함수
 export const apiCall = async (
   method: HttpMethod,
