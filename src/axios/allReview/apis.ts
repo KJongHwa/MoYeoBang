@@ -7,3 +7,10 @@ export const getReviewsRating = async (genre: string) => {
   );
   return response.data;
 };
+
+export const getAllReviews = async (genre: string) => {
+  const response = await axiosInstance.get(
+    `${API_PATH.review.default}?genre=${genre}`
+  );
+  return response.data;
+};

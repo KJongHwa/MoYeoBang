@@ -10,7 +10,7 @@ interface RatingSectionProps {
 export default function RatingSection({ selectedGenre }: RatingSectionProps) {
   const { data: ratingsData, isLoading } = useQuery({
     queryKey: ['ratings'],
-    queryFn: () => getReviewsRating('mystery'), // API 영대님이 수정해주시면 selectedGenre를 받도록 수정
+    queryFn: () => getReviewsRating(selectedGenre), // API 영대님이 수정해주시면 selectedGenre를 받도록
   });
 
   if (isLoading)

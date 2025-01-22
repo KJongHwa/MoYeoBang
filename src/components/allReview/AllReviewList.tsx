@@ -8,20 +8,34 @@ import ReviewFilters from '@/components/allReview/ReviewFilters';
 import EmptyElement from '@/components/@shared/EmptyElement';
 import GenreFilter from '@/components/@shared/GenreFilter';
 import RatingSection from '@/components/allReview/RatingSection';
+import { useQuery } from '@tanstack/react-query';
+import { getAllReviews } from '@/axios/allReview/apis';
 
-export default function AllReviewList({ allReviews }: AllReviewListProps) {
+export default function AllReviewList() {
   const [selectedGenre, setSelectedGenre] = useState<string>('all');
   const [selectedLocation, setSelectedLocation] = useState<string>('all');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedSort, setSelectedSort] = useState<string>('createdAt');
 
-  const filteredReviews = allReviews
+  const { data: reviewsData = [], isLoading } = useQuery<
+    AllReviewListProps['allReviews']
+  >({
+    queryKey: ['reviews'],
+    queryFn: () => getAllReviews(selectedGenre),
+  });
+
+  if (isLoading)
+    return (
+      <div className="flex h-dvh items-center justify-center">Loading...</div>
+    );
+
+  const filteredReviews = reviewsData
     .filter((review) => {
       const genreMatches =
-        selectedGenre === 'all' || review.Gathering.genre === selectedGenre;
+        selectedGenre === 'all' || review.gathering.genre === selectedGenre;
       const locationMatches =
         selectedLocation === 'all' ||
-        review.Gathering.location === selectedLocation;
+        review.gathering.location === selectedLocation;
       const dateMatches =
         selectedDate === '' ||
         slashYearMonthDay(review.createdAt) === selectedDate;
@@ -36,7 +50,7 @@ export default function AllReviewList({ allReviews }: AllReviewListProps) {
         case 'score':
           return b.score - a.score;
         case 'participantCount':
-          return b.Gathering.participantCount - a.Gathering.participantCount;
+          return b.gathering.participantCount - a.gathering.participantCount;
         default:
           return 0;
       }
@@ -52,8 +66,8 @@ export default function AllReviewList({ allReviews }: AllReviewListProps) {
         score={review.score}
         comment={review.comment}
         createdAt={review.createdAt}
-        Gathering={review.Gathering}
-        User={review.User}
+        Gathering={review.gathering}
+        User={review.user}
       />
     ));
   };

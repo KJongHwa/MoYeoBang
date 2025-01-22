@@ -35,7 +35,7 @@ export interface AllReviewListProps {
     score: number; // 리뷰 점수
     comment: string; // 리뷰 내용
     createdAt: string; // 리뷰 생성 날짜
-    Gathering: {
+    gathering: {
       gatheringId: number;
       location: string; // 방탈출 테마 지역
       themeName: string; // 방탈출 테마 이름
@@ -43,7 +43,7 @@ export interface AllReviewListProps {
       genre: string; // 장르
       participantCount: number; // 참여 인원
     };
-    User: {
+    user: {
       userId: number;
       nickname: string; // 리뷰 작성자 이름
       image: string; // 리뷰 작성자 이미지
