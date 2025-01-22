@@ -25,13 +25,7 @@ export interface ReviewRatingDto {
     genre?: string; // 장르
     totalScore: number; // 총 스코어 갯수
     averageScore: number; // 평균 스코어
-    Score: {
-      1: number; // 1점 스코어 갯수
-      2: number; // 2점 스코어 갯수
-      3: number; // 3점 스코어 갯수
-      4: number; // 4점 스코어 갯수
-      5: number; // 5점 스코어 갯수
-    };
+    Score: number[];
   };
 }
 
