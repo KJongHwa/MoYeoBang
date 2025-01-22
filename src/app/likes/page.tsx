@@ -9,23 +9,30 @@ import { getLikeGatherings } from '@/axios/likes/apis';
 import { QueryProvider } from '@/components/@shared/QueryProvider';
 
 export default function LikeGathering() {
-  const [likesGatherings, setLikesGatherings] = useState<number[]>([1, 2, 3]); // 영주님 PR이 merge 되면 수정
+  const [likesGatherings, setLikesGatherings] = useState<number[]>([]);
+  const [shouldFetch, setShouldFetch] = useState(false);
 
-  const { data: gatheringsData } = useQuery({
+  const { data: gatheringsData, isLoading } = useQuery({
     queryKey: ['likes', likesGatherings],
     queryFn: () => getLikeGatherings(likesGatherings),
-    enabled: likesGatherings.length > 0,
+    enabled: shouldFetch,
   });
 
   const likes = gatheringsData ?? [];
 
-  // useEffect(() => {
-  //   const getLocalStorageItem = localStorage.getItem('favorites');
-  //   const getLocalStorageArray = getLocalStorageItem
-  //     ? JSON.parse(getLocalStorageItem)
-  //     : [];
-  //   setLikesGatherings(getLocalStorageArray);
-  // }, []);
+  useEffect(() => {
+    const getLocalStorageItem = localStorage.getItem('favorites');
+    const getLocalStorageArray = getLocalStorageItem
+      ? JSON.parse(getLocalStorageItem)
+      : [];
+    setLikesGatherings(getLocalStorageArray);
+    setShouldFetch(true);
+  }, []);
+
+  if (!shouldFetch || isLoading)
+    return (
+      <div className="flex h-dvh items-center justify-center">Loading...</div>
+    );
 
   return (
     <QueryProvider>
