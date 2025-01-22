@@ -8,7 +8,7 @@ import clsx from 'clsx';
 interface MyGatheringCardProps {
   image: string;
   children: React.ReactNode;
-  isCanceled: boolean;
+  isCanceled?: boolean;
 }
 
 export default function MyGatheringCard({

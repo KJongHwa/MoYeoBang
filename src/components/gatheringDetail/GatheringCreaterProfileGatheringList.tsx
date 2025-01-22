@@ -14,12 +14,8 @@ export default function GatheringCreaterProfileGatheringList({
   }
   return (
     <div className="flex flex-col gap-5">
-      {/* {createrGatheringList.map((gathering: any) => (
-        <MyGatheringCard
-          key={gathering.gatheringId}
-          image={gathering.image}
-          isCanceled={false}
-        >
+      {createrGatheringList.map((gathering: any) => (
+        <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
           <MyCreateGatheringDetail
             location={gathering.location}
             dateTime={gathering.dateTime}
@@ -29,7 +25,7 @@ export default function GatheringCreaterProfileGatheringList({
             participantCount={gathering.participantCount}
           />
         </MyGatheringCard>
-      ))} */}
+      ))}
     </div>
   );
 }
