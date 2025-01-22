@@ -15,7 +15,11 @@ export default function GatheringCreaterProfileGatheringList({
   return (
     <div className="flex flex-col gap-5">
       {createrGatheringList.map((gathering: any) => (
-        <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
+        <MyGatheringCard
+          key={gathering.gatheringId}
+          image={gathering.image}
+          isCanceled={false}
+        >
           <MyCreateGatheringDetail
             location={gathering.location}
             dateTime={gathering.dateTime}
