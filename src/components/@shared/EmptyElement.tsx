@@ -9,7 +9,9 @@ interface EmptyElementProps {
 export default function EmptyElement({ children }: EmptyElementProps) {
   return (
     <div className="relative mt-20 h-[187px] text-center md:h-[260px] xl:h-[306px]">
-      <p className="text-base font-medium text-text-secondary">{children}</p>
+      <div className="text-base font-medium text-text-secondary">
+        {children}
+      </div>
       <Image
         src={PuzzleImage}
         alt="퍼즐 캐릭터"
