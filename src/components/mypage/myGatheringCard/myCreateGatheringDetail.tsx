@@ -64,7 +64,7 @@ export default function MyCreateGatheringDetail({
             {participantCount === capacity ? (
               <span>
                 <Image
-                  src="/check.png"
+                  src="/icons/check.svg"
                   width={16}
                   height={16}
                   alt="체크 이미지"
@@ -86,7 +86,7 @@ export default function MyCreateGatheringDetail({
           <p>{formatDate(dateTime)}</p>
           <p>.</p>
           <Image
-            src="/gathering_icon.png"
+            src="/icons/gathering_icon.svg"
             width={20}
             height={20}
             alt="모임 아이콘"
@@ -100,7 +100,7 @@ export default function MyCreateGatheringDetail({
       <div className="group relative">
         <button type="button" onClick={toggleDropdown}>
           <Image
-            src="/see_more_icon.png"
+            src="/icons/see_more_icon.svg"
             width={24}
             height={24}
             alt="드롭다운 클릭 버튼"
