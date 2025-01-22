@@ -16,6 +16,7 @@ interface MyGatheringDetailProps {
   themeName: string;
   capacity: string;
   participantCount: string;
+  isCanceled: boolean;
 }
 
 export default function MyGatheringDetail({
@@ -25,6 +26,7 @@ export default function MyGatheringDetail({
   themeName,
   capacity,
   participantCount,
+  isCanceled,
 }: MyGatheringDetailProps) {
   const {
     isOpen: isDeleteModal,
@@ -81,11 +83,8 @@ export default function MyGatheringDetail({
             padding="10"
             fontSize="14"
             onClick={openDeleteModal}
-            style={{
-              backgroundColor: '#525463',
-              position: 'absolute',
-              right: '10px',
-            }}
+            className="bg-secondary-70 border-secondary-80 absolute right-4"
+            disabled={isCanceled}
           >
             예약취소하기
           </Button>

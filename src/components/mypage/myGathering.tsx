@@ -10,7 +10,11 @@ export default function MyGathering() {
   return (
     <div className="flex flex-col gap-5">
       {mockGatherings.map((gathering: any) => (
-        <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
+        <MyGatheringCard
+          key={gathering.gatheringId}
+          image={gathering.image}
+          isCanceled={gathering.isCanceled}
+        >
           <MyGatheringDetail
             location={gathering.location}
             dateTime={gathering.dateTime}
@@ -18,6 +22,7 @@ export default function MyGathering() {
             themeName={gathering.themeName}
             capacity={gathering.capacity}
             participantCount={gathering.participantCount}
+            isCanceled={gathering.isCanceled}
           />
         </MyGatheringCard>
       ))}

@@ -45,7 +45,7 @@ export default function MyReviewCard({
         width={240}
         height={170}
         quality={100}
-        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:rounded-l-xl md:rounded-r-none"
+        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:max-w-[192px] md:rounded-l-xl md:rounded-r-none"
       />
 
       <div className="mx-4 my-5 flex flex-1 flex-col justify-between md:mx-6 md:my-5">
