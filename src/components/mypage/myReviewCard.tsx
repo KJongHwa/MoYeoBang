@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import { ReviewDto } from '@/types/review.types';
 import Image from 'next/image';
-import Rating from '../@shared/Rating';
+import Rating from '../@shared/rating/Rating';
 import MyReviewModal from './myReviewModal';
 import DeleteModal from './deleteModal';
 
@@ -33,14 +33,14 @@ export default function MyReviewCard({
   ];
 
   return (
-    <article className="bg-default-tertiary relative flex w-full flex-col gap-2 rounded-xl md:max-h-[200px] md:flex-row xl:max-h-[170px]">
+    <article className="relative flex w-full flex-col gap-2 rounded-xl bg-default-tertiary md:max-h-[200px] md:flex-row xl:max-h-[170px]">
       <Image
         src={Gathering.image}
         alt={Gathering.themeName}
         width={240}
         height={170}
         quality={100}
-        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:rounded-l-xl md:rounded-r-none"
+        className="w-full rounded-t-xl bg-default-tertiary md:w-60 md:rounded-l-xl md:rounded-r-none"
       />
 
       <div className="mx-4 my-5 flex flex-1 flex-col justify-between md:mx-6 md:my-5">
@@ -60,13 +60,13 @@ export default function MyReviewCard({
                 />
               </button>
               {isMenuOpen && (
-                <ul className="bg-secondary-80 absolute -right-6 z-50 mt-2 w-32 rounded-md shadow-md md:-right-20">
+                <ul className="absolute -right-6 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md md:-right-20">
                   {liDropdowns.map((liDropdown) => (
                     <li key={liDropdown.label}>
                       <button
                         onClick={liDropdown.clickHandler}
                         type="button"
-                        className="hover:bg-secondary-60 w-full px-4 py-2 text-left"
+                        className="w-full px-4 py-2 text-left hover:bg-secondary-60"
                       >
                         {liDropdown.label}
                       </button>
@@ -77,7 +77,7 @@ export default function MyReviewCard({
             </div>
           </div>
 
-          <h2 className="text-secondary-40 text-xs font-medium">
+          <h2 className="text-xs font-medium text-secondary-40">
             {Gathering.themeName}
           </h2>
           <p className="text-sm font-medium text-white md:mt-5">{comment}</p>

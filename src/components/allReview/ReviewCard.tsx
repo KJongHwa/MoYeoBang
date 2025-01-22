@@ -1,8 +1,8 @@
 import { ReviewDto } from '@/types/review.types';
 import { yearMonthDay } from '@/utils/dateUtils';
 import Image from 'next/image';
-import Rating from '../@shared/Rating';
-import ReviewEditDropdown from './ReviewEditDropdown';
+import Rating from '@/components/@shared/rating/Rating';
+import ReviewEditDropdown from '@/components/allReview/ReviewEditDropdown';
 
 export default function ReviewCard({
   score,

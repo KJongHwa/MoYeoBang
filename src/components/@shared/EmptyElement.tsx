@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import PuzzleImage from '@/public/puzzle_empty.png';
+import PuzzleImage from '@/public/images/puzzle_empty.png';
 import { ReactNode } from 'react';
 
 interface EmptyElementProps {

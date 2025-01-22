@@ -34,7 +34,7 @@ export default function Dropdown({
   defaultLabel,
   onChange,
   className,
-  icon = '/chevron-down.svg',
+  icon = '/icons/chevron-down.svg',
 }: DropdownProps) {
   const initialOption: DropdownOption = { value: 'all', label: defaultLabel };
 
@@ -56,8 +56,8 @@ export default function Dropdown({
     <div
       className={clsx(
         'relative',
-        { 'min-w-0 md:max-w-[120px]': icon !== '/chevron-down.svg' },
-        { 'max-w-[120px]': icon === '/chevron-down.svg' }
+        { 'min-w-0 md:max-w-[120px]': icon !== '/icons/chevron-down.svg' },
+        { 'max-w-[120px]': icon === '/icons/chevron-down.svg' }
       )}
     >
       <button
@@ -72,12 +72,12 @@ export default function Dropdown({
           'bg-default-tertiary',
           'flex items-center',
           'gap-2',
-          { 'w-full flex-row-reverse': icon !== '/chevron-down.svg' },
+          { 'w-full flex-row-reverse': icon !== '/icons/chevron-down.svg' },
           className
         )}
       >
         <span
-          className={`${icon !== '/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-xs font-medium text-secondary-40 md:text-sm`}
+          className={`${icon !== '/icons/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-xs font-medium text-secondary-40 md:text-sm`}
         >
           {selectedOption.label}
         </span>

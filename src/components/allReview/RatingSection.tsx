@@ -1,6 +1,6 @@
 import { mockReviewRatings } from '@/data/mockReviewRatings';
-import Rating from '../@shared/Rating';
-import ProgressBar from '../@shared/ProgressBar';
+import Rating from '@/components/@shared/rating/Rating';
+import ProgressBar from '@/components/@shared/ProgressBar';
 
 interface RatingSectionProps {
   selectedGenre: string;

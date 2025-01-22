@@ -31,14 +31,14 @@ export default function Rating({
     width: `${width}px`,
     height: `${height}px`,
     backgroundSize: `${starWidth}px ${height}px`,
-    backgroundImage: `url('/HeartLine.svg')`,
+    backgroundImage: `url('/icons/HeartLine.svg')`,
   };
 
   const filledStyle = {
     width: `${filledWidth}px`,
     height: `${height}px`,
     backgroundSize: `${starWidth}px ${height}px`,
-    backgroundImage: `url('/HeartFull.svg')`,
+    backgroundImage: `url('/icons/HeartFull.svg')`,
   };
 
   return (
