@@ -16,13 +16,14 @@ export default function LocationSelector({
       <div className="flex w-full gap-2">
         {Object.entries(themeNameList).map(([locationKey, { label }]) => (
           <Button
+            variant="secondary"
             padding="12"
             key={locationKey}
             onClick={() => handleLocationClick(locationKey)}
             className={
               locationKey === location
-                ? 'w-full bg-default-primary text-white'
-                : 'w-full bg-default-secondary text-default-primary hover:bg-primary-0 hover:text-primary-30'
+                ? 'w-full !bg-default-primary text-white'
+                : 'w-full'
             }
           >
             {label}
