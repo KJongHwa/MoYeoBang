@@ -89,20 +89,7 @@ export default function GatheringCard({
           </div>
         </div>
       </Link>
-      <PuzzleButton
-        gathering={{
-          gatheringId,
-          location,
-          dateTime,
-          registrationEnd,
-          level,
-          name,
-          themeName,
-          capacity,
-          participantCount,
-          image,
-        }}
-      />
+      <PuzzleButton gatheringId={gatheringId} />
     </figure>
   );
 }
