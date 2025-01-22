@@ -165,10 +165,50 @@ export default function GatheringModal({
 
   // 폼 제출 시 날짜 형식 포맷
   const onSubmit = (data: GatheringRequestBody['post']) => {
-    const finalDateTime = new Date(data.dateTime);
-    const finalRegistrationEnd = new Date(data.registrationEnd);
+    const dateTimeString = data.dateTime;
+    const registrationEndString = data.registrationEnd;
 
-    const isoDateTime = finalDateTime.toISOString(); // ISO 형식으로 변환
+    // 날짜와와 시간 분리
+    const [datePart, ...timeParts] = dateTimeString.split(' ');
+    const timePart = timeParts.join(' ');
+
+    // AM/PM 정보 추출
+    const periodParts = timePart.split(' ');
+    const [hourString, minuteString] = periodParts[0].split(':');
+
+    const selectedPeriod = periodParts[1];
+    const selectedHour = parseInt(hourString, 10); // 정수 변환
+    const selectedMinute = parseInt(minuteString, 10);
+
+    // 등록 마감 시간
+    const [regEndDatePart, regEndTimePart] = registrationEndString.split(' ');
+    const [regEndHourString, regEndMinuteString] = regEndTimePart.split(':');
+    const registrationEndPeriod = regEndTimePart.split(' ')[1];
+    const registrationEndHour = parseInt(regEndHourString, 10);
+    const registrationEndMinute = parseInt(regEndMinuteString, 10);
+
+    // 선택된 시간에 따라 시간 조정
+    const adjustHour = (hour: number, period: string) => {
+      if (period === 'PM') {
+        return hour === 12 ? hour : hour + 12;
+      }
+      return hour === 12 ? 0 : hour;
+    };
+
+    const adjustedHour = adjustHour(selectedHour, selectedPeriod);
+    const adjustedRegistrationEndHour = adjustHour(
+      registrationEndHour,
+      registrationEndPeriod
+    );
+
+    // 최종 Date 객체 생성
+    const finalDateTimeString = `${datePart}T${adjustedHour.toString().padStart(2, '0')}:${selectedMinute.toString().padStart(2, '0')}:00Z`; // UTC
+    const finalDateTime = new Date(finalDateTimeString);
+
+    const finalRegistrationEndString = `${regEndDatePart}T${adjustedRegistrationEndHour.toString().padStart(2, '0')}:${registrationEndMinute.toString().padStart(2, '0')}:00Z`;
+    const finalRegistrationEnd = new Date(finalRegistrationEndString);
+
+    const isoDateTime = finalDateTime.toISOString();
     const isoRegistrationEnd = finalRegistrationEnd.toISOString();
 
     const submissionData = {
