@@ -1,10 +1,16 @@
-export interface GatheringParams {
-  sortBy: 'dateTime' | 'registrationEnd' | 'participantCount';
-  sortOrder: 'asc' | 'desc';
-  keyword: string;
-  location: string;
-  dateTime: string;
-  genre: string;
+export interface GatheringFilters {
+  location?: string;
+  date?: string;
+  genre?: string;
+  level?: string;
+}
+
+export interface GatheringUrlParams extends GatheringFilters {
+  sortBy?: string;
+  sortOrder?: string;
+  keyword?: string;
+  limit?: number;
+  offset?: number;
 }
 
 // Response
@@ -13,11 +19,20 @@ export interface GatheringDto {
     gatheringId: number;
     userId: number;
     name: string;
-    location: string;
+    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
     themeName: string;
     image: string;
-    level: string;
-    genre: string;
+    level: 'low' | 'middle' | 'high';
+    genre:
+      | 'mystery'
+      | 'horror'
+      | 'fantasy'
+      | 'comic'
+      | 'sci-fi'
+      | 'drama'
+      | 'thriller'
+      | 'stealth'
+      | 'adventure';
     playtime: number;
     map: string;
     dateTime: string;
@@ -31,7 +46,7 @@ export interface GatheringDto {
 export interface GatheringRequestBody {
   post: {
     name: string;
-    location: string;
+    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
     themeName: string;
     dateTime: string;
     registrationEnd: string;
@@ -40,7 +55,7 @@ export interface GatheringRequestBody {
   patch: {
     gatheringId: number;
     name: string;
-    location: string;
+    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
     themeName: string;
     dateTime: string;
     registrationEnd: string;
@@ -54,14 +69,14 @@ export interface GatheringRequestBody {
 export interface GatheringProps {
   card: {
     gatheringId: number;
-    location: string;
+    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
     dateTime: string;
     registrationEnd: string;
-    level: string;
+    level: 'low' | 'middle' | 'high';
     name: string;
     themeName: string;
-    capacity: string;
-    participantCount: string;
+    capacity: number;
+    participantCount: number;
     image: string;
   };
   badge: {
