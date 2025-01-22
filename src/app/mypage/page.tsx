@@ -12,9 +12,39 @@ import { useModal } from '@/hooks/useModal';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import MyGathering from '../../components/mypage/myGathering';
+import { getMyProfile } from '@/axios/mypage/api';
+import { UserTypes } from '@/types/mypage.types';
+import { useQuery } from '@tanstack/react-query';
 
 export default function MyPage() {
   const user = mockUser;
+
+  // const {
+  //   data: user,
+  //   isLoading,
+  //   error,
+  // } = useQuery<UserTypes>({
+  //   queryKey: ['myProfile'], // 쿼리 키
+  //   queryFn: getMyProfile, // 데이터 페칭 함수
+  // });
+
+  // // 로딩 상태 처리
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
+
+  // // 에러 상태 처리
+  // if (error) {
+  //   return (
+  //     <p>Error: {error instanceof Error ? error.message : 'Unknown error'}</p>
+  //   );
+  // }
+  // async function fetchData() {
+  //   const userInfo = await getMyProfile();
+  //   console.log(userInfo);
+  // }
+  // fetchData();
+
   const levelImage = Math.min(Math.max(1, mockGatherings.length), 6); // levelImage는 최소 1부터 최대 6까지만
   const {
     isOpen: isEditModal,
@@ -44,19 +74,19 @@ export default function MyPage() {
 
   return (
     <main className="relative top-[100px] mx-4 md:mx-6 xl:mx-auto xl:w-[1166px]">
-      <p className="text-[18px] font-bold">{`안녕하세요 ${user.nickname}님!`}</p>
+      <p className="text-[18px] font-bold">{`안녕하세요 ${user?.nickname}님!`}</p>
       <div className="bg-primary-30 relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
-            src={user.image || '/icons/profile_image_default.svg'}
+            src={user?.image || '/icons/profile_image_default.svg'}
             width={66}
             height={66}
             alt="프로필 이미지 미리보기"
             className="h-[56px] w-[56px] rounded-full md:h-[66px] md:w-[66px]"
           />
           <div>
-            <p className="text-base font-bold md:text-2xl">{user.nickname}</p>
-            <p className="text-sm md:text-base">{user.email}</p>
+            <p className="text-base font-bold md:text-2xl">{user?.nickname}</p>
+            <p className="text-sm md:text-base">{user?.email}</p>
           </div>
         </div>
         <Image
