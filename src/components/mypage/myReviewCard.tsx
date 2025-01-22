@@ -1,11 +1,9 @@
 /* eslint-disable prettier/prettier */
 
-'use client';
-
-import { useState } from 'react';
-
 import { ReviewDto } from '@/types/review.types';
 import Image from 'next/image';
+import { useDropdown } from '@/hooks/useDropdown';
+import { useModal } from '@/hooks/useModal';
 import Rating from '../@shared/rating/Rating';
 import MyReviewModal from './myReviewModal';
 import DeleteModal from './deleteModal';
@@ -17,19 +15,26 @@ export default function MyReviewCard({
   Gathering,
   User,
 }: ReviewDto['get']) {
-  const [isEditModal, setEditIsModal] = useState(false);
-  const [isDeleteModal, setDeleteIsModal] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const openEditModalHandler = () => {
-    setEditIsModal(true);
-  };
-  const openDeleteModalHandler = () => {
-    setDeleteIsModal(true);
-  };
+  const {
+    isOpen: isMenuOpen,
+    openDropdown,
+    closeDropdown,
+    toggleDropdown,
+  } = useDropdown();
+  const {
+    isOpen: isEditModal,
+    openModal: openEditModal,
+    closeModal: closeEditModal,
+  } = useModal();
+  const {
+    isOpen: isDeleteModal,
+    openModal: openDeleteModal,
+    closeModal: closeDeleteModal,
+  } = useModal();
 
   const liDropdowns = [
-    { label: '수정하기', clickHandler: openEditModalHandler },
-    { label: '삭제하기', clickHandler: openDeleteModalHandler },
+    { label: '수정하기', clickHandler: openEditModal },
+    { label: '삭제하기', clickHandler: openDeleteModal },
   ];
 
   return (
@@ -48,10 +53,7 @@ export default function MyReviewCard({
           <div className="group relative flex items-center justify-between">
             <Rating rating={score} width={120} height={24} />
             <div className="relative">
-              <button
-                type="button"
-                onClick={() => setIsMenuOpen((prev) => !prev)}
-              >
+              <button type="button" onClick={toggleDropdown}>
                 <Image
                   src="/see_more_icon.png"
                   width={24}
@@ -64,7 +66,10 @@ export default function MyReviewCard({
                   {liDropdowns.map((liDropdown) => (
                     <li key={liDropdown.label}>
                       <button
-                        onClick={liDropdown.clickHandler}
+                        onClick={() => {
+                          liDropdown.clickHandler();
+                          closeDropdown();
+                        }}
                         type="button"
                         className="w-full px-4 py-2 text-left hover:bg-secondary-60"
                       >
@@ -85,13 +90,13 @@ export default function MyReviewCard({
       </div>
       <MyReviewModal
         isModal={isEditModal}
-        setIsModal={setEditIsModal}
+        setIsModal={closeEditModal}
         comment={comment}
         score={score}
       />
       <DeleteModal
         isModal={isDeleteModal}
-        setIsModal={setDeleteIsModal}
+        setIsModal={closeDeleteModal}
         classification="delete"
       />
     </article>
