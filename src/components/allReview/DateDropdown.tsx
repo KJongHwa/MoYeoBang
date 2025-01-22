@@ -7,7 +7,7 @@ import CustomCalendar from '@/components/@shared/calendar/CustomCalendar';
 
 interface DateDropdownProps {
   onDateChange(date: string): void;
-  selectedDate: string | undefined;
+  selectedDate?: string | undefined;
 }
 
 export default function DateDropdown({

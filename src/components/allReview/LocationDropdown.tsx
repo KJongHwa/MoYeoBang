@@ -6,7 +6,7 @@ import { locationList } from '@/constants/themeList';
 
 interface LocationDropdownProps {
   onLocatingChange: (value: string) => void;
-  selectedLocation: string | undefined;
+  selectedLocation?: string | undefined;
 }
 
 export default function LocationDropdown({

@@ -7,7 +7,7 @@ import { levels } from '@/constants/themeList';
 
 interface LevelDropdownProps {
   onLevelChange: (value: string) => void;
-  selectedLevel: string | undefined;
+  selectedLevel?: string | undefined;
 }
 
 export default function LevelDropdown({

@@ -46,7 +46,7 @@ export interface GatheringDto {
 export interface GatheringRequestBody {
   post: {
     name: string;
-    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
+    location: string;
     themeName: string;
     dateTime: string;
     registrationEnd: string;
@@ -55,7 +55,7 @@ export interface GatheringRequestBody {
   patch: {
     gatheringId: number;
     name: string;
-    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
+    location: string;
     themeName: string;
     dateTime: string;
     registrationEnd: string;
@@ -69,10 +69,10 @@ export interface GatheringRequestBody {
 export interface GatheringProps {
   card: {
     gatheringId: number;
-    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
+    location: string;
     dateTime: string;
     registrationEnd: string;
-    level: 'low' | 'middle' | 'high';
+    level: string;
     name: string;
     themeName: string;
     capacity: number;
