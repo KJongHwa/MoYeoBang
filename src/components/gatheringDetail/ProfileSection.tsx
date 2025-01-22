@@ -1,5 +1,5 @@
 import { GatheringCreaterDTO } from '@/types/gathering.types';
-import Button from '@/components/@shared/Button';
+import Button from '@/components/@shared/button/Button';
 import GatheringCreaterProfileModal from '@/components/gatheringDetail/GatheringCreaterProfileModal';
 import Image from 'next/image';
 

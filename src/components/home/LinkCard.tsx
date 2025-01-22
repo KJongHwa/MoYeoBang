@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import LinkButton from '../@shared/LinkButton';
+import LinkButton from '../@shared/button/LinkButton';
 
 type LinkCardProps = {
   href: string;

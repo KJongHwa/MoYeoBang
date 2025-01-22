@@ -8,7 +8,7 @@ import useToast from '@/hooks/useToast';
 import { useDropdown } from '@/hooks/useDropdown';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Button from './Button';
+import Button from './button/Button';
 import HeaderNavBar from './HeaderNavbar';
 import Toast from './Toast';
 
@@ -83,7 +83,7 @@ export default function Header() {
             <nav className="text-text-default flex items-center gap-8 text-base">
               <Link href="/" onClick={closeMobileNav}>
                 <Image
-                  src="/Logo.svg"
+                  src="/icons/Logo.svg"
                   width={100}
                   height={23}
                   alt="로고 이미지"

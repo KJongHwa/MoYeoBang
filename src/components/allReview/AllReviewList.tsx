@@ -3,11 +3,11 @@
 import { AllReviewListProps } from '@/types/review.types';
 import { useState } from 'react';
 import { slashYearMonthDay } from '@/utils/dateUtils';
-import ReviewCard from './ReviewCard';
-import ReviewFilters from './ReviewFilters';
-import EmptyElement from '../@shared/EmptyElement';
-import GenreFilter from '../@shared/GenreFilter';
-import RatingSection from './RatingSection';
+import ReviewCard from '@/components/allReview/ReviewCard';
+import ReviewFilters from '@/components/allReview/ReviewFilters';
+import EmptyElement from '@/components/@shared/EmptyElement';
+import GenreFilter from '@/components/@shared/GenreFilter';
+import RatingSection from '@/components/allReview/RatingSection';
 
 export default function AllReviewList({ allReviews }: AllReviewListProps) {
   const [selectedGenre, setSelectedGenre] = useState<string>('all');

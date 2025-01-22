@@ -1,8 +1,8 @@
 import { sortList } from '@/constants/sortList';
 
-import SortDropdown from '@/components/@shared/SortDropdown';
-import DateDropdown from './DateDropdown';
-import LocationDropdown from './LocationDropdown';
+import SortDropdown from '@/components/@shared/dropdown/SortDropdown';
+import DateDropdown from '@/components/allReview/DateDropdown';
+import LocationDropdown from '@/components/allReview/LocationDropdown';
 
 interface ReviewFiltersProps {
   onLocatingChange: (value: string) => void;

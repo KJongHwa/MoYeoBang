@@ -3,7 +3,7 @@ import { mockGatherings } from '@/data/mockGatherings';
 import Image from 'next/image';
 
 import Links from '@/components/home/Links';
-import LinkButton from '@/components/@shared/LinkButton';
+import LinkButton from '@/components/@shared/button/LinkButton';
 import NearFullCapacities from '@/components/home/NearFullCapacities';
 import NearDeadlines from '@/components/home/NearDeadlines';
 
