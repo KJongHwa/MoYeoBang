@@ -4,7 +4,7 @@ import type { GatheringRequestBody } from '@/types/gathering.types';
 import useCustomForm from '@/hooks/useCustomForm';
 import useToast from '@/hooks/useToast';
 import { getToday } from '@/utils/dateUtils';
-import { postGathering } from '@/axios/gathering/apis';
+import { postGathering } from '@/axios/gather/apis';
 import Toast from '@/components/@shared/Toast';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/button/Button';

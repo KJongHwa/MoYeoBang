@@ -7,9 +7,13 @@ import CustomCalendar from '@/components/@shared/calendar/CustomCalendar';
 
 interface DateDropdownProps {
   onDateChange(date: string): void;
+  selectedDate: string | undefined;
 }
 
-export default function DateDropdown({ onDateChange }: DateDropdownProps) {
+export default function DateDropdown({
+  onDateChange,
+  selectedDate,
+}: DateDropdownProps) {
   const { isOpen, date, handleChange, handleDateChange } = useCalendar({
     onDateChange,
   });
@@ -31,7 +35,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
         )}
       >
         <p className="flex-1 text-xs font-medium text-text-tertiary md:text-sm">
-          {date === '' ? '날짜' : date}
+          {selectedDate || date || '날짜'}
         </p>
         <Image
           src="/icons/chevron-down.svg"
@@ -48,7 +52,7 @@ export default function DateDropdown({ onDateChange }: DateDropdownProps) {
       {isOpen && (
         <CustomCalendar
           isOpen={isOpen}
-          selectedDate={date}
+          selectedDate={selectedDate}
           onClose={handleChange}
           onDateChange={handleDateChange}
           layout="top-12 -right-full -left-full md:left-0"
