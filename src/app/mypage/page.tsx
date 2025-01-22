@@ -2,19 +2,18 @@
 
 'use client';
 
-import { mockUser } from '@/data/mockUser';
 import { mockGatherings } from '@/data/mockGatherings';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
 import { useState } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/button/IconButton';
 import { useModal } from '@/hooks/useModal';
-import MyReview from '../../components/mypage/myReview';
-import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
-import MyGathering from '../../components/mypage/myGathering';
 import { getMyProfile } from '@/axios/mypage/api';
 import { UserTypes } from '@/types/mypage.types';
 import { useQuery } from '@tanstack/react-query';
+import MyReview from '../../components/mypage/myReview';
+import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
+import MyGathering from '../../components/mypage/myGathering';
 
 export default function MyPage() {
   const {

@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/axios/axiosInstance';
-import { API_PATH } from '../config/path';
 import { ImageTypes, UserTypes } from '@/types/mypage.types';
+import { API_PATH } from '../config/path';
 import { AddImageFileParams, UpdateMyProfileParams } from './types';
 
 export const getMyProfile = async () => {
