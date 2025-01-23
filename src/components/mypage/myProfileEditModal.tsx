@@ -16,6 +16,7 @@ interface MyProfileEditModalProps {
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
   nickname: string;
   image: string;
+  onProfileUpdate: (updatedNickname: string, updatedImage: string) => void;
 }
 
 export default function MyProfileEditModal({
@@ -23,6 +24,7 @@ export default function MyProfileEditModal({
   setIsModal,
   nickname,
   image,
+  onProfileUpdate,
 }: MyProfileEditModalProps) {
   const [img, setImg] = useState<string | null>(null);
   const [updatedNickname, setUpdatedNickname] = useState<string>(nickname);
@@ -84,6 +86,7 @@ export default function MyProfileEditModal({
         image: uploadedImageUrl,
       });
       handleSuccess('프로필이 성공적으로 업데이트되었습니다.');
+      onProfileUpdate(updatedNickname, uploadedImageUrl);
       closeModalhandler();
     } catch (error) {
       handleError('프로필 업데이트 중 오류가 발생했습니다.');
