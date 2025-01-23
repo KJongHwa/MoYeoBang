@@ -30,8 +30,12 @@ export default function GatheringList() {
     level: '',
   });
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['gather', filters, selectedSort],
+  const {
+    data: gatherings,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['gatherings', filters, selectedSort],
     queryFn: () =>
       getGatherings({
         limit: 10,
@@ -57,7 +61,9 @@ export default function GatheringList() {
   }
 
   if (isError) {
-    return <div>에러 발생!</div>;
+    return (
+      <div className="flex h-dvh items-center justify-center">에러 발생!</div>
+    );
   }
 
   const handleFilterChange = (key: string, value: string) => {
@@ -104,14 +110,14 @@ export default function GatheringList() {
       </section>
 
       <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
-        {data.length > 0
-          ? data.map((gathering: GatheringDto['get']) => (
+        {gatherings.length > 0
+          ? gatherings.map((gathering: GatheringDto['get']) => (
               <GatheringCard key={gathering.gatheringId} {...gathering} />
             ))
           : null}
       </section>
 
-      {data.length === 0 && (
+      {gatherings.length === 0 && (
         <EmptyElement>
           아직 모임이 없어요,
           <br />
