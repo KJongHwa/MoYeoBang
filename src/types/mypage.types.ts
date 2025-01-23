@@ -20,7 +20,7 @@ export interface UserTypes {
 }
 
 export interface ImageTypes {
-  url: string;
+  image: string;
 }
 
 export interface GetUserInfoParmas {
