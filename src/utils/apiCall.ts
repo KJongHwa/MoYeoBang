@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/axios/axiosInstance';
+import { publicAxiosInstance, authAxiosInstance } from '@/axios/axiosInstance';
 
 type HttpMethod = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
@@ -23,6 +23,9 @@ export const apiCall = async (
     : '';
 
   const finalUrl = queryString ? `${url}?${queryString}` : url;
+
+  const axiosInstance =
+    method === 'get' ? publicAxiosInstance : authAxiosInstance;
 
   const response = await axiosInstance[method](finalUrl, data, axiosConfig);
   return response.data;
