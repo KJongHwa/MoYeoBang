@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import { apiConfig } from './config/api';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -6,8 +7,3 @@ export const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-// api.interceptors.request.use((config) => {
-//   // 토근 로직 추후 구현
-//   return config;
-// });
