@@ -21,6 +21,7 @@ export const authApi = {
       API_PATH.auth.login,
       data
     );
+    // 토큰 추출 후 저장
     const authHeader = response.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.split(' ')[1];
