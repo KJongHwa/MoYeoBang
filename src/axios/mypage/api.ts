@@ -1,7 +1,11 @@
 import { axiosInstance } from '@/axios/axiosInstance';
-import { ImageTypes, UserTypes } from '@/types/mypage.types';
+import {
+  ImageTypes,
+  UserTypes,
+  AddImageFileParams,
+  UpdateMyProfileParams,
+} from '@/types/mypage.types';
 import { API_PATH } from '../config/path';
-import { AddImageFileParams, UpdateMyProfileParams } from './types';
 
 export const getMyProfile = async () => {
   const response = await axiosInstance.get<UserTypes>(`${API_PATH.user.me}`); // 현재 header에 accessToken이 없어서 401 error
@@ -9,13 +13,21 @@ export const getMyProfile = async () => {
 };
 
 export const postMyImage = async ({ image }: AddImageFileParams) => {
+  const formData = new FormData();
+  formData.append('image', image);
+
   const response = await axiosInstance.post<ImageTypes>(
     `${API_PATH.user.image}`,
-    image
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
   );
-  return response.data.url ?? [];
-};
 
+  return response.data.image ?? [];
+};
 export const updateMyProfile = async ({
   nickname,
   image,

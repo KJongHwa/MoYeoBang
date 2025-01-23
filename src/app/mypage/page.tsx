@@ -8,9 +8,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/button/IconButton';
 import { useModal } from '@/hooks/useModal';
-import { getMyProfile } from '@/axios/mypage/api';
+import { getMyProfile, updateMyProfile } from '@/axios/mypage/api';
 import { UserTypes } from '@/types/mypage.types';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import MyGathering from '../../components/mypage/myGathering';
@@ -22,21 +22,46 @@ export default function MyPage() {
     closeModal: closeEditModal,
   } = useModal();
 
+  const queryClient = useQueryClient();
+
   const { data: user, isLoading } = useQuery<UserTypes>({
     queryKey: ['myProfile'],
     queryFn: getMyProfile,
   });
-  // 유저 데이터가 로드된 이후 navLinks 정의
+
+  const mutation = useMutation({
+    mutationFn: updateMyProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
+    },
+    onError: (error) => {
+      console.error('프로필 업데이트 실패:', error);
+    },
+  });
+
+  const handleProfileUpdate = async (
+    updatedNickname: string,
+    updatedImage: string
+  ) => {
+    try {
+      await mutation.mutateAsync({
+        nickname: updatedNickname,
+        image: updatedImage,
+      });
+    } catch (error) {
+      console.error('프로필 업데이트 중 오류가 발생했습니다.', error);
+    }
+  };
+
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
     { label: '나의 리뷰', component: <MyReview /> },
     {
       label: '내가 만든 모임',
-      component: <MyCreateGathering userID={user?.userID ?? 0} />, // user.userID는 안전하게 사용 가능
+      component: <MyCreateGathering userID={user?.userID ?? 0} />,
     },
   ];
 
-  // activeTab 초기값은 navLinks가 안전하게 설정된 이후에만 참조
   const [activeTab, setActiveTab] = useState(navLinks[0]?.label || '');
 
   const navClick = (label: string) => {
@@ -118,6 +143,7 @@ export default function MyPage() {
             setIsModal={closeEditModal}
             nickname={user.nickname}
             image={user.image}
+            onProfileUpdate={handleProfileUpdate}
           />
         </div>
       </div>
