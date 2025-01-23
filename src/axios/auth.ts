@@ -1,5 +1,6 @@
 import { axiosInstance } from './axiosInstance';
 import { API_PATH } from './config/path';
+import { ACCESS_TOKEN_KEY } from './constants';
 
 interface AuthRequest {
   email: string;
@@ -20,9 +21,10 @@ export const authApi = {
       API_PATH.auth.login,
       data
     );
-    if (response.data.accessToken) {
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('refreshToken', response.data.refreshToken);
+    const authHeader = response.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.split(' ')[1];
+      localStorage.setItem(ACCESS_TOKEN_KEY, token);
     }
     return response;
   },
@@ -31,8 +33,7 @@ export const authApi = {
     axiosInstance.post(API_PATH.auth.reissue, { refreshToken }),
 
   logout: () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
     return axiosInstance.post(API_PATH.auth.logout);
   },
 };
