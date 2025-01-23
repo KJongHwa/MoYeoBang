@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 'use client';
 
 import { mockGatherings } from '@/data/mockGatherings';
@@ -8,8 +6,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/button/IconButton';
 import { useModal } from '@/hooks/useModal';
-import { getMyProfile, updateMyProfile } from '@/axios/mypage/api';
-import { UserTypes } from '@/types/mypage.types';
+import {
+  getMyGatheringJoied,
+  getMyProfile,
+  updateMyProfile,
+} from '@/axios/mypage/api';
+import { UserGatheringJoined, UserTypes } from '@/types/mypage.types';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
@@ -24,9 +26,16 @@ export default function MyPage() {
 
   const queryClient = useQueryClient();
 
-  const { data: user, isLoading } = useQuery<UserTypes>({
+  const { data: user, isLoading: isUserLoading } = useQuery<UserTypes>({
     queryKey: ['myProfile'],
     queryFn: getMyProfile,
+  });
+
+  const { data: gatherings, isLoading: isGatheringLoading } = useQuery<
+    UserGatheringJoined[]
+  >({
+    queryKey: ['myGatheringJoined'],
+    queryFn: getMyGatheringJoied,
   });
 
   const mutation = useMutation({
@@ -73,9 +82,9 @@ export default function MyPage() {
     return activeLink?.component;
   };
 
-  const levelImage = Math.min(Math.max(1, mockGatherings.length), 6); // levelImage는 최소 1부터 최대 6까지만
+  const levelImage = Math.min(Math.max(1, gatherings?.length || 0), 6); // levelImage는 최소 1부터 최대 6까지만
   // 로딩 상태 처리
-  if (isLoading) {
+  if (isUserLoading || isGatheringLoading) {
     return (
       <div className="flex h-dvh items-center justify-center">Loading...</div>
     );
@@ -93,7 +102,7 @@ export default function MyPage() {
   return (
     <main className="relative top-[100px] mx-4 md:mx-6 xl:mx-auto xl:w-[1166px]">
       <p className="text-[18px] font-bold">{`안녕하세요 ${user?.nickname}님!`}</p>
-      <div className="bg-primary-30 relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] px-3 py-8 md:mb-7 md:px-10">
+      <div className="relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] bg-primary-30 px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
             src={user?.image || '/icons/profile_image_default.svg'}
@@ -155,7 +164,7 @@ export default function MyPage() {
             <button
               key={link.label}
               type="button"
-              className={`text-secondary-60 pb-2 text-[18px] font-bold ${
+              className={`pb-2 text-[18px] font-bold text-secondary-60 ${
                 activeTab === link.label
                   ? 'border-b-2 border-white !text-white'
                   : ''
