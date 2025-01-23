@@ -45,13 +45,42 @@ export const getDateTime = (dateString?: string): number => {
   return dateString ? new Date(dateString).getTime() : 0;
 };
 
+// 오늘 날짜 비교 및 확인
 export const isToday = (date: any) => {
   const today = getToday();
   const dateToCompare = new Date(date);
-  // 한국 시간으로 변환
-  const koreaOffset = dateToCompare.getTimezoneOffset() * 60000;
+
+  const koreaOffset = dateToCompare.getTimezoneOffset() * 60000; // 한국 시간 변환
   const koreaDateToCompare = new Date(
     dateToCompare.getTime() + koreaOffset + 9 * 60 * 60 * 1000
   ); // UTC+9
   return today.toDateString() === koreaDateToCompare.toDateString();
+};
+
+// 날짜, 시간, AM/PM 분리
+export const splitDateTime = (dateTimeString: string): [string, string] => {
+  const [datePart, ...timeParts] = dateTimeString.split(' ');
+  const timePart = timeParts.join(' ');
+  return [datePart, timePart];
+};
+
+// AM/PM 정보를 반영하여 시간 계산
+export const adjustHour = (hour: number, period: string): number => {
+  if (period === 'PM') {
+    return hour === 12 ? hour : hour + 12;
+  }
+  return hour === 12 ? 0 : hour;
+};
+
+// EX) 0000-00-00T00:00:000Z
+export const convertToISO = (
+  dateString: string,
+  timeString: string
+): string => {
+  const [hourString, minuteString] = timeString.split(':');
+  const [period] = minuteString.split(' ');
+
+  const adjustedHour = adjustHour(parseInt(hourString, 10), period);
+  const finalDateTimeString = `${dateString}T${adjustedHour.toString().padStart(2, '0')}:${minuteString.split(' ')[0].padStart(2, '0')}:00Z`;
+  return new Date(finalDateTimeString).toISOString();
 };
