@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 
@@ -19,6 +19,7 @@ interface DropdownProps {
   // 추가 스타일링 클래스
   className?: string;
   icon?: string;
+  selectedValue?: string;
 }
 
 /**
@@ -35,19 +36,32 @@ export default function Dropdown({
   onChange,
   className,
   icon = '/icons/chevron-down.svg',
+  selectedValue,
 }: DropdownProps) {
-  const initialOption: DropdownOption = { value: 'all', label: defaultLabel };
+  const initialOption: DropdownOption = { value: '', label: defaultLabel };
 
   const [selectedOption, setSelectedOption] =
     useState<DropdownOption>(initialOption);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // selectedValue가 변경될 때 selectedOption 업데이트
+  useEffect(() => {
+    if (selectedValue === '') {
+      setSelectedOption(initialOption);
+    } else {
+      const selected =
+        options.find((option) => option.value === selectedValue) ||
+        initialOption;
+      setSelectedOption(selected);
+    }
+  }, [selectedValue, options]);
 
   const handleSelect = (option: DropdownOption) => {
     setSelectedOption(option);
     setIsOpen(false);
     onChange?.(option);
 
-    if (option.value === 'all') {
+    if (option.value === '') {
       setSelectedOption(initialOption);
     }
   };

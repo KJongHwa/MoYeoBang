@@ -17,6 +17,8 @@
     "react-calendar": "^5.1.0",
     "react-dom": "^18",
     "react-hook-form": "^7.54.2",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
