@@ -9,9 +9,12 @@ interface RatingSectionProps {
 
 export default function RatingSection({ selectedGenre }: RatingSectionProps) {
   const { data: ratingsData, isLoading } = useQuery({
-    queryKey: ['ratings', selectedGenre],
+    queryKey: ['ratings'],
     queryFn: () => getReviewsRating(selectedGenre),
   });
+
+  console.log(selectedGenre);
+  console.log(ratingsData);
 
   if (isLoading)
     return (
