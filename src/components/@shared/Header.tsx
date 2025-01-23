@@ -129,14 +129,14 @@ export default function Header() {
                 <div className="relative flex text-base font-bold text-white">
                   <button type="button" onClick={toggleDropdown}>
                     <Image
-                      src="/profile_image_default.png"
+                      src="/icons/profile_image_default.svg"
                       width={24}
                       height={24}
                       alt="마이페이지 이미지"
                     />
                   </button>
                   {isMenuOpen && (
-                    <ul className="bg-secondary-80 absolute -right-12 z-50 mt-8 w-32 rounded-md shadow-md">
+                    <ul className="bg-secondary-80 absolute -right-12 z-50 mt-8 w-32 rounded-md text-[16px] font-normal shadow-md">
                       <li>
                         <Link href="/mypage" onClick={closeDropdown}>
                           <button

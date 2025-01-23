@@ -80,7 +80,7 @@ export default function MyProfileEditModal({
             }`}
           >
             <Image
-              src={img || '/icons/profile_image_default.svg'}
+              src={img || '/icons/edit_profile_image_default.svg'}
               width={117}
               height={117}
               alt="프로필 이미지 미리보기"

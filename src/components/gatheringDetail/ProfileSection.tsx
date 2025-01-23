@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { GatheringCreaterDTO } from '@/types/gathering.types';
 import Button from '@/components/@shared/button/Button';
 import GatheringCreaterProfileModal from '@/components/gatheringDetail/GatheringCreaterProfileModal';
@@ -18,10 +20,10 @@ export default function ProfileSection({
 }: ProfileSectionProps) {
   return (
     <div>
-      <div className="flex h-[66px] w-full items-center justify-between rounded-2xl border border-default-inverse px-7 py-2 md:h-[90px]">
+      <div className="border-default-inverse flex h-[66px] w-full items-center justify-between rounded-2xl border px-7 py-2 md:h-[90px]">
         <div className="flex items-center gap-3">
           <Image
-            src={createrProfile.image || '/profile_image_default.png'}
+            src={createrProfile.image || '/icons/profile_image_default.svg'}
             width={52}
             height={52}
             alt="모임주최자 프로필 이미지"

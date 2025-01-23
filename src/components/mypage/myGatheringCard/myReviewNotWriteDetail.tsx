@@ -31,14 +31,14 @@ export default function MyReviewNotWriteDetail({
     <div className="md: flex flex-col justify-evenly gap-5 px-4 pb-7 pt-5 md:py-5">
       <div className="flex flex-col gap-[1px]">
         <p className="text-[18px] font-semibold">{name}</p>
-        <p className="text-[14px] font-light text-secondary-40">{themeName}</p>
+        <p className="text-secondary-40 text-[14px] font-light">{themeName}</p>
       </div>
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-1 text-[10px] text-text-secondary md:text-sm">
+        <div className="text-text-secondary flex items-center gap-1 text-[10px] md:text-sm">
           <p>{formatDate(dateTime)}</p>
           <p>.</p>
           <Image
-            src="/gathering_icon.png"
+            src="/icons/gathering_icon.svg"
             width={20}
             height={20}
             alt="모임 아이콘"

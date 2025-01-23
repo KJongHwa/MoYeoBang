@@ -15,7 +15,7 @@ export default function GatheringCreaterProfileModal({
   onClose,
   createrProfile,
 }: GatheringCreaterProfileModalProps) {
-  const levelImage = Math.min(createrProfile.gatherings.length, 6);
+  const levelImage = Math.min(Math.max(1, createrProfile.gatherings.length), 6);
 
   return (
     <Modal
@@ -26,7 +26,7 @@ export default function GatheringCreaterProfileModal({
       <div className="bg-primary-30 relative z-0 mb-5 mt-8 flex items-center justify-between overflow-hidden rounded-[25px] border px-3 py-8 md:mb-7 md:px-10">
         <div className="text-default-inverse z-10 flex flex-col gap-3">
           <Image
-            src={createrProfile.image || '/profile_image_default.png'}
+            src={createrProfile.image || '/icons/profile_image_default.svg'}
             width={66}
             height={66}
             alt="프로필 이미지 미리보기"
