@@ -39,6 +39,7 @@ export interface GatheringDto {
     registrationEnd: string;
     capacity: number;
     participantCount: number;
+    isCanceled: boolean;
   };
 }
 

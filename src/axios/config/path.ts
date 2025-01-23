@@ -1,6 +1,7 @@
 export const API_PATH = {
   user: {
     me: '/user', // 내 정보 조회 && 수정
+    image: '/image', // 프로필 이미지 업로드
   },
   auth: {
     signup: '/auth/signup', // 회원가입

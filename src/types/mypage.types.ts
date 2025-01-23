@@ -9,3 +9,16 @@ export interface userDTO {
     updatedAt: string;
   };
 }
+
+export interface UserTypes {
+  userID: number;
+  email: string;
+  nickname: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ImageTypes {
+  url: string;
+}
