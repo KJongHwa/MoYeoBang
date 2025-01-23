@@ -1,12 +1,16 @@
-/* eslint-disable prettier/prettier */
-
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import { matchFilter } from '@/utils/filterUtils';
-import { sortGatherings } from '@/utils/sortUtils';
+import type {
+  GatheringDto,
+  GatheringFilters,
+  GatheringUrlParams,
+} from '@/types/gathering.types';
+import { getGatherings } from '@/axios/gather/apis';
 import { sortList } from '@/constants/sortList';
+import { QueryProvider } from '@/components/@shared/QueryProvider';
 
 import EmptyElement from '@/components/@shared/EmptyElement';
 import GatheringCard from '@/components/gathering/GatheringCard';
@@ -16,56 +20,56 @@ import LevelDropdown from '@/components/gathering/selector/LevelDropdown';
 import SortDropdown from '@/components/@shared/dropdown/SortDropdown';
 import GenreFilter from '@/components/@shared/GenreFilter';
 
-interface GatheringListProps {
-  gatherings: any;
-}
-
-export default function GatheringList({ gatherings }: GatheringListProps) {
-  const [selectedSort, setSelectedSort] = useState('createdAt');
-  const [filteredGatherings, setFilteredGatherings] = useState(gatherings);
-  const [filters, setFilters] = useState({
-    genre: 'all',
-    location: 'all',
+export default function GatheringList() {
+  const [selectedSort, setSelectedSort] =
+    useState<GatheringUrlParams['sortBy']>('dateTime');
+  const [filters, setFilters] = useState<GatheringFilters>({
+    genre: '',
+    location: '',
     date: '',
-    level: 'all',
+    level: '',
   });
 
-  const filterGatherings = () => {
-    const { genre, location, date, level } = filters;
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['gather', filters, selectedSort],
+    queryFn: () =>
+      getGatherings({
+        limit: 10,
+        sortOrder: 'asc',
+        sortBy: selectedSort,
+        level: filters.level,
+        location: filters.location,
+        genre: filters.genre,
+        date: filters.date,
+      }),
+    enabled:
+      !!filters.genre ||
+      !!filters.location ||
+      !!filters.date ||
+      !!filters.level ||
+      !!selectedSort,
+  });
 
-    const filtered = gatherings.filter((gathering: any) => {
-      const filterConditions = [
-        { option: genre, target: gathering.genre },
-        { option: location, target: gathering.location },
-        { option: date, target: gathering.dateTime, isDate: true },
-        { option: level, target: gathering.level },
-      ];
+  if (isLoading) {
+    return (
+      <div className="flex h-dvh items-center justify-center">Loading...</div>
+    );
+  }
 
-      const matches = filterConditions.map(({ option, target, isDate }) =>
-        matchFilter({ option, target, isDate })
-      );
-
-      return matches.every(Boolean);
-    });
-
-    setFilteredGatherings(sortGatherings(filtered, selectedSort));
-  };
-
-  useEffect(() => {
-    filterGatherings();
-  }, [filters, selectedSort]);
+  if (isError) {
+    return <div>에러 발생!</div>;
+  }
 
   const handleFilterChange = (key: string, value: string) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
-    filterGatherings();
+    setFilters((prev: any) => ({ ...prev, [key]: value }));
   };
 
-  const onSortingChange = (sortOption: string) => {
+  const onSortingChange = (sortOption: GatheringUrlParams['sortBy']) => {
     setSelectedSort(sortOption);
   };
 
   return (
-    <>
+    <QueryProvider>
       <section className="flex flex-col">
         <div className="flex flex-col gap-5 md:gap-7">
           <GenreFilter
@@ -79,12 +83,15 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
                   onLocatingChange={(value) =>
                     handleFilterChange('location', value)
                   }
+                  selectedLocation={filters.location}
                 />
                 <DateDropdown
                   onDateChange={(value) => handleFilterChange('date', value)}
+                  selectedDate={filters.date}
                 />
                 <LevelDropdown
                   onLevelChange={(value) => handleFilterChange('level', value)}
+                  selectedLevel={filters.level}
                 />
               </div>
             </div>
@@ -97,20 +104,20 @@ export default function GatheringList({ gatherings }: GatheringListProps) {
       </section>
 
       <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
-        {filteredGatherings.length > 0
-          ? filteredGatherings.map((gathering: any) => (
+        {data.length > 0
+          ? data.map((gathering: GatheringDto['get']) => (
               <GatheringCard key={gathering.gatheringId} {...gathering} />
             ))
           : null}
       </section>
 
-      {filteredGatherings.length === 0 && (
+      {data.length === 0 && (
         <EmptyElement>
           아직 모임이 없어요,
           <br />
           지금 바로 모임을 만들어보세요
         </EmptyElement>
       )}
-    </>
+    </QueryProvider>
   );
 }

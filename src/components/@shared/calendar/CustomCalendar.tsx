@@ -10,7 +10,7 @@ type CalendarValue = Date | null | [Date | null, Date | null];
 
 interface CustomCalendarProps {
   isOpen: boolean;
-  selectedDate: string;
+  selectedDate: string | undefined;
   onClose(): void;
   onDateChange(date: string): void;
   layout?: string;
@@ -31,7 +31,7 @@ export default function CustomCalendar({
   onDateChange,
   layout,
 }: CustomCalendarProps) {
-  const [date, setDate] = useState<string>(selectedDate);
+  const [date, setDate] = useState<string | undefined>(selectedDate);
 
   const handleDateChange = (newDate: CalendarValue) => {
     setDate(hyphenYearMonthDay(String(newDate)));

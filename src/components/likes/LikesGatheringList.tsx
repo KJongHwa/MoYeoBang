@@ -44,8 +44,8 @@ export default function LikesGatheringList({
             level={gathering.level}
             dateTime={gathering.dateTime}
             registrationEnd={gathering.registrationEnd}
-            capacity={gathering.capacity.toString()}
-            participantCount={gathering.participantCount.toString()}
+            capacity={gathering.capacity}
+            participantCount={gathering.participantCount}
           />
         ))}
       </section>

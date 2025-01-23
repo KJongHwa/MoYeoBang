@@ -2,7 +2,7 @@ import { genres } from '@/constants/themeList';
 
 interface GenreFilterProps {
   onGenreChange: (value: string) => void;
-  selectedGenre: string;
+  selectedGenre: string | undefined;
 }
 
 export default function GenreFilter({
