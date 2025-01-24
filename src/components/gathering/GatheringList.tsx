@@ -10,6 +10,7 @@ import type {
 } from '@/types/gathering.types';
 import { getGatherings } from '@/axios/gather/apis';
 import { sortList } from '@/constants/sortList';
+import { INIT_GATHRING } from '@/constants/initialValues';
 import { QueryProvider } from '@/components/@shared/QueryProvider';
 
 import EmptyElement from '@/components/@shared/EmptyElement';
@@ -23,12 +24,9 @@ import GenreFilter from '@/components/@shared/GenreFilter';
 export default function GatheringList() {
   const [selectedSort, setSelectedSort] =
     useState<GatheringUrlParams['sortBy']>('dateTime');
-  const [filters, setFilters] = useState<GatheringFilters>({
-    genre: '',
-    location: '',
-    date: '',
-    level: '',
-  });
+  const [filters, setFilters] = useState<GatheringFilters>(
+    INIT_GATHRING.FILTER
+  );
 
   const {
     data: gatherings,

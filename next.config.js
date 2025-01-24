@@ -10,6 +10,7 @@ const nextConfig = {
       'www.dumbndumber.kr',
       'search.pstatic.net',
       'moyeobang.s3.ap-northeast-2.amazonaws.com',
+      'www.secretgardenescape.com',
     ],
   },
   webpack(config) {
