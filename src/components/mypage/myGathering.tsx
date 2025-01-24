@@ -1,21 +1,15 @@
-import { mockGatherings } from '@/data/mockGatherings';
-import { useQuery } from '@tanstack/react-query';
-import { UserGatheringJoined } from '@/types/mypage.types';
-import { getMyGatheringJoied } from '@/axios/mypage/api';
+import { useUserGatherings } from '@/hooks/userUserGatherings';
 import MyGatheringCard from './myGatheringCard';
 import MyGatheringDetail from './myGatheringCard/myGatheringDetail';
 import EmptyElement from '../@shared/EmptyElement';
 
 export default function MyGathering() {
-  const { data: gatherings, isLoading: isGatheringLoading } = useQuery<
-    UserGatheringJoined[]
-  >({
-    queryKey: ['myGatheringJoined'],
-    queryFn: getMyGatheringJoied,
-  });
+  const { data: gatherings, isLoading: isGatheringLoading } =
+    useUserGatherings();
 
   if (isGatheringLoading) {
     return (
+      // 추후 loading 스피너로 구현
       <div className="flex h-dvh items-center justify-center">Loading...</div>
     );
   }
@@ -27,9 +21,11 @@ export default function MyGathering() {
       </div>
     );
   }
+
   if (gatherings.length === 0) {
     return <EmptyElement>신청한 모임이 아직 없어요</EmptyElement>;
   }
+
   return (
     <div className="flex flex-col gap-5">
       {gatherings.map((gathering: any) => (

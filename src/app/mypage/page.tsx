@@ -1,18 +1,14 @@
 'use client';
 
-import { mockGatherings } from '@/data/mockGatherings';
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
 import { useState } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/button/IconButton';
 import { useModal } from '@/hooks/useModal';
-import {
-  getMyGatheringJoied,
-  getMyProfile,
-  updateMyProfile,
-} from '@/axios/mypage/api';
-import { UserGatheringJoined, UserTypes } from '@/types/mypage.types';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateMyProfile } from '@/axios/mypage/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useUserProfile } from '@/hooks/useUserProfile';
+import { useUserGatherings } from '@/hooks/userUserGatherings';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import MyGathering from '../../components/mypage/myGathering';
@@ -26,17 +22,10 @@ export default function MyPage() {
 
   const queryClient = useQueryClient();
 
-  const { data: user, isLoading: isUserLoading } = useQuery<UserTypes>({
-    queryKey: ['myProfile'],
-    queryFn: getMyProfile,
-  });
+  const { data: user, isLoading: isUserLoading } = useUserProfile();
 
-  const { data: gatherings, isLoading: isGatheringLoading } = useQuery<
-    UserGatheringJoined[]
-  >({
-    queryKey: ['myGatheringJoined'],
-    queryFn: getMyGatheringJoied,
-  });
+  const { data: gatherings, isLoading: isGatheringLoading } =
+    useUserGatherings();
 
   const mutation = useMutation({
     mutationFn: updateMyProfile,
@@ -83,14 +72,13 @@ export default function MyPage() {
   };
 
   const levelImage = Math.min(Math.max(1, gatherings?.length || 0), 6); // levelImage는 최소 1부터 최대 6까지만
-  // 로딩 상태 처리
+
   if (isUserLoading || isGatheringLoading) {
     return (
       <div className="flex h-dvh items-center justify-center">Loading...</div>
     );
   }
 
-  // 유저 정보가 없을 때 처리
   if (!user) {
     return (
       <div className="flex h-dvh items-center justify-center">
