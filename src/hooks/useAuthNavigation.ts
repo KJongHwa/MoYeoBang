@@ -11,7 +11,7 @@ export function useAuthNavigation(redirectPath: string, onSuccess: () => void) {
   const router = useRouter();
 
   const checkAndNavigate = () => {
-    const item = localStorage.getItem('accessToken');
+    const item = localStorage.getItem('userInfo');
 
     if (!item) {
       router.push(redirectPath);
