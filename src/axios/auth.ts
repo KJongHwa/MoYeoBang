@@ -1,4 +1,4 @@
-import { axiosInstance } from './axiosInstance';
+import { authAxiosInstance } from './axiosInstance';
 import { API_PATH } from './config/path';
 import { ACCESS_TOKEN_KEY } from './constants';
 
@@ -14,10 +14,11 @@ interface LoginResponse {
 }
 
 export const authApi = {
-  signup: (data: AuthRequest) => axiosInstance.post(API_PATH.auth.signup, data),
+  signup: (data: AuthRequest) =>
+    authAxiosInstance.post(API_PATH.auth.signup, data),
 
   login: async (data: Omit<AuthRequest, 'nickname'>) => {
-    const response = await axiosInstance.post<LoginResponse>(
+    const response = await authAxiosInstance.post<LoginResponse>(
       API_PATH.auth.login,
       data
     );
@@ -31,10 +32,10 @@ export const authApi = {
   },
 
   reissue: (refreshToken: string) =>
-    axiosInstance.post(API_PATH.auth.reissue, { refreshToken }),
+    authAxiosInstance.post(API_PATH.auth.reissue, { refreshToken }),
 
   logout: () => {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-    return axiosInstance.post(API_PATH.auth.logout);
+    return authAxiosInstance.post(API_PATH.auth.logout);
   },
 };
