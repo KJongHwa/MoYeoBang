@@ -18,6 +18,9 @@ export const setupInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
+      if (error.response?.status === 401) {
+        window.location.href = '/login';
+      }
       if (process.env.NODE_ENV === 'development') {
         errorMessageLogger(error);
       }

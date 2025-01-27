@@ -22,7 +22,6 @@ export const authApi = {
       API_PATH.auth.login,
       data
     );
-    // 토큰 추출 후 저장
     const authHeader = response.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.split(' ')[1];
@@ -34,8 +33,14 @@ export const authApi = {
   reissue: (refreshToken: string) =>
     authAxiosInstance.post(API_PATH.auth.reissue, { refreshToken }),
 
-  logout: () => {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    return authAxiosInstance.post(API_PATH.auth.logout);
+  logout: async () => {
+    try {
+      await authAxiosInstance.post(API_PATH.auth.logout);
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
+      localStorage.removeItem('userInfo');
+      return { success: true };
+    } catch (error) {
+      return { success: false, error };
+    }
   },
 };
