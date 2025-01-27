@@ -10,6 +10,7 @@ import type {
 } from '@/types/gathering.types';
 import { getGatherings } from '@/axios/gather/apis';
 import { sortList } from '@/constants/sortList';
+import { INIT_GATHRING } from '@/constants/initialValues';
 import { QueryProvider } from '@/components/@shared/QueryProvider';
 
 import EmptyElement from '@/components/@shared/EmptyElement';
@@ -23,15 +24,16 @@ import GenreFilter from '@/components/@shared/GenreFilter';
 export default function GatheringList() {
   const [selectedSort, setSelectedSort] =
     useState<GatheringUrlParams['sortBy']>('dateTime');
-  const [filters, setFilters] = useState<GatheringFilters>({
-    genre: '',
-    location: '',
-    date: '',
-    level: '',
-  });
+  const [filters, setFilters] = useState<GatheringFilters>(
+    INIT_GATHRING.FILTER
+  );
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['gather', filters, selectedSort],
+  const {
+    data: gatherings,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['gatherings', filters, selectedSort],
     queryFn: () =>
       getGatherings({
         limit: 10,
@@ -57,7 +59,9 @@ export default function GatheringList() {
   }
 
   if (isError) {
-    return <div>에러 발생!</div>;
+    return (
+      <div className="flex h-dvh items-center justify-center">에러 발생!</div>
+    );
   }
 
   const handleFilterChange = (key: string, value: string) => {
@@ -104,14 +108,14 @@ export default function GatheringList() {
       </section>
 
       <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
-        {data.length > 0
-          ? data.map((gathering: GatheringDto['get']) => (
+        {gatherings.length > 0
+          ? gatherings.map((gathering: GatheringDto['get']) => (
               <GatheringCard key={gathering.gatheringId} {...gathering} />
             ))
           : null}
       </section>
 
-      {data.length === 0 && (
+      {gatherings.length === 0 && (
         <EmptyElement>
           아직 모임이 없어요,
           <br />

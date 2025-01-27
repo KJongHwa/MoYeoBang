@@ -1,13 +1,18 @@
 import axios from 'axios';
+import { setupInterceptors } from './interceptors';
 
-export const axiosInstance = axios.create({
+export const publicAxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// api.interceptors.request.use((config) => {
-//   // 토근 로직 추후 구현
-//   return config;
-// });
+export const authAxiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+setupInterceptors(authAxiosInstance);
