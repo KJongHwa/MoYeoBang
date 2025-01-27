@@ -9,24 +9,29 @@ export const apiCall = async (
   data: any = null,
   config: Record<string, any> = {}
 ) => {
-  const { params, ...axiosConfig } = config;
+  try {
+    const { params, ...axiosConfig } = config;
 
-  // params가 있을 경우 빈 값을 제외하고 쿼리 문자열 생성
-  const queryString = params
-    ? new URLSearchParams(
-        Object.entries(params)
-          .filter(
-            ([, value]) => value !== '' && value !== undefined && value !== null
-          )
-          .map(([key, value]) => [key, String(value)])
-      ).toString()
-    : '';
+    // params가 있을 경우 빈 값을 제외하고 쿼리 문자열 생성
+    const queryString = params
+      ? new URLSearchParams(
+          Object.entries(params)
+            .filter(
+              ([, value]) =>
+                value !== '' && value !== undefined && value !== null
+            )
+            .map(([key, value]) => [key, String(value)])
+        ).toString()
+      : '';
 
-  const finalUrl = queryString ? `${url}?${queryString}` : url;
+    const finalUrl = queryString ? `${url}?${queryString}` : url;
+    const axiosInstance =
+      method === 'get' ? publicAxiosInstance : authAxiosInstance;
 
-  const axiosInstance =
-    method === 'get' ? publicAxiosInstance : authAxiosInstance;
-
-  const response = await axiosInstance[method](finalUrl, data, axiosConfig);
-  return response.data;
+    const response = await axiosInstance[method](finalUrl, data, axiosConfig);
+    return response.data;
+  } catch (error) {
+    console.error('API call error:', error);
+    throw error;
+  }
 };
