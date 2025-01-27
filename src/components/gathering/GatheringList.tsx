@@ -84,19 +84,19 @@ export default function GatheringList() {
           </div>
         </div>
       </section>
-      <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
-        {gatherings.length > 0 ? (
-          gatherings.map((gathering: GatheringDto['get']) => (
+      {gatherings.length > 0 ? (
+        <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
+          {gatherings.map((gathering: GatheringDto['get']) => (
             <GatheringCard key={gathering.gatheringId} {...gathering} />
-          ))
-        ) : (
-          <EmptyElement>
-            아직 모임이 없어요,
-            <br />
-            지금 바로 모임을 만들어보세요
-          </EmptyElement>
-        )}
-      </section>
+          ))}
+        </section>
+      ) : (
+        <EmptyElement>
+          아직 모임이 없어요,
+          <br />
+          지금 바로 모임을 만들어보세요
+        </EmptyElement>
+      )}
     </QueryProvider>
   );
 }
