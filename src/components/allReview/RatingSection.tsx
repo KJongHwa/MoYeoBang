@@ -1,6 +1,6 @@
 import Rating from '@/components/@shared/rating/Rating';
 import ProgressBar from '@/components/@shared/ProgressBar';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getReviewsRating } from '@/axios/allReview/apis';
 
 interface RatingSectionProps {
@@ -9,12 +9,10 @@ interface RatingSectionProps {
 
 export default function RatingSection({ selectedGenre }: RatingSectionProps) {
   const { data: ratingsData, isLoading } = useQuery({
-    queryKey: ['ratings'],
+    queryKey: ['ratings', selectedGenre],
     queryFn: () => getReviewsRating(selectedGenre),
+    placeholderData: keepPreviousData,
   });
-
-  console.log(selectedGenre);
-  console.log(ratingsData);
 
   if (isLoading)
     return (
