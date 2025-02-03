@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export interface userDTO {
+export interface UserDTO {
   get: {
     userID: number;
     email: string;
@@ -17,6 +16,21 @@ export interface UserTypes {
   image: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface UserGatheringJoined {
+  gatheringId: number;
+  userId: number;
+  name: string;
+  location: string;
+  themeName: string;
+  genre: string;
+  image: string;
+  level: string;
+  dateTime: string;
+  registrationEnd: string;
+  capacity: number;
+  participantCount: number;
 }
 
 export interface ImageTypes {
