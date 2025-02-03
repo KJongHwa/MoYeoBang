@@ -25,7 +25,6 @@ export default function MyGathering() {
   if (myJoinedGatherings.length === 0) {
     return <EmptyElement>신청한 모임이 아직 없어요</EmptyElement>;
   }
-
   return (
     <div className="flex flex-col gap-5">
       {myJoinedGatherings.map((gathering: any) => (

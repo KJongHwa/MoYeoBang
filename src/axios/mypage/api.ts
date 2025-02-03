@@ -9,7 +9,7 @@ import {
 import { API_PATH } from '../config/path';
 
 export const getMyProfile = async () => {
-  const response = await publicAxiosInstance.get<UserTypes>(
+  const response = await authAxiosInstance.get<UserTypes>(
     `${API_PATH.user.me}`
   ); // 현재 header에 accessToken이 없어서 401 error
   return response.data ?? [];

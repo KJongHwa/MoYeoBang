@@ -31,6 +31,15 @@ export interface UserGatheringJoined {
   registrationEnd: string;
   capacity: number;
   participantCount: number;
+  isCompleted: boolean;
+  isCanceled: boolean;
+  review: {
+    reviewId: number;
+    score: number;
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+  };
 }
 
 export interface ImageTypes {
@@ -48,4 +57,12 @@ export interface AddImageFileParams {
 export interface UpdateMyProfileParams {
   nickname: string;
   image: string;
+}
+
+export interface myReviewParmas {
+  reviewId: number;
+  themeName: string;
+  image: string;
+  comment: string;
+  score: number;
 }
