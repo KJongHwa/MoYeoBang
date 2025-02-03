@@ -1,8 +1,17 @@
 name: BuildTest
 
 on:
+  push:
+    branches:
+      - main
+      - dev
+      - '**'
   pull_request:
-    
+    branches:
+      - main
+      - dev
+      - '**' # 모든 브랜치
+
 env:
   NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
   PERSON_ACCESS_TOKEN: ${{ secrets.PERSON_ACCESS_TOKEN }}
@@ -24,7 +33,7 @@ jobs:
 
       - name: Run build
         run: npm run build # build 테스트
-        
+
       - name: Debugging info
         run: |
           echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
