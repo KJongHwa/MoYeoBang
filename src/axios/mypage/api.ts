@@ -43,9 +43,27 @@ export const updateMyProfile = async ({
   return response.data ?? [];
 };
 
-export const getMyGatheringJoied = async () => {
+export const getMyGatheringJoined = async ({
+  isHost,
+  reviewed,
+  offset = 0,
+  limit = 10,
+}: {
+  isHost?: boolean;
+  reviewed?: boolean;
+  offset?: number;
+  limit?: number;
+}) => {
+  if (isHost === undefined && reviewed === undefined) {
+    throw new Error('host 또는 reviewed 중 하나는 반드시 제공해야 합니다.');
+  }
+
   const response = await authAxiosInstance.get<UserGatheringJoined[]>(
-    `${API_PATH.gathering.joined}`
+    `${API_PATH.gathering.joined}`,
+    {
+      params: { isHost, reviewed, offset, limit },
+    }
   );
+
   return response.data ?? [];
 };
