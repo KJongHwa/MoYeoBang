@@ -44,7 +44,7 @@ export const updateMyProfile = async ({
 };
 
 export const getMyGatheringJoied = async () => {
-  const response = await axiosInstance.get<UserGatheringJoined[]>(
+  const response = await authAxiosInstance.get<UserGatheringJoined[]>(
     `${API_PATH.gathering.joined}`
   );
   return response.data ?? [];
