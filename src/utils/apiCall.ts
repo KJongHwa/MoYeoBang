@@ -24,6 +24,19 @@ export const apiCall = async (
       ? `${publicAxiosInstance.defaults.baseURL}${url}`
       : url;
 
+    // TEST:쿼리 문자열 생성
+    const queryString = qs.stringify(queryParams, {
+      skipNulls: true,
+      arrayFormat: 'brackets',
+      filter: (prefix, value) => (value === '' ? undefined : value),
+    });
+
+    // TEST: 최종 URL
+    const fullUrl = queryString ? `${finalUrl}?${queryString}` : finalUrl;
+
+    console.log('Full URL:', fullUrl);
+    console.log('Query Params:', queryParams);
+
     const response = await axiosInstance[method](finalUrl, data, {
       ...axiosConfig,
       params: queryParams,
