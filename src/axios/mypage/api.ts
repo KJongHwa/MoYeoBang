@@ -4,6 +4,7 @@ import {
   UserTypes,
   AddImageFileParams,
   UpdateMyProfileParams,
+  UserGatheringJoined,
 } from '@/types/mypage.types';
 import { API_PATH } from '../config/path';
 
@@ -38,6 +39,13 @@ export const updateMyProfile = async ({
   const response = await authAxiosInstance.put<UserTypes>(
     `${API_PATH.user.me}`,
     params
+  );
+  return response.data ?? [];
+};
+
+export const getMyGatheringJoied = async () => {
+  const response = await authAxiosInstance.get<UserGatheringJoined[]>(
+    `${API_PATH.gathering.joined}`
   );
   return response.data ?? [];
 };

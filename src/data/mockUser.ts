@@ -1,7 +1,7 @@
 // mockUser.ts
-import { userDTO } from '@/types/mypage.types';
+import { UserDTO } from '@/types/mypage.types';
 
-export const mockUser: userDTO['get'] = {
+export const mockUser: UserDTO['get'] = {
   userID: 101, //
   email: 'moyeobangtester@naver.com', // 사용자 아이디
   nickname: '모여방테스터', // 사용자 별명
