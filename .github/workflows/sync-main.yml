@@ -25,10 +25,3 @@ jobs:
           git checkout dev
           git merge upstream/dev --allow-unrelated-histories --no-edit
           git push origin dev
-
-      # 환경 변수 설정
-      - name: Set environment variable
-        run: |
-          echo "Environment variable set"
-        env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
