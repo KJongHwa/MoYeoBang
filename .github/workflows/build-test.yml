@@ -1,7 +1,12 @@
 name: BuildTest
 
 on:
-  pull_request: # 모든 PR이 등록 될 때
+  pull_request_target:
+    types: [labeled]
+
+env:
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+  PERSON_ACCESS_TOKEN: ${{ secrets.PERSON_ACCESS_TOKEN }}
 
 jobs:
   lint:
