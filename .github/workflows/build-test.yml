@@ -1,11 +1,16 @@
 name: BuildTest
 
 on:
-  pull_request: # 모든 PR이 등록 될 때
+  pull_request:
+    
+env:
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+  PERSON_ACCESS_TOKEN: ${{ secrets.PERSON_ACCESS_TOKEN }}
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test')
 
     steps:
       - name: Checkout code
@@ -19,3 +24,9 @@ jobs:
 
       - name: Run build
         run: npm run build # build 테스트
+        
+      - name: Debugging info
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
+          echo "PERSON_ACCESS_TOKEN=${{ secrets.PERSON_ACCESS_TOKEN }}"
+          echo "Labels: ${{ github.event.pull_request.labels.*.name }}"

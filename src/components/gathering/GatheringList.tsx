@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useState, Suspense, useEffect } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import type {
   GatheringDto,
@@ -15,9 +15,9 @@ import { QueryProvider } from '@/components/@shared/QueryProvider';
 
 import EmptyElement from '@/components/@shared/EmptyElement';
 import GatheringCard from '@/components/gathering/GatheringCard';
-import DateDropdown from '@/components/allReview/DateDropdown';
-import LocationDropdown from '@/components/allReview/LocationDropdown';
-import LevelDropdown from '@/components/gathering/selector/LevelDropdown';
+import DateDropdown from '@/components/@shared/dropdown/DateDropdown';
+import LocationDropdown from '@/components/@shared/dropdown/LocationDropdown';
+import LevelDropdown from '@/components/@shared/dropdown/LevelDropdown';
 import SortDropdown from '@/components/@shared/dropdown/SortDropdown';
 import GenreFilter from '@/components/@shared/GenreFilter';
 
@@ -28,11 +28,7 @@ export default function GatheringList() {
     INIT_GATHRING.FILTER
   );
 
-  const {
-    data: gatherings,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: gatherings } = useSuspenseQuery({
     queryKey: ['gatherings', filters, selectedSort],
     queryFn: () =>
       getGatherings({
@@ -44,28 +40,10 @@ export default function GatheringList() {
         genre: filters.genre,
         date: filters.date,
       }),
-    enabled:
-      !!filters.genre ||
-      !!filters.location ||
-      !!filters.date ||
-      !!filters.level ||
-      !!selectedSort,
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="flex h-dvh items-center justify-center">에러 발생!</div>
-    );
-  }
-
   const handleFilterChange = (key: string, value: string) => {
-    setFilters((prev: any) => ({ ...prev, [key]: value }));
+    setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   const onSortingChange = (sortOption: GatheringUrlParams['sortBy']) => {
@@ -106,16 +84,13 @@ export default function GatheringList() {
           </div>
         </div>
       </section>
-
-      <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
-        {gatherings.length > 0
-          ? gatherings.map((gathering: GatheringDto['get']) => (
-              <GatheringCard key={gathering.gatheringId} {...gathering} />
-            ))
-          : null}
-      </section>
-
-      {gatherings.length === 0 && (
+      {gatherings.length > 0 ? (
+        <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
+          {gatherings.map((gathering: GatheringDto['get']) => (
+            <GatheringCard key={gathering.gatheringId} {...gathering} />
+          ))}
+        </section>
+      ) : (
         <EmptyElement>
           아직 모임이 없어요,
           <br />
