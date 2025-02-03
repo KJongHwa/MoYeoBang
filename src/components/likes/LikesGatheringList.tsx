@@ -9,11 +9,11 @@ import EmptyElement from '../@shared/EmptyElement';
 export default function LikesGatheringList({
   likesGatherings,
 }: LikesGatheringListProps) {
-  const [selectedGenre, setSelectedGenre] = useState<string>('all');
+  const [selectedGenre, setSelectedGenre] = useState<string>('');
 
   const filteredGatherings = likesGatherings.filter((gathering) => {
     const genreMatches =
-      selectedGenre === 'all' || gathering.genre === selectedGenre;
+      selectedGenre === '' || gathering.genre === selectedGenre;
     return genreMatches;
   });
 
