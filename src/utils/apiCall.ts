@@ -33,9 +33,7 @@ export const apiCall = async (
 
     // TEST: 최종 URL
     const fullUrl = queryString ? `${finalUrl}?${queryString}` : finalUrl;
-
     console.log('Full URL:', fullUrl);
-    console.log('Query Params:', queryParams);
 
     const response = await axiosInstance[method](finalUrl, data, {
       ...axiosConfig,
