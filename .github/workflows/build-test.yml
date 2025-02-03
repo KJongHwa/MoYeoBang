@@ -1,8 +1,7 @@
 name: BuildTest
 
 on:
-  pull_request_target:
-    types: [labeled]
+  pull_request:
     
 env:
   NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
