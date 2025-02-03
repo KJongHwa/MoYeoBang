@@ -6,8 +6,6 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 
     steps:
       - name: Checkout code
@@ -19,9 +17,5 @@ jobs:
       - name: Run lint
         run: npm run lint # lint 테스트
 
-      - name: Print environment variables # TEST
-        run: echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
-
       - name: Run build
         run: npm run build # build 테스트
-
