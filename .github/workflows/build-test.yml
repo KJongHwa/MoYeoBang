@@ -19,3 +19,5 @@ jobs:
 
       - name: Run build
         run: npm run build # build 테스트
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
