@@ -16,7 +16,15 @@ export const apiCall = async (
     const axiosInstance =
       method === 'get' ? publicAxiosInstance : authAxiosInstance;
 
-    const response = await axiosInstance[method](url, data, {
+    // 현재 URL이 상대 경로인지 확인
+    const isRelativeUrl = url.startsWith('/');
+
+    // 절대 URL로 변환
+    const finalUrl = isRelativeUrl
+      ? `${publicAxiosInstance.defaults.baseURL}${url}`
+      : url;
+
+    const response = await axiosInstance[method](finalUrl, data, {
       ...axiosConfig,
       params: queryParams,
       paramsSerializer: (params) =>
@@ -26,6 +34,7 @@ export const apiCall = async (
           filter: (prefix, value) => (value === '' ? undefined : value),
         }),
     });
+
     return response.data;
   } catch (error) {
     console.error('API call error:', error);
