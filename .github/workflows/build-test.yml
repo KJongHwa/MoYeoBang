@@ -25,3 +25,9 @@ jobs:
 
       - name: Run build
         run: npm run build # build 테스트
+        
+      - name: Debugging info
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
+          echo "PERSON_ACCESS_TOKEN=${{ secrets.PERSON_ACCESS_TOKEN }}"
+          echo "Labels: ${{ github.event.pull_request.labels.*.name }}"
