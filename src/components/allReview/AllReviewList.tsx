@@ -12,8 +12,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getAllReviews } from '@/axios/allReview/apis';
 
 export default function AllReviewList() {
-  const [selectedGenre, setSelectedGenre] = useState<string>('all');
-  const [selectedLocation, setSelectedLocation] = useState<string>('all');
+  const [selectedGenre, setSelectedGenre] = useState<string>('');
+  const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedSort, setSelectedSort] = useState<string>('createdAt');
 
@@ -32,9 +32,9 @@ export default function AllReviewList() {
   const filteredReviews = reviewsData
     .filter((review) => {
       const genreMatches =
-        selectedGenre === 'all' || review.gathering.genre === selectedGenre;
+        selectedGenre === '' || review.gathering.genre === selectedGenre;
       const locationMatches =
-        selectedLocation === 'all' ||
+        selectedLocation === '' ||
         review.gathering.location === selectedLocation;
       const dateMatches =
         selectedDate === '' ||
