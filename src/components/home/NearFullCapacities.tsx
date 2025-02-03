@@ -1,42 +1,33 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { ErrorBoundary } from 'react-error-boundary';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import GatheringCard from '@/components/gathering/GatheringCard';
 import { QueryProvider } from '@/components/@shared/QueryProvider';
+import EmptyElement from '@/components/@shared/EmptyElement';
+import GatheringCard from '@/components/gathering/GatheringCard';
 
 import { getGatheringsByParticipantCount } from '@/axios/gather/apis';
 
 export default function NearFullCapacities() {
-  const {
-    data: gatherings,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['gatherings/participants'],
+  const { data: gatherings } = useSuspenseQuery({
+    queryKey: ['gatherings/participantcount'],
     queryFn: getGatheringsByParticipantCount,
-    initialData: [],
   });
-
-  if (isLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="flex h-dvh items-center justify-center">에러 발생!</div>
-    );
-  }
 
   return (
     <QueryProvider>
-      <section className="grid h-full w-full grid-cols-1 grid-rows-2 gap-4 md:gap-7 xl:grid-cols-2 xl:grid-rows-2 xl:gap-9">
-        {gatherings.map((gathering: any) => (
-          <GatheringCard key={gathering.gatheringId} {...gathering} />
-        ))}
-      </section>
+      {gatherings.length > 0 ? (
+        <section className="grid h-full w-full grid-cols-1 grid-rows-2 gap-4 md:gap-7 xl:grid-cols-2 xl:grid-rows-2 xl:gap-9">
+          {gatherings.map((gathering: any) => (
+            <GatheringCard key={gathering.gatheringId} {...gathering} />
+          ))}
+        </section>
+      ) : (
+        <EmptyElement className="w-full">
+          모집 중인 모임을 불러오지 못했어요.
+        </EmptyElement>
+      )}
     </QueryProvider>
   );
 }

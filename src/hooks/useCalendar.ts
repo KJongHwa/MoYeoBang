@@ -41,6 +41,7 @@ export const useCalendar = ({ onDateChange }: UseCalendarProps) => {
   };
 
   return {
+    setIsOpen,
     isOpen, // 캘린더 열림/닫힘 상태
     date, // 선택된 날짜
     handleChange, // 캘린더 상태 토글 함수
