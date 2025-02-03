@@ -16,6 +16,7 @@ export const mockGatherings: GatheringDto['get'][] = [
     registrationEnd: '2025-01-14T23:59:59.000Z',
     capacity: 4,
     participantCount: 2,
+    isCanceled: false,
   },
   {
     gatheringId: 2,
@@ -32,6 +33,7 @@ export const mockGatherings: GatheringDto['get'][] = [
     registrationEnd: '2025-01-21T12:59:59.000Z',
     capacity: 6,
     participantCount: 1,
+    isCanceled: true,
   },
   {
     gatheringId: 3,
@@ -49,5 +51,6 @@ export const mockGatherings: GatheringDto['get'][] = [
     registrationEnd: '2025-01-24T23:59:59.000Z',
     capacity: 5,
     participantCount: 3,
+    isCanceled: true,
   },
 ];

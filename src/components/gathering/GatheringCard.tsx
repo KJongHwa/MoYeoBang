@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -26,7 +26,14 @@ export default function GatheringCard({
   participantCount,
   image,
 }: GatheringProps['card']) {
+  const [isError, setIsError] = useState(false);
+  const [imgSrc, setImgSrc] = useState(image);
   const isRegistrationEndToday = isToday(registrationEnd);
+
+  const handleError = () => {
+    setIsError(true);
+    setImgSrc('/images/theme_default.png');
+  };
 
   return (
     <figure className="relative">
@@ -36,12 +43,13 @@ export default function GatheringCard({
             <AlarmBadge hour={extractHour(registrationEnd)} />
           )}
           <Image
-            src={image}
+            src={imgSrc}
             alt="방탈출 테마 이미지"
             width={240}
             height={170}
             quality={100}
-            className="w-28 rounded-l-xl bg-default-tertiary object-cover md:w-60"
+            className={`w-28 rounded-l-xl bg-default-tertiary object-cover md:w-60 ${isError ? 'h-28 md:h-[170px]' : ''}`}
+            onError={handleError}
           />
           <div className="mx-3 my-2 flex flex-1 flex-col justify-between md:mx-6 md:my-4">
             <div className="flex justify-between">
@@ -89,20 +97,7 @@ export default function GatheringCard({
           </div>
         </div>
       </Link>
-      <PuzzleButton
-        gathering={{
-          gatheringId,
-          location,
-          dateTime,
-          registrationEnd,
-          level,
-          name,
-          themeName,
-          capacity,
-          participantCount,
-          image,
-        }}
-      />
+      <PuzzleButton gatheringId={gatheringId} />
     </figure>
   );
 }

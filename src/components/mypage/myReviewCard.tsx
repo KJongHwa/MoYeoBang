@@ -1,12 +1,10 @@
 /* eslint-disable prettier/prettier */
 
-'use client';
-
-import { useState } from 'react';
-
 import { ReviewDto } from '@/types/review.types';
 import Image from 'next/image';
-import Rating from '../@shared/Rating';
+import { useDropdown } from '@/hooks/useDropdown';
+import { useModal } from '@/hooks/useModal';
+import Rating from '../@shared/rating/Rating';
 import MyReviewModal from './myReviewModal';
 import DeleteModal from './deleteModal';
 
@@ -17,19 +15,26 @@ export default function MyReviewCard({
   Gathering,
   User,
 }: ReviewDto['get']) {
-  const [isEditModal, setEditIsModal] = useState(false);
-  const [isDeleteModal, setDeleteIsModal] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const openEditModalHandler = () => {
-    setEditIsModal(true);
-  };
-  const openDeleteModalHandler = () => {
-    setDeleteIsModal(true);
-  };
+  const {
+    isOpen: isMenuOpen,
+    openDropdown,
+    closeDropdown,
+    toggleDropdown,
+  } = useDropdown();
+  const {
+    isOpen: isEditModal,
+    openModal: openEditModal,
+    closeModal: closeEditModal,
+  } = useModal();
+  const {
+    isOpen: isDeleteModal,
+    openModal: openDeleteModal,
+    closeModal: closeDeleteModal,
+  } = useModal();
 
   const liDropdowns = [
-    { label: '수정하기', clickHandler: openEditModalHandler },
-    { label: '삭제하기', clickHandler: openDeleteModalHandler },
+    { label: '수정하기', clickHandler: openEditModal },
+    { label: '삭제하기', clickHandler: openDeleteModal },
   ];
 
   return (
@@ -40,7 +45,7 @@ export default function MyReviewCard({
         width={240}
         height={170}
         quality={100}
-        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:rounded-l-xl md:rounded-r-none"
+        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:max-w-[192px] md:rounded-l-xl md:rounded-r-none"
       />
 
       <div className="mx-4 my-5 flex flex-1 flex-col justify-between md:mx-6 md:my-5">
@@ -48,12 +53,9 @@ export default function MyReviewCard({
           <div className="group relative flex items-center justify-between">
             <Rating rating={score} width={120} height={24} />
             <div className="relative">
-              <button
-                type="button"
-                onClick={() => setIsMenuOpen((prev) => !prev)}
-              >
+              <button type="button" onClick={toggleDropdown}>
                 <Image
-                  src="/see_more_icon.png"
+                  src="/icons/see_more_icon.svg"
                   width={24}
                   height={24}
                   alt="드롭다운 클릭 버튼"
@@ -64,9 +66,12 @@ export default function MyReviewCard({
                   {liDropdowns.map((liDropdown) => (
                     <li key={liDropdown.label}>
                       <button
-                        onClick={liDropdown.clickHandler}
+                        onClick={() => {
+                          liDropdown.clickHandler();
+                          closeDropdown();
+                        }}
                         type="button"
-                        className="hover:bg-secondary-60 w-full px-4 py-2 text-left"
+                        className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
                       >
                         {liDropdown.label}
                       </button>
@@ -85,13 +90,13 @@ export default function MyReviewCard({
       </div>
       <MyReviewModal
         isModal={isEditModal}
-        setIsModal={setEditIsModal}
+        setIsModal={closeEditModal}
         comment={comment}
         score={score}
       />
       <DeleteModal
         isModal={isDeleteModal}
-        setIsModal={setDeleteIsModal}
+        setIsModal={closeDeleteModal}
         classification="delete"
       />
     </article>

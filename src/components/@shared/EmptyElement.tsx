@@ -1,15 +1,23 @@
 import Image from 'next/image';
-import PuzzleImage from '@/public/puzzle_empty.png';
+import PuzzleImage from '@/public/images/puzzle_empty.png';
 import { ReactNode } from 'react';
 
 interface EmptyElementProps {
   children: ReactNode;
+  className?: string;
 }
 
-export default function EmptyElement({ children }: EmptyElementProps) {
+export default function EmptyElement({
+  children,
+  className,
+}: EmptyElementProps) {
   return (
-    <div className="relative mt-20 h-[187px] text-center md:h-[260px] xl:h-[306px]">
-      <p className="text-base font-medium text-text-secondary">{children}</p>
+    <div
+      className={`relative mt-20 h-[187px] text-center md:h-[260px] xl:h-[306px] ${className}`}
+    >
+      <div className="text-base font-medium text-text-secondary">
+        {children}
+      </div>
       <Image
         src={PuzzleImage}
         alt="퍼즐 캐릭터"

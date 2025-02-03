@@ -5,19 +5,26 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import useToast from '@/hooks/useToast';
+import { useDropdown } from '@/hooks/useDropdown';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Button from './Button';
+import { authApi } from '@/axios/auth';
+import Button from './button/Button';
 import HeaderNavBar from './HeaderNavbar';
 import Toast from './Toast';
 
 export default function Header() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searching, setSearching] = useState(true);
   const [mobileNav, setMobileNav] = useState(false);
   const { toastMessage, toastVisible, toastType, handleSuccess } = useToast();
+  const {
+    isOpen: isMenuOpen,
+    openDropdown,
+    closeDropdown,
+    toggleDropdown,
+  } = useDropdown();
 
   useEffect(() => {
     const checkLoginStatus = () => {
@@ -52,19 +59,12 @@ export default function Header() {
   };
 
   const handleLogout = () => {
+    authApi.logout();
     localStorage.removeItem('userInfo');
     setIsLoggedIn(false);
     closeMobileNav();
     handleSuccess('로그아웃 되었습니다.');
     router.push('/');
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
   };
 
   const navLinks = [
@@ -80,12 +80,12 @@ export default function Header() {
     <div>
       <div className="relative z-50">
         <div className="fixed top-0 w-full">
-          <div className="border-secondary-70 bg-secondary-bg mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b px-5 md:h-[60px] md:px-[30px] xl:px-[200px]">
+          <div className="mx-auto flex h-[52px] w-full max-w-[1920px] items-center justify-between border-b border-secondary-70 bg-secondary-bg px-5 md:h-[60px] md:px-[30px] xl:px-[200px]">
             {/* Navigation Links */}
-            <nav className="text-text-default flex items-center gap-8 text-base">
+            <nav className="flex items-center gap-8 text-base text-text-default">
               <Link href="/" onClick={closeMobileNav}>
                 <Image
-                  src="/Logo.svg"
+                  src="/icons/Logo.svg"
                   width={100}
                   height={23}
                   alt="로고 이미지"
@@ -95,7 +95,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="hover:bg-primary-40 hidden rounded-xl px-4 py-1 transition duration-300 md:block"
+                  className="hidden rounded-xl px-4 py-1 transition duration-300 hover:bg-primary-40 md:block"
                 >
                   {link.label}
                 </Link>
@@ -129,21 +129,21 @@ export default function Header() {
                 </div>
               ) : (
                 <div className="relative flex text-base font-bold text-white">
-                  <button type="button" onClick={toggleMenu}>
+                  <button type="button" onClick={toggleDropdown}>
                     <Image
-                      src="/profile_image_default.png"
+                      src="/icons/profile_image_default.svg"
                       width={24}
                       height={24}
                       alt="마이페이지 이미지"
                     />
                   </button>
                   {isMenuOpen && (
-                    <ul className="bg-secondary-80 absolute right-0 z-50 mt-8 w-32 rounded-md shadow-md">
+                    <ul className="absolute -right-12 z-50 mt-8 w-32 rounded-md bg-secondary-80 text-[16px] font-normal shadow-md">
                       <li>
-                        <Link href="/mypage" onClick={closeMenu}>
+                        <Link href="/mypage" onClick={closeDropdown}>
                           <button
                             type="button"
-                            className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
+                            className="w-full rounded-md px-4 py-2 text-left hover:bg-secondary-60"
                           >
                             마이페이지
                           </button>
@@ -152,8 +152,11 @@ export default function Header() {
                       <li>
                         <button
                           type="button"
-                          className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
-                          onClick={handleLogout}
+                          className="w-full rounded-md px-4 py-2 text-left hover:bg-secondary-60"
+                          onClick={() => {
+                            handleLogout();
+                            closeDropdown();
+                          }}
                         >
                           로그아웃
                         </button>
@@ -162,7 +165,13 @@ export default function Header() {
                   )}
                 </div>
               )}
-              <button type="button" onClick={handleMobileNav}>
+              <button
+                type="button"
+                onClick={() => {
+                  handleMobileNav();
+                  closeDropdown();
+                }}
+              >
                 <Image
                   src={
                     mobileNav ? '/icons/ic_delete.svg' : '/icons/mobile_nav.svg'

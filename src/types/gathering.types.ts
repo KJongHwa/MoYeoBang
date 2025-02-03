@@ -1,10 +1,20 @@
-export interface GatheringParams {
-  sortBy: 'dateTime' | 'registrationEnd' | 'participantCount';
-  sortOrder: 'asc' | 'desc';
+export interface GatheringFilters {
+  location?: string;
+  date?: string;
+  genre?: string;
+  level?: string;
+}
+
+export interface GatheringUrlParams extends GatheringFilters {
+  sortBy?: string;
+  sortOrder?: string;
+  keyword?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export interface SearchGatheringParams {
   keyword: string;
-  location: string;
-  dateTime: string;
-  genre: string;
 }
 
 // Response
@@ -13,17 +23,27 @@ export interface GatheringDto {
     gatheringId: number;
     userId: number;
     name: string;
-    location: string;
+    location: 'geondae' | 'hongdae' | 'hyehwa' | 'gangnam';
     themeName: string;
     image: string;
-    level: string;
-    genre: string;
+    level: 'low' | 'middle' | 'high';
+    genre:
+      | 'mystery'
+      | 'horror'
+      | 'fantasy'
+      | 'comic'
+      | 'sci-fi'
+      | 'drama'
+      | 'thriller'
+      | 'stealth'
+      | 'adventure';
     playtime: number;
     map: string;
     dateTime: string;
     registrationEnd: string;
     capacity: number;
     participantCount: number;
+    isCanceled: boolean;
   };
 }
 
@@ -60,8 +80,8 @@ export interface GatheringProps {
     level: string;
     name: string;
     themeName: string;
-    capacity: string;
-    participantCount: string;
+    capacity: number;
+    participantCount: number;
     image: string;
   };
   badge: {

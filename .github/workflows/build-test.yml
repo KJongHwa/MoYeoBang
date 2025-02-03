@@ -1,7 +1,16 @@
 name: BuildTest
 
 on:
-  pull_request: # 모든 PR이 등록 될 때
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**' # 모든 브랜치
+
+env:
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+  PERSON_ACCESS_TOKEN: ${{ secrets.PERSON_ACCESS_TOKEN }}
 
 jobs:
   lint:
@@ -19,3 +28,9 @@ jobs:
 
       - name: Run build
         run: npm run build # build 테스트
+
+      - name: Debugging info
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
+          echo "PERSON_ACCESS_TOKEN=${{ secrets.PERSON_ACCESS_TOKEN }}"
+          echo "Labels: ${{ github.event.pull_request.labels.*.name }}"

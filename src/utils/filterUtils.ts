@@ -7,11 +7,10 @@ interface FilterOptions {
 }
 
 export const filter = ({ option, target }: FilterOptions) => {
-  return option === 'all' || target === option;
+  return option === '' || target === option;
 };
 
 export const dateFilter = ({ option, target }: FilterOptions) => {
-  // target의 형식을 유틸 함수에서 변환
   return option === '' || slashYearMonthDay(target) === option;
 };
 

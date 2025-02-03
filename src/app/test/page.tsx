@@ -1,21 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '@/components/@shared/Button';
-import IconButton from '@/components/@shared/IconButton';
-import Dropdown, { DropdownOption } from '@/components/@shared/Dropdown';
-import Input from '@/components/@shared/Input';
-import TextArea from '@/components/@shared/TextArea';
-import ToggleInput from '@/components/@shared/ToggleInput';
+import Button from '@/components/@shared/button/Button';
+import IconButton from '@/components/@shared/button/IconButton';
+import Dropdown, {
+  DropdownOption,
+} from '@/components/@shared/dropdown/Dropdown';
+import Input from '@/components/@shared/input/Input';
+import TextArea from '@/components/@shared/input/TextArea';
+import ToggleInput from '@/components/@shared/input/ToggleInput';
 import Modal from '@/components/@shared/Modal';
-import DateTimeCalendar from '@/components/@shared/DateTimeCalendar';
+import DateTimeCalendar from '@/components/@shared/calendar/DateTimeCalendar';
 import { useCalendar } from '@/hooks/useCalendar';
 // import Spinner from '@/components/@shared/Spinner';
 // import CustomCalendar from '@/components/@shared/CustomCalendar';
 
 // 옵션 데이터 정의 예시
 const locationOptions: DropdownOption[] = [
-  { value: 'all', label: '지역 전체' },
+  { value: '', label: '전체' },
   { value: 'gangnam', label: '강남' },
   { value: 'hongdae', label: '홍대' },
   { value: 'konkuk', label: '건대' },
@@ -136,8 +138,8 @@ export default function Test() {
         <div className="flex justify-center gap-4">
           <Dropdown
             options={locationOptions}
-            defaultValue={locationOptions[0]}
             onChange={handleLocationChange}
+            defaultLabel="지역"
           />
           <p className="text-sm">디버깅용: {selectedLocation.label}</p>
         </div>

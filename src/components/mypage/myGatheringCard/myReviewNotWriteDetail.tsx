@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import Button from '@/components/@shared/Button';
+import Button from '@/components/@shared/button/Button';
 import { formatDate } from '@/utils/dateUtils';
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
@@ -38,7 +38,7 @@ export default function MyReviewNotWriteDetail({
           <p>{formatDate(dateTime)}</p>
           <p>.</p>
           <Image
-            src="/gathering_icon.png"
+            src="/icons/gathering_icon.svg"
             width={20}
             height={20}
             alt="모임 아이콘"

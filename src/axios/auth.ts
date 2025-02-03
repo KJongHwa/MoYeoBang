@@ -1,17 +1,40 @@
-import { axiosInstance } from './axios';
+import { authAxiosInstance } from './axiosInstance';
+import { API_PATH } from './config/path';
+import { ACCESS_TOKEN_KEY } from './constants';
 
-interface SignUpRequest {
+interface AuthRequest {
   email: string;
   password: string;
-  nickname: string;
+  nickname?: string;
 }
 
-interface LoginRequest {
-  email: string;
-  password: string;
+interface LoginResponse {
+  accessToken: string;
+  refreshToken: string;
 }
 
 export const authApi = {
-  signup: (data: SignUpRequest) => axiosInstance.post('/auth/signup', data),
-  login: (data: LoginRequest) => axiosInstance.post('/login', data),
+  signup: (data: AuthRequest) =>
+    authAxiosInstance.post(API_PATH.auth.signup, data),
+
+  login: async (data: Omit<AuthRequest, 'nickname'>) => {
+    const response = await authAxiosInstance.post<LoginResponse>(
+      API_PATH.auth.login,
+      data
+    );
+    const authHeader = response.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.split(' ')[1];
+      localStorage.setItem(ACCESS_TOKEN_KEY, token);
+    }
+    return response;
+  },
+
+  reissue: (refreshToken: string) =>
+    authAxiosInstance.post(API_PATH.auth.reissue, { refreshToken }),
+
+  logout: () => {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    return authAxiosInstance.post(API_PATH.auth.logout);
+  },
 };

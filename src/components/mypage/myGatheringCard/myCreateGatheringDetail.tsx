@@ -5,6 +5,7 @@ import { formatDate } from '@/utils/dateUtils';
 import Image from 'next/image';
 import GatheringModal from '@/components/gathering/GatheringModal';
 import { useModal } from '@/hooks/useModal';
+import { useDropdown } from '@/hooks/useDropdown';
 import { findLabelByValue } from '@/utils/mappingUtils';
 import { locationList } from '@/constants/themeList';
 import DeleteModal from '../deleteModal';
@@ -37,6 +38,12 @@ export default function MyCreateGatheringDetail({
     openModal: openGatheringEditModal,
     closeModal: closeGatheringEditModal,
   } = useModal();
+  const {
+    isOpen: isMenuOpen,
+    openDropdown,
+    closeDropdown,
+    toggleDropdown,
+  } = useDropdown();
 
   const liDropdowns = [
     { label: '수정하기', clickHandler: openGatheringEditModal },
@@ -57,7 +64,7 @@ export default function MyCreateGatheringDetail({
             {participantCount === capacity ? (
               <span>
                 <Image
-                  src="/check.png"
+                  src="/icons/check.svg"
                   width={16}
                   height={16}
                   alt="체크 이미지"
@@ -79,7 +86,7 @@ export default function MyCreateGatheringDetail({
           <p>{formatDate(dateTime)}</p>
           <p>.</p>
           <Image
-            src="/gathering_icon.png"
+            src="/icons/gathering_icon.svg"
             width={20}
             height={20}
             alt="모임 아이콘"
@@ -91,25 +98,32 @@ export default function MyCreateGatheringDetail({
       </div>
 
       <div className="group relative">
-        <Image
-          src="/see_more_icon.png"
-          width={24}
-          height={24}
-          alt="드롭다운 클릭 버튼"
-        />
-        <ul className="bg-secondary-80 absolute -right-1 z-50 mt-2 hidden w-32 rounded-md shadow-md group-hover:pointer-events-auto group-hover:block md:-right-10 md:-right-3">
-          {liDropdowns.map((liDropdown) => (
-            <li key={liDropdown.label}>
-              <button
-                onClick={liDropdown.clickHandler}
-                type="button"
-                className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
-              >
-                {liDropdown.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <button type="button" onClick={toggleDropdown}>
+          <Image
+            src="/icons/see_more_icon.svg"
+            width={24}
+            height={24}
+            alt="드롭다운 클릭 버튼"
+          />
+        </button>
+        {isMenuOpen && (
+          <ul className="bg-secondary-80 absolute -right-2 z-50 mt-2 w-32 rounded-md shadow-md md:-right-16">
+            {liDropdowns.map((liDropdown) => (
+              <li key={liDropdown.label}>
+                <button
+                  onClick={() => {
+                    liDropdown.clickHandler();
+                    closeDropdown();
+                  }}
+                  type="button"
+                  className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
+                >
+                  {liDropdown.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <GatheringModal

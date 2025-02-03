@@ -2,17 +2,19 @@
 
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
+import { useAuthNavigation } from '@/hooks/useAuthNavigation';
 import GatheringModal from '../GatheringModal';
 
 export default function CreateGatheringBtn() {
   const { isOpen, openModal, closeModal } = useModal();
+  const { checkAndNavigate } = useAuthNavigation('/login', openModal);
 
   return (
     <>
       <button
         type="button"
         className="fixed bottom-12 right-8 xl:bottom-16 xl:right-1/10"
-        onClick={openModal}
+        onClick={checkAndNavigate}
       >
         <Image
           src="/icons/creator.svg"

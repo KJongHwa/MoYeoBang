@@ -9,11 +9,11 @@ import EmptyElement from '../@shared/EmptyElement';
 export default function LikesGatheringList({
   likesGatherings,
 }: LikesGatheringListProps) {
-  const [selectedGenre, setSelectedGenre] = useState<string>('all');
+  const [selectedGenre, setSelectedGenre] = useState<string>('');
 
   const filteredGatherings = likesGatherings.filter((gathering) => {
     const genreMatches =
-      selectedGenre === 'all' || gathering.genre === selectedGenre;
+      selectedGenre === '' || gathering.genre === selectedGenre;
     return genreMatches;
   });
 
@@ -44,8 +44,8 @@ export default function LikesGatheringList({
             level={gathering.level}
             dateTime={gathering.dateTime}
             registrationEnd={gathering.registrationEnd}
-            capacity={gathering.capacity.toString()}
-            participantCount={gathering.participantCount.toString()}
+            capacity={gathering.capacity}
+            participantCount={gathering.participantCount}
           />
         ))}
       </section>
