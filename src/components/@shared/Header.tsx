@@ -58,14 +58,13 @@ export default function Header() {
     setMobileNav(false);
   };
 
-  const handleLogout = async () => {
-    const { success } = await authApi.logout();
-    if (success) {
-      setIsLoggedIn(false);
-      closeMobileNav();
-      handleSuccess('로그아웃 되었습니다.');
-      router.push('/');
-    }
+  const handleLogout = () => {
+    authApi.logout();
+    localStorage.removeItem('userInfo');
+    setIsLoggedIn(false);
+    closeMobileNav();
+    handleSuccess('로그아웃 되었습니다.');
+    router.push('/');
   };
 
   const navLinks = [

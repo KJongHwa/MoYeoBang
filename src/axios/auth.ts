@@ -33,14 +33,8 @@ export const authApi = {
   reissue: (refreshToken: string) =>
     authAxiosInstance.post(API_PATH.auth.reissue, { refreshToken }),
 
-  logout: async () => {
-    try {
-      await authAxiosInstance.post(API_PATH.auth.logout);
-      localStorage.removeItem(ACCESS_TOKEN_KEY);
-      localStorage.removeItem('userInfo');
-      return { success: true };
-    } catch (error) {
-      return { success: false, error };
-    }
+  logout: () => {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    return authAxiosInstance.post(API_PATH.auth.logout);
   },
 };
