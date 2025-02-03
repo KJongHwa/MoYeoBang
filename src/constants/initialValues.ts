@@ -18,4 +18,10 @@ export const INIT_GATHRING = {
   DELETE: {
     gatheringId: 0,
   },
+  FILTER: {
+    genre: '',
+    location: '',
+    date: '',
+    level: '',
+  },
 };

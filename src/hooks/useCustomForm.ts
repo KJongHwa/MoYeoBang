@@ -9,7 +9,7 @@ const useCustomForm = <T extends FieldValues>(
   defaultValues: DefaultValues<T>
 ) => {
   const formMethods: UseFormReturn<T> = useForm<T>({
-    mode: 'onChange',
+    mode: 'onBlur',
     defaultValues,
   });
 

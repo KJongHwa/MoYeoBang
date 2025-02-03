@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import type { GatheringRequestBody } from '@/types/gathering.types';
 import useCustomForm from '@/hooks/useCustomForm';
+import { useCalendar } from '@/hooks/useCalendar';
 import useToast from '@/hooks/useToast';
-import { getToday } from '@/utils/dateUtils';
-import { GatheringRequestBody } from '@/types/gathering.types';
+import { getToday, convertToISO, splitDateTime } from '@/utils/dateUtils';
+import { searchThemes } from '@/utils/searchUtils';
+import { INIT_GATHRING } from '@/constants/initialValues';
+import { postGathering } from '@/axios/gather/apis';
+
 import Toast from '@/components/@shared/Toast';
 import Modal from '@/components/@shared/Modal';
-import Button from '@/components/@shared/Button';
-import Input from '@/components/@shared/Input';
-import DateInput from '@/components/@shared/DateInput';
-import DateTimeCalendar from '@/components/@shared/DateTimeCalendar';
-import { themeNameList } from '@/constants/themeList';
-import { INIT_GATHRING } from '@/constants/initialValues';
-import { useCalendar } from '@/hooks/useCalendar';
+import Button from '@/components/@shared/button/Button';
+import Input from '@/components/@shared/input/Input';
+import DateInput from '@/components/@shared/input/DateInput';
+import DateTimeCalendar from '@/components/@shared/calendar/DateTimeCalendar';
 
 import LocationSelector from './selector/LocationSelector';
 import CapacitySelector from './selector/CapacitySelector';
@@ -29,13 +32,9 @@ export default function GatheringModal({
   onClose,
   isEdit = false,
 }: GatheringModalProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watchFields,
-    formState: { isValid },
-  } = useCustomForm<GatheringRequestBody['post']>(INIT_GATHRING.POST);
+  const queryClient = useQueryClient();
+  const { trigger, register, handleSubmit, setValue, watchFields, formState } =
+    useCustomForm<GatheringRequestBody['post']>(INIT_GATHRING.POST);
 
   const [location, setLocation] = useState<string>('');
   const [inputThemeName, setInputThemeName] = useState<string>('');
@@ -93,31 +92,14 @@ export default function GatheringModal({
   };
 
   // 방탈출 테마 검색
-  const searchThemes = () => {
+  const handleThemeSearch = () => {
     setSearchAttempted(true);
-
-    if (inputThemeName.length < 2) {
-      setSearchMessage('2글자 이상 입력해주세요.');
-      setFilteredThemes([]);
-      return;
-    }
-
-    if (location) {
-      const filtered = themeNameList[location]?.theme.filter((theme) =>
-        theme.toLowerCase().includes(inputThemeName.toLowerCase())
-      );
-
-      if (filtered.length === 0) {
-        setSearchMessage('검색어가 없어요. 다시 입력해 주세요.');
-      } else {
-        setSearchMessage('');
-      }
-
-      setFilteredThemes(filtered);
-    }
+    const { filtered, message } = searchThemes(inputThemeName, location);
+    setFilteredThemes(filtered);
+    setSearchMessage(message);
   };
 
-  // location이 변경될 때
+  // 방탈출 지역 변경 처리
   useEffect(() => {
     if (location) {
       setSearchAttempted(false);
@@ -163,13 +145,35 @@ export default function GatheringModal({
     }
   }, [registrationEnd, dateTime, setValue]);
 
-  // 폼 제출 시 날짜 형식 포맷
-  const onSubmit = (data: GatheringRequestBody['post']) => {
-    const finalDateTime = new Date(data.dateTime);
-    const finalRegistrationEnd = new Date(data.registrationEnd);
+  // POST
+  const { mutate: createGathering } = useMutation({
+    mutationFn: async (submissionData: GatheringRequestBody['post']) =>
+      postGathering(submissionData),
+    onSuccess: () => {
+      handleSuccess('모임이 생성되었습니다!');
+      onClose();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['gatherings'] });
+    },
+    onError: (error: any) => {
+      console.error('createGathering Error:', error);
+      handleError('모임 생성에 실패했습니다. 다시 시도해 주세요.');
+    },
+  });
 
-    const isoDateTime = finalDateTime.toISOString(); // ISO 형식으로 변환
-    const isoRegistrationEnd = finalRegistrationEnd.toISOString();
+  // 폼 제출 시 날짜 형식 포맷
+  const onSubmit = async (data: GatheringRequestBody['post']) => {
+    const dateTimeString = data.dateTime;
+    const registrationEndString = data.registrationEnd;
+
+    const [datePart, timePart] = splitDateTime(dateTimeString);
+    const [regEndDatePart, regEndTimePart] = splitDateTime(
+      registrationEndString
+    );
+
+    const isoDateTime = convertToISO(datePart, timePart);
+    const isoRegistrationEnd = convertToISO(regEndDatePart, regEndTimePart);
 
     const submissionData = {
       ...data,
@@ -177,18 +181,25 @@ export default function GatheringModal({
       registrationEnd: isoRegistrationEnd,
     };
 
-    console.log('Submitted Data:', submissionData);
-
-    const isSuccess = false;
-
-    // onClose();
-
-    if (isSuccess) {
-      handleSuccess('성공적으로 처리되었습니다!');
-    } else {
-      handleError('아직 구현되지 않은 기능입니다.');
-    }
+    await createGathering(submissionData);
   };
+
+  // 유효성 검사 강제 수행
+  useEffect(() => {
+    const validateForm = async () => {
+      await trigger();
+    };
+
+    validateForm();
+  }, [
+    name,
+    themeName,
+    dateTime,
+    registrationEnd,
+    registrationEndError,
+    dateTimeError,
+    trigger,
+  ]);
 
   return (
     <Modal
@@ -205,8 +216,19 @@ export default function GatheringModal({
           labelText="모임 이름"
           placeholder="모임 이름을 입력하세요."
           inputProps={{
-            ...register('name', { required: true }),
+            ...register('name', {
+              required: {
+                value: true,
+                message: '모임 이름을 입력해주세요.',
+              },
+              maxLength: {
+                value: 12,
+                message: '모임 이름은 12글자 이하로 입력해주세요.',
+              },
+            }),
           }}
+          isError={!!formState.errors.name}
+          errorMessage={formState.errors.name?.message}
         />
         <LocationSelector
           location={location}
@@ -218,7 +240,7 @@ export default function GatheringModal({
             location={location}
             inputThemeName={inputThemeName}
             setInputThemeName={setInputThemeName}
-            searchThemes={searchThemes}
+            searchThemes={handleThemeSearch}
             filteredThemes={filteredThemes}
             setThemeName={(newName) => setValue('themeName', newName)}
             selectedThemeName={selectedThemeName}
@@ -286,10 +308,8 @@ export default function GatheringModal({
           type="submit"
           variant="primary-gray"
           padding="10"
-          disabled={
-            !isValid || !themeName || !!registrationEndError || !!dateTimeError
-          }
-          className="mb-4 mt-14 w-full md:mt-6"
+          disabled={!formState.isValid}
+          className="mb-4 mt-3 w-full"
         >
           {isEdit ? '수정' : '생성'}
         </Button>

@@ -1,7 +1,7 @@
 'use client';
 
 import Modal from '@/components/@shared/Modal';
-import Button from '@/components/@shared/Button';
+import Button from '@/components/@shared/button/Button';
 import useToast from '@/hooks/useToast';
 import Toast from '../@shared/Toast';
 

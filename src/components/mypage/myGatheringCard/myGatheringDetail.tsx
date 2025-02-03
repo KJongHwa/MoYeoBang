@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import GatheringBadge from '@/components/gathering/UI/GatheringBadge';
-import Button from '@/components/@shared/Button';
+import Button from '@/components/@shared/button/Button';
 import { formatDate } from '@/utils/dateUtils';
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
@@ -16,6 +16,7 @@ interface MyGatheringDetailProps {
   themeName: string;
   capacity: string;
   participantCount: string;
+  isCanceled: boolean;
 }
 
 export default function MyGatheringDetail({
@@ -25,6 +26,7 @@ export default function MyGatheringDetail({
   themeName,
   capacity,
   participantCount,
+  isCanceled,
 }: MyGatheringDetailProps) {
   const {
     isOpen: isDeleteModal,
@@ -46,7 +48,7 @@ export default function MyGatheringDetail({
             {participantCount === capacity ? (
               <span>
                 <Image
-                  src="/check.png"
+                  src="/icons/check.svg"
                   width={16}
                   height={16}
                   alt="체크 이미지"
@@ -64,11 +66,11 @@ export default function MyGatheringDetail({
         <p className="text-secondary-40 text-[14px] font-light">{themeName}</p>
       </div>
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-1 text-[10px] text-text-secondary md:text-sm">
+        <div className="text-text-secondary flex items-center gap-1 text-[10px] md:text-sm">
           <p>{formatDate(dateTime)}</p>
           <p>.</p>
           <Image
-            src="/gathering_icon.png"
+            src="/icons/gathering_icon.svg"
             width={20}
             height={20}
             alt="모임 아이콘"
@@ -81,11 +83,8 @@ export default function MyGatheringDetail({
             padding="10"
             fontSize="14"
             onClick={openDeleteModal}
-            style={{
-              backgroundColor: '#525463',
-              position: 'absolute',
-              right: '10px',
-            }}
+            className="bg-secondary-70 border-secondary-80 absolute right-4"
+            disabled={isCanceled}
           >
             예약취소하기
           </Button>

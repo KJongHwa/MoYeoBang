@@ -1,7 +1,7 @@
 export const sortList = {
   gathering: [
-    { value: 'createdAt', label: '최신순' },
-    { value: 'deadline', label: '마감 임박순' },
+    { value: 'dateTime', label: '최신순' },
+    { value: 'registrationEnd', label: '마감 임박순' },
   ],
   review: [
     { value: 'createdAt', label: '최신순' },

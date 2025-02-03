@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '../@shared/Button';
+import Button from '../@shared/button/Button';
 import MyReviewNotWrite from './myReviewNotWrite';
 import MyReviewWrite from './myReviewWrite';
 

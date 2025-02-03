@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 
 import Modal from '@/components/@shared/Modal';
-import Input from '@/components/@shared/Input';
-import Button from '@/components/@shared/Button';
+import Input from '@/components/@shared/input/Input';
+import Button from '@/components/@shared/button/Button';
+import clsx from 'clsx';
+import { postMyImage, updateMyProfile } from '@/axios/mypage/api';
 import useToast from '@/hooks/useToast';
 import Toast from '../@shared/Toast';
 
@@ -14,6 +16,7 @@ interface MyProfileEditModalProps {
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
   nickname: string;
   image: string;
+  onProfileUpdate: (updatedNickname: string, updatedImage: string) => void;
 }
 
 export default function MyProfileEditModal({
@@ -21,19 +24,21 @@ export default function MyProfileEditModal({
   setIsModal,
   nickname,
   image,
+  onProfileUpdate,
 }: MyProfileEditModalProps) {
   const [img, setImg] = useState<string | null>(null);
   const [updatedNickname, setUpdatedNickname] = useState<string>(nickname);
-  const { toastMessage, toastVisible, toastType, handleError } = useToast();
+  const { toastMessage, toastVisible, toastType, handleError, handleSuccess } =
+    useToast();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const closeModalhandler = () => {
     setIsModal(false);
-    setImg(null);
-    setUpdatedNickname(nickname);
   };
 
   const isModified =
-    nickname !== updatedNickname && updatedNickname.trim() !== '';
+    (updatedNickname.trim() !== '' && nickname !== updatedNickname) ||
+    (img && img !== image);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -56,13 +61,35 @@ export default function MyProfileEditModal({
   };
 
   const triggerFileInput = () => {
-    const fileInput = document.getElementById(
-      'profile_image-input'
-    ) as HTMLInputElement;
-    if (fileInput) fileInput.click();
+    fileInputRef.current?.click();
   };
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatedNickname(e.target.value);
+  };
+
+  // api put
+  const handleProfileUpdate = async () => {
+    try {
+      let uploadedImageUrl = image;
+      if (
+        fileInputRef.current?.files?.[0] &&
+        fileInputRef.current.files[0]?.name !== image
+      ) {
+        const file = fileInputRef.current.files[0];
+        const response = await postMyImage({ image: file });
+        uploadedImageUrl = response;
+      }
+      await updateMyProfile({
+        nickname: updatedNickname,
+        image: uploadedImageUrl,
+      });
+      handleSuccess('프로필이 성공적으로 업데이트되었습니다.');
+      onProfileUpdate(updatedNickname, uploadedImageUrl);
+      setUpdatedNickname(updatedNickname);
+      closeModalhandler();
+    } catch (error) {
+      handleError('프로필 업데이트 중 오류가 발생했습니다.');
+    }
   };
 
   return (
@@ -75,16 +102,19 @@ export default function MyProfileEditModal({
         <p className="text-base font-bold">프로필 수정하기</p>
         <div className="rounded-full">
           <div
-            className={`relative flex items-center justify-center overflow-hidden ${
-              img ? 'w-118 h-118 rounded-full' : ''
-            }`}
+            className={clsx(
+              'relative flex items-center justify-center overflow-hidden',
+              {
+                'w-118 h-118 rounded-full': img || image,
+              }
+            )}
           >
             <Image
-              src={img || '/icons/profile_image_default.svg'}
+              src={img || image || '/icons/edit_profile_image_default.svg'}
               width={117}
               height={117}
               alt="프로필 이미지 미리보기"
-              className={img ? 'h-[118px] rounded-full' : ''}
+              className={clsx({ 'h-[118px] rounded-full': img || image })}
             />
           </div>
           <button type="button" onClick={triggerFileInput}>
@@ -101,6 +131,7 @@ export default function MyProfileEditModal({
             id="profile_image-input"
             accept="image/*"
             className="hidden"
+            ref={fileInputRef}
             onChange={handleFileChange}
           />
         </div>
@@ -127,9 +158,7 @@ export default function MyProfileEditModal({
             fontSize="16"
             disabled={!isModified}
             className="w-full"
-            onClick={() => {
-              handleError('아직 구현되지 않은 기능입니다.');
-            }}
+            onClick={handleProfileUpdate}
           >
             수정하기
           </Button>

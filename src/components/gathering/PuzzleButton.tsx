@@ -4,67 +4,46 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 
-import { GatheringProps } from '@/types/gathering.types';
-
 interface PuzzleButtonProps {
   layout?: 'card' | 'slot';
-  gathering: GatheringProps['card'] | undefined;
+  gatheringId: number;
 }
 
 export default function PuzzleButton({
   layout = 'card',
-  gathering,
+  gatheringId,
 }: PuzzleButtonProps) {
   const [isFavorited, setIsFavorited] = useState(false);
 
-  // 컴포넌트가 마운트될 때 찜 상태 불러오기
-  useEffect(() => {
-    if (!gathering) return;
-
+  // 로컬 스토리지에서 찜 상태 불러오기
+  const loadFavorites = () => {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    setIsFavorited(
-      favorites.some(
-        (fav: GatheringProps['card']) =>
-          fav.gatheringId === gathering.gatheringId
-      )
-    );
-  }, [gathering]);
-
-  const handleFavoriteToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-
-    if (!gathering) return;
-
-    setIsFavorited((prev) => {
-      const newFavorited = !prev;
-      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-
-      if (newFavorited) {
-        if (
-          !favorites.some(
-            (fav: GatheringProps['card']) =>
-              fav.gatheringId === gathering.gatheringId
-          )
-        ) {
-          favorites.push(gathering);
-        }
-      } else {
-        const updatedFavorites = favorites.filter(
-          (fav: GatheringProps['card']) =>
-            fav.gatheringId !== gathering.gatheringId
-        );
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-        return false;
-      }
-
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-      return newFavorited;
-    });
+    setIsFavorited(favorites.includes(gatheringId));
   };
+
+  useEffect(() => {
+    loadFavorites();
+  }, [gatheringId]);
+
+  // 찜 상태 토글 함수
+  const toggleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+    if (isFavorited) {
+      const newFavorites = favorites.filter((id: number) => id !== gatheringId);
+      localStorage.setItem('favorites', JSON.stringify(newFavorites));
+    } else {
+      favorites.push(gatheringId);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+
+    loadFavorites();
+  };
+
   return (
     <button
       type="button"
-      onClick={handleFavoriteToggle}
+      onClick={toggleFavorite}
       className={clsx(
         'absolute right-0  flex h-10 w-10 flex-1 items-center justify-center',
         {
