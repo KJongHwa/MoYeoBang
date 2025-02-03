@@ -17,7 +17,7 @@ import { useCalendar } from '@/hooks/useCalendar';
 
 // 옵션 데이터 정의 예시
 const locationOptions: DropdownOption[] = [
-  { value: 'all', label: '지역 전체' },
+  { value: '', label: '전체' },
   { value: 'gangnam', label: '강남' },
   { value: 'hongdae', label: '홍대' },
   { value: 'konkuk', label: '건대' },
@@ -138,8 +138,8 @@ export default function Test() {
         <div className="flex justify-center gap-4">
           <Dropdown
             options={locationOptions}
-            defaultValue={locationOptions[0]}
             onChange={handleLocationChange}
+            defaultLabel="지역"
           />
           <p className="text-sm">디버깅용: {selectedLocation.label}</p>
         </div>

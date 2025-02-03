@@ -1,4 +1,5 @@
 import { publicAxiosInstance, authAxiosInstance } from '@/axios/axiosInstance';
+import qs from 'qs';
 
 type HttpMethod = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
@@ -9,24 +10,45 @@ export const apiCall = async (
   data: any = null,
   config: Record<string, any> = {}
 ) => {
-  const { params, ...axiosConfig } = config;
+  try {
+    const { params: queryParams, ...axiosConfig } = config;
 
-  // params가 있을 경우 빈 값을 제외하고 쿼리 문자열 생성
-  const queryString = params
-    ? new URLSearchParams(
-        Object.entries(params)
-          .filter(
-            ([, value]) => value !== '' && value !== undefined && value !== null
-          )
-          .map(([key, value]) => [key, String(value)])
-      ).toString()
-    : '';
+    const axiosInstance =
+      method === 'get' ? publicAxiosInstance : authAxiosInstance;
 
-  const finalUrl = queryString ? `${url}?${queryString}` : url;
+    // 현재 URL이 상대 경로인지 확인
+    const isRelativeUrl = url.startsWith('/');
 
-  const axiosInstance =
-    method === 'get' ? publicAxiosInstance : authAxiosInstance;
+    // 절대 URL로 변환
+    const finalUrl = isRelativeUrl
+      ? `${publicAxiosInstance.defaults.baseURL}${url}`
+      : url;
 
-  const response = await axiosInstance[method](finalUrl, data, axiosConfig);
-  return response.data;
+    // TEST:쿼리 문자열 생성
+    const queryString = qs.stringify(queryParams, {
+      skipNulls: true,
+      arrayFormat: 'brackets',
+      filter: (prefix, value) => (value === '' ? undefined : value),
+    });
+
+    // TEST: 최종 URL
+    const fullUrl = queryString ? `${finalUrl}?${queryString}` : finalUrl;
+    console.log('Full URL:', fullUrl);
+
+    const response = await axiosInstance[method](finalUrl, data, {
+      ...axiosConfig,
+      params: queryParams,
+      paramsSerializer: (params) =>
+        qs.stringify(params, {
+          skipNulls: true,
+          arrayFormat: 'brackets',
+          filter: (prefix, value) => (value === '' ? undefined : value),
+        }),
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('API call error:', error);
+    throw error;
+  }
 };

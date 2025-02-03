@@ -1,6 +1,6 @@
 import Dropdown, {
   DropdownOption,
-} from '@/components/@shared/dropdown/SelectLocationDropdown';
+} from '@/components/@shared/dropdown/Dropdown';
 
 import { locationList } from '@/constants/themeList';
 

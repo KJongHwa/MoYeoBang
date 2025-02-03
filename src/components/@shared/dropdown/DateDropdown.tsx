@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useCalendar } from '@/hooks/useCalendar';
 import { clsx } from 'clsx';
 import Image from 'next/image';
@@ -14,12 +15,33 @@ export default function DateDropdown({
   onDateChange,
   selectedDate,
 }: DateDropdownProps) {
-  const { isOpen, date, handleChange, handleDateChange } = useCalendar({
-    onDateChange,
-  });
+  const { isOpen, date, setIsOpen, handleChange, handleDateChange } =
+    useCalendar({
+      onDateChange,
+    });
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    const listener = (event: MouseEvent) => handleClickOutside(event);
+
+    document.addEventListener('mousedown', listener);
+
+    return () => {
+      document.removeEventListener('mousedown', listener);
+    };
+  }, []);
 
   return (
-    <div className={clsx('relative flex')}>
+    <div ref={dropdownRef} className={clsx('relative flex')}>
       <button
         type="button"
         onClick={handleChange}

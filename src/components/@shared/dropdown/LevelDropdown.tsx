@@ -2,7 +2,7 @@
 
 import Dropdown, {
   DropdownOption,
-} from '@/components/@shared/dropdown/SelectLocationDropdown';
+} from '@/components/@shared/dropdown/Dropdown';
 import { levels } from '@/constants/themeList';
 
 interface LevelDropdownProps {
