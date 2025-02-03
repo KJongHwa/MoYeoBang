@@ -13,6 +13,10 @@ export interface GatheringUrlParams extends GatheringFilters {
   offset?: number;
 }
 
+export interface SearchGatheringParams {
+  keyword: string;
+}
+
 // Response
 export interface GatheringDto {
   get: {
