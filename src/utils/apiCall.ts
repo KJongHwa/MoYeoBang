@@ -18,15 +18,17 @@ export const apiCall = async (
       ? qs.stringify(params, {
           skipNulls: true,
           arrayFormat: 'brackets',
+          filter: (prefix, value) => (value === '' ? undefined : value),
         })
       : '';
 
-    const finalUrl = queryString ? `${url}?${queryString}` : url;
+    const finalUrl = new URL(url, publicAxiosInstance.defaults.baseURL).href;
+    const fullUrl = queryString ? `${finalUrl}?${queryString}` : finalUrl;
 
     const axiosInstance =
       method === 'get' ? publicAxiosInstance : authAxiosInstance;
 
-    const response = await axiosInstance[method](finalUrl, data, axiosConfig);
+    const response = await axiosInstance[method](fullUrl, data, axiosConfig);
     return response.data;
   } catch (error) {
     console.error('API call error:', error);
