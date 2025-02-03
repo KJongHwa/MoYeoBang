@@ -32,7 +32,7 @@ export default function GatheringList() {
     queryKey: ['gatherings', filters, selectedSort],
     queryFn: () =>
       getGatherings({
-        limit: 10,
+        limit: 20,
         sortOrder: 'asc',
         sortBy: selectedSort,
         level: filters.level,
