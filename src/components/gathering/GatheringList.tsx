@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
-import type { GatheringDto, GatheringFilters } from '@/types/gathering.types';
+import type { GatheringDto } from '@/types/gathering.types';
 import { getGatherings } from '@/axios/gather/apis';
 import { sortList } from '@/constants/sortList';
 import { INIT_GATHRING } from '@/constants/initialValues';
@@ -19,18 +19,18 @@ import SortDropdown from '@/components/@shared/dropdown/SortDropdown';
 import GenreFilter from '@/components/@shared/GenreFilter';
 
 export default function GatheringList() {
-  const [selectedSort, setSelectedSort] = useState<string>('dateTime');
-  const [filters, setFilters] = useState<GatheringFilters>(
-    INIT_GATHRING.FILTER
-  );
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [allGatherings, setAllGatherings] = useState<GatheringDto['get'][]>([]);
+  const [selectedSort, setSelectedSort] = useState('dateTime');
+  const [filters, setFilters] = useState(INIT_GATHRING.FILTER);
 
-  const { data: gatherings } = useSuspenseQuery({
-    queryKey: ['gatherings', filters, selectedSort, offset],
-    queryFn: () =>
-      getGatherings({
+  const {
+    data: gatherings,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useSuspenseInfiniteQuery({
+    queryKey: ['gatherings', filters, selectedSort],
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await getGatherings({
         limit: 10,
         sortOrder: 'asc',
         sortBy: selectedSort,
@@ -38,51 +38,41 @@ export default function GatheringList() {
         location: filters.location,
         genre: filters.genre,
         date: filters.date,
-        offset,
-      }),
+        offset: pageParam,
+      });
+
+      return response;
+    },
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      // 추가 데이터 요청 여부 판별
+      if (!lastPage || lastPage.length < 10) return undefined;
+
+      // offset이 page처럼 동작, 1씩 증가하도록 설정
+      return lastPageParam + 1;
+    },
+    initialPageParam: 0,
   });
 
-  // 데이터 누적 로직
-  useEffect(() => {
-    if (!gatherings) return;
+  const allGatherings = gatherings.pages.flat();
 
-    setAllGatherings((prev) => [
-      ...prev,
-      ...gatherings.filter(
-        (gathering: GatheringDto['get']) =>
-          !prev.some((item) => item.gatheringId === gathering.gatheringId)
-      ),
-    ]);
-
-    // 남아있는 데이터 확인
-    setHasMore(gatherings.length > 0);
-  }, [gatherings]);
-
-  const handleFilterChange = (key: string, value: string) => {
+  const handleFilterChange = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
-    setAllGatherings([]); // 기존 데이터 리셋
-    setOffset(0); // 오프셋 리셋
-    setHasMore(true);
+    fetchNextPage();
   };
 
   const onSortingChange = (sortOption: string) => {
     setSelectedSort(sortOption);
-    setAllGatherings([]);
-    setOffset(0);
-    setHasMore(true);
+    fetchNextPage();
   };
 
   // 추가 데이터 요청 함수
   const loadMore = () => {
-    if (hasMore) {
-      setOffset((prev) => {
-        const newOffset = prev + 1;
-        return newOffset;
-      });
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
   };
 
-  const { targetRef } = useInfiniteScroll(loadMore, hasMore);
+  const { targetRef } = useInfiniteScroll(loadMore, hasNextPage);
 
   return (
     <QueryProvider>
