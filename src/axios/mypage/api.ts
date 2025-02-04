@@ -5,17 +5,21 @@ import {
   AddImageFileParams,
   UpdateMyProfileParams,
   UserGatheringJoined,
+  ReviewParams,
+  EditReviewParams,
 } from '@/types/mypage.types';
 import { GatheringRequestBody } from '@/types/gathering.types';
 import { API_PATH } from '../config/path';
 
+// 프로필 Get
 export const getMyProfile = async () => {
   const response = await authAxiosInstance.get<UserTypes>(
     `${API_PATH.user.me}`
-  ); // 현재 header에 accessToken이 없어서 401 error
+  );
   return response.data ?? [];
 };
 
+// 프로필 이미지 Post
 export const postMyImage = async ({ image }: AddImageFileParams) => {
   const formData = new FormData();
   formData.append('image', image);
@@ -32,6 +36,8 @@ export const postMyImage = async ({ image }: AddImageFileParams) => {
 
   return response.data.image ?? [];
 };
+
+// 프로필 Put
 export const updateMyProfile = async ({
   nickname,
   image,
@@ -44,6 +50,7 @@ export const updateMyProfile = async ({
   return response.data ?? [];
 };
 
+// 나의 모임, 작성 가능한 리뷰 모임, 작성한 리뷰, 내가 만든 모임 Get
 export const getMyGatheringJoined = async ({
   isHost,
   reviewed,
@@ -69,6 +76,7 @@ export const getMyGatheringJoined = async ({
   return response.data ?? [];
 };
 
+// 내가 만든 모임 Delete
 export const deleteMyCreateGathering = async (gatheringId: number) => {
   const response = await authAxiosInstance.delete(
     `${API_PATH.gathering.detail(gatheringId)}`
@@ -76,12 +84,42 @@ export const deleteMyCreateGathering = async (gatheringId: number) => {
   return response.data ?? [];
 };
 
+// 내가 만든 모임 Put
 export const editMyCreateGathering = async (
   data: GatheringRequestBody['post'],
   gatheringId: number
 ) => {
   const response = await authAxiosInstance.put(
     `${API_PATH.gathering.detail(gatheringId)}`,
+    data
+  );
+  return response.data ?? [];
+};
+
+// 리뷰 Post
+export const postGatheringReview = async (data: ReviewParams) => {
+  const response = await authAxiosInstance.post(
+    `${API_PATH.review.default}`,
+    data
+  );
+  return response.data ?? [];
+};
+
+// 리뷰 Delete
+export const deleteGatheringReview = async (reviewId: number) => {
+  const response = await authAxiosInstance.delete(
+    `${API_PATH.review.detail(reviewId)}`
+  );
+  return response.data ?? [];
+};
+
+// 리뷰 Put
+export const editGatheringReview = async (
+  reviewId: number,
+  data: EditReviewParams
+) => {
+  const response = await authAxiosInstance.put(
+    `${API_PATH.review.detail(reviewId)}`,
     data
   );
   return response.data ?? [];

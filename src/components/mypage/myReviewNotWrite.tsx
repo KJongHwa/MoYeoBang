@@ -1,11 +1,11 @@
-import { useUserGatherings } from '@/hooks/useUserGatherings';
+import { UseReviews } from '@/hooks/useReviews';
 import MyGatheringCard from './myGatheringCard';
 import MyReviewNotWriteDetail from './myGatheringCard/myReviewNotWriteDetail';
 import EmptyElement from '../@shared/EmptyElement';
 
 export default function MyReviewNotWrite() {
   const { data: notWriteMyReviews, isLoading: isNotWriteMyReviewsLoading } =
-    useUserGatherings({ reviewed: false });
+    UseReviews({ reviewed: false });
   if (isNotWriteMyReviewsLoading) {
     return (
       // 추후 loading 스피너로 구현
@@ -31,6 +31,7 @@ export default function MyReviewNotWrite() {
           image={notWriteMyReview.image}
         >
           <MyReviewNotWriteDetail
+            gatheringId={notWriteMyReview.gatheringId}
             dateTime={notWriteMyReview.dateTime}
             name={notWriteMyReview.name}
             themeName={notWriteMyReview.themeName}

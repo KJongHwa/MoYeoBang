@@ -1,12 +1,11 @@
-import { useUserGatherings } from '@/hooks/useUserGatherings';
+import { UseReviews } from '@/hooks/useReviews';
 import MyReviewCard from './myReviewCard';
 import EmptyElement from '../@shared/EmptyElement';
 
 export default function MyReviewWrite() {
   const { data: writeMyReviews, isLoading: isWriteMyReviewsLoading } =
-    useUserGatherings({ reviewed: true });
+    UseReviews({ reviewed: true });
   if (isWriteMyReviewsLoading) {
-    console.log(writeMyReviews);
     return (
       // 추후 loading 스피너로 구현
       <div className="flex h-dvh items-center justify-center">Loading...</div>

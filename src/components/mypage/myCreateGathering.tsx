@@ -36,9 +36,6 @@ export default function MyCreateGathering() {
             participantCount={gathering.participantCount}
             gatheringId={gathering.gatheringId}
           />
-          {!gathering.isCanceled && (
-            <p className="font-bold text-red-500">취소안된 모임입니다</p>
-          )}
         </MyGatheringCard>
       ))}
     </div>

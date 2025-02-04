@@ -10,6 +10,7 @@ interface MyReviewNotWriteDetailProps {
   themeName: string;
   capacity: string;
   participantCount: string;
+  gatheringId: number;
 }
 
 export default function MyReviewNotWriteDetail({
@@ -18,6 +19,7 @@ export default function MyReviewNotWriteDetail({
   themeName,
   capacity,
   participantCount,
+  gatheringId,
 }: MyReviewNotWriteDetailProps) {
   const {
     isOpen: isEditModal,
@@ -56,7 +58,11 @@ export default function MyReviewNotWriteDetail({
           >
             리뷰쓰기
           </Button>
-          <MyReviewModal isModal={isEditModal} setIsModal={closeEditModal} />
+          <MyReviewModal
+            id={gatheringId}
+            isModal={isEditModal}
+            setIsModal={closeEditModal}
+          />
         </div>
       </div>
     </div>

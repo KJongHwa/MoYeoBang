@@ -66,3 +66,14 @@ export interface MyReviewParmas {
   comment: string;
   score: number;
 }
+
+export interface ReviewParams {
+  gatheringId: number;
+  score: number;
+  comment: string;
+}
+
+export interface EditReviewParams {
+  score: number;
+  comment: string;
+}

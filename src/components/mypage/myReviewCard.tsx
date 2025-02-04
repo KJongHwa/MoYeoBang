@@ -89,6 +89,7 @@ export default function MyReviewCard({
         setIsModal={closeEditModal}
         comment={comment}
         score={score}
+        id={reviewId}
       />
       <DeleteModal
         id={reviewId}
