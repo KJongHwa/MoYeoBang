@@ -2,11 +2,11 @@ import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/button/Button';
 import { deleteMyCreateGathering } from '@/axios/mypage/api';
 import useToast from '@/hooks/useToast';
-import Toast from '../@shared/Toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Toast from '../@shared/Toast';
 
 interface DeleteModalProps {
-  id: number; //리뷰 삭제 할때는 reviewId, 모임 예약 취소 또는 내가 만든 모임 삭제 할때는 gatheringId
+  id: number; // 리뷰 삭제 할때는 reviewId, 모임 예약 취소 또는 내가 만든 모임 삭제 할때는 gatheringId
   isModal: boolean;
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
   classification: string;
