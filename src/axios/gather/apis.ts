@@ -1,4 +1,4 @@
-import { publicAxiosInstance } from '@/axios/axiosInstance';
+import { authAxiosInstance, publicAxiosInstance } from '@/axios/axiosInstance';
 import type {
   GatheringRequestBody,
   GatheringUrlParams,
@@ -60,7 +60,7 @@ export const getGatherings = async (params: GatheringUrlParams) => {
 
 // 모임 생성
 export const postGathering = async (data: GatheringRequestBody['post']) => {
-  const response = await publicAxiosInstance.post(
+  const response = await authAxiosInstance.post(
     API_PATH.gathering.default,
     data
   );

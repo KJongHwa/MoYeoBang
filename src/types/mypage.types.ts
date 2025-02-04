@@ -59,7 +59,7 @@ export interface UpdateMyProfileParams {
   image: string;
 }
 
-export interface myReviewParmas {
+export interface MyReviewParmas {
   reviewId: number;
   themeName: string;
   image: string;

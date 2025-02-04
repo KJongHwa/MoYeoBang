@@ -17,6 +17,7 @@ interface MyCreateGatheringDetailProps {
   themeName: string;
   capacity: string;
   participantCount: string;
+  gatheringId: number;
 }
 
 export default function MyCreateGatheringDetail({
@@ -26,6 +27,7 @@ export default function MyCreateGatheringDetail({
   themeName,
   capacity,
   participantCount,
+  gatheringId,
 }: MyCreateGatheringDetailProps) {
   const {
     isOpen: isDeleteModal,
@@ -47,7 +49,7 @@ export default function MyCreateGatheringDetail({
 
   const liDropdowns = [
     { label: '수정하기', clickHandler: openGatheringEditModal },
-    { label: '모임취소', clickHandler: openDeleteModal },
+    { label: '모임삭제', clickHandler: openDeleteModal },
   ];
 
   return (
@@ -129,12 +131,14 @@ export default function MyCreateGatheringDetail({
       <GatheringModal
         isOpen={isGatheringEditModal}
         onClose={closeGatheringEditModal}
+        gatheringId={gatheringId}
         isEdit
       />
       <DeleteModal
         isModal={isDeleteModal}
         setIsModal={closeDeleteModal}
-        classification="cancel"
+        classification="gathering_delete"
+        id={gatheringId}
       />
     </div>
   );

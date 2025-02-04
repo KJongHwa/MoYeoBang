@@ -1,6 +1,6 @@
+import { useUserGatherings } from '@/hooks/useUserGatherings';
 import MyReviewCard from './myReviewCard';
 import EmptyElement from '../@shared/EmptyElement';
-import { useUserGatherings } from '@/hooks/useUserGatherings';
 
 export default function MyReviewWrite() {
   const { data: writeMyReviews, isLoading: isWriteMyReviewsLoading } =
@@ -9,13 +9,11 @@ export default function MyReviewWrite() {
     console.log(writeMyReviews);
     return (
       // 추후 loading 스피너로 구현
-
       <div className="flex h-dvh items-center justify-center">Loading...</div>
     );
   }
 
   if (!writeMyReviews) {
-    console.log(writeMyReviews);
     return (
       <div className="flex h-dvh items-center justify-center">
         작성 가능한 모임 정보를 불러올 수 없습니다.

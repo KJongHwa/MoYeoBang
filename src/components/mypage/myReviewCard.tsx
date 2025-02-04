@@ -1,13 +1,10 @@
-/* eslint-disable prettier/prettier */
-
-import { ReviewDto } from '@/types/review.types';
 import Image from 'next/image';
 import { useDropdown } from '@/hooks/useDropdown';
 import { useModal } from '@/hooks/useModal';
+import { MyReviewParmas } from '@/types/mypage.types';
 import Rating from '../@shared/rating/Rating';
 import MyReviewModal from './myReviewModal';
 import DeleteModal from './deleteModal';
-import { myReviewParmas, UserGatheringJoined } from '@/types/mypage.types';
 
 export default function MyReviewCard({
   reviewId,
@@ -15,7 +12,7 @@ export default function MyReviewCard({
   image,
   comment,
   score,
-}: myReviewParmas) {
+}: MyReviewParmas) {
   const {
     isOpen: isMenuOpen,
     openDropdown,
@@ -94,6 +91,7 @@ export default function MyReviewCard({
         score={score}
       />
       <DeleteModal
+        id={reviewId}
         isModal={isDeleteModal}
         setIsModal={closeDeleteModal}
         classification="delete"

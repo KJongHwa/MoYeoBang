@@ -1,4 +1,4 @@
-import { publicAxiosInstance, authAxiosInstance } from '@/axios/axiosInstance';
+import { authAxiosInstance } from '@/axios/axiosInstance';
 import {
   ImageTypes,
   UserTypes,
@@ -6,6 +6,7 @@ import {
   UpdateMyProfileParams,
   UserGatheringJoined,
 } from '@/types/mypage.types';
+import { GatheringRequestBody } from '@/types/gathering.types';
 import { API_PATH } from '../config/path';
 
 export const getMyProfile = async () => {
@@ -65,5 +66,23 @@ export const getMyGatheringJoined = async ({
     }
   );
 
+  return response.data ?? [];
+};
+
+export const deleteMyCreateGathering = async (gatheringId: number) => {
+  const response = await authAxiosInstance.delete(
+    `${API_PATH.gathering.detail(gatheringId)}`
+  );
+  return response.data ?? [];
+};
+
+export const editMyCreateGathering = async (
+  data: GatheringRequestBody['post'],
+  gatheringId: number
+) => {
+  const response = await authAxiosInstance.put(
+    `${API_PATH.gathering.detail(gatheringId)}`,
+    data
+  );
   return response.data ?? [];
 };

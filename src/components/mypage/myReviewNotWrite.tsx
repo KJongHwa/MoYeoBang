@@ -1,7 +1,7 @@
+import { useUserGatherings } from '@/hooks/useUserGatherings';
 import MyGatheringCard from './myGatheringCard';
 import MyReviewNotWriteDetail from './myGatheringCard/myReviewNotWriteDetail';
 import EmptyElement from '../@shared/EmptyElement';
-import { useUserGatherings } from '@/hooks/useUserGatherings';
 
 export default function MyReviewNotWrite() {
   const { data: notWriteMyReviews, isLoading: isNotWriteMyReviewsLoading } =

@@ -16,7 +16,7 @@ import Button from '@/components/@shared/button/Button';
 import Input from '@/components/@shared/input/Input';
 import DateInput from '@/components/@shared/input/DateInput';
 import DateTimeCalendar from '@/components/@shared/calendar/DateTimeCalendar';
-
+import { editMyCreateGathering } from '@/axios/mypage/api';
 import LocationSelector from './selector/LocationSelector';
 import CapacitySelector from './selector/CapacitySelector';
 import ThemeSelector from './selector/ThemeSelector';
@@ -25,12 +25,14 @@ interface GatheringModalProps {
   isOpen: boolean;
   onClose: () => void;
   isEdit?: boolean;
+  gatheringId?: number;
 }
 
 export default function GatheringModal({
   isOpen,
   onClose,
   isEdit = false,
+  gatheringId,
 }: GatheringModalProps) {
   const queryClient = useQueryClient();
   const { trigger, register, handleSubmit, setValue, watchFields, formState } =
@@ -162,6 +164,25 @@ export default function GatheringModal({
     },
   });
 
+  // PUT
+  const { mutate: updateGathering } = useMutation({
+    mutationFn: async (submissionData: GatheringRequestBody['post']) => {
+      if (!gatheringId) return Promise.resolve();
+      return editMyCreateGathering(submissionData, gatheringId);
+    },
+    onSuccess: () => {
+      handleSuccess('모임이 수정되었습니다!');
+      onClose();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['gatherings'] });
+    },
+    onError: (error: any) => {
+      console.error('updateGathering Error:', error);
+      handleError('모임 수정에 실패했습니다. 다시 시도해 주세요.');
+    },
+  });
+
   // 폼 제출 시 날짜 형식 포맷
   const onSubmit = async (data: GatheringRequestBody['post']) => {
     const dateTimeString = data.dateTime;
@@ -180,8 +201,13 @@ export default function GatheringModal({
       dateTime: isoDateTime,
       registrationEnd: isoRegistrationEnd,
     };
-
-    await createGathering(submissionData);
+    if (isEdit) {
+      // 모임 수정
+      await updateGathering(submissionData);
+    } else {
+      // 모임 생성
+      await createGathering(submissionData);
+    }
   };
 
   // 유효성 검사 강제 수행
