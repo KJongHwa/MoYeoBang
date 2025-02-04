@@ -1,76 +1,78 @@
 'use client';
 
+import { useInView } from 'react-intersection-observer';
 import { AllReviewListProps } from '@/types/review.types';
-import { useState } from 'react';
-import { slashYearMonthDay } from '@/utils/dateUtils';
+import { useEffect, useState } from 'react';
 import ReviewCard from '@/components/allReview/ReviewCard';
 import ReviewFilters from '@/components/allReview/ReviewFilters';
 import EmptyElement from '@/components/@shared/EmptyElement';
 import GenreFilter from '@/components/@shared/GenreFilter';
 import RatingSection from '@/components/allReview/RatingSection';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { getAllReviews } from '@/axios/allReview/apis';
+import { hyphenYearMonthDay } from '@/utils/dateUtils';
 
 export default function AllReviewList() {
   const [selectedGenre, setSelectedGenre] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedSort, setSelectedSort] = useState<string>('createdAt');
+  const { ref, inView } = useInView();
 
-  const { data: reviewsData = [], isLoading } = useQuery<
-    AllReviewListProps['allReviews']
-  >({
-    queryKey: ['reviews'],
-    queryFn: () => getAllReviews(selectedGenre),
-  });
+  const PAGE_LIMIT = 10;
+
+  const filters = {
+    genre: selectedGenre,
+    location: selectedLocation,
+    date: selectedDate ? hyphenYearMonthDay(selectedDate) : '',
+    sortBy: selectedSort,
+  };
+
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
+    useInfiniteQuery<AllReviewListProps['allReviews']>({
+      queryKey: ['reviews', filters],
+      queryFn: ({ pageParam = 0 }) =>
+        getAllReviews({
+          ...filters,
+          limit: PAGE_LIMIT,
+          offset: pageParam as number,
+        }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages, lastPageParam) =>
+        lastPage.length < PAGE_LIMIT
+          ? undefined
+          : (lastPageParam as number) + PAGE_LIMIT,
+      placeholderData: keepPreviousData,
+    });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
 
   if (isLoading)
     return (
       <div className="flex h-dvh items-center justify-center">Loading...</div>
     );
 
-  const filteredReviews = reviewsData
-    .filter((review) => {
-      const genreMatches =
-        selectedGenre === '' || review.gathering.genre === selectedGenre;
-      const locationMatches =
-        selectedLocation === '' ||
-        review.gathering.location === selectedLocation;
-      const dateMatches =
-        selectedDate === '' ||
-        slashYearMonthDay(review.createdAt) === selectedDate;
-      return genreMatches && locationMatches && dateMatches;
-    })
-    .sort((a, b) => {
-      switch (selectedSort) {
-        case 'createdAt':
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-        case 'score':
-          return b.score - a.score;
-        case 'participantCount':
-          return b.gathering.participantCount - a.gathering.participantCount;
-        default:
-          return 0;
-      }
-    });
+  const reviewsData = data?.pages.flat() || [];
 
-  const renderReviews = () => {
-    if (filteredReviews.length === 0) {
-      return <EmptyElement>아직 리뷰가 없어요</EmptyElement>;
-    }
-    return filteredReviews.map((review) => (
-      <ReviewCard
-        key={review.reviewId}
-        score={review.score}
-        comment={review.comment}
-        createdAt={review.createdAt}
-        Gathering={review.gathering}
-        User={review.user}
-      />
-    ));
-  };
+  const renderReviews = () =>
+    reviewsData?.length > 0 ? (
+      reviewsData?.map((review) => (
+        <ReviewCard
+          key={review.reviewId}
+          score={review.score}
+          comment={review.comment}
+          createdAt={review.createdAt}
+          Gathering={review.gathering}
+          User={review.user}
+        />
+      ))
+    ) : (
+      <EmptyElement>아직 리뷰가 없어요</EmptyElement>
+    );
 
   return (
     <>
@@ -95,6 +97,10 @@ export default function AllReviewList() {
           {renderReviews()}
         </div>
       </section>
+
+      <div ref={ref} className="flex h-10 items-center justify-center">
+        {isFetchingNextPage ? 'Loading...' : ''}
+      </div>
     </>
   );
 }
