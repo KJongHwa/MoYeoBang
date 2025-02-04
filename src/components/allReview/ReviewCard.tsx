@@ -19,6 +19,7 @@ export default function ReviewCard({
           alt={Gathering.themeName}
           fill
           quality={100}
+          priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="rounded-t-[20px] md:rounded-l-[20px] md:rounded-r-[0px]"
         />

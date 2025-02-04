@@ -42,7 +42,7 @@ export default function Rating({
   };
 
   return (
-    <div className="inline-block" style={containerStyle} aria-label="별점 평가">
+    <div className="inline-block" style={containerStyle}>
       <span className="inline-block bg-repeat-x" style={backgroundStyle}>
         <span className="inline-block bg-repeat-x" style={filledStyle} />
       </span>
