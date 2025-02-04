@@ -18,6 +18,8 @@ const useInfiniteScroll = (
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && hasMore) {
+            // 데이터 로드 전 스크롤 위치 저장
+            scrollYRef.current = window.scrollY;
             loadMore();
           }
         });
@@ -49,16 +51,14 @@ const useInfiniteScroll = (
     }
   }, [hasMore]);
 
+  // 데이터 로드 후 스크롤 위치 복원
   useEffect(() => {
-    window.scrollTo(0, scrollYRef.current);
+    if (scrollYRef.current !== 0) {
+      window.scrollTo(0, scrollYRef.current);
+    }
   }, [loadMore]);
 
-  // 데이터 로드 전 스크롤 위치 저장
-  const saveScrollPosition = () => {
-    scrollYRef.current = window.scrollY;
-  };
-
-  return { targetRef, saveScrollPosition };
+  return { targetRef };
 };
 
 export default useInfiniteScroll;
