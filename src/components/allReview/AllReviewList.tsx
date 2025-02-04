@@ -26,6 +26,7 @@ export default function AllReviewList() {
     location: selectedLocation,
     date: selectedDate ? hyphenYearMonthDay(selectedDate) : '',
     sortBy: selectedSort,
+    sortOrder: 'desc',
   };
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
