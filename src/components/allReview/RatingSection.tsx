@@ -28,7 +28,7 @@ export default function RatingSection({ selectedGenre }: RatingSectionProps) {
         <div className="flex flex-col items-center justify-center gap-2">
           <p className="flex gap-1">
             <span className="text-2xl font-semibold">
-              {ratingsData.averageScore}
+              {ratingsData.averageScore.toFixed(1)}
             </span>
             <span className="text-2xl font-semibold text-gray-400">/5</span>
           </p>
