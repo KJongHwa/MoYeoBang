@@ -1,40 +1,23 @@
 'use client';
 
 import Image from 'next/image';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import usePagination from '@/hooks/usePagination';
+import { QueryProvider } from '@/components/@shared/QueryProvider';
 import Pagination from '@/components/@shared/Pagination';
 import GatheringSlot from '@/components/home/GatheringSlot';
-import { QueryProvider } from '@/components/@shared/QueryProvider';
 
 import { getGatheringsByRegistrationEnd } from '@/axios/gather/apis';
 
 export default function NearDeadlines() {
-  const {
-    data: gatherings,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: gatherings } = useSuspenseQuery({
     queryKey: ['gatherings/registrationEnd'],
     queryFn: getGatheringsByRegistrationEnd,
-    initialData: [],
   });
 
   const { currentItems, currentPage, handleNextPage, handlePrevPage } =
     usePagination(gatherings, 2);
-
-  if (isLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="flex h-dvh items-center justify-center">에러 발생!</div>
-    );
-  }
 
   return (
     <QueryProvider>
@@ -62,19 +45,25 @@ export default function NearDeadlines() {
                 className="mt-auto hidden max-h-full md:block xl:hidden"
               />
             </div>
-            <div className="grid grid-cols-1 grid-rows-1 gap-3 md:grid-cols-2 md:gap-7">
-              {currentItems.map((gathering: any) => (
-                <GatheringSlot
-                  key={gathering.gatheringId}
-                  gatheringId={gathering.gatheringId}
-                  registrationEnd={gathering.registrationEnd}
-                  name={gathering.name}
-                  capacity={gathering.capacity}
-                  participantCount={gathering.participantCount}
-                  image={gathering.image}
-                />
-              ))}
-            </div>
+            {currentItems.length > 0 ? (
+              <div className="grid grid-cols-1 grid-rows-1 gap-3 md:grid-cols-2 md:gap-7">
+                {currentItems.map((gathering: any) => (
+                  <GatheringSlot
+                    key={gathering.gatheringId}
+                    gatheringId={gathering.gatheringId}
+                    registrationEnd={gathering.registrationEnd}
+                    name={gathering.name}
+                    capacity={gathering.capacity}
+                    participantCount={gathering.participantCount}
+                    image={gathering.image}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="mb-6 mt-12 flex flex-1 items-center justify-center text-default-tertiary md:mb-20 md:mt-16 xl:my-0">
+                마감 임박 모임을 불러오지 못했어요.
+              </div>
+            )}
           </div>
           <div className="ml-auto mt-2 max-h-[109px] max-w-[153px] md:hidden">
             <Image

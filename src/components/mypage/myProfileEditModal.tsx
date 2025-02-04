@@ -34,8 +34,6 @@ export default function MyProfileEditModal({
 
   const closeModalhandler = () => {
     setIsModal(false);
-    setImg(null);
-    setUpdatedNickname(nickname);
   };
 
   const isModified =
@@ -87,6 +85,7 @@ export default function MyProfileEditModal({
       });
       handleSuccess('프로필이 성공적으로 업데이트되었습니다.');
       onProfileUpdate(updatedNickname, uploadedImageUrl);
+      setUpdatedNickname(updatedNickname);
       closeModalhandler();
     } catch (error) {
       handleError('프로필 업데이트 중 오류가 발생했습니다.');

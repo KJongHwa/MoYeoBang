@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { DropdownOption } from './SelectLocationDropdown';
+import { DropdownOption } from './Dropdown';
 
 interface SortDropdownProps {
   sortList: DropdownOption[];
