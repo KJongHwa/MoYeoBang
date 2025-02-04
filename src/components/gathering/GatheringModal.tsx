@@ -176,6 +176,7 @@ export default function GatheringModal({
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['gatherings'] });
+      queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
     },
     onError: (error: any) => {
       console.error('updateGathering Error:', error);

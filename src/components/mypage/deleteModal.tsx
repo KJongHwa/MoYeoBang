@@ -3,9 +3,10 @@ import Button from '@/components/@shared/button/Button';
 import { deleteMyCreateGathering } from '@/axios/mypage/api';
 import useToast from '@/hooks/useToast';
 import Toast from '../@shared/Toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface DeleteModalProps {
-  id: number;
+  id: number; //리뷰 삭제 할때는 reviewId, 모임 예약 취소 또는 내가 만든 모임 삭제 할때는 gatheringId
   isModal: boolean;
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
   classification: string;
@@ -17,11 +18,14 @@ export default function DeleteModal({
   setIsModal,
   classification,
 }: DeleteModalProps) {
+  const queryClient = useQueryClient();
   const { toastMessage, toastVisible, toastType, handleError, handleSuccess } =
     useToast();
+
   const closeModalhandler = () => {
     setIsModal(false);
   };
+
   const getActionText = (type: string) => {
     switch (type) {
       case 'cancel':
@@ -32,17 +36,22 @@ export default function DeleteModal({
         return '리뷰 삭제';
     }
   };
-  const handleMyCreateGatheringDelete = async () => {
-    try {
-      deleteMyCreateGathering(id);
-      console.log('모임 삭제');
+
+  const { mutate: deleteGathering } = useMutation({
+    mutationFn: async (gatheringId: number) =>
+      deleteMyCreateGathering(gatheringId),
+    onSuccess: () => {
       handleSuccess('모임이 삭제 되었습니다!');
       closeModalhandler();
-    } catch (error) {
-      console.log(error);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
+    },
+    onError: (error: any) => {
+      console.log('delete MyCreateGathering:', error);
       handleError('모임 삭제중 에러가 발생하였습니다!');
-    }
-  };
+    },
+  });
 
   return (
     <Modal
@@ -69,7 +78,7 @@ export default function DeleteModal({
             className="w-full"
             onClick={() => {
               if (classification === 'gathering_delete') {
-                handleMyCreateGatheringDelete();
+                deleteGathering(id);
               } else {
                 handleError('아직 구현되지 않은 기능입니다!');
               }
