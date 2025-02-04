@@ -39,6 +39,12 @@ export default function GatheringMainSection({
     low: { src: '/icons/graph_low.svg', alt: '초급 난이도 아이콘' },
   };
 
+  const levelLabels = {
+    high: '고급',
+    middle: '중급',
+    low: '초급',
+  } as const;
+
   return (
     <div className="flex gap-6">
       <section className="flex-1">
@@ -59,7 +65,7 @@ export default function GatheringMainSection({
               shape="round"
               icon={level as keyof typeof levelIcons}
             >
-              {level === 'high' ? '고급' : level === 'middle' ? '중급' : '초급'}
+              {levelLabels[level as keyof typeof levelLabels]}
             </GatheringBadge>
             <GatheringBadge shape="round">{locationLabel}</GatheringBadge>
             <GatheringBadge shape="round">

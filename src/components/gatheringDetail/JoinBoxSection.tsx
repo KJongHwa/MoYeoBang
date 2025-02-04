@@ -90,7 +90,7 @@ export default function JoinBoxSection({
 
             {/* 버튼 영역 */}
             <div className="mx-[17px] flex items-center justify-between gap-4 py-4 min-[420px]:mx-[104px]">
-              <button
+              <Button
                 onClick={toggleExpand}
                 className="flex h-11 items-center justify-center rounded-lg p-2"
                 aria-label={isExpanded ? '접기' : '펼치기'}
@@ -104,7 +104,7 @@ export default function JoinBoxSection({
                     isExpanded ? 'rotate-180' : ''
                   }`}
                 />
-              </button>
+              </Button>
 
               <div className="flex-1">
                 <Button
