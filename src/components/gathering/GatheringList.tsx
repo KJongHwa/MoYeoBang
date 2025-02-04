@@ -1,17 +1,14 @@
 'use client';
 
-import { useState, Suspense, useEffect } from 'react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
-import type {
-  GatheringDto,
-  GatheringFilters,
-  GatheringUrlParams,
-} from '@/types/gathering.types';
+import type { GatheringDto } from '@/types/gathering.types';
 import { getGatherings } from '@/axios/gather/apis';
 import { sortList } from '@/constants/sortList';
 import { INIT_GATHRING } from '@/constants/initialValues';
 import { QueryProvider } from '@/components/@shared/QueryProvider';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 
 import EmptyElement from '@/components/@shared/EmptyElement';
 import GatheringCard from '@/components/gathering/GatheringCard';
@@ -22,33 +19,60 @@ import SortDropdown from '@/components/@shared/dropdown/SortDropdown';
 import GenreFilter from '@/components/@shared/GenreFilter';
 
 export default function GatheringList() {
-  const [selectedSort, setSelectedSort] =
-    useState<GatheringUrlParams['sortBy']>('dateTime');
-  const [filters, setFilters] = useState<GatheringFilters>(
-    INIT_GATHRING.FILTER
-  );
+  const [selectedSort, setSelectedSort] = useState('dateTime');
+  const [filters, setFilters] = useState(INIT_GATHRING.FILTER);
 
-  const { data: gatherings } = useSuspenseQuery({
+  const {
+    data: gatherings,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useSuspenseInfiniteQuery({
     queryKey: ['gatherings', filters, selectedSort],
-    queryFn: () =>
-      getGatherings({
-        limit: 20,
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await getGatherings({
+        limit: 10,
         sortOrder: 'asc',
         sortBy: selectedSort,
         level: filters.level,
         location: filters.location,
         genre: filters.genre,
         date: filters.date,
-      }),
+        offset: pageParam,
+      });
+
+      return response;
+    },
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      // 추가 데이터 요청 여부 판별
+      if (!lastPage || lastPage.length < 10) return undefined;
+
+      // offset이 page처럼 동작, 1씩 증가하도록 설정
+      return lastPageParam + 1;
+    },
+    initialPageParam: 0,
   });
 
-  const handleFilterChange = (key: string, value: string) => {
+  const allGatherings = gatherings.pages.flat();
+
+  const handleFilterChange = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
+    fetchNextPage();
   };
 
-  const onSortingChange = (sortOption: GatheringUrlParams['sortBy']) => {
+  const onSortingChange = (sortOption: string) => {
     setSelectedSort(sortOption);
+    fetchNextPage();
   };
+
+  // 추가 데이터 요청 함수
+  const loadMore = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const { targetRef } = useInfiniteScroll(loadMore, hasNextPage);
 
   return (
     <QueryProvider>
@@ -84,9 +108,10 @@ export default function GatheringList() {
           </div>
         </div>
       </section>
-      {gatherings.length > 0 ? (
+
+      {allGatherings.length > 0 ? (
         <section className="mx-auto grid h-full w-full grid-cols-1 gap-3 text-white xl:grid-cols-2">
-          {gatherings.map((gathering: GatheringDto['get']) => (
+          {allGatherings.map((gathering: GatheringDto['get']) => (
             <GatheringCard key={gathering.gatheringId} {...gathering} />
           ))}
         </section>
@@ -97,6 +122,7 @@ export default function GatheringList() {
           지금 바로 모임을 만들어보세요
         </EmptyElement>
       )}
+      <div ref={targetRef} style={{ height: '1px' }} />
     </QueryProvider>
   );
 }
