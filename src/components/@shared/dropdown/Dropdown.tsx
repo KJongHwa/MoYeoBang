@@ -61,7 +61,7 @@ export default function Dropdown({
           'gap-[2px]'
         )}
       >
-        <span className="flex-1 text-sm font-medium text-white">
+        <span className="flex-1 text-xs font-medium text-white md:text-sm">
           {selectedOption.label}
         </span>
         <Image
@@ -92,7 +92,8 @@ export default function Dropdown({
                 type="button"
                 onClick={() => handleSelect(option)}
                 className={clsx(
-                  'w-full cursor-pointer px-4 py-2 text-left text-sm',
+                  'w-full cursor-pointer px-4 py-2 text-left',
+                  'text-xs md:text-sm',
                   'text-white hover:bg-[#4A4A52]',
                   'transition-colors duration-150'
                 )}
