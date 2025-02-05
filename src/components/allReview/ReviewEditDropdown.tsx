@@ -35,7 +35,7 @@ export default function ReviewEditDropdown({
   return (
     <div className="absolute right-[25px]">
       <Image
-        src="/see_more_icon.png"
+        src="/icons/see_more_icon.svg"
         width={24}
         height={24}
         alt="드롭다운 클릭 버튼"
