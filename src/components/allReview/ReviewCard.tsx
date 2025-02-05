@@ -2,7 +2,6 @@ import { ReviewDto } from '@/types/review.types';
 import { yearMonthDay } from '@/utils/dateUtils';
 import Image from 'next/image';
 import Rating from '@/components/@shared/rating/Rating';
-import ReviewEditDropdown from '@/components/allReview/ReviewEditDropdown';
 
 export default function ReviewCard({
   score,
@@ -19,6 +18,7 @@ export default function ReviewCard({
           alt={Gathering.themeName}
           fill
           quality={100}
+          priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="rounded-t-[20px] md:rounded-l-[20px] md:rounded-r-[0px]"
         />
@@ -47,7 +47,6 @@ export default function ReviewCard({
             {yearMonthDay(createdAt)}
           </p>
         </div>
-        <ReviewEditDropdown score={score} comment={comment} />
       </div>
     </article>
   );
