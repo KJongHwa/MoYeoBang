@@ -42,7 +42,7 @@ export default function DeleteModal({
         return '리뷰 삭제';
     }
   };
-
+  // 내가 만든 모임 삭제
   const { mutate: deleteGathering } = useMutation({
     mutationFn: async (gatheringId: number) =>
       deleteMyCreateGathering(gatheringId),
@@ -59,6 +59,7 @@ export default function DeleteModal({
     },
   });
 
+  // 내가 쓴 리뷰 삭제
   const { mutate: deleteReview } = useMutation({
     mutationFn: async (reviewId: number) => deleteGatheringReview(reviewId),
     onSuccess: () => {
@@ -75,6 +76,7 @@ export default function DeleteModal({
     },
   });
 
+  // 모임 참여 취소
   const { mutate: deleteCancelGathering } = useMutation({
     mutationFn: async (gatheringId: number) =>
       deleteParticipantGathering(gatheringId),
@@ -117,8 +119,7 @@ export default function DeleteModal({
             onClick={() => {
               if (classification === 'gathering_delete') {
                 deleteGathering(id);
-              }
-              if (classification === 'review_delete') {
+              } else if (classification === 'review_delete') {
                 deleteReview(id);
               } else {
                 handleError('아직 구현되지 않은 기능입니다!');
