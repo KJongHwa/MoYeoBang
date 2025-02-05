@@ -29,6 +29,7 @@ export default function MyGathering() {
     <div className="flex flex-col gap-5">
       {myJoinedGatherings.map((gathering: any) => (
         <MyGatheringCard
+          gatheringId={gathering.gatheringId}
           key={gathering.gatheringId}
           image={gathering.image}
           isCanceled={gathering.isCanceled}

@@ -26,7 +26,11 @@ export default function MyCreateGathering() {
   return (
     <div className="flex flex-col gap-5">
       {myCreateGatherings.map((gathering: any) => (
-        <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
+        <MyGatheringCard
+          key={gathering.gatheringId}
+          image={gathering.image}
+          gatheringId={gathering.gatheringId}
+        >
           <MyCreateGatheringDetail
             location={gathering.location}
             dateTime={gathering.dateTime}

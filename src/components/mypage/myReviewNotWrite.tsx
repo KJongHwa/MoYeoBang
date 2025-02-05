@@ -29,6 +29,7 @@ export default function MyReviewNotWrite() {
         <MyGatheringCard
           key={notWriteMyReview.gatheringId}
           image={notWriteMyReview.image}
+          gatheringId={notWriteMyReview.gatheringId}
         >
           <MyReviewNotWriteDetail
             gatheringId={notWriteMyReview.gatheringId}
