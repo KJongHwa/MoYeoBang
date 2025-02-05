@@ -10,6 +10,7 @@ import { locationList } from '@/constants/themeList';
 import DeleteModal from '../deleteModal';
 
 interface MyGatheringDetailProps {
+  gatheringId: number;
   location: string;
   dateTime: string;
   name: string;
@@ -20,6 +21,7 @@ interface MyGatheringDetailProps {
 }
 
 export default function MyGatheringDetail({
+  gatheringId,
   location,
   dateTime,
   name,
@@ -63,10 +65,10 @@ export default function MyGatheringDetail({
       </div>
       <div className="flex flex-col gap-[1px]">
         <p className="text-[18px] font-semibold">{name}</p>
-        <p className="text-secondary-40 text-[14px] font-light">{themeName}</p>
+        <p className="text-[14px] font-light text-secondary-40">{themeName}</p>
       </div>
       <div className="flex flex-col gap-1">
-        <div className="text-text-secondary flex items-center gap-1 text-[10px] md:text-sm">
+        <div className="flex items-center gap-1 text-[10px] text-text-secondary md:text-sm">
           <p>{formatDate(dateTime)}</p>
           <p>.</p>
           <Image
@@ -83,15 +85,16 @@ export default function MyGatheringDetail({
             padding="10"
             fontSize="14"
             onClick={openDeleteModal}
-            className="bg-secondary-70 border-secondary-80 absolute right-4"
+            className="absolute right-4 border-secondary-80 bg-secondary-70"
             disabled={isCanceled}
           >
             예약취소하기
           </Button>
           <DeleteModal
+            id={gatheringId}
             isModal={isDeleteModal}
             setIsModal={closeDeleteModal}
-            classification="cancel"
+            classification="gathering_cancel"
           />
         </div>
       </div>
