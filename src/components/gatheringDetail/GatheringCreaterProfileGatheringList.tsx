@@ -17,6 +17,7 @@ export default function GatheringCreaterProfileGatheringList({
       {createrGatheringList.map((gathering: any) => (
         <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
           <MyCreateGatheringDetail
+            gatheringId={gathering.gatheringId}
             location={gathering.location}
             dateTime={gathering.dateTime}
             name={gathering.name}
