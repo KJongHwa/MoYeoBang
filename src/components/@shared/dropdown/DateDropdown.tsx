@@ -5,6 +5,7 @@ import { useCalendar } from '@/hooks/useCalendar';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import CustomCalendar from '@/components/@shared/calendar/CustomCalendar';
+import { slashYearMonthDay } from '@/utils/dateUtils';
 
 interface DateDropdownProps {
   onDateChange(date: string): void;
@@ -57,7 +58,7 @@ export default function DateDropdown({
         )}
       >
         <p className="flex-1 text-xs font-medium text-text-tertiary md:text-sm">
-          {selectedDate || date || '날짜'}
+          {slashYearMonthDay(selectedDate) || slashYearMonthDay(date) || '날짜'}
         </p>
         <Image
           src="/icons/chevron-down.svg"
