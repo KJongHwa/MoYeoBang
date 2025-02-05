@@ -76,6 +76,14 @@ export const getMyGatheringJoined = async ({
   return response.data ?? [];
 };
 
+// 모임 참여 취소 Delete
+export const deleteParticipantGathering = async (gatheringId: number) => {
+  const response = await authAxiosInstance.delete(
+    `${API_PATH.gathering.participant(gatheringId)}`
+  );
+  return response.data ?? [];
+};
+
 // 내가 만든 모임 Delete
 export const deleteMyCreateGathering = async (gatheringId: number) => {
   const response = await authAxiosInstance.delete(

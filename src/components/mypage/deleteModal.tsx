@@ -3,6 +3,7 @@ import Button from '@/components/@shared/button/Button';
 import {
   deleteGatheringReview,
   deleteMyCreateGathering,
+  deleteParticipantGathering,
 } from '@/axios/mypage/api';
 import useToast from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -29,9 +30,11 @@ export default function DeleteModal({
     setIsModal(false);
   };
 
+  // eslint-disable-next-line consistent-return
   const getActionText = (type: string) => {
+    // eslint-disable-next-line default-case
     switch (type) {
-      case 'cancel':
+      case 'gathering_cancel':
         return '모임 취소';
       case 'gathering_delete':
         return '모임 삭제';
@@ -69,6 +72,22 @@ export default function DeleteModal({
     onError: (error: any) => {
       console.log('delete MyReview:', error);
       handleError('리뷰 삭제 중 에러가 발생하였습니다!');
+    },
+  });
+
+  const { mutate: deleteCancelGathering } = useMutation({
+    mutationFn: async (gatheringId: number) =>
+      deleteParticipantGathering(gatheringId),
+    onSuccess: () => {
+      handleSuccess('참여가 취소 되었습니다');
+      closeModalhandler();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
+    },
+    onError: (error: any) => {
+      console.log('delete cancel Gathering:', error);
+      handleError('모임 참여 취소 중 에러가 발생하였습니다!');
     },
   });
 

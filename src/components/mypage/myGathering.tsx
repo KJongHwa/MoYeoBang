@@ -34,6 +34,7 @@ export default function MyGathering() {
           isCanceled={gathering.isCanceled}
         >
           <MyGatheringDetail
+            gatheringId={gathering.gatheringId}
             location={gathering.location}
             dateTime={gathering.dateTime}
             name={gathering.name}
