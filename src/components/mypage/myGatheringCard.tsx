@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -15,6 +16,13 @@ export default function MyGatheringCard({
   isCanceled,
   gatheringId,
 }: MyGatheringCardProps) {
+  const [isError, setIsError] = useState(false);
+  const [imgSrc, setImgSrc] = useState(image);
+
+  const handleError = () => {
+    setIsError(true);
+    setImgSrc('/images/theme_default.png');
+  };
   return (
     <figure className="relative flex w-full flex-col gap-2 rounded-2xl bg-default-tertiary md:max-h-[170px] md:flex-row">
       {isCanceled && (
@@ -32,12 +40,13 @@ export default function MyGatheringCard({
       >
         <Link href={`/gathering/${gatheringId}`}>
           <Image
-            src={image}
+            src={imgSrc}
             alt="방탈출 테마 이미지"
             width={240}
             height={170}
             quality={100}
-            className="w-full rounded-t-2xl bg-default-tertiary md:max-h-[170px] md:w-60 md:rounded-l-2xl md:rounded-r-none"
+            onError={handleError}
+            className="w-full rounded-t-2xl bg-default-tertiary md:h-[170px] md:w-60 md:rounded-l-2xl md:rounded-r-none"
           />
         </Link>
       </div>
