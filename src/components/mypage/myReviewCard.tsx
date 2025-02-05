@@ -95,7 +95,7 @@ export default function MyReviewCard({
         id={reviewId}
         isModal={isDeleteModal}
         setIsModal={closeDeleteModal}
-        classification="delete"
+        classification="review_delete"
       />
     </article>
   );

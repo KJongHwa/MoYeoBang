@@ -140,7 +140,6 @@ export default function MyReviewModal({
                 writeReview(submissionData);
                 // 리뷰 수정
               } else {
-                console.log(id);
                 editReview({
                   reviewId: id,
                   score: updatedScore,

@@ -1,6 +1,9 @@
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/button/Button';
-import { deleteMyCreateGathering } from '@/axios/mypage/api';
+import {
+  deleteGatheringReview,
+  deleteMyCreateGathering,
+} from '@/axios/mypage/api';
 import useToast from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Toast from '../@shared/Toast';
@@ -32,7 +35,7 @@ export default function DeleteModal({
         return '모임 취소';
       case 'gathering_delete':
         return '모임 삭제';
-      default:
+      case 'review_delete':
         return '리뷰 삭제';
     }
   };
@@ -49,7 +52,23 @@ export default function DeleteModal({
     },
     onError: (error: any) => {
       console.log('delete MyCreateGathering:', error);
-      handleError('모임 삭제중 에러가 발생하였습니다!');
+      handleError('모임 삭제 중 에러가 발생하였습니다!');
+    },
+  });
+
+  const { mutate: deleteReview } = useMutation({
+    mutationFn: async (reviewId: number) => deleteGatheringReview(reviewId),
+    onSuccess: () => {
+      handleSuccess('리뷰가 삭제 되었습니다!');
+      closeModalhandler();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['myReviews', false] });
+      queryClient.invalidateQueries({ queryKey: ['myReviews', true] });
+    },
+    onError: (error: any) => {
+      console.log('delete MyReview:', error);
+      handleError('리뷰 삭제 중 에러가 발생하였습니다!');
     },
   });
 
@@ -79,6 +98,9 @@ export default function DeleteModal({
             onClick={() => {
               if (classification === 'gathering_delete') {
                 deleteGathering(id);
+              }
+              if (classification === 'review_delete') {
+                deleteReview(id);
               } else {
                 handleError('아직 구현되지 않은 기능입니다!');
               }
