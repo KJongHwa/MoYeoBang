@@ -7,7 +7,8 @@ type ButtonProps = {
     | 'secondary'
     | 'tertiary'
     | 'tertiary-gray'
-    | 'grayscale';
+    | 'grayscale'
+    | 'icon';
   type?: 'button' | 'submit' | 'reset';
   padding?: '12' | '10' | '8';
   fontSize?: '16' | '14';
@@ -59,6 +60,7 @@ export default function Button({
       'border-[1px] border-status-disabled text-status-disabled':
         disabled && (variant === 'tertiary' || variant === 'tertiary-gray'),
       'bg-secondary-60 text-text-default': disabled && variant === 'grayscale',
+      'border-0 bg-transparent p-0 hover:text-primary-40': variant === 'icon',
       'text-base': fontSize === '16',
       'text-sm': fontSize === '14',
       'font-semibold': fontWeight === '600',
@@ -66,15 +68,18 @@ export default function Button({
       'p-3':
         padding === '12' &&
         variant !== 'tertiary' &&
-        variant !== 'tertiary-gray',
+        variant !== 'tertiary-gray' &&
+        variant !== 'icon',
       'px-4 py-[10px]':
         padding === '10' &&
         variant !== 'tertiary' &&
-        variant !== 'tertiary-gray',
+        variant !== 'tertiary-gray' &&
+        variant !== 'icon',
       'p-2':
         padding === '8' &&
         variant !== 'tertiary' &&
-        variant !== 'tertiary-gray',
+        variant !== 'tertiary-gray' &&
+        variant !== 'icon',
       'p-[11px]':
         padding === '12' &&
         (variant === 'tertiary' || variant === 'tertiary-gray'),
