@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import SkeletonCardList from '@/components/@shared/skeleton/SkeletonCardList';
 import SkeletonSlotList from '@/components/@shared/skeleton/SkeletonSlotList';
-import Carousel from '@/components/home/Carousel';
+import Carousel from '@/components/home/UI/Carousel';
 import Links from '@/components/home/Links';
 import LinkButton from '@/components/@shared/button/LinkButton';
 import NearFullCapacities from '@/components/home/NearFullCapacities';

@@ -6,7 +6,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import usePagination from '@/hooks/usePagination';
 import { QueryProvider } from '@/components/@shared/QueryProvider';
 import Pagination from '@/components/@shared/Pagination';
-import GatheringSlot from '@/components/home/GatheringSlot';
+import GatheringSlot from '@/components/home/UI/GatheringSlot';
 
 import { getGatheringsByRegistrationEnd } from '@/axios/gather/apis';
 
