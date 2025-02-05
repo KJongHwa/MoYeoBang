@@ -17,6 +17,7 @@ interface MyCreateGatheringDetailProps {
   themeName: string;
   capacity: string;
   participantCount: string;
+  gatheringId: number;
 }
 
 export default function MyCreateGatheringDetail({
@@ -26,6 +27,7 @@ export default function MyCreateGatheringDetail({
   themeName,
   capacity,
   participantCount,
+  gatheringId,
 }: MyCreateGatheringDetailProps) {
   const {
     isOpen: isDeleteModal,
@@ -47,7 +49,7 @@ export default function MyCreateGatheringDetail({
 
   const liDropdowns = [
     { label: '수정하기', clickHandler: openGatheringEditModal },
-    { label: '모임취소', clickHandler: openDeleteModal },
+    { label: '모임삭제', clickHandler: openDeleteModal },
   ];
 
   return (
@@ -78,11 +80,11 @@ export default function MyCreateGatheringDetail({
         </div>
         <div className="flex flex-col gap-[1px]">
           <p className="text-[18px] font-semibold">{name}</p>
-          <p className="text-secondary-40 text-[14px] font-light">
+          <p className="text-[14px] font-light text-secondary-40">
             {themeName}
           </p>
         </div>
-        <div className="text-text-secondary flex items-center gap-1 text-[10px] md:text-sm">
+        <div className="flex items-center gap-1 text-[10px] text-text-secondary md:text-sm">
           <p>{formatDate(dateTime)}</p>
           <p>.</p>
           <Image
@@ -107,7 +109,7 @@ export default function MyCreateGatheringDetail({
           />
         </button>
         {isMenuOpen && (
-          <ul className="bg-secondary-80 absolute -right-2 z-50 mt-2 w-32 rounded-md shadow-md md:-right-16">
+          <ul className="absolute -right-2 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md md:-right-16">
             {liDropdowns.map((liDropdown) => (
               <li key={liDropdown.label}>
                 <button
@@ -116,7 +118,7 @@ export default function MyCreateGatheringDetail({
                     closeDropdown();
                   }}
                   type="button"
-                  className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
+                  className="w-full rounded-md px-4 py-2 text-left hover:bg-secondary-60"
                 >
                   {liDropdown.label}
                 </button>
@@ -129,11 +131,14 @@ export default function MyCreateGatheringDetail({
       <GatheringModal
         isOpen={isGatheringEditModal}
         onClose={closeGatheringEditModal}
+        gatheringId={gatheringId}
+        isEdit
       />
       <DeleteModal
         isModal={isDeleteModal}
         setIsModal={closeDeleteModal}
-        classification="cancel"
+        classification="gathering_delete"
+        id={gatheringId}
       />
     </div>
   );
