@@ -12,21 +12,24 @@ export default function HeaderTitle({
   order,
 }: HeaderTitleProps) {
   return (
-    <header className="flex flex-col gap-2">
-      <h1
-        className={clsx('text-2xl font-semibold', {
-          'order-2': order === 'inverse',
-        })}
-      >
-        {title}
-      </h1>
-      <p
-        className={clsx('text-sm font-medium', {
-          'order-1': order === 'inverse',
-        })}
-      >
-        {content}
-      </p>
-    </header>
+    <>
+      <title>{title}</title>
+      <header className="flex flex-col gap-2">
+        <h1
+          className={clsx('text-2xl font-semibold', {
+            'order-2': order === 'inverse',
+          })}
+        >
+          {title}
+        </h1>
+        <p
+          className={clsx('text-sm font-medium', {
+            'order-1': order === 'inverse',
+          })}
+        >
+          {content}
+        </p>
+      </header>
+    </>
   );
 }

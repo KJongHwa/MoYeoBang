@@ -31,7 +31,6 @@
 //     { label: '수정하기', clickHandler: openEditModalHandler },
 //     { label: '삭제하기', clickHandler: openDeleteModalHandler },
 //   ];
-
 //   return (
 //     <div className="absolute right-[25px]">
 //       <Image

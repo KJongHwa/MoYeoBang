@@ -111,9 +111,7 @@ export default function Dropdown({
           className
         )}
       >
-        <span
-          className={`${icon !== '/icons/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-xs font-medium text-secondary-40 md:text-sm`}
-        >
+        <span className="flex-1 text-xs font-medium text-white md:text-sm">
           {selectedOption.label}
         </span>
         <Image
@@ -144,8 +142,9 @@ export default function Dropdown({
                 type="button"
                 onClick={() => handleSelect(option)}
                 className={clsx(
-                  'w-full cursor-pointer px-4 py-2 text-left text-xs md:text-sm',
-                  'text-white-lg rounded-[9px] hover:rounded-[9px] hover:bg-default-primary',
+                  'w-full cursor-pointer px-4 py-2 text-left',
+                  'text-xs md:text-sm',
+                  'text-white hover:bg-[#4A4A52]',
                   'transition-colors duration-150'
                 )}
               >
