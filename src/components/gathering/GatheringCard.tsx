@@ -6,6 +6,7 @@ import UserIcon from '@/public/icons/user.svg';
 import { formatDate, extractHour, isToday } from '@/utils/dateUtils';
 import { findLabelByValue } from '@/utils/mappingUtils';
 import ProgressBar from '@/components/@shared/ProgressBar';
+import CardMotion from '@/components/@shared/animation/CardMotion';
 import { GatheringProps } from '@/types/gathering.types';
 import { locationList, levelToKorean } from '@/constants/themeList';
 
@@ -35,7 +36,7 @@ export default function GatheringCard({
   };
 
   return (
-    <figure className="relative">
+    <CardMotion className="relative">
       <Link href={`/gathering/${gatheringId}`}>
         <div className="flex max-h-28 w-full rounded-xl bg-default-tertiary md:max-h-[170px]">
           {isRegistrationEndToday && (
@@ -97,6 +98,6 @@ export default function GatheringCard({
         </div>
       </Link>
       <PuzzleButton gatheringId={gatheringId} />
-    </figure>
+    </CardMotion>
   );
 }
