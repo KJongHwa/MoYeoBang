@@ -43,22 +43,28 @@ export default function JoinBoxSection({
   const { mutate: participate } = useMutation({
     mutationFn: () => participateGathering(gatheringId),
     onSuccess: () => {
-      setParticipantCount((prev) => prev + 1);
+      queryClient.setQueryData(
+        ['gathering-detail', gatheringId],
+        (oldData: any) => ({
+          ...oldData,
+          participantCount: oldData.participantCount + 1,
+        })
+      );
       setIsParticipating(true);
-      queryClient.invalidateQueries({
-        queryKey: ['gathering-detail', gatheringId],
-      });
     },
   });
 
   const { mutate: cancel } = useMutation({
     mutationFn: () => cancelParticipation(gatheringId),
     onSuccess: () => {
-      setParticipantCount((prev) => prev - 1);
+      queryClient.setQueryData(
+        ['gathering-detail', gatheringId],
+        (oldData: any) => ({
+          ...oldData,
+          participantCount: oldData.participantCount - 1,
+        })
+      );
       setIsParticipating(false);
-      queryClient.invalidateQueries({
-        queryKey: ['gathering-detail', gatheringId],
-      });
     },
   });
 
