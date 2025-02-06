@@ -153,7 +153,9 @@ export default function GatheringModal({
       postGathering(submissionData),
     onSuccess: () => {
       handleSuccess('모임이 생성되었습니다!');
-      onClose();
+      setTimeout(() => {
+        onClose();
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['gatherings'] });
@@ -202,6 +204,7 @@ export default function GatheringModal({
       dateTime: isoDateTime,
       registrationEnd: isoRegistrationEnd,
     };
+
     if (isEdit) {
       // 모임 수정
       await updateGathering(submissionData);
