@@ -1,14 +1,16 @@
 import { UseReviews } from '@/hooks/useReviews';
 import MyReviewCard from './myReviewCard';
 import EmptyElement from '../@shared/EmptyElement';
+import Spinner from '../@shared/Spinner';
 
 export default function MyReviewWrite() {
   const { data: writeMyReviews, isLoading: isWriteMyReviewsLoading } =
     UseReviews({ reviewed: true });
   if (isWriteMyReviewsLoading) {
     return (
-      // 추후 loading 스피너로 구현
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
+      <div className="flex h-dvh items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 

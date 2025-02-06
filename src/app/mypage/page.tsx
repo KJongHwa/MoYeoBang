@@ -9,6 +9,7 @@ import { updateMyProfile } from '@/axios/mypage/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { UseReviews } from '@/hooks/useReviews';
+import Spinner from '@/components/@shared/Spinner';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import MyGathering from '../../components/mypage/myGathering';
@@ -76,7 +77,9 @@ export default function MyPage() {
 
   if (isUserLoading || isReviewLoading) {
     return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
+      <div className="flex h-dvh items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 
