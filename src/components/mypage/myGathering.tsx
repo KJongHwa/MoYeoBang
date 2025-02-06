@@ -2,6 +2,7 @@ import { useUserGatherings } from '@/hooks/useUserGatherings';
 import MyGatheringCard from './myGatheringCard';
 import MyGatheringDetail from './myGatheringCard/myGatheringDetail';
 import EmptyElement from '../@shared/EmptyElement';
+import Spinner from '../@shared/Spinner';
 
 export default function MyGathering() {
   const { data: myJoinedGatherings, isLoading: isJoinedLoading } =
@@ -10,7 +11,9 @@ export default function MyGathering() {
   if (isJoinedLoading) {
     return (
       // 추후 loading 스피너로 구현
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
+      <div className="flex h-dvh items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 
@@ -29,6 +32,7 @@ export default function MyGathering() {
     <div className="flex flex-col gap-5">
       {myJoinedGatherings.map((gathering: any) => (
         <MyGatheringCard
+          gatheringId={gathering.gatheringId}
           key={gathering.gatheringId}
           image={gathering.image}
           isCanceled={gathering.isCanceled}

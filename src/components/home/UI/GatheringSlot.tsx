@@ -5,6 +5,7 @@ import UserIcon from '@/public/icons/user.svg';
 import { extractHour } from '@/utils/dateUtils';
 import { GatheringProps } from '@/types/gathering.types';
 
+import SlotMotion from '@/components/@shared/animation/SlotMotion';
 import AlarmBadge from '@/components/gathering/UI/AlarmBadge';
 import PuzzleButton from '@/components/gathering/PuzzleButton';
 
@@ -17,7 +18,7 @@ export default function GatheringSlot({
   image,
 }: GatheringProps['slot']) {
   return (
-    <figure className="relative col-span-1 row-span-1 max-h-80 w-full rounded-2xl bg-black md:max-h-96 xl:max-h-[317px] xl:max-w-[358px]">
+    <SlotMotion className="relative col-span-1 row-span-1 max-h-80 w-full rounded-2xl bg-black md:max-h-96 xl:max-h-[317px] xl:max-w-[358px]">
       <Link href={`/gathering/${gatheringId}`}>
         <AlarmBadge layout="slot" hour={extractHour(registrationEnd)} />
         <Image
@@ -39,6 +40,6 @@ export default function GatheringSlot({
         </p>
       </Link>
       <PuzzleButton layout="slot" gatheringId={gatheringId} />
-    </figure>
+    </SlotMotion>
   );
 }
