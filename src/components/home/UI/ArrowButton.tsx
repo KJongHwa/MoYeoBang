@@ -11,7 +11,7 @@ export default function ArrowButton({ onClick, type }: ArrowButtonProps) {
     <button
       type="button"
       className={clsx(
-        'absolute bottom-1/2 top-1/2 z-10 m-auto flex h-6 w-6 rounded-full bg-default-tertiary outline outline-2 outline-primary-5',
+        'absolute bottom-1/2 top-1/2 z-10 m-auto flex h-6 w-6 rounded-full bg-default-tertiary outline outline-2 outline-primary-0',
         {
           'right-5': type === 'next',
           'left-5': type === 'prev',

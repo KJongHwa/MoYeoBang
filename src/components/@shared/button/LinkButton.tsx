@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-
 import clsx from 'clsx';
 
 const arrowIcons = {
@@ -13,6 +12,7 @@ type LinkButtonProps = {
   type?: 'button' | 'submit' | 'reset';
   variant?: 'dark' | 'light';
   size?: 'long' | 'short';
+  shape?: 'round' | 'default';
   children: React.ReactNode;
 } & React.ComponentPropsWithoutRef<'button'>;
 
@@ -21,6 +21,7 @@ export default function LinkButton({
   href,
   variant = 'dark',
   size = 'long',
+  shape = 'round',
   children,
   disabled,
   ...props
@@ -33,12 +34,14 @@ export default function LinkButton({
         // eslint-disable-next-line react/button-has-type
         type={type}
         className={clsx(
-          'my-auto flex items-center justify-center gap-2 rounded-full py-[5px] text-xs font-semibold md:text-sm',
+          'my-auto flex items-center justify-center gap-2 py-[5px] text-xs font-semibold md:text-sm',
           {
             'bg-default-tertiary text-text-default': variant === 'dark',
             'bg-white text-default-tertiary': variant === 'light',
             'pl-7 pr-4 md:py-3 md:pl-8 md:pr-4': size === 'long',
             'pl-4 pr-2': size === 'short',
+            'rounded-full': shape === 'round',
+            'rounded-lg': shape === 'default',
           }
         )}
         disabled={disabled}
