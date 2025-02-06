@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import { useDropdown } from '@/hooks/useDropdown';
 import { useModal } from '@/hooks/useModal';
@@ -29,6 +30,13 @@ export default function MyReviewCard({
     openModal: openDeleteModal,
     closeModal: closeDeleteModal,
   } = useModal();
+  const [isError, setIsError] = useState(false);
+  const [imgSrc, setImgSrc] = useState(image);
+
+  const handleError = () => {
+    setIsError(true);
+    setImgSrc('/images/theme_default.png');
+  };
 
   const liDropdowns = [
     { label: '수정하기', clickHandler: openEditModal },
@@ -38,12 +46,13 @@ export default function MyReviewCard({
   return (
     <article className="relative flex w-full flex-col gap-2 rounded-xl bg-default-tertiary md:max-h-[200px] md:flex-row xl:max-h-[170px]">
       <Image
-        src={image}
+        src={imgSrc}
+        onError={handleError}
         alt={themeName}
         width={240}
         height={170}
         quality={100}
-        className="w-full rounded-t-xl bg-default-tertiary md:w-60 md:max-w-[192px] md:rounded-l-xl md:rounded-r-none"
+        className={`h-[343px] w-full rounded-t-xl bg-default-tertiary  md:h-[170px] md:w-60 md:max-w-[192px] md:rounded-l-xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
       />
 
       <div className="mx-4 my-5 flex flex-1 flex-col justify-between md:mx-6 md:my-5">
