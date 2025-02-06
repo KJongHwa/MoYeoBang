@@ -48,7 +48,9 @@ export default function DeleteModal({
       deleteMyCreateGathering(gatheringId),
     onSuccess: () => {
       handleSuccess('모임이 삭제 되었습니다!');
-      closeModalhandler();
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
@@ -64,7 +66,9 @@ export default function DeleteModal({
     mutationFn: async (reviewId: number) => deleteGatheringReview(reviewId),
     onSuccess: () => {
       handleSuccess('리뷰가 삭제 되었습니다!');
-      closeModalhandler();
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myReviews', false] });
@@ -82,7 +86,9 @@ export default function DeleteModal({
       deleteParticipantGathering(gatheringId),
     onSuccess: () => {
       handleSuccess('참여가 취소 되었습니다');
-      closeModalhandler();
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
