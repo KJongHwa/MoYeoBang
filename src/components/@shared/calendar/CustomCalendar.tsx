@@ -1,6 +1,6 @@
 'use client';
 
-import { hyphenYearMonthDay, slashYearMonthDay } from '@/utils/dateUtils';
+import { hyphenYearMonthDay } from '@/utils/dateUtils';
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import Button from '@/components/@shared/button/Button';
@@ -44,7 +44,9 @@ export default function CustomCalendar({
   };
 
   const handleSubmit = () => {
-    onDateChange(slashYearMonthDay(date));
+    if (date) {
+      onDateChange(date);
+    }
     onClose();
   };
 

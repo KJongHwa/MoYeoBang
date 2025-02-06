@@ -2,14 +2,16 @@ import { useUserGatherings } from '@/hooks/useUserGatherings';
 import MyGatheringCard from './myGatheringCard';
 import MyCreateGatheringDetail from './myGatheringCard/myCreateGatheringDetail';
 import EmptyElement from '../@shared/EmptyElement';
+import Spinner from '../@shared/Spinner';
 
 export default function MyCreateGathering() {
   const { data: myCreateGatherings, isLoading: isMyCreateGatheringsLoading } =
     useUserGatherings({ isHost: true });
   if (isMyCreateGatheringsLoading) {
     return (
-      // 추후 loading 스피너로 구현
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
+      <div className="flex h-dvh items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 
@@ -26,7 +28,11 @@ export default function MyCreateGathering() {
   return (
     <div className="flex flex-col gap-5">
       {myCreateGatherings.map((gathering: any) => (
-        <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
+        <MyGatheringCard
+          key={gathering.gatheringId}
+          image={gathering.image}
+          gatheringId={gathering.gatheringId}
+        >
           <MyCreateGatheringDetail
             location={gathering.location}
             dateTime={gathering.dateTime}
