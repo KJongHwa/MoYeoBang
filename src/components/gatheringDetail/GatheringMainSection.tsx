@@ -7,7 +7,6 @@ interface GatheringMainSectionProps {
   image: string;
   name: string;
   themeName: string;
-  synopsis: string;
   location: string;
   level: 'high' | 'middle' | 'low';
   dateTime: string;
@@ -17,7 +16,6 @@ export default function GatheringMainSection({
   image,
   name,
   themeName,
-  synopsis,
   location,
   level,
   dateTime,
@@ -26,10 +24,12 @@ export default function GatheringMainSection({
     locationList.find((item) => item.value === location)?.label || location;
 
   const handleLike = () => {
+    // eslint-disable-next-line no-console
     console.log('like clicked');
   };
 
   const handleShare = () => {
+    // eslint-disable-next-line no-console
     console.log('share clicked');
   };
 
@@ -111,18 +111,6 @@ export default function GatheringMainSection({
               alt="위치 아이콘"
             />
             <span className="text-white">{locationLabel}</span>
-          </div>
-
-          <div className="space-y-6">
-            <div className="flex items-baseline gap-4">
-              <h3 className="min-w-[100px] text-secondary-50">테마명</h3>
-              <span>{themeName}</span>
-            </div>
-
-            <div className="flex items-baseline gap-4">
-              <h3 className="min-w-[100px] text-secondary-50">시놉시스</h3>
-              <p className="whitespace-pre-line">{synopsis}</p>
-            </div>
           </div>
         </div>
       </section>
