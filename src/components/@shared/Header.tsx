@@ -9,8 +9,6 @@ import { useRouter } from 'next/navigation';
 import { authApi } from '@/axios/auth';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import clsx from 'clsx';
-import { useQuery } from '@tanstack/react-query';
-import { getMyProfile } from '@/axios/mypage/api';
 import Button from './button/Button';
 import HeaderNavBar from './HeaderNavbar';
 import Toast from './Toast';
@@ -53,7 +51,6 @@ export default function Header() {
   }, []);
 
   const { data: userProfile } = useUserProfile(!!isLoggedIn);
-  // console.log(userProfile);
 
   const handleMobileNav = () => {
     setMobileNav(!mobileNav);
