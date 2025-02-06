@@ -2,6 +2,7 @@ import Rating from '@/components/@shared/rating/Rating';
 import ProgressBar from '@/components/@shared/ProgressBar';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getReviewsRating } from '@/axios/allReview/apis';
+import Spinner from '../@shared/Spinner';
 
 interface RatingSectionProps {
   selectedGenre: string;
@@ -14,10 +15,7 @@ export default function RatingSection({ selectedGenre }: RatingSectionProps) {
     placeholderData: keepPreviousData,
   });
 
-  if (isLoading)
-    return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
-    );
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="flex h-[180px] items-center justify-center rounded-[20px] bg-secondary-80">

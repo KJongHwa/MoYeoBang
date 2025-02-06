@@ -1,6 +1,5 @@
 'use client';
 
-import { ErrorBoundary } from 'react-error-boundary';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { QueryProvider } from '@/components/@shared/QueryProvider';
