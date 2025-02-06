@@ -2,14 +2,16 @@ import { UseReviews } from '@/hooks/useReviews';
 import MyGatheringCard from './myGatheringCard';
 import MyReviewNotWriteDetail from './myGatheringCard/myReviewNotWriteDetail';
 import EmptyElement from '../@shared/EmptyElement';
+import Spinner from '../@shared/Spinner';
 
 export default function MyReviewNotWrite() {
   const { data: notWriteMyReviews, isLoading: isNotWriteMyReviewsLoading } =
     UseReviews({ reviewed: false });
   if (isNotWriteMyReviewsLoading) {
     return (
-      // 추후 loading 스피너로 구현
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
+      <div className="flex h-dvh items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 
@@ -29,6 +31,7 @@ export default function MyReviewNotWrite() {
         <MyGatheringCard
           key={notWriteMyReview.gatheringId}
           image={notWriteMyReview.image}
+          gatheringId={notWriteMyReview.gatheringId}
         >
           <MyReviewNotWriteDetail
             gatheringId={notWriteMyReview.gatheringId}

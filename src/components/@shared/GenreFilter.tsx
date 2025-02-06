@@ -14,7 +14,9 @@ export default function GenreFilter({
   };
 
   const buttonClass = (isSelected: boolean) =>
-    isSelected ? 'text-white customUnderline' : 'text-text-disabled';
+    isSelected
+      ? 'text-white customUnderline'
+      : 'text-text-disabled hover:text-secondary-30 customUnderlineHover';
 
   return (
     <ul className="scrollbar-hidden flex gap-3 overflow-y-hidden whitespace-nowrap text-lg font-semibold">

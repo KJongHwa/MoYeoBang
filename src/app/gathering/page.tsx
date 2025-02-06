@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import HeaderTitle from '@/components/@shared/HeaderTitle';
 import AddGatheringButton from '@/components/gathering/UI/AddGatheringButton';
 import GatheringList from '@/components/gathering/GatheringList';
+import Spinner from '@/components/@shared/Spinner';
 
 export default function Gathering() {
   return (
@@ -13,13 +14,7 @@ export default function Gathering() {
         order="inverse"
       />
       <main className="flex flex-col gap-10 md:gap-12 ">
-        <Suspense
-          fallback={
-            <div className="flex h-dvh items-center justify-center">
-              로딩 스피너
-            </div>
-          }
-        >
+        <Suspense fallback={<Spinner />}>
           <GatheringList />
         </Suspense>
         <AddGatheringButton />
