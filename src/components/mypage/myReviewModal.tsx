@@ -59,7 +59,7 @@ export default function MyReviewModal({
       handleSuccess('리뷰가 수정되었습니다!');
       setTimeout(() => {
         closeModalhandler();
-      }, 500);
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myReviews', true] });
@@ -78,7 +78,7 @@ export default function MyReviewModal({
       handleSuccess('리뷰를 작성했습니다!');
       setTimeout(() => {
         closeModalhandler();
-      }, 500);
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myReviews', false] });

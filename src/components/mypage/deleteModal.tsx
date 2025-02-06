@@ -50,7 +50,7 @@ export default function DeleteModal({
       handleSuccess('모임이 삭제 되었습니다!');
       setTimeout(() => {
         closeModalhandler();
-      }, 500);
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
@@ -68,7 +68,7 @@ export default function DeleteModal({
       handleSuccess('리뷰가 삭제 되었습니다!');
       setTimeout(() => {
         closeModalhandler();
-      }, 500);
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myReviews', false] });
@@ -88,7 +88,7 @@ export default function DeleteModal({
       handleSuccess('참여가 취소 되었습니다');
       setTimeout(() => {
         closeModalhandler();
-      }, 500);
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
