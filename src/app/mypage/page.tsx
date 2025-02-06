@@ -8,7 +8,7 @@ import { useModal } from '@/hooks/useModal';
 import { updateMyProfile } from '@/axios/mypage/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserProfile } from '@/hooks/useUserProfile';
-import { useUserGatherings } from '@/hooks/useUserGatherings';
+import { UseReviews } from '@/hooks/useReviews';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import MyGathering from '../../components/mypage/myGathering';
@@ -24,8 +24,9 @@ export default function MyPage() {
 
   const { data: user, isLoading: isUserLoading } = useUserProfile();
 
-  const { data: myJoinedGatherings, isLoading: isJoinedLoading } =
-    useUserGatherings({ isHost: false });
+  const { data: myWriteReviews, isLoading: isReviewLoading } = UseReviews({
+    reviewed: true,
+  });
 
   const mutation = useMutation({
     mutationFn: updateMyProfile,
@@ -71,9 +72,9 @@ export default function MyPage() {
     return activeLink?.component;
   };
 
-  const levelImage = Math.min(Math.max(1, myJoinedGatherings?.length || 0), 6); // levelImage는 최소 1부터 최대 6까지만
+  const levelImage = Math.min(Math.max(1, myWriteReviews?.length || 0), 6); // levelImage는 최소 1부터 최대 6까지만
 
-  if (isUserLoading || isJoinedLoading) {
+  if (isUserLoading || isReviewLoading) {
     return (
       <div className="flex h-dvh items-center justify-center">Loading...</div>
     );
