@@ -46,7 +46,7 @@ export default function MyGatheringCard({
             height={170}
             quality={100}
             onError={handleError}
-            className="w-full rounded-t-2xl bg-default-tertiary md:h-[170px] md:w-60 md:rounded-l-2xl md:rounded-r-none"
+            className={`w-full rounded-t-2xl bg-default-tertiary md:h-[170px] md:w-60 md:rounded-l-2xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
           />
         </Link>
       </div>
