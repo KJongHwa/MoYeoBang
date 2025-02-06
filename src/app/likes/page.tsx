@@ -7,6 +7,7 @@ import LikesGatheringList from '@/components/likes/LikesGatheringList';
 import { useQuery } from '@tanstack/react-query';
 import { getLikeGatherings } from '@/axios/likes/apis';
 import { QueryProvider } from '@/components/@shared/QueryProvider';
+import Spinner from '@/components/@shared/Spinner';
 
 export default function LikeGathering() {
   const [likesGatherings, setLikesGatherings] = useState<number[]>([]);
@@ -29,10 +30,7 @@ export default function LikeGathering() {
     setShouldFetch(true);
   }, []);
 
-  if (!shouldFetch || isLoading)
-    return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
-    );
+  if (!shouldFetch || isLoading) return <Spinner />;
 
   return (
     <QueryProvider>
