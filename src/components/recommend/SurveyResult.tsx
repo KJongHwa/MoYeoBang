@@ -1,10 +1,11 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { SurveyUrlParams } from '@/types/gathering.types';
 import { getLabelFromValue } from '@/utils/filterUtils';
-import LinkButton from '@/components/@shared/button/LinkButton';
-import Button from '@/components/@shared/button/Button';
 import { genres, levels, locationList } from '@/constants/themeList';
+
+import Button from '@/components/@shared/button/Button';
 
 interface SurveyResultProps {
   recommendedTheme: SurveyUrlParams | null;
@@ -23,6 +24,10 @@ export default function SurveyResult({
     level: getLabelFromValue(recommendedTheme.level, levels),
     location: getLabelFromValue(recommendedTheme.location, locationList),
   };
+
+  // 추천 테마 제목 URL 인코딩
+  const encodedThemeName = encodeURIComponent(recommendedTheme.name);
+
   return (
     <div className="flex flex-col items-center justify-center gap-24 px-4 pb-24 font-bold text-primary-5 md:pb-32">
       <section className="flex flex-col items-center justify-center gap-7">
@@ -51,14 +56,16 @@ export default function SurveyResult({
         </div>
       </section>
       <section className="flex w-full flex-col gap-2 px-8 md:px-14">
-        <Button
-          variant="tertiary-gray"
-          shape="default"
-          className="w-full border-2 py-3 text-sm md:border-4 md:py-6 md:text-2xl"
-          onClick={() => resetSurvey(false)}
-        >
-          추천 테마 참여하기
-        </Button>
+        <Link href={`/search/keyword=${encodedThemeName}`}>
+          <Button
+            variant="tertiary-gray"
+            shape="default"
+            className="w-full border-2 py-3 text-sm md:border-4 md:py-6 md:text-2xl"
+            onClick={() => resetSurvey(false)}
+          >
+            추천 테마 참여하기
+          </Button>
+        </Link>
         <Button
           variant="tertiary-gray"
           shape="default"
