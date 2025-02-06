@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { DropdownOption } from './Dropdown';
+import SlideDownMotion from '../animation/SlideDownMotion';
 
 interface SortDropdownProps {
   sortList: DropdownOption[];
@@ -49,19 +50,21 @@ export default function SortDropdown({
       </button>
 
       {isOpen && (
-        <ul className="absolute right-0 z-10 mt-2 w-[120px] overflow-hidden rounded-xl bg-secondary-80 shadow-lg">
-          {sortList.map((option) => (
-            <li key={option.value} className="relative p-0">
-              <button
-                type="button"
-                onClick={() => handleSelect(option)}
-                className="text-white-lg w-full cursor-pointer rounded-[9px] px-4 py-2 text-left text-sm transition-colors duration-150 hover:bg-default-primary"
-              >
-                {option.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <SlideDownMotion>
+          <ul className="absolute right-0 z-10 mt-2 w-28 overflow-hidden rounded-xl bg-secondary-80 shadow-lg">
+            {sortList.map((option) => (
+              <li key={option.value} className="relative w-full p-1">
+                <button
+                  type="button"
+                  onClick={() => handleSelect(option)}
+                  className="flex w-full flex-1 cursor-pointer rounded-lg px-3 py-1 text-left text-xs text-white transition-colors duration-150 hover:bg-default-primary md:text-sm "
+                >
+                  {option.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </SlideDownMotion>
       )}
     </div>
   );

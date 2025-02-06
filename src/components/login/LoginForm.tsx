@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -99,7 +97,7 @@ function LoginForm() {
             </button>
           </form>
 
-          <p className="text-secondary-50 mt-6 text-sm">
+          <p className="mt-6 text-sm text-secondary-50">
             모여방이 처음이신가요?{' '}
             <Link
               href="/signup"

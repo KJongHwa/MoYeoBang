@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
 import { useAuthNavigation } from '@/hooks/useAuthNavigation';
-import GatheringModal from '../GatheringModal';
+import ButtonMotion from '@/components/@shared/animation/ButtonMotion';
+import GatheringModal from '@/components/gathering/GatheringModal';
 
 export default function CreateGatheringBtn() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -11,7 +12,7 @@ export default function CreateGatheringBtn() {
 
   return (
     <>
-      <button
+      <ButtonMotion
         type="button"
         className="fixed bottom-12 right-8 xl:bottom-16 xl:right-1/10"
         onClick={checkAndNavigate}
@@ -24,7 +25,7 @@ export default function CreateGatheringBtn() {
           quality={100}
           className="h-14 w-14 md:h-16 md:w-16"
         />
-      </button>
+      </ButtonMotion>
 
       {isOpen && <GatheringModal isOpen={isOpen} onClose={closeModal} />}
     </>
