@@ -36,11 +36,17 @@
 }
 
 /* text style */
-.customUnderline {
+.customUnderline,
+.customUnderlineHover {
   position: relative;
 }
 
-.customUnderline::after {
+.customUnderlineHover {
+  overflow: hidden;
+}
+
+.customUnderline::after,
+.customUnderlineHover::after {
   content: '';
   display: block;
   width: 100%;
@@ -49,6 +55,16 @@
   position: absolute;
   bottom: -1px;
   left: 0;
+}
+
+.customUnderlineHover::after {
+  background-color: #cdced6;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.customUnderlineHover:hover::after {
+  transform: translateX(0);
 }
 
 /* scrollbar style */

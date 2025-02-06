@@ -3,8 +3,16 @@
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Button from '@/components/@shared/button/Button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  cancelParticipation,
+  participateGathering,
+  checkParticipationStatus,
+} from '@/axios/gather/apis';
+import { useState } from 'react';
 
 interface JoinBoxSectionProps {
+  gatheringId: number;
   name: string;
   themeName: string;
   participantCount: number;
@@ -12,18 +20,55 @@ interface JoinBoxSectionProps {
 }
 
 export default function JoinBoxSection({
+  gatheringId,
   name,
   themeName,
-  participantCount,
+  participantCount: initialParticipantCount,
   capacity,
 }: JoinBoxSectionProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
+
+  const [participantCount, setParticipantCount] = useState(
+    initialParticipantCount
+  );
+  const [isParticipating, setIsParticipating] = useState(false);
+
   const participationRate = (participantCount / capacity) * 100;
   const isRecruiting = participantCount < capacity;
-
   const isExpanded = searchParams.has('joinbox');
+
+  const { mutate: participate } = useMutation({
+    mutationFn: () => participateGathering(gatheringId),
+    onSuccess: () => {
+      setParticipantCount((prev) => prev + 1);
+      setIsParticipating(true);
+      queryClient.invalidateQueries({
+        queryKey: ['gathering-detail', gatheringId],
+      });
+    },
+  });
+
+  const { mutate: cancel } = useMutation({
+    mutationFn: () => cancelParticipation(gatheringId),
+    onSuccess: () => {
+      setParticipantCount((prev) => prev - 1);
+      setIsParticipating(false);
+      queryClient.invalidateQueries({
+        queryKey: ['gathering-detail', gatheringId],
+      });
+    },
+  });
+
+  const handleParticipation = () => {
+    if (isParticipating) {
+      cancel();
+    } else {
+      participate();
+    }
+  };
 
   const toggleExpand = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -41,13 +86,18 @@ export default function JoinBoxSection({
     router.replace(`${pathname}${query}`, { scroll: false });
   };
 
+  const getButtonText = () => {
+    if (isParticipating) return '참여 취소';
+    if (isRecruiting) return '참여하기';
+    return '모집완료';
+  };
+
   return (
     <aside className="w-full min-[1000px]:w-[369px]">
       {/* 모바일 뷰 */}
       <div className="min-[1000px]:hidden">
         <div className="fixed bottom-0 left-0 right-0 z-50">
           <div className="mx-auto w-full max-w-screen-xl">
-            {/* 상세 정보 영역 */}
             {isExpanded && (
               <div className="mx-[17px] rounded-lg border border-secondary-70 bg-[#17171C] p-4 min-[420px]:mx-[104px]">
                 <div className="mb-6">
@@ -88,7 +138,6 @@ export default function JoinBoxSection({
               </div>
             )}
 
-            {/* 버튼 영역 */}
             <div className="mx-[17px] flex items-center justify-between gap-4 py-4 min-[420px]:mx-[104px]">
               <Button
                 onClick={toggleExpand}
@@ -109,11 +158,11 @@ export default function JoinBoxSection({
               <div className="flex-1">
                 <Button
                   variant="primary"
-                  onClick={() => {}}
+                  onClick={handleParticipation}
                   className="h-11 w-full text-base font-semibold"
                   disabled={!isRecruiting}
                 >
-                  {isRecruiting ? '참여하기' : '모집완료'}
+                  {getButtonText()}
                 </Button>
               </div>
             </div>
@@ -163,11 +212,11 @@ export default function JoinBoxSection({
 
             <Button
               variant="primary"
-              onClick={() => {}}
+              onClick={handleParticipation}
               className="h-11 w-full text-base font-semibold"
               disabled={!isRecruiting}
             >
-              {isRecruiting ? '참여하기' : '모집완료'}
+              {getButtonText()}
             </Button>
           </div>
         </div>
