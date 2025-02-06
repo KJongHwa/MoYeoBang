@@ -7,6 +7,10 @@ import { useDropdown } from '@/hooks/useDropdown';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { authApi } from '@/axios/auth';
+import { useUserProfile } from '@/hooks/useUserProfile';
+import clsx from 'clsx';
+import { useQuery } from '@tanstack/react-query';
+import { getMyProfile } from '@/axios/mypage/api';
 import Button from './button/Button';
 import HeaderNavBar from './HeaderNavbar';
 import Toast from './Toast';
@@ -14,6 +18,9 @@ import Toast from './Toast';
 export default function Header() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userImage, setUserImage] = useState(
+    '/icons/profile_image_default.svg'
+  );
   const [mobileNav, setMobileNav] = useState(false);
   const { toastMessage, toastVisible, toastType, handleSuccess } = useToast();
   const {
@@ -45,6 +52,15 @@ export default function Header() {
     };
   }, []);
 
+  // const { data: userProfile } = useUserProfile(!!isLoggedIn);
+  // console.log(userProfile);
+
+  // const { data: userProfile } = useQuery({
+  //   queryKey: ['myProfile'],
+  //   queryFn: getMyProfile,
+  //   enabled: isLoggedIn, // 로그인 상태일 때만 쿼리 실행
+  // });
+
   const handleMobileNav = () => {
     setMobileNav(!mobileNav);
   };
@@ -56,6 +72,7 @@ export default function Header() {
   const handleLogout = () => {
     authApi.logout();
     setIsLoggedIn(false);
+    localStorage.removeItem('userInfo');
     closeMobileNav();
     handleSuccess('로그아웃 되었습니다.');
     router.push('/');
@@ -121,6 +138,15 @@ export default function Header() {
               ) : (
                 <div className="relative flex text-base font-bold text-white">
                   <button type="button" onClick={toggleDropdown}>
+                    {/* <Image
+                      src={
+                        userProfile?.image || '/icons/profile_image_default.svg'
+                      }
+                      width={24}
+                      height={24}
+                      className={clsx(userProfile?.image ? 'rounded-full' : '')}
+                      alt="마이페이지 이미지"
+                    /> */}
                     <Image
                       src="/icons/profile_image_default.svg"
                       width={24}

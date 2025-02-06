@@ -35,8 +35,10 @@ export default function RootLayout({
         <meta property="og:image:height" content="630" />
       </Head>
       <body>
-        <Header />
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );
