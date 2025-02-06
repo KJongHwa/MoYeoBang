@@ -30,13 +30,15 @@ export default function RootLayout({
           content="방탈출 팀원을 모집하고, 방탈출 테마에 대한 경험을 나눌 수 있는 또 하나의 방. 일단 모여방!"
         />
         <meta property="og:url" content="https://moyeobang.vercel.app/" />
-        <meta property="og:image" content="/images/thumnail.png" />
+        <meta property="og:image" content="/images/thumbnail.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
       <body>
-        <Header />
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -22,3 +22,10 @@ export const matchFilter = ({
 }: FilterOptions) => {
   return isDate ? dateFilter({ option, target }) : filter({ option, target });
 };
+
+export const getLabelFromValue = (
+  value: string,
+  list: { value: string; label: string }[]
+) => {
+  return list.find((item) => item.value === value)?.label || '';
+};

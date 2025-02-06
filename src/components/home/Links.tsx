@@ -1,4 +1,4 @@
-import LinkCard from './LinkCard';
+import LinkCard from './UI/LinkCard';
 
 export default function Links() {
   return (

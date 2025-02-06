@@ -11,6 +11,7 @@ import RatingSection from '@/components/allReview/RatingSection';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { getAllReviews } from '@/axios/allReview/apis';
 import { hyphenYearMonthDay } from '@/utils/dateUtils';
+import Spinner from '../@shared/Spinner';
 
 export default function AllReviewList() {
   const [selectedGenre, setSelectedGenre] = useState<string>('');
@@ -42,7 +43,7 @@ export default function AllReviewList() {
       getNextPageParam: (lastPage, allPages, lastPageParam) =>
         lastPage.length < PAGE_LIMIT
           ? undefined
-          : (lastPageParam as number) + PAGE_LIMIT,
+          : (lastPageParam as number) + 1,
       placeholderData: keepPreviousData,
     });
 
@@ -52,10 +53,7 @@ export default function AllReviewList() {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  if (isLoading)
-    return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
-    );
+  if (isLoading) return <Spinner />;
 
   const reviewsData = data?.pages.flat() || [];
 
@@ -100,7 +98,7 @@ export default function AllReviewList() {
       </section>
 
       <div ref={ref} className="flex h-10 items-center justify-center">
-        {isFetchingNextPage ? 'Loading...' : ''}
+        {isFetchingNextPage ? <Spinner /> : ''}
       </div>
     </>
   );
