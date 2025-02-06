@@ -44,7 +44,10 @@ export default function GatheringDetail({
             <div className="flex-1">
               <GatheringMainSection {...gatheringData} />
             </div>
-            <JoinBoxSection {...gatheringData} />
+            <JoinBoxSection
+              {...gatheringData}
+              gatheringId={Number(params.id)}
+            />
           </div>
 
           <div className="mt-16">
