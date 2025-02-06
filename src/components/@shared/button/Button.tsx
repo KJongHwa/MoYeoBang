@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import ButtonMotion from '../animation/ButtonMotion';
 
 type ButtonProps = {
   variant?:
@@ -97,8 +98,13 @@ export default function Button({
 
   return (
     // eslint-disable-next-line react/button-has-type
-    <button type={type} className={buttonClass} disabled={disabled} {...props}>
+    <ButtonMotion
+      type={type}
+      className={buttonClass}
+      disabled={disabled}
+      {...props}
+    >
       {children}
-    </button>
+    </ButtonMotion>
   );
 }
