@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 
+import SlideDownMotion from '@/components/@shared/animation/SlideDownMotion';
+
 interface DropdownOption {
   value: string;
   label: string;
@@ -111,9 +113,7 @@ export default function Dropdown({
           className
         )}
       >
-        <span
-          className={`${icon !== '/icons/chevron-down.svg' ? 'hidden md:inline-block' : ''} flex-1 text-xs font-medium text-secondary-40 md:text-sm`}
-        >
+        <span className="flex-1 text-xs font-medium text-text-tertiary md:text-sm">
           {selectedOption.label}
         </span>
         <Image
@@ -129,31 +129,29 @@ export default function Dropdown({
       </button>
 
       {isOpen && (
-        <ul
-          className={clsx(
-            'absolute right-0 z-10 w-full max-w-[120px]',
-            'mt-2',
-            'rounded-xl',
-            'bg-secondary-80',
-            'overflow-hidden shadow-lg'
-          )}
-        >
-          {options.map((option) => (
-            <li key={option.value} className="relative p-0">
-              <button
-                type="button"
-                onClick={() => handleSelect(option)}
-                className={clsx(
-                  'w-full cursor-pointer px-4 py-2 text-left text-xs md:text-sm',
-                  'text-white-lg rounded-[9px] hover:rounded-[9px] hover:bg-default-primary',
-                  'transition-colors duration-150'
-                )}
-              >
-                {option.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <SlideDownMotion>
+          <ul
+            className={clsx(
+              'absolute left-0 z-10 w-full max-w-[120px]',
+              'mt-2',
+              'rounded-xl',
+              'bg-secondary-80',
+              'overflow-hidden shadow-lg'
+            )}
+          >
+            {options.map((option) => (
+              <li key={option.value} className="relative w-full p-1">
+                <button
+                  type="button"
+                  onClick={() => handleSelect(option)}
+                  className="flex w-full flex-1 cursor-pointer rounded-lg px-3 py-1 text-left text-xs text-white transition-colors duration-150 hover:bg-default-primary md:text-sm "
+                >
+                  {option.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </SlideDownMotion>
       )}
     </div>
   );

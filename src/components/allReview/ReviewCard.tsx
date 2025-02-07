@@ -2,7 +2,6 @@ import { ReviewDto } from '@/types/review.types';
 import { yearMonthDay } from '@/utils/dateUtils';
 import Image from 'next/image';
 import Rating from '@/components/@shared/rating/Rating';
-import ReviewEditDropdown from '@/components/allReview/ReviewEditDropdown';
 
 export default function ReviewCard({
   score,
@@ -48,7 +47,6 @@ export default function ReviewCard({
             {yearMonthDay(createdAt)}
           </p>
         </div>
-        <ReviewEditDropdown score={score} comment={comment} />
       </div>
     </article>
   );

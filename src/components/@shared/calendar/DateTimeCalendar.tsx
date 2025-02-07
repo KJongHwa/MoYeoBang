@@ -6,6 +6,7 @@ import Calendar from 'react-calendar';
 import '@/styles/dateTimeCalendar.css';
 import ScrollTimePicker from '@/components/@shared/calendar/ScrollTimePicker';
 import Button from '@/components/@shared/button/Button';
+import FadeInMotion from '../animation/FadeInMotion';
 
 type CalendarValue = Date | null | [Date | null, Date | null];
 
@@ -98,7 +99,7 @@ export default function DateTimeCalendar({
   }, [isOpen, onClose]);
 
   return (
-    <div
+    <FadeInMotion
       className={`${isOpen ? '' : 'hidden'} ${layout} border-1 absolute z-80 flex flex-col rounded-[10px] border-default-tertiary bg-default-tertiary py-5 pl-6 pr-6 text-black shadow-xl md:pr-0`}
     >
       <div className="flex flex-col md:h-[332px] md:flex-row">
@@ -140,6 +141,6 @@ export default function DateTimeCalendar({
           적용
         </Button>
       </div>
-    </div>
+    </FadeInMotion>
   );
 }

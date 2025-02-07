@@ -8,7 +8,8 @@ import { useModal } from '@/hooks/useModal';
 import { updateMyProfile } from '@/axios/mypage/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserProfile } from '@/hooks/useUserProfile';
-import { useUserGatherings } from '@/hooks/userUserGatherings';
+import { UseReviews } from '@/hooks/useReviews';
+import Spinner from '@/components/@shared/Spinner';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import MyGathering from '../../components/mypage/myGathering';
@@ -24,8 +25,9 @@ export default function MyPage() {
 
   const { data: user, isLoading: isUserLoading } = useUserProfile();
 
-  const { data: gatherings, isLoading: isGatheringLoading } =
-    useUserGatherings();
+  const { data: myWriteReviews, isLoading: isReviewLoading } = UseReviews({
+    reviewed: true,
+  });
 
   const mutation = useMutation({
     mutationFn: updateMyProfile,
@@ -56,7 +58,7 @@ export default function MyPage() {
     { label: '나의 리뷰', component: <MyReview /> },
     {
       label: '내가 만든 모임',
-      component: <MyCreateGathering userID={user?.userID ?? 0} />,
+      component: <MyCreateGathering />,
     },
   ];
 
@@ -71,11 +73,13 @@ export default function MyPage() {
     return activeLink?.component;
   };
 
-  const levelImage = Math.min(Math.max(1, gatherings?.length || 0), 6); // levelImage는 최소 1부터 최대 6까지만
+  const levelImage = Math.min(Math.max(1, myWriteReviews?.length || 0), 6); // levelImage는 최소 1부터 최대 6까지만
 
-  if (isUserLoading || isGatheringLoading) {
+  if (isUserLoading || isReviewLoading) {
     return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
+      <div className="flex h-dvh items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 

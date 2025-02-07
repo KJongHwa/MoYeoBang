@@ -5,6 +5,7 @@ export interface GatheringFilters {
   level?: string;
 }
 
+// UrlParams
 export interface GatheringUrlParams extends GatheringFilters {
   sortBy?: string;
   sortOrder?: string;
@@ -15,6 +16,14 @@ export interface GatheringUrlParams extends GatheringFilters {
 
 export interface SearchGatheringParams {
   keyword: string;
+}
+
+export interface SurveyUrlParams {
+  name: string;
+  genre: string;
+  playtime: string;
+  level: string;
+  location: string;
 }
 
 // Response

@@ -1,3 +1,4 @@
+import { ACCESS_TOKEN_KEY } from '@/axios/constants';
 import { useRouter } from 'next/navigation';
 
 /**
@@ -11,14 +12,17 @@ export function useAuthNavigation(redirectPath: string, onSuccess: () => void) {
   const router = useRouter();
 
   const checkAndNavigate = () => {
-    const item = localStorage.getItem('userInfo');
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const userInfo = localStorage.getItem('userInfo');
 
-    if (!item) {
+    if (!token || !userInfo) {
+      // 둘 중 하나라도 없으면 모두 제거
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
+      localStorage.removeItem('userInfo');
       router.push(redirectPath);
     } else {
       onSuccess();
     }
   };
-
   return { checkAndNavigate };
 }

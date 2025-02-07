@@ -12,7 +12,7 @@ const useToast = () => {
 
     setTimeout(() => {
       setToastVisible(false);
-    }, 5000);
+    }, 3000);
   };
 
   const handleSuccess = (message: string) => {
