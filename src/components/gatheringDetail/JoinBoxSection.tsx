@@ -31,34 +31,37 @@ export default function JoinBoxSection({
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
 
-  const [participantCount, setParticipantCount] = useState(
-    initialParticipantCount
-  );
   const [isParticipating, setIsParticipating] = useState(false);
 
-  const participationRate = (participantCount / capacity) * 100;
-  const isRecruiting = participantCount < capacity;
+  const participationRate = (initialParticipantCount / capacity) * 100;
+  const isRecruiting = initialParticipantCount < capacity;
   const isExpanded = searchParams.has('joinbox');
 
   const { mutate: participate } = useMutation({
     mutationFn: () => participateGathering(gatheringId),
     onSuccess: () => {
-      setParticipantCount((prev) => prev + 1);
+      queryClient.setQueryData(
+        ['gathering-detail', gatheringId],
+        (oldData: any) => ({
+          ...oldData,
+          participantCount: oldData.participantCount + 1,
+        })
+      );
       setIsParticipating(true);
-      queryClient.invalidateQueries({
-        queryKey: ['gathering-detail', gatheringId],
-      });
     },
   });
 
   const { mutate: cancel } = useMutation({
     mutationFn: () => cancelParticipation(gatheringId),
     onSuccess: () => {
-      setParticipantCount((prev) => prev - 1);
+      queryClient.setQueryData(
+        ['gathering-detail', gatheringId],
+        (oldData: any) => ({
+          ...oldData,
+          participantCount: oldData.participantCount - 1,
+        })
+      );
       setIsParticipating(false);
-      queryClient.invalidateQueries({
-        queryKey: ['gathering-detail', gatheringId],
-      });
     },
   });
 
@@ -117,7 +120,7 @@ export default function JoinBoxSection({
                       className="mr-1"
                     />
                     <span>
-                      {participantCount}/{capacity}
+                      {initialParticipantCount}/{capacity}
                     </span>
                     <span className="mx-2">·</span>
                     <span
@@ -191,7 +194,7 @@ export default function JoinBoxSection({
                   className="mr-1"
                 />
                 <span>
-                  {participantCount}/{capacity}
+                  {initialParticipantCount}/{capacity}
                 </span>
                 <span className="mx-2">·</span>
                 <span
