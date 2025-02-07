@@ -24,7 +24,7 @@ export default function MyGatheringCard({
     setImgSrc('/images/theme_default.png');
   };
   return (
-    <figure className="relative flex w-full flex-col gap-2 rounded-2xl bg-default-tertiary md:max-h-[170px] md:flex-row">
+    <figure className="relative flex w-full flex-col gap-2 rounded-2xl bg-default-tertiary xs:max-h-[170px] xs:flex-row">
       {isCanceled && (
         <p className="absolute left-20 top-40  text-[18px] font-bold text-white md:left-3 md:top-16 ">
           모집 취소된 모임이에요.
@@ -46,7 +46,7 @@ export default function MyGatheringCard({
             height={170}
             quality={100}
             onError={handleError}
-            className={`w-full rounded-t-2xl bg-default-tertiary md:h-[170px] md:w-60 md:rounded-l-2xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
+            className={`h-[292px] w-full rounded-t-2xl bg-default-tertiary xs:h-[170px] xs:w-[192px] md:rounded-l-2xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
           />
         </Link>
       </div>

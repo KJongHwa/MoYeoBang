@@ -44,7 +44,7 @@ export default function MyReviewCard({
   ];
 
   return (
-    <article className="relative flex w-full flex-col gap-2 rounded-xl bg-default-tertiary md:max-h-[200px] md:flex-row xl:max-h-[170px]">
+    <article className="relative flex w-full flex-col gap-2 rounded-2xl bg-default-tertiary xs:max-h-[170px] xs:flex-row">
       <Image
         src={imgSrc}
         onError={handleError}
@@ -52,7 +52,7 @@ export default function MyReviewCard({
         width={240}
         height={170}
         quality={100}
-        className={`h-[343px] w-full rounded-t-xl bg-default-tertiary  md:h-[170px] md:w-60 md:max-w-[192px] md:rounded-l-xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
+        className={`h-[292px] w-full rounded-t-2xl bg-default-tertiary xs:h-[170px] xs:w-[192px] md:rounded-l-2xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
       />
 
       <div className="mx-4 my-5 flex flex-1 flex-col justify-between md:mx-6 md:my-5">
