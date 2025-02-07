@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Button from '@/components/@shared/button/Button';
 import ProgressPuzzleBar from '@/components/@shared/ProgressPuzzleBar';
+import FadeInListMotion from '@/components/@shared/animation/FadeInListMotion';
 
 import {
   questions,
@@ -87,19 +88,21 @@ export default function Survey({ onComplete }: SurveyProps) {
           <span>Q.</span> <p>{questions[currentStep - 1]?.text}</p>
         </h2>
       </section>
-      <section className="flex w-full flex-col flex-wrap justify-center gap-4">
-        {questions[currentStep - 1].options.map((option) => (
-          <Button
-            type="button"
-            padding="12"
-            key={option}
-            onClick={() => handleAnswer(option)}
-            className="w-full py-4 text-xs md:py-5 md:text-2xl"
-          >
-            {option === '' ? '전체' : levelToKorean[option] || option}
-          </Button>
+      <ul className="flex w-full flex-col flex-wrap justify-center gap-4">
+        {questions[currentStep - 1].options.map((option, index) => (
+          <FadeInListMotion key={option} delay={index * 0.25} duration={0.5}>
+            <Button
+              type="button"
+              padding="12"
+              key={option}
+              onClick={() => handleAnswer(option)}
+              className="w-full py-4 text-xs md:py-5 md:text-2xl"
+            >
+              {option === '' ? '전체' : levelToKorean[option] || option}
+            </Button>
+          </FadeInListMotion>
         ))}
-      </section>
+      </ul>
     </div>
   );
 }
