@@ -18,7 +18,6 @@ export default function MyGatheringCard({
 }: MyGatheringCardProps) {
   const [isError, setIsError] = useState(false);
   const [imgSrc, setImgSrc] = useState(image);
-  //console.log(isCanceled);
   const handleError = () => {
     setIsError(true);
     setImgSrc('/images/theme_default.png');
