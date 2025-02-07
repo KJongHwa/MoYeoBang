@@ -34,7 +34,11 @@ export const authApi = {
     authAxiosInstance.post(API_PATH.auth.reissue, { refreshToken }),
 
   logout: () => {
+    // 모든 관련 데이터 제거
     localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('redirectPath');
+
     return authAxiosInstance.post(API_PATH.auth.logout);
   },
 };
