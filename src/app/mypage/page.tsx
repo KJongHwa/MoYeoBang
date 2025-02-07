@@ -13,7 +13,6 @@ import Spinner from '@/components/@shared/Spinner';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import MyGathering from '../../components/mypage/myGathering';
-import SkeletonMypageCard from '@/components/@shared/skeleton/SkeletonMypageCard';
 
 export default function MyPage() {
   const {
