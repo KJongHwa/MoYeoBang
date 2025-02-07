@@ -14,6 +14,7 @@ export interface ReviewDto {
       participantCount: number; // 참여 인원
     };
     User: {
+      userId: number;
       nickname: string; // 리뷰 작성자 이름
       image: string; // 리뷰 작성자 이미지
     };
