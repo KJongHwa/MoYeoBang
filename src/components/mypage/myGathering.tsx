@@ -9,20 +9,11 @@ export default function MyGathering() {
     useUserGatherings({ isHost: false });
 
   if (isJoinedLoading) {
-    return (
-      // 추후 loading 스피너로 구현
-      <div className="flex h-dvh items-center justify-center">
-        <Spinner />
-      </div>
-    );
+    return <Spinner />;
   }
 
   if (!myJoinedGatherings) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        모임 정보를 불러올 수 없습니다.
-      </div>
-    );
+    return <EmptyElement>모임 정보를 불러올 수 없습니다.</EmptyElement>;
   }
 
   if (myJoinedGatherings.length === 0) {
@@ -35,7 +26,7 @@ export default function MyGathering() {
           gatheringId={gathering.gatheringId}
           key={gathering.gatheringId}
           image={gathering.image}
-          isCanceled={gathering.isCanceled}
+          isCanceled={gathering.canceled}
         >
           <MyGatheringDetail
             gatheringId={gathering.gatheringId}
@@ -45,7 +36,7 @@ export default function MyGathering() {
             themeName={gathering.themeName}
             capacity={gathering.capacity}
             participantCount={gathering.participantCount}
-            isCanceled={gathering.isCanceled}
+            isCanceled={gathering.canceled}
           />
         </MyGatheringCard>
       ))}

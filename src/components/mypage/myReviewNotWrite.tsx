@@ -8,18 +8,12 @@ export default function MyReviewNotWrite() {
   const { data: notWriteMyReviews, isLoading: isNotWriteMyReviewsLoading } =
     UseReviews({ reviewed: false });
   if (isNotWriteMyReviewsLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        <Spinner />
-      </div>
-    );
+    return <Spinner />;
   }
 
   if (!notWriteMyReviews) {
     return (
-      <div className="flex h-dvh items-center justify-center">
-        작성 가능한 모임 정보를 불러올 수 없습니다.
-      </div>
+      <EmptyElement>작성 가능한 모임 정보를 불러올 수 없습니다.</EmptyElement>
     );
   }
   if (notWriteMyReviews.length === 0) {

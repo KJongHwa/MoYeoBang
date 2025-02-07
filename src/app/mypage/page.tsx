@@ -1,7 +1,7 @@
 'use client';
 
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/button/IconButton';
 import { useModal } from '@/hooks/useModal';
@@ -13,6 +13,7 @@ import Spinner from '@/components/@shared/Spinner';
 import MyReview from '../../components/mypage/myReview';
 import MyProfileEditModal from '../../components/mypage/myProfileEditModal';
 import MyGathering from '../../components/mypage/myGathering';
+import SkeletonMypageCard from '@/components/@shared/skeleton/SkeletonMypageCard';
 
 export default function MyPage() {
   const {
@@ -23,11 +24,13 @@ export default function MyPage() {
 
   const queryClient = useQueryClient();
 
-  const { data: user, isLoading: isUserLoading } = useUserProfile();
+  const { data: user, isLoading: userProfileLoading } = useUserProfile();
 
-  const { data: myWriteReviews, isLoading: isReviewLoading } = UseReviews({
-    reviewed: true,
-  });
+  const { data: myWriteReviews, isLoading: myWriteReviewsLoading } = UseReviews(
+    {
+      reviewed: true,
+    }
+  );
 
   const mutation = useMutation({
     mutationFn: updateMyProfile,
@@ -73,27 +76,16 @@ export default function MyPage() {
     return activeLink?.component;
   };
 
+  if (!user || !myWriteReviews || userProfileLoading || myWriteReviewsLoading) {
+    return <Spinner />;
+  }
+
   const levelImage = Math.min(Math.max(1, myWriteReviews?.length || 0), 6); // levelImage는 최소 1부터 최대 6까지만
-
-  if (isUserLoading || isReviewLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        유저 정보를 불러올 수 없습니다.
-      </div>
-    );
-  }
 
   return (
     <main className="relative top-[100px] mx-4 md:mx-6 xl:mx-auto xl:w-[1166px]">
       <p className="text-[18px] font-bold">{`안녕하세요 ${user?.nickname}님!`}</p>
+
       <div className="relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] bg-primary-30 px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image

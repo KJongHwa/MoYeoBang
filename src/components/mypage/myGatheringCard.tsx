@@ -18,7 +18,7 @@ export default function MyGatheringCard({
 }: MyGatheringCardProps) {
   const [isError, setIsError] = useState(false);
   const [imgSrc, setImgSrc] = useState(image);
-
+  //console.log(isCanceled);
   const handleError = () => {
     setIsError(true);
     setImgSrc('/images/theme_default.png');
@@ -26,7 +26,7 @@ export default function MyGatheringCard({
   return (
     <figure className="relative flex w-full flex-col gap-2 rounded-2xl bg-default-tertiary xs:max-h-[170px] xs:flex-row">
       {isCanceled && (
-        <p className="absolute left-20 top-40  text-[18px] font-bold text-white md:left-3 md:top-16 ">
+        <p className="absolute left-20 top-40 z-10  text-[18px] font-bold text-white md:left-3 md:top-16 ">
           모집 취소된 모임이에요.
         </p>
       )}
@@ -34,7 +34,7 @@ export default function MyGatheringCard({
         className={clsx(
           'relative rounded-t-2xl md:max-w-[192px] md:rounded-l-2xl md:rounded-r-none',
           {
-            'bg-status-hover opacity-60 ': isCanceled,
+            'bg-status-hover opacity-20 ': isCanceled,
           }
         )}
       >

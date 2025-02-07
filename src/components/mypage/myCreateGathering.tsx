@@ -8,19 +8,10 @@ export default function MyCreateGathering() {
   const { data: myCreateGatherings, isLoading: isMyCreateGatheringsLoading } =
     useUserGatherings({ isHost: true });
   if (isMyCreateGatheringsLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        <Spinner />
-      </div>
-    );
+    return <Spinner />;
   }
-
   if (!myCreateGatherings) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        모임 정보를 불러올 수 없습니다.
-      </div>
-    );
+    return <EmptyElement>모임 정보를 불러올 수 없습니다.</EmptyElement>;
   }
   if (myCreateGatherings.length === 0) {
     return <EmptyElement>아직 만든 모임이 없어요</EmptyElement>;
