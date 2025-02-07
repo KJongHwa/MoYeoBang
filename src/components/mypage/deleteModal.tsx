@@ -128,7 +128,7 @@ export default function DeleteModal({
               } else if (classification === 'review_delete') {
                 deleteReview(id);
               } else {
-                handleError('아직 구현되지 않은 기능입니다!');
+                deleteCancelGathering(id);
               }
             }}
           >
