@@ -1,6 +1,7 @@
 'use client';
 
 import EmptyElement from '@/components/@shared/EmptyElement';
+import Spinner from '@/components/@shared/Spinner';
 import Toast from '@/components/@shared/Toast';
 import GatheringCard from '@/components/gathering/GatheringCard';
 import { useSearchGathering } from '@/hooks/useSearchGathering';
@@ -32,9 +33,7 @@ export default function Search() {
   };
 
   if (isGatheringLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
-    );
+    return <Spinner />;
   }
 
   return (
@@ -59,11 +58,16 @@ export default function Search() {
             className="w-full bg-secondary-bg pr-3 text-base outline-none"
             value={searchKeyword}
             onChange={handleSearchKeywordChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearchGatheringGet();
+              }
+            }}
           />
         </section>
         <section className="flex justify-center text-base">
           <div className="flex-col items-center justify-center">
-            <p className="text-secondary-60">추천 검색어</p>
+            <p className="text-center text-secondary-60">추천 검색어</p>
             <div className="flex w-full justify-center gap-3">
               {searchWords.map((searchWord) => (
                 // eslint-disable-next-line react/button-has-type
