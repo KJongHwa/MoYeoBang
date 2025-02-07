@@ -42,13 +42,15 @@ export default function DeleteModal({
         return '리뷰 삭제';
     }
   };
-
+  // 내가 만든 모임 삭제
   const { mutate: deleteGathering } = useMutation({
     mutationFn: async (gatheringId: number) =>
       deleteMyCreateGathering(gatheringId),
     onSuccess: () => {
       handleSuccess('모임이 삭제 되었습니다!');
-      closeModalhandler();
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
@@ -59,11 +61,14 @@ export default function DeleteModal({
     },
   });
 
+  // 내가 쓴 리뷰 삭제
   const { mutate: deleteReview } = useMutation({
     mutationFn: async (reviewId: number) => deleteGatheringReview(reviewId),
     onSuccess: () => {
       handleSuccess('리뷰가 삭제 되었습니다!');
-      closeModalhandler();
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myReviews', false] });
@@ -75,12 +80,15 @@ export default function DeleteModal({
     },
   });
 
+  // 모임 참여 취소
   const { mutate: deleteCancelGathering } = useMutation({
     mutationFn: async (gatheringId: number) =>
       deleteParticipantGathering(gatheringId),
     onSuccess: () => {
       handleSuccess('참여가 취소 되었습니다');
-      closeModalhandler();
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
@@ -117,8 +125,7 @@ export default function DeleteModal({
             onClick={() => {
               if (classification === 'gathering_delete') {
                 deleteGathering(id);
-              }
-              if (classification === 'review_delete') {
+              } else if (classification === 'review_delete') {
                 deleteReview(id);
               } else {
                 handleError('아직 구현되지 않은 기능입니다!');
