@@ -2,7 +2,6 @@
 
 import { useGatheringWithHost } from '@/hooks/queries/useGathering';
 import { useModal } from '@/hooks/useModal';
-import { QueryProvider } from '@/components/@shared/QueryProvider';
 import GatheringMainSection from '@/components/gatheringDetail/GatheringMainSection';
 import JoinBoxSection from '@/components/gatheringDetail/JoinBoxSection';
 import GatheringDetailSection from '@/components/gatheringDetail/GatheringDetailSection';
@@ -37,39 +36,34 @@ export default function GatheringDetail({
     );
 
   return (
-    <QueryProvider>
-      <div className="mx-auto max-w-screen-xl px-4">
-        <div className="mt-36">
-          <div className="flex flex-col gap-6 md:flex-row">
-            <div className="flex-1">
-              <GatheringMainSection {...gatheringData} />
-            </div>
-            <JoinBoxSection
-              {...gatheringData}
-              gatheringId={Number(params.id)}
+    <div className="mx-auto max-w-screen-xl px-4">
+      <div className="mt-36">
+        <div className="flex flex-col gap-6 md:flex-row">
+          <div className="flex-1">
+            <GatheringMainSection {...gatheringData} />
+          </div>
+          <JoinBoxSection {...gatheringData} gatheringId={Number(params.id)} />
+        </div>
+
+        <div className="mt-16">
+          <GatheringDetailSection {...gatheringData} />
+        </div>
+
+        {hostData ? (
+          <div className="mt-16">
+            <ProfileSection
+              createrProfile={hostData}
+              isOpen={isOpen}
+              openModal={openModal}
+              closeModal={closeModal}
             />
           </div>
+        ) : null}
 
-          <div className="mt-16">
-            <GatheringDetailSection {...gatheringData} />
-          </div>
-
-          {hostData ? (
-            <div className="mt-16">
-              <ProfileSection
-                createrProfile={hostData}
-                isOpen={isOpen}
-                openModal={openModal}
-                closeModal={closeModal}
-              />
-            </div>
-          ) : null}
-
-          <div className="mb-20 mt-16">
-            <GatheringReviewSection gatheringId={Number(params.id)} />
-          </div>
+        <div className="mb-20 mt-16">
+          <GatheringReviewSection gatheringId={Number(params.id)} />
         </div>
       </div>
-    </QueryProvider>
+    </div>
   );
 }
