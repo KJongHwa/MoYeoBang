@@ -43,7 +43,7 @@ export default function AllReviewList() {
       getNextPageParam: (lastPage, allPages, lastPageParam) =>
         lastPage.length < PAGE_LIMIT
           ? undefined
-          : (lastPageParam as number) + PAGE_LIMIT,
+          : (lastPageParam as number) + 1,
       placeholderData: keepPreviousData,
     });
 
