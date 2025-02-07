@@ -21,10 +21,10 @@ export default function SurveyResult({
   recommendedTheme,
   resetSurvey,
 }: SurveyResultProps) {
-  if (!recommendedTheme) return null;
-
   const [isError, setIsError] = useState(false);
   const [imgSrc, setImgSrc] = useState('');
+
+  if (!recommendedTheme) return null;
 
   const handleError = () => {
     setIsError(true);
