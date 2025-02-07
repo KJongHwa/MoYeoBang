@@ -48,7 +48,7 @@ export default function MyGatheringDetail({
           </GatheringBadge>
           <GatheringBadge variant="secondary" fontColor="primary">
             {participantCount === capacity ? (
-              <span>
+              <div className="flex">
                 <Image
                   src="/icons/check.svg"
                   width={16}
@@ -56,7 +56,7 @@ export default function MyGatheringDetail({
                   alt="체크 이미지"
                 />
                 일정 확정
-              </span>
+              </div>
             ) : (
               '일정 미확정'
             )}
