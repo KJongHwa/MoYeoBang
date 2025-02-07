@@ -57,7 +57,9 @@ export default function MyReviewModal({
       editGatheringReview(reviewId, submissData),
     onSuccess: () => {
       handleSuccess('리뷰가 수정되었습니다!');
-      closeModalhandler();
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myReviews', true] });
@@ -74,7 +76,9 @@ export default function MyReviewModal({
       postGatheringReview(submissData),
     onSuccess: () => {
       handleSuccess('리뷰를 작성했습니다!');
-      closeModalhandler();
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myReviews', false] });
