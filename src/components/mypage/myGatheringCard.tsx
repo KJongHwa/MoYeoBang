@@ -26,7 +26,7 @@ export default function MyGatheringCard({
   return (
     <figure className="relative flex w-full flex-col gap-2 rounded-2xl bg-default-tertiary xs:max-h-[170px] xs:flex-row">
       {isCanceled && (
-        <p className="absolute left-20 top-40 z-10  text-[18px] font-bold text-white md:left-3 md:top-16 ">
+        <p className="absolute left-24 top-32 z-10 text-lg font-bold text-white xs:left-20  xs:top-40 md:left-3 md:top-16 ">
           모집 취소된 모임이에요.
         </p>
       )}
