@@ -12,7 +12,7 @@ export default function LocationSelector({
 }: LocationSelectorProps) {
   return (
     <div className="text-md flex w-full flex-col items-start gap-3">
-      <h3 className="font-semibold text-gray-800">장소</h3>
+      <h3 className="font-semibold text-white">장소</h3>
       <div className="flex w-full gap-2">
         {Object.entries(themeNameList).map(([locationKey, { label }]) => (
           <Button
@@ -22,8 +22,8 @@ export default function LocationSelector({
             onClick={() => handleLocationClick(locationKey)}
             className={
               locationKey === location
-                ? 'w-full !bg-default-primary text-white'
-                : 'w-full'
+                ? 'w-36 !bg-default-primary text-white'
+                : 'w-36'
             }
           >
             {label}

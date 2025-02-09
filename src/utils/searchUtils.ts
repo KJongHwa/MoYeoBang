@@ -2,12 +2,8 @@ import { themeNameList } from '@/constants/themeList';
 
 // 방탈출 테마 이름 검색
 export const searchThemes = (inputThemeName: string, location?: string) => {
-  if (inputThemeName.length < 2) {
-    return { filtered: [], message: '2글자 이상 입력해주세요.' };
-  }
-
   let filtered: string[] = [];
-  let message = '';
+  let searchErrorMessage = '';
 
   // location이 제공된 경우 필터링
   if (location && themeNameList[location]) {
@@ -24,11 +20,11 @@ export const searchThemes = (inputThemeName: string, location?: string) => {
   }
 
   if (filtered.length === 0) {
-    message = '검색어가 없어요. 다시 입력해 주세요.';
+    searchErrorMessage = '검색어가 없어요. 다시 입력해 주세요.';
   }
 
   return {
     filtered,
-    message,
+    searchErrorMessage,
   };
 };
