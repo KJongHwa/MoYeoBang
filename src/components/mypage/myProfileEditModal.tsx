@@ -41,7 +41,6 @@ export default function MyProfileEditModal({
   };
 
   const closeResethandler = () => {
-    console.log(nickname);
     setUpdatedNickname(nickname);
     setImg(image);
   };
@@ -90,8 +89,8 @@ export default function MyProfileEditModal({
         nickname: updatedNickname,
         image: uploadUrl,
       }),
-
     onSuccess: () => {
+      console.log(uploadUrl);
       handleSuccess('프로필이 성공적으로 업데이트되었습니다.');
       setTimeout(() => {
         closeModalhandler();
@@ -109,13 +108,21 @@ export default function MyProfileEditModal({
   // 이미지 upload post
   const handleProfileUpdate = async () => {
     try {
-      if (
-        fileInputRef.current?.files?.[0] &&
-        fileInputRef.current.files[0]?.name !== image
-      ) {
-        const file = fileInputRef.current.files[0];
+      const file = fileInputRef.current?.files?.[0];
+      const isNicknameChanged = updatedNickname !== nickname;
+      const isImageChanged = file && file.name !== image;
+
+      // 닉네임만 변경한 경우
+      if (isNicknameChanged && !isImageChanged) {
+        updateProfile();
+        return;
+      }
+
+      // 이미지 변경한 경우
+      if (isImageChanged) {
         const response = await postMyImage({ image: file });
-        setUploadUrl(response);
+        console.log('API 응답 이미지 URL:', response);
+        setUploadUrl(response); // 상태 업데이트 후 useEffect에서 처리됨
       }
     } catch (error) {
       console.log('update urlImg:', error);
@@ -123,6 +130,7 @@ export default function MyProfileEditModal({
     }
   };
 
+  // useEffect로 uploadUrl 변경 감지 후 updateProfile 실행
   useEffect(() => {
     if (uploadUrl !== image) {
       console.log('업로드된 이미지 URL 변경됨:', uploadUrl);
