@@ -28,10 +28,12 @@ export default function ThemeSelector({
   searchMessage,
 }: ThemeSelectorProps) {
   return (
-    <div className="text-md flex flex-1 flex-col items-start gap-3">
-      <h2 className="font-semibold text-gray-800">{`${themeNameList[location].label}의 방탈출 테마`}</h2>
+    <div className="flex flex-1 flex-col items-start gap-3 text-base">
+      <h2 className="font-semibold text-white">{`${themeNameList[location].label}의 방탈출 테마`}</h2>
       <div className="flex w-full items-center gap-2 md:gap-3">
         <Input
+          labelColor="white"
+          variant="elevated"
           placeholder="테마 제목을 입력하세요."
           inputProps={{
             type: 'text',
@@ -39,12 +41,7 @@ export default function ThemeSelector({
             onChange: (e) => setInputThemeName(e.target.value),
           }}
         />
-        <Button
-          padding="12"
-          variant="tertiary"
-          onClick={searchThemes}
-          className="w-[70px] md:w-24"
-        >
+        <Button onClick={searchThemes} className="w-20 md:w-28">
           검색
         </Button>
       </div>
@@ -56,7 +53,7 @@ export default function ThemeSelector({
       )}
 
       {searchAttempted && !searchMessage && filteredThemes.length > 0 && (
-        <div className="-my-1 flex w-full flex-col flex-wrap gap-1 rounded-lg bg-secondary-5 p-1">
+        <div className="-my-1 flex w-full flex-col flex-wrap gap-1 rounded-lg bg-secondary-80 p-1">
           {filteredThemes.map((filteredTheme) => (
             <button
               type="button"
@@ -65,10 +62,10 @@ export default function ThemeSelector({
                 setSelectedThemeName(filteredTheme);
                 setThemeName(filteredTheme);
               }}
-              className={`w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap px-2 py-[6px] text-left text-sm font-medium text-secondary-80 ${
+              className={`w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap px-2 py-[6px] text-left text-sm font-medium text-white ${
                 selectedThemeName === filteredTheme
-                  ? 'rounded-md bg-primary-5'
-                  : 'hover:rounded-md hover:bg-primary-5'
+                  ? 'rounded-md bg-secondary-90'
+                  : 'hover:rounded-md hover:bg-secondary-90'
               }`}
             >
               {filteredTheme}

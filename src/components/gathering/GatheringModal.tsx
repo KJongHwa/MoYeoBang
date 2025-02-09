@@ -282,7 +282,6 @@ export default function GatheringModal({
           <DateInput
             label="dateTime"
             labelText="모임 날짜"
-            placeholder="YYYY-MM-DD 00:00 AM"
             inputProps={{
               readOnly: true,
               onClick: toggleCalendar,
@@ -307,7 +306,6 @@ export default function GatheringModal({
             <DateInput
               label="registrationEnd"
               labelText="마감 날짜"
-              placeholder="YYYY-MM-DD 00:00 AM"
               inputProps={{
                 readOnly: true,
                 onClick: toggleEndDateCalendar,

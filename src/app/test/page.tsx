@@ -235,18 +235,18 @@ export default function Test() {
         <Input
           placeholder="placeholder 색상과 입력 글자의 색상을 다르게 설정했습니다."
           label="예시1"
-          labelText="fontSize=14 / varient=elevated / gap=12"
+          labelText="fontSize=14 / variant=elevated / gap=12"
           fontSize="14"
           gap="12"
-          varient="elevated"
+          variant="elevated"
         />
         <div className="bg-white p-4">
           <Input
-            placeholder="fontColor 속성 제거 후 varient 속성을 추가했습니다."
+            placeholder="fontColor 속성 제거 후 variant 속성을 추가했습니다."
             label="예시2"
-            labelText="fontSize=16 / varient=default / gap=8"
+            labelText="fontSize=16 / variant=default / gap=8"
             fontSize="16"
-            varient="default"
+            variant="default"
             gap="8"
             errorMessage="에러 메세지 디자인은 동일합니다."
           />
@@ -255,9 +255,9 @@ export default function Test() {
           <Input
             placeholder="focus 해보세요."
             label="예시2"
-            labelText="fontSize=16 / varient=default / gap=8"
+            labelText="fontSize=16 / variant=default / gap=8"
             fontSize="16"
-            varient="default"
+            variant="default"
             gap="8"
             isError
             errorMessage="에러 메세지 디자인은 동일합니다."
