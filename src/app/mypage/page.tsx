@@ -1,12 +1,10 @@
 'use client';
 
 import MyCreateGathering from '@/components/mypage/myCreateGathering';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/button/IconButton';
 import { useModal } from '@/hooks/useModal';
-import { updateMyProfile } from '@/axios/mypage/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { UseReviews } from '@/hooks/useReviews';
 import Spinner from '@/components/@shared/Spinner';
@@ -21,8 +19,6 @@ export default function MyPage() {
     closeModal: closeEditModal,
   } = useModal();
 
-  const queryClient = useQueryClient();
-
   const { data: user, isLoading: userProfileLoading } = useUserProfile();
 
   const { data: myWriteReviews, isLoading: myWriteReviewsLoading } = UseReviews(
@@ -30,30 +26,6 @@ export default function MyPage() {
       reviewed: true,
     }
   );
-
-  const mutation = useMutation({
-    mutationFn: updateMyProfile,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-    },
-    onError: (error) => {
-      console.error('프로필 업데이트 실패:', error);
-    },
-  });
-
-  const handleProfileUpdate = async (
-    updatedNickname: string,
-    updatedImage: string
-  ) => {
-    try {
-      await mutation.mutateAsync({
-        nickname: updatedNickname,
-        image: updatedImage,
-      });
-    } catch (error) {
-      console.error('프로필 업데이트 중 오류가 발생했습니다.', error);
-    }
-  };
 
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
@@ -135,7 +107,6 @@ export default function MyPage() {
             setIsModal={closeEditModal}
             nickname={user.nickname}
             image={user.image}
-            onProfileUpdate={handleProfileUpdate}
           />
         </div>
       </div>

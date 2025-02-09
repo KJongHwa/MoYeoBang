@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import Modal from '@/components/@shared/Modal';
@@ -9,6 +9,7 @@ import Button from '@/components/@shared/button/Button';
 import clsx from 'clsx';
 import { postMyImage, updateMyProfile } from '@/axios/mypage/api';
 import useToast from '@/hooks/useToast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Toast from '../@shared/Toast';
 
 interface MyProfileEditModalProps {
@@ -16,7 +17,6 @@ interface MyProfileEditModalProps {
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
   nickname: string;
   image: string;
-  onProfileUpdate: (updatedNickname: string, updatedImage: string) => void;
 }
 
 export default function MyProfileEditModal({
@@ -24,16 +24,26 @@ export default function MyProfileEditModal({
   setIsModal,
   nickname,
   image,
-  onProfileUpdate,
 }: MyProfileEditModalProps) {
   const [img, setImg] = useState<string | null>(null);
   const [updatedNickname, setUpdatedNickname] = useState<string>(nickname);
+  const [uploadUrl, setUploadUrl] = useState<string>(image);
+  const [nicknameError, setNickNameError] = useState<string | undefined>(
+    undefined
+  );
   const { toastMessage, toastVisible, toastType, handleError, handleSuccess } =
     useToast();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const queryClient = useQueryClient();
 
   const closeModalhandler = () => {
     setIsModal(false);
+  };
+
+  const closeResethandler = () => {
+    console.log(nickname);
+    setUpdatedNickname(nickname);
+    setImg(image);
   };
 
   const isModified =
@@ -63,36 +73,62 @@ export default function MyProfileEditModal({
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
+
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatedNickname(e.target.value);
+    const newValue = e.target.value;
+    if (newValue.length < 13) {
+      setUpdatedNickname(newValue);
+    } else {
+      setNickNameError('닉네임은 12글자 이하로 입력해주세요.');
+    }
   };
 
-  // api put
+  // 프로필 변경 put
+  const { mutate: updateProfile } = useMutation({
+    mutationFn: async () =>
+      updateMyProfile({
+        nickname: updatedNickname,
+        image: uploadUrl,
+      }),
+
+    onSuccess: () => {
+      handleSuccess('프로필이 성공적으로 업데이트되었습니다.');
+      setTimeout(() => {
+        closeModalhandler();
+      }, 3500);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
+    },
+    onError: (err: any) => {
+      console.log('update profile:', err);
+      handleError('프로필 업데이트 중 에러가 발생하였습니다!');
+    },
+  });
+
+  // 이미지 upload post
   const handleProfileUpdate = async () => {
     try {
-      let uploadedImageUrl = image;
       if (
         fileInputRef.current?.files?.[0] &&
         fileInputRef.current.files[0]?.name !== image
       ) {
         const file = fileInputRef.current.files[0];
         const response = await postMyImage({ image: file });
-        uploadedImageUrl = response;
+        setUploadUrl(response);
       }
-      await updateMyProfile({
-        nickname: updatedNickname,
-        image: uploadedImageUrl,
-      });
-      handleSuccess('프로필이 성공적으로 업데이트되었습니다.');
-      onProfileUpdate(updatedNickname, uploadedImageUrl);
-      setUpdatedNickname(updatedNickname);
-      setTimeout(() => {
-        closeModalhandler();
-      }, 3500);
     } catch (error) {
-      handleError('프로필 업데이트 중 오류가 발생했습니다.');
+      console.log('update urlImg:', error);
+      handleError('프로필 이미지 업로드 중 오류가 발생했습니다.');
     }
   };
+
+  useEffect(() => {
+    if (uploadUrl !== image) {
+      console.log('업로드된 이미지 URL 변경됨:', uploadUrl);
+      updateProfile();
+    }
+  }, [uploadUrl]); // uploadUrl 변경 시 updateProfile 실행
 
   return (
     <Modal
@@ -139,18 +175,24 @@ export default function MyProfileEditModal({
         </div>
         <Input
           label="닉네임"
+          labelText="닉네임"
           fontSize="14"
           gap="8"
           inputProps={{
             value: updatedNickname,
             onChange: handleNicknameChange,
           }}
+          isError={!!nicknameError}
+          errorMessage={nicknameError}
         />
         <div className="flex w-full gap-3 ">
           <Button
             variant="tertiary"
             fontSize="16"
-            onClick={closeModalhandler}
+            onClick={() => {
+              closeModalhandler();
+              closeResethandler();
+            }}
             className="w-full"
           >
             취소하기
