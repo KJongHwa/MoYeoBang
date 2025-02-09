@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/button/Button';
 import useToast from '@/hooks/useToast';
@@ -28,12 +28,28 @@ export default function MyReviewModal({
 }: MyReviewModalProps) {
   const [updatedScore, setUpdatedScore] = useState<number>(score || 0);
   const [updatedComment, setUpdatedComment] = useState<string>(comment || '');
+  const [commentError, setCommentError] = useState<string | undefined>(
+    undefined
+  );
   const { toastMessage, toastVisible, toastType, handleError, handleSuccess } =
     useToast();
   const queryClient = useQueryClient();
 
+  useEffect(() => {
+    if (isModal) {
+      setUpdatedScore(score ?? 0);
+      setUpdatedComment(comment ?? '');
+    }
+  }, [isModal, score, comment]);
+
   const closeModalhandler = () => {
     setIsModal(false);
+    closeResethandler();
+  };
+
+  const closeResethandler = () => {
+    setUpdatedComment(comment ?? '');
+    setUpdatedScore(score ?? 0);
   };
 
   const scoreChangehandler = (value: number) => {
@@ -41,7 +57,12 @@ export default function MyReviewModal({
   };
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setUpdatedComment(e.target.value);
+    const newValue = e.target.value;
+    if (newValue.length < 101) {
+      setUpdatedComment(newValue);
+    } else {
+      setCommentError('리뷰글은 100자 이하로 입력해주세요.');
+    }
   };
 
   const isModified =
@@ -117,6 +138,8 @@ export default function MyReviewModal({
               value: updatedComment,
               onChange: handleCommentChange,
             }}
+            isError={!!commentError}
+            errorMessage={commentError}
           />
         </div>
         <div className="flex w-full flex-col justify-center gap-3 md:flex-row">
