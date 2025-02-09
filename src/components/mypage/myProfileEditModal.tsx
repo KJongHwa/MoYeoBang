@@ -36,8 +36,16 @@ export default function MyProfileEditModal({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const queryClient = useQueryClient();
 
+  useEffect(() => {
+    if (isModal) {
+      setUpdatedNickname(nickname);
+      setImg(image);
+    }
+  }, [isModal, nickname, image]);
+
   const closeModalhandler = () => {
     setIsModal(false);
+    closeResethandler();
   };
 
   const closeResethandler = () => {
@@ -90,7 +98,6 @@ export default function MyProfileEditModal({
         image: uploadUrl,
       }),
     onSuccess: () => {
-      console.log(uploadUrl);
       handleSuccess('프로필이 성공적으로 업데이트되었습니다.');
       setTimeout(() => {
         closeModalhandler();
