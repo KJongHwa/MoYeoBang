@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import UserIcon from '@/public/icons/user.svg';
-import { extractHour } from '@/utils/dateUtils';
+import { extractHour, isToday } from '@/utils/dateUtils';
 import { GatheringProps } from '@/types/gathering.types';
 
 import SlotMotion from '@/components/@shared/animation/SlotMotion';
@@ -17,10 +17,14 @@ export default function GatheringSlot({
   participantCount,
   image,
 }: GatheringProps['slot']) {
+  const isRegistrationEndToday = isToday(registrationEnd);
+
   return (
     <SlotMotion className="relative col-span-1 row-span-1 max-h-80 w-full rounded-2xl bg-black md:max-h-96 xl:max-h-[317px] xl:max-w-[358px]">
       <Link href={`/gathering/${gatheringId}`}>
-        <AlarmBadge layout="slot" hour={extractHour(registrationEnd)} />
+        {isRegistrationEndToday && (
+          <AlarmBadge hour={extractHour(registrationEnd)} />
+        )}
         <Image
           src={image}
           alt="방탈출 테마 이미지"
