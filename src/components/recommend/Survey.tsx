@@ -50,7 +50,7 @@ export default function Survey({ onComplete }: SurveyProps) {
   const progressPercentage = ((currentStep - 1) / questions.length) * 100;
 
   return (
-    <div className="flex flex-col items-center gap-48 px-8 py-24 md:px-14 md:py-32">
+    <div className="flex flex-col items-center gap-32 px-8 py-24 md:gap-44 md:px-14 md:py-32">
       <section className="flex w-full flex-col gap-16">
         <ProgressPuzzleBar
           bgColor="bg-secondary-80"
