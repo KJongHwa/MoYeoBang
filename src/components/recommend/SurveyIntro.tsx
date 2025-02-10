@@ -31,10 +31,9 @@ export default function SurveyIntro({ resetSurvey }: SurveyIntroProps) {
         </p>
       </section>
       <Button
-        variant="tertiary-gray"
         fontWeight="600"
         onClick={() => resetSurvey(true)}
-        className="mx-10 rounded-2xl border-2 border-primary-5 py-3 text-xs text-primary-5 md:border-4 md:py-6 md:text-2xl xl:mx-32"
+        className="mx-10 rounded-2xl border-2 border-primary-5 bg-secondary-90 py-3 text-xs text-primary-5 md:border-4 md:py-6 md:text-2xl xl:mx-32"
       >
         시작하기
       </Button>

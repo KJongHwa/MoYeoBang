@@ -16,10 +16,10 @@ export default function GenreFilter({
   const buttonClass = (isSelected: boolean) =>
     isSelected
       ? 'text-white customUnderline'
-      : 'text-text-disabled hover:text-secondary-30 customUnderlineHover';
+      : 'text-text-disabled hover:text-secondary-30';
 
   return (
-    <ul className="scrollbar-hidden flex gap-3 overflow-y-hidden whitespace-nowrap text-lg font-semibold">
+    <ul className="scrollbar-x-hidden flex gap-3 overflow-y-hidden whitespace-nowrap text-lg font-semibold">
       {genres.map((genre) => (
         <button
           key={genre.value}
@@ -27,7 +27,7 @@ export default function GenreFilter({
           onClick={() => handleGenreClick(genre.value)}
           className={buttonClass(selectedGenre === genre.value)}
         >
-          {genre.label}
+          <span className="customUnderlineHover">{genre.label}</span>
         </button>
       ))}
     </ul>

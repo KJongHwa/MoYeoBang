@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import useToast from '@/hooks/useToast';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 import Toast from '@/components/@shared/Toast';
 import FormField from '@/components/@shared/form/Formfield';
 import { authApi } from '@/axios/auth';
+import { ACCESS_TOKEN_KEY } from '@/axios/constants';
 import LoginImages from './LoginImages';
 
 interface LoginFormData {
@@ -18,6 +20,17 @@ interface LoginFormData {
 function LoginForm() {
   const router = useRouter();
   const { toastMessage, toastVisible, toastType, handleError } = useToast();
+
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const userInfo = localStorage.getItem('userInfo');
+
+    // 둘 중 하나만 있는 비정상적인 상태일 때
+    if ((!token && userInfo) || (token && !userInfo)) {
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
+      localStorage.removeItem('userInfo');
+    }
+  }, []);
 
   const {
     register,

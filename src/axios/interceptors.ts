@@ -19,6 +19,16 @@ export const setupInterceptors = (instance: AxiosInstance) => {
     (response) => response,
     (error) => {
       if (error.response?.status === 401) {
+        // 토큰과 사용자 정보 모두 제거
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem('userInfo');
+
+        // 현재 경로 저장 (로그인 후 리다이렉트용)
+        const currentPath = window.location.pathname;
+        if (currentPath !== '/login') {
+          localStorage.setItem('redirectPath', currentPath);
+        }
+
         window.location.href = '/login';
       }
       if (process.env.NODE_ENV === 'development') {

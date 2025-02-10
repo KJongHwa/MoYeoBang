@@ -1,4 +1,8 @@
+'use client';
+
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import type { GatheringRequestBody } from '@/types/gathering.types';
@@ -7,56 +11,57 @@ import { useCalendar } from '@/hooks/useCalendar';
 import useToast from '@/hooks/useToast';
 import { getToday, convertToISO, splitDateTime } from '@/utils/dateUtils';
 import { searchThemes } from '@/utils/searchUtils';
-import { INIT_GATHRING } from '@/constants/initialValues';
+import { INIT_GATHERING } from '@/constants/initialValues';
 import { postGathering } from '@/axios/gather/apis';
+import { themeNameList } from '@/constants/themeList';
 
 import Toast from '@/components/@shared/Toast';
-import Modal from '@/components/@shared/Modal';
 import Button from '@/components/@shared/button/Button';
 import Input from '@/components/@shared/input/Input';
+import TextArea from '@/components/@shared/input/TextArea';
 import DateInput from '@/components/@shared/input/DateInput';
 import DateTimeCalendar from '@/components/@shared/calendar/DateTimeCalendar';
 import { editMyCreateGathering } from '@/axios/mypage/api';
-import LocationSelector from './selector/LocationSelector';
-import CapacitySelector from './selector/CapacitySelector';
-import ThemeSelector from './selector/ThemeSelector';
+import LocationSelector from '@/components/gatheringEdit/LocationSelector';
+import CapacitySelector from '@/components/gatheringEdit/CapacitySelector';
+import ThemeSelector from '@/components/gatheringEdit/ThemeSelector';
 
-interface GatheringModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface GatheringFormProps {
   isEdit?: boolean;
   gatheringId?: number;
 }
 
-export default function GatheringModal({
-  isOpen,
-  onClose,
+export default function GatheringForm({
   isEdit = false,
   gatheringId,
-}: GatheringModalProps) {
+}: GatheringFormProps) {
   const queryClient = useQueryClient();
   const { trigger, register, handleSubmit, setValue, watchFields, formState } =
-    useCustomForm<GatheringRequestBody['post']>(INIT_GATHRING.POST);
+    useCustomForm<GatheringRequestBody['post']>(INIT_GATHERING.POST);
 
   const [location, setLocation] = useState<string>('');
   const [inputThemeName, setInputThemeName] = useState<string>('');
   const [selectedThemeName, setSelectedThemeName] = useState<string>('');
   const [filteredThemes, setFilteredThemes] = useState<string[]>([]);
   const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
+  const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const [dateTimeError, setDateTimeError] = useState<string>('');
   const [registrationEndError, setRegistrationEndError] = useState<string>('');
   const [searchMessage, setSearchMessage] = useState<string>('');
+  const [success, setSuccess] = useState(false);
 
   const { toastMessage, toastVisible, toastType, handleSuccess, handleError } =
     useToast();
 
-  const { name, themeName, capacity, dateTime, registrationEnd } = watchFields([
-    'name',
-    'themeName',
-    'capacity',
-    'dateTime',
-    'registrationEnd',
-  ]);
+  const { name, themeName, message, capacity, dateTime, registrationEnd } =
+    watchFields([
+      'name',
+      'message',
+      'themeName',
+      'capacity',
+      'dateTime',
+      'registrationEnd',
+    ]);
 
   // 모임 날짜 캘린더
   const {
@@ -96,9 +101,28 @@ export default function GatheringModal({
   // 방탈출 테마 검색
   const handleThemeSearch = () => {
     setSearchAttempted(true);
-    const { filtered, message } = searchThemes(inputThemeName, location);
+    const { filtered, searchErrorMessage } = searchThemes(
+      inputThemeName,
+      location
+    );
     setFilteredThemes(filtered);
-    setSearchMessage(message);
+    setSearchMessage(searchErrorMessage);
+    setShowThemeDropdown(true);
+
+    if (searchErrorMessage) {
+      setValue('themeName', '');
+    }
+  };
+
+  // 방탈출 테마 전체보기
+  const handleShowAllThemes = (selectedLocation: string) => {
+    if (themeNameList[selectedLocation]) {
+      const allThemes = themeNameList[selectedLocation].theme;
+      setFilteredThemes(allThemes);
+    } else {
+      setFilteredThemes([]);
+    }
+    setShowThemeDropdown(true);
   };
 
   // 방탈출 지역 변경 처리
@@ -152,13 +176,11 @@ export default function GatheringModal({
     mutationFn: async (submissionData: GatheringRequestBody['post']) =>
       postGathering(submissionData),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['gatherings'] });
       handleSuccess('모임이 생성되었습니다!');
       setTimeout(() => {
-        onClose();
-      }, 3500);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['gatherings'] });
+        setSuccess(true);
+      }, 2000);
     },
     onError: (error: any) => {
       console.error('createGathering Error:', error);
@@ -173,12 +195,12 @@ export default function GatheringModal({
       return editMyCreateGathering(submissionData, gatheringId);
     },
     onSuccess: () => {
-      handleSuccess('모임이 수정되었습니다!');
-      onClose();
-    },
-    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['gatherings'] });
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
+      handleSuccess('모임이 수정되었습니다!');
+      setTimeout(() => {
+        setSuccess(true);
+      }, 2000);
     },
     onError: (error: any) => {
       console.error('updateGathering Error:', error);
@@ -206,10 +228,8 @@ export default function GatheringModal({
     };
 
     if (isEdit) {
-      // 모임 수정
       await updateGathering(submissionData);
     } else {
-      // 모임 생성
       await createGathering(submissionData);
     }
   };
@@ -223,7 +243,7 @@ export default function GatheringModal({
     validateForm();
   }, [
     name,
-    themeName,
+    message,
     dateTime,
     registrationEnd,
     registrationEndError,
@@ -231,17 +251,21 @@ export default function GatheringModal({
     trigger,
   ]);
 
+  // FIX: next-router-not-mounted 오류
+  useEffect(() => {
+    if (success) {
+      window.location.href = isEdit ? '/mypage' : '/gathering';
+    }
+  }, [success, isEdit]);
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      customDimStyle="w-full md:w-[542px] overflow-visible"
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex w-full flex-col gap-12"
     >
-      <h1 className="mb-10 text-lg font-bold">
-        {isEdit ? '모임 수정하기' : '모임 만들기'}
-      </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <main className="flex h-full w-full flex-col gap-12 px-4 pb-24 pt-5 md:gap-12 md:px-6 md:pb-32 md:pt-8 xl:mx-auto xl:max-w-[1166px] xl:px-0 xl:pt-12">
         <Input
+          variant="elevated"
           label="name"
           labelText="모임 이름"
           placeholder="모임 이름을 입력하세요."
@@ -272,17 +296,34 @@ export default function GatheringModal({
             setInputThemeName={setInputThemeName}
             searchThemes={handleThemeSearch}
             filteredThemes={filteredThemes}
+            setFilteredThemes={setFilteredThemes}
             setThemeName={(newName) => setValue('themeName', newName)}
             selectedThemeName={selectedThemeName}
             setSelectedThemeName={setSelectedThemeName}
             searchAttempted={searchAttempted}
+            showThemeDropdown={showThemeDropdown}
+            setShowThemeDropdown={setShowThemeDropdown}
+            handleShowAllThemes={handleShowAllThemes}
           />
         )}
-        <div className="relative flex flex-col gap-2">
+        <TextArea
+          variant="dark"
+          size="large"
+          labelColor="white"
+          label="모집글"
+          inputProps={{
+            ...register('message', {
+              required: {
+                value: true,
+                message: '모임 설명을 입력해주세요.',
+              },
+            }),
+          }}
+        />
+        <div className="relative flex gap-5">
           <DateInput
             label="dateTime"
             labelText="모임 날짜"
-            placeholder="YYYY-MM-DD 00:00 AM"
             inputProps={{
               readOnly: true,
               onClick: toggleCalendar,
@@ -303,21 +344,19 @@ export default function GatheringModal({
               />
             </div>
           )}
-          {dateTime && !dateTimeError && (
-            <DateInput
-              label="registrationEnd"
-              labelText="마감 날짜"
-              placeholder="YYYY-MM-DD 00:00 AM"
-              inputProps={{
-                readOnly: true,
-                onClick: toggleEndDateCalendar,
-                value: selectedEndDate || '',
-                ...register('registrationEnd', { required: true }),
-              }}
-              isError={!!registrationEndError}
-              errorMessage={registrationEndError}
-            />
-          )}
+          <DateInput
+            label="registrationEnd"
+            labelText="마감 날짜"
+            inputProps={{
+              readOnly: true,
+              onClick: toggleEndDateCalendar,
+              value: selectedEndDate || '',
+              ...register('registrationEnd', { required: true }),
+              disabled: !dateTime || !!dateTimeError,
+            }}
+            isError={!!registrationEndError}
+            errorMessage={registrationEndError}
+          />
           {isEndDateCalendarOpen && (
             <div className="fixed inset-0 z-90 flex items-center justify-center bg-black bg-opacity-50">
               <DateTimeCalendar
@@ -334,17 +373,42 @@ export default function GatheringModal({
           capacity={capacity}
           setCapacity={(newCapacity) => setValue('capacity', newCapacity)}
         />
-        <Button
-          type="submit"
-          variant="primary-gray"
-          padding="10"
-          disabled={!formState.isValid}
-          className="mb-4 mt-3 w-full"
-        >
-          {isEdit ? '수정' : '생성'}
-        </Button>
-      </form>
-      {toastVisible && <Toast message={toastMessage} type={toastType} />}
-    </Modal>
+        {toastVisible && <Toast message={toastMessage} type={toastType} />}
+      </main>
+
+      <footer className="fixed bottom-0 w-screen border-t-2 border-secondary-70 bg-secondary-100 px-4 pb-6 pt-2 md:px-6 md:py-1 xl:px-0">
+        <div className="my-auto flex max-w-[1166px] items-center justify-between xl:mx-auto">
+          <div className="flex md:gap-6 xl:gap-14">
+            <Image
+              src="/images/puzzle_footer.png"
+              alt="하단 퍼즐 캐릭터"
+              width={113}
+              height={78}
+              className="-mb-1 hidden md:block"
+            />
+            <p className="my-auto hidden text-sm font-semibold md:block xl:text-base">
+              모집글 쓰고 손발이 척척 맞는 <br className="xl:hidden" /> 방탈출
+              팀원을 모집해보세요!
+            </p>
+          </div>
+          <div className="mx-auto flex gap-2 md:mx-0">
+            <Link href={isEdit ? '/mypage' : '/gathering'}>
+              <Button className="w-36 bg-secondary-70 hover:bg-secondary-60">
+                취소
+              </Button>
+            </Link>
+            <Button
+              type="submit"
+              variant="primary-gray"
+              padding="10"
+              disabled={!formState.isValid || !location || !themeName}
+              className="w-36"
+            >
+              {isEdit ? '수정' : '생성'}
+            </Button>
+          </div>
+        </div>
+      </footer>
+    </form>
   );
 }
