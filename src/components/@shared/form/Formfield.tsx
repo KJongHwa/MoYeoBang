@@ -37,8 +37,6 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
       <div className="relative">
         <LoginInput
           label={label}
-          varient="elevated"
-          fontSize="14"
           placeholder={placeholder}
           inputProps={{
             ...rest,

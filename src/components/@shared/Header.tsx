@@ -9,8 +9,6 @@ import { useRouter } from 'next/navigation';
 import { authApi } from '@/axios/auth';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import clsx from 'clsx';
-import { useQuery } from '@tanstack/react-query';
-import { getMyProfile } from '@/axios/mypage/api';
 import Button from './button/Button';
 import HeaderNavBar from './HeaderNavbar';
 import Toast from './Toast';
@@ -32,8 +30,8 @@ export default function Header() {
 
   useEffect(() => {
     const checkLoginStatus = () => {
-      const userInfo = localStorage.getItem('userInfo');
-      setIsLoggedIn(!!userInfo);
+      const accessToken = localStorage.getItem('accessToken');
+      setIsLoggedIn(!!accessToken);
     };
 
     checkLoginStatus();
@@ -52,14 +50,7 @@ export default function Header() {
     };
   }, []);
 
-  // const { data: userProfile } = useUserProfile(!!isLoggedIn);
-  // console.log(userProfile);
-
-  // const { data: userProfile } = useQuery({
-  //   queryKey: ['myProfile'],
-  //   queryFn: getMyProfile,
-  //   enabled: isLoggedIn, // 로그인 상태일 때만 쿼리 실행
-  // });
+  const { data: userProfile } = useUserProfile(!!isLoggedIn);
 
   const handleMobileNav = () => {
     setMobileNav(!mobileNav);
@@ -138,29 +129,27 @@ export default function Header() {
               ) : (
                 <div className="relative flex text-base font-bold text-white">
                   <button type="button" onClick={toggleDropdown}>
-                    {/* <Image
+                    <Image
                       src={
                         userProfile?.image || '/icons/profile_image_default.svg'
                       }
                       width={24}
                       height={24}
-                      className={clsx(userProfile?.image ? 'rounded-full' : '')}
-                      alt="마이페이지 이미지"
-                    /> */}
-                    <Image
-                      src="/icons/profile_image_default.svg"
-                      width={24}
-                      height={24}
+                      className={clsx(
+                        'h-[24px] w-[24px] md:h-[40px] md:w-[40px]',
+                        userProfile?.image && 'rounded-full'
+                      )}
                       alt="마이페이지 이미지"
                     />
                   </button>
                   {isMenuOpen && (
-                    <ul className="absolute -right-12 z-50 mt-8 w-32 rounded-md bg-secondary-80 text-[16px] font-normal shadow-md">
+                    <ul className="absolute -right-12 z-50 mt-8 w-32 rounded-md bg-secondary-80 text-[16px] font-normal shadow-md md:top-3">
                       <li>
                         <Link href="/mypage" onClick={closeDropdown}>
                           <button
                             type="button"
                             className="w-full rounded-md px-4 py-2 text-left hover:bg-secondary-60"
+                            onClick={closeMobileNav}
                           >
                             마이페이지
                           </button>
@@ -173,6 +162,7 @@ export default function Header() {
                           onClick={() => {
                             handleLogout();
                             closeDropdown();
+                            closeMobileNav();
                           }}
                         >
                           로그아웃

@@ -16,7 +16,7 @@ export default function CapacitySelector({
 
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="font-semibold text-gray-800">
+      <h2 className="font-semibold text-white">
         모집 정원 (본인을 포함한 모집 정원)
       </h2>
       <div className="flex items-center justify-center">
