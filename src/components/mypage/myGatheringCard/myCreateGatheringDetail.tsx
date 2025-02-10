@@ -64,7 +64,7 @@ export default function MyCreateGatheringDetail({
           </GatheringBadge>
           <GatheringBadge variant="secondary" fontColor="primary">
             {participantCount === capacity ? (
-              <span>
+              <div className="flex">
                 <Image
                   src="/icons/check.svg"
                   width={16}
@@ -72,7 +72,7 @@ export default function MyCreateGatheringDetail({
                   alt="체크 이미지"
                 />
                 일정 확정
-              </span>
+              </div>
             ) : (
               '일정 미확정'
             )}
@@ -109,7 +109,7 @@ export default function MyCreateGatheringDetail({
           />
         </button>
         {isMenuOpen && (
-          <ul className="absolute -right-2 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md md:-right-16">
+          <ul className="absolute -right-2 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md xl:-right-16">
             {liDropdowns.map((liDropdown) => (
               <li key={liDropdown.label}>
                 <button

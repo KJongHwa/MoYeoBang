@@ -7,18 +7,12 @@ export default function MyReviewWrite() {
   const { data: writeMyReviews, isLoading: isWriteMyReviewsLoading } =
     UseReviews({ reviewed: true });
   if (isWriteMyReviewsLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        <Spinner />
-      </div>
-    );
+    return <Spinner />;
   }
 
   if (!writeMyReviews) {
     return (
-      <div className="flex h-dvh items-center justify-center">
-        작성 가능한 모임 정보를 불러올 수 없습니다.
-      </div>
+      <EmptyElement>내가 쓴 리뷰의 정보를 불러올 수 없습니다.</EmptyElement>
     );
   }
   if (writeMyReviews.length === 0) {

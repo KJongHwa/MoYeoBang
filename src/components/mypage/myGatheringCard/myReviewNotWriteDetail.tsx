@@ -55,6 +55,7 @@ export default function MyReviewNotWriteDetail({
               position: 'absolute',
               right: '10px',
             }}
+            className="w-[120px]"
           >
             리뷰쓰기
           </Button>

@@ -174,7 +174,9 @@ export default function GatheringModal({
     },
     onSuccess: () => {
       handleSuccess('모임이 수정되었습니다!');
-      onClose();
+      setTimeout(() => {
+        onClose();
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['gatherings'] });
