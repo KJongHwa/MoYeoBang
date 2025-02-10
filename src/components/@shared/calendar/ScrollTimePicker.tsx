@@ -28,20 +28,20 @@ export default function ScrollTimePicker({
         <button
           type="button"
           className={`rounded-md px-[14px] py-[10px] text-xl font-bold ${
-            selectedPeriod === 'PM' ? 'bg-default-primary' : ''
-          } hover:bg-primary-50`}
-          onClick={handlePeriodToggle}
-        >
-          PM
-        </button>
-        <button
-          type="button"
-          className={`rounded-md px-[14px] py-[10px] text-xl font-bold ${
             selectedPeriod === 'AM' ? 'bg-default-primary' : ''
           } hover:bg-primary-50`}
           onClick={handlePeriodToggle}
         >
           AM
+        </button>
+        <button
+          type="button"
+          className={`rounded-md px-[14px] py-[10px] text-xl font-bold ${
+            selectedPeriod === 'PM' ? 'bg-default-primary' : ''
+          } hover:bg-primary-50`}
+          onClick={handlePeriodToggle}
+        >
+          PM
         </button>
       </div>
 
