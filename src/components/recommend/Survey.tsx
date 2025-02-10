@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Button from '@/components/@shared/button/Button';
 import ProgressPuzzleBar from '@/components/@shared/ProgressPuzzleBar';
+import FadeInListMotion from '@/components/@shared/animation/FadeInListMotion';
 
 import {
   questions,
@@ -76,30 +77,32 @@ export default function Survey({ onComplete }: SurveyProps) {
   const progressPercentage = ((currentStep - 1) / questions.length) * 100;
 
   return (
-    <div className="flex flex-col items-center gap-32 px-8 py-24 md:px-14 md:py-32">
-      <section className="flex w-full flex-col gap-12">
+    <div className="flex flex-col items-center gap-48 px-8 py-24 md:px-14 md:py-32">
+      <section className="flex w-full flex-col gap-16">
         <ProgressPuzzleBar
           bgColor="bg-secondary-80"
           progressColor="bg-primary-60"
           value={progressPercentage}
         />
-        <h2 className="flex flex-col gap-2 text-center text-2xl font-bold md:gap-6">
-          <span>Q</span> <p>{questions[currentStep - 1]?.text}</p>
+        <h2 className="flex flex-col gap-2 text-center text-base font-bold md:gap-6 md:text-2xl">
+          <span>Q.</span> <p>{questions[currentStep - 1]?.text}</p>
         </h2>
       </section>
-      <section className="flex w-full flex-col flex-wrap justify-center gap-4">
-        {questions[currentStep - 1].options.map((option) => (
-          <Button
-            type="button"
-            padding="12"
-            key={option}
-            onClick={() => handleAnswer(option)}
-            className="w-full py-4 text-xs md:py-5 md:text-2xl"
-          >
-            {option === '' ? '전체' : levelToKorean[option] || option}
-          </Button>
+      <ul className="flex w-full flex-col flex-wrap justify-center gap-4">
+        {questions[currentStep - 1].options.map((option, index) => (
+          <FadeInListMotion key={option} delay={index * 0.25} duration={0.5}>
+            <Button
+              type="button"
+              padding="12"
+              key={option}
+              onClick={() => handleAnswer(option)}
+              className="w-full py-4 text-xs md:py-5 md:text-2xl"
+            >
+              {option === '' ? '전체' : levelToKorean[option] || option}
+            </Button>
+          </FadeInListMotion>
         ))}
-      </section>
+      </ul>
     </div>
   );
 }
