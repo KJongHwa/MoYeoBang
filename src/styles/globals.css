@@ -39,6 +39,7 @@
 .customUnderline,
 .customUnderlineHover {
   position: relative;
+  display: block;
 }
 
 .customUnderlineHover {
