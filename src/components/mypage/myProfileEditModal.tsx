@@ -43,14 +43,15 @@ export default function MyProfileEditModal({
     }
   }, [isModal, nickname, image]);
 
-  const closeModalhandler = () => {
-    setIsModal(false);
-    closeResethandler();
-  };
-
   const closeResethandler = () => {
     setUpdatedNickname(nickname);
     setImg(image);
+    setNickNameError(undefined);
+  };
+
+  const closeModalhandler = () => {
+    setIsModal(false);
+    closeResethandler();
   };
 
   const isModified =
@@ -128,7 +129,6 @@ export default function MyProfileEditModal({
       // 이미지 변경한 경우
       if (isImageChanged) {
         const response = await postMyImage({ image: file });
-        console.log('API 응답 이미지 URL:', response);
         setUploadUrl(response); // 상태 업데이트 후 useEffect에서 처리됨
       }
     } catch (error) {
@@ -140,7 +140,6 @@ export default function MyProfileEditModal({
   // useEffect로 uploadUrl 변경 감지 후 updateProfile 실행
   useEffect(() => {
     if (uploadUrl !== image) {
-      console.log('업로드된 이미지 URL 변경됨:', uploadUrl);
       updateProfile();
     }
   }, [uploadUrl]); // uploadUrl 변경 시 updateProfile 실행

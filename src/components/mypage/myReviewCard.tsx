@@ -69,7 +69,7 @@ export default function MyReviewCard({
                 />
               </button>
               {isMenuOpen && (
-                <ul className="absolute -right-6 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md md:-right-20">
+                <ul className="absolute -right-6 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md xl:-right-20">
                   {liDropdowns.map((liDropdown) => (
                     <li key={liDropdown.label}>
                       <button

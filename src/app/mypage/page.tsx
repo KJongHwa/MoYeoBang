@@ -112,7 +112,7 @@ export default function MyPage() {
       </div>
 
       <hr className="mb-9 border-[#646464]" />
-      <div className="">
+      <div className="mb-[180px] h-full">
         <nav className="ml-3 flex items-center gap-8 md:gap-6">
           {navLinks.map((link) => (
             <button
@@ -120,8 +120,8 @@ export default function MyPage() {
               type="button"
               className={`pb-2 text-[18px] font-bold text-secondary-60 ${
                 activeTab === link.label
-                  ? 'border-b-2 border-white !text-white'
-                  : ''
+                  ? 'customUnderline text-white'
+                  : 'hover:text-secondary-30'
               }`}
               onClick={() => navClick(link.label)}
             >
@@ -129,7 +129,7 @@ export default function MyPage() {
             </button>
           ))}
         </nav>
-        <div className=" mb-10 mt-8">{renderActiveComponent()}</div>
+        <div className="mb-10 mt-8">{renderActiveComponent()}</div>
       </div>
     </main>
   );

@@ -135,15 +135,12 @@ export default function Header() {
                       }
                       width={24}
                       height={24}
-                      className={clsx(userProfile?.image ? 'rounded-full' : '')}
+                      className={clsx(
+                        'h-[24px] w-[24px] md:h-[40px] md:w-[40px]',
+                        userProfile?.image && 'rounded-full'
+                      )}
                       alt="마이페이지 이미지"
                     />
-                    {/* <Image
-                      src="/icons/profile_image_default.svg"
-                      width={24}
-                      height={24}
-                      alt="마이페이지 이미지"
-                    /> */}
                   </button>
                   {isMenuOpen && (
                     <ul className="absolute -right-12 z-50 mt-8 w-32 rounded-md bg-secondary-80 text-[16px] font-normal shadow-md">

@@ -109,7 +109,7 @@ export default function MyCreateGatheringDetail({
           />
         </button>
         {isMenuOpen && (
-          <ul className="absolute -right-2 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md md:-right-16">
+          <ul className="absolute -right-2 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md xl:-right-16">
             {liDropdowns.map((liDropdown) => (
               <li key={liDropdown.label}>
                 <button

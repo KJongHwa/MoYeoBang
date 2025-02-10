@@ -85,10 +85,10 @@ export default function MyGatheringDetail({
             padding="10"
             fontSize="14"
             onClick={openDeleteModal}
-            className="absolute right-4 border-secondary-80 bg-secondary-70"
+            className="absolute bottom-4 right-4 w-[120px] border-secondary-80 bg-secondary-70"
             disabled={isCanceled}
           >
-            예약취소하기
+            예약 취소하기
           </Button>
           <DeleteModal
             id={gatheringId}

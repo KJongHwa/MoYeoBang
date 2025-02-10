@@ -3,6 +3,7 @@ import MyGatheringCard from './myGatheringCard';
 import MyGatheringDetail from './myGatheringCard/myGatheringDetail';
 import EmptyElement from '../@shared/EmptyElement';
 import Spinner from '../@shared/Spinner';
+import CardMotion from '../@shared/animation/CardMotion';
 
 export default function MyGathering() {
   const { data: myJoinedGatherings, isLoading: isJoinedLoading } =
@@ -22,23 +23,24 @@ export default function MyGathering() {
   return (
     <div className="flex flex-col gap-5">
       {myJoinedGatherings.map((gathering: any) => (
-        <MyGatheringCard
-          gatheringId={gathering.gatheringId}
-          key={gathering.gatheringId}
-          image={gathering.image}
-          isCanceled={gathering.canceled}
-        >
-          <MyGatheringDetail
+        <CardMotion key={gathering.gatheringId}>
+          <MyGatheringCard
             gatheringId={gathering.gatheringId}
-            location={gathering.location}
-            dateTime={gathering.dateTime}
-            name={gathering.name}
-            themeName={gathering.themeName}
-            capacity={gathering.capacity}
-            participantCount={gathering.participantCount}
+            image={gathering.image}
             isCanceled={gathering.canceled}
-          />
-        </MyGatheringCard>
+          >
+            <MyGatheringDetail
+              gatheringId={gathering.gatheringId}
+              location={gathering.location}
+              dateTime={gathering.dateTime}
+              name={gathering.name}
+              themeName={gathering.themeName}
+              capacity={gathering.capacity}
+              participantCount={gathering.participantCount}
+              isCanceled={gathering.canceled}
+            />
+          </MyGatheringCard>
+        </CardMotion>
       ))}
     </div>
   );

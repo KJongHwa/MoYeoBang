@@ -42,14 +42,15 @@ export default function MyReviewModal({
     }
   }, [isModal, score, comment]);
 
-  const closeModalhandler = () => {
-    setIsModal(false);
-    closeResethandler();
-  };
-
   const closeResethandler = () => {
     setUpdatedComment(comment ?? '');
     setUpdatedScore(score ?? 0);
+    setCommentError(undefined);
+  };
+
+  const closeModalhandler = () => {
+    setIsModal(false);
+    closeResethandler();
   };
 
   const scoreChangehandler = (value: number) => {

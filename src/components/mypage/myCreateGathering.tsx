@@ -3,6 +3,7 @@ import MyGatheringCard from './myGatheringCard';
 import MyCreateGatheringDetail from './myGatheringCard/myCreateGatheringDetail';
 import EmptyElement from '../@shared/EmptyElement';
 import Spinner from '../@shared/Spinner';
+import CardMotion from '../@shared/animation/CardMotion';
 
 export default function MyCreateGathering() {
   const { data: myCreateGatherings, isLoading: isMyCreateGatheringsLoading } =
@@ -19,21 +20,22 @@ export default function MyCreateGathering() {
   return (
     <div className="flex flex-col gap-5">
       {myCreateGatherings.map((gathering: any) => (
-        <MyGatheringCard
-          key={gathering.gatheringId}
-          image={gathering.image}
-          gatheringId={gathering.gatheringId}
-        >
-          <MyCreateGatheringDetail
-            location={gathering.location}
-            dateTime={gathering.dateTime}
-            name={gathering.name}
-            themeName={gathering.themeName}
-            capacity={gathering.capacity}
-            participantCount={gathering.participantCount}
+        <CardMotion key={gathering.gatheringId}>
+          <MyGatheringCard
+            image={gathering.image}
             gatheringId={gathering.gatheringId}
-          />
-        </MyGatheringCard>
+          >
+            <MyCreateGatheringDetail
+              location={gathering.location}
+              dateTime={gathering.dateTime}
+              name={gathering.name}
+              themeName={gathering.themeName}
+              capacity={gathering.capacity}
+              participantCount={gathering.participantCount}
+              gatheringId={gathering.gatheringId}
+            />
+          </MyGatheringCard>
+        </CardMotion>
       ))}
     </div>
   );

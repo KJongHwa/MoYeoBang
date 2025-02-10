@@ -103,10 +103,10 @@ export default function DeleteModal({
     <Modal
       isOpen={isModal}
       onClose={closeModalhandler}
-      customDimStyle="w-[400px]"
+      customDimStyle="w-[300px] md:w-[400px]"
     >
-      <div className="flex flex-col gap-10">
-        <p className="text-xl font-bold">
+      <div className="flex flex-col gap-12">
+        <p className="mt-10 text-center text-base ">
           {getActionText(classification)} 하시겠습니까?
         </p>
         <div className="flex justify-center gap-3">
