@@ -11,6 +11,7 @@ import { getToday, convertToISO, splitDateTime } from '@/utils/dateUtils';
 import { searchThemes } from '@/utils/searchUtils';
 import { INIT_GATHERING } from '@/constants/initialValues';
 import { postGathering } from '@/axios/gather/apis';
+import { themeNameList } from '@/constants/themeList';
 
 import Toast from '@/components/@shared/Toast';
 import Button from '@/components/@shared/button/Button';
@@ -41,6 +42,7 @@ export default function GatheringForm({
   const [selectedThemeName, setSelectedThemeName] = useState<string>('');
   const [filteredThemes, setFilteredThemes] = useState<string[]>([]);
   const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
+  const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const [dateTimeError, setDateTimeError] = useState<string>('');
   const [registrationEndError, setRegistrationEndError] = useState<string>('');
   const [searchMessage, setSearchMessage] = useState<string>('');
@@ -103,6 +105,18 @@ export default function GatheringForm({
     );
     setFilteredThemes(filtered);
     setSearchMessage(searchErrorMessage);
+    setShowThemeDropdown(true);
+  };
+
+  // 방탈출 테마 전체보기
+  const handleShowAllThemes = (selectedLocation: string) => {
+    if (themeNameList[selectedLocation]) {
+      const allThemes = themeNameList[selectedLocation].theme;
+      setFilteredThemes(allThemes);
+    } else {
+      setFilteredThemes([]);
+    }
+    setShowThemeDropdown(true);
   };
 
   // 방탈출 지역 변경 처리
@@ -207,6 +221,8 @@ export default function GatheringForm({
       registrationEnd: isoRegistrationEnd,
     };
 
+    console.log(submissionData);
+
     if (isEdit) {
       await updateGathering(submissionData);
     } else {
@@ -224,7 +240,6 @@ export default function GatheringForm({
   }, [
     name,
     message,
-    themeName,
     dateTime,
     registrationEnd,
     registrationEndError,
@@ -277,10 +292,14 @@ export default function GatheringForm({
             setInputThemeName={setInputThemeName}
             searchThemes={handleThemeSearch}
             filteredThemes={filteredThemes}
+            setFilteredThemes={setFilteredThemes}
             setThemeName={(newName) => setValue('themeName', newName)}
             selectedThemeName={selectedThemeName}
             setSelectedThemeName={setSelectedThemeName}
             searchAttempted={searchAttempted}
+            showThemeDropdown={showThemeDropdown}
+            setShowThemeDropdown={setShowThemeDropdown}
+            handleShowAllThemes={handleShowAllThemes}
           />
         )}
         <TextArea
@@ -378,7 +397,7 @@ export default function GatheringForm({
               type="submit"
               variant="primary-gray"
               padding="10"
-              disabled={!formState.isValid}
+              disabled={!formState.isValid || !location || !themeName}
               className="w-36"
             >
               {isEdit ? '수정' : '생성'}
