@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Header from '../components/@shared/Header';
 import { Providers } from '../providers/providers';
 import '../styles/globals.css';
+import '../styles/scrollbar.css';
 
 export const metadata: Metadata = {
   title: '모여방',
@@ -34,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>
+      <body className="scrollbar-x-hidden default-scrollbar">
         <Providers>
           <Header />
           {children}

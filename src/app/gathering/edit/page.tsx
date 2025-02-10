@@ -12,7 +12,7 @@ export default function GatheringEdit() {
 
   return (
     <>
-      <div className="flex h-full max-w-[1166px] flex-col gap-12 px-4 pb-5 pt-24 md:px-6 md:pb-12 md:pt-32 xl:mx-auto xl:px-0">
+      <div className="flex h-full w-full flex-col gap-12 overflow-x-hidden px-4 pb-5 pt-24 md:px-6 md:pb-12 md:pt-32 xl:mx-auto xl:max-w-[1166px] xl:px-0">
         <HeaderTitle title={isEdit ? '모임 수정하기' : '모임 만들기'} />
       </div>
       <GatheringForm

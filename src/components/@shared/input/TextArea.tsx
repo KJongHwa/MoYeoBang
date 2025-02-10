@@ -59,7 +59,7 @@ export default function TextArea({
       )}
       <div
         className={clsx(
-          'relative  w-full overflow-hidden rounded-lg px-4 outline outline-1',
+          'textarea-wrapper relative  w-full overflow-hidden rounded-lg px-4 outline outline-1',
           {
             'outline-status-danger focus-within:outline-status-danger': isError,
             'outline-transparent focus-within:outline-default-primary':
@@ -76,11 +76,12 @@ export default function TextArea({
           id={textAreaId}
           placeholder={placeholder}
           className={clsx(
-            'h-full w-full resize-none overflow-auto bg-transparent font-medium leading-6 outline-none ',
+            'w-full resize-none overflow-auto bg-transparent font-medium leading-6 outline-none ',
             {
-              'text-secondary-70 placeholder:text-secondary-50':
+              'textarea-light-scrollbar min-h-[100px] text-secondary-70 placeholder:text-secondary-50':
                 variant === 'light',
-              'text-white placeholder:text-secondary-50': variant === 'dark',
+              'textarea-dark-scrollbar h-full text-white placeholder:text-secondary-50':
+                variant === 'dark',
             }
           )}
           {...inputProps}

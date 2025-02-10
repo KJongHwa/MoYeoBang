@@ -19,7 +19,7 @@ export default function GenreFilter({
       : 'text-text-disabled hover:text-secondary-30 customUnderlineHover';
 
   return (
-    <ul className="scrollbar-hidden flex gap-3 overflow-y-hidden whitespace-nowrap text-lg font-semibold">
+    <ul className="scrollbar-x-hidden flex gap-3 overflow-y-hidden whitespace-nowrap text-lg font-semibold">
       {genres.map((genre) => (
         <button
           key={genre.value}
