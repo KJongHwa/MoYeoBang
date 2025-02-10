@@ -6,7 +6,7 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import type { GatheringDto } from '@/types/gathering.types';
 import { getGatherings } from '@/axios/gather/apis';
 import { sortList } from '@/constants/sortList';
-import { INIT_GATHRING } from '@/constants/initialValues';
+import { INIT_GATHERING } from '@/constants/initialValues';
 import { QueryProvider } from '@/components/@shared/QueryProvider';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 
@@ -20,7 +20,7 @@ import GenreFilter from '@/components/@shared/GenreFilter';
 
 export default function GatheringList() {
   const [selectedSort, setSelectedSort] = useState('dateTime');
-  const [filters, setFilters] = useState(INIT_GATHRING.FILTER);
+  const [filters, setFilters] = useState(INIT_GATHERING.FILTER);
 
   const {
     data: gatherings,

@@ -4,8 +4,9 @@ import clsx from 'clsx';
 type LoginInputProps = {
   label?: string;
   labelText?: string;
+  labelColor?: 'charcoal' | 'gray' | 'white';
   fontSize?: '14' | '16';
-  varient?: 'default' | 'elevated';
+  variant?: 'default' | 'elevated';
   gap?: '8' | '12';
   placeholder?: string;
   isError?: boolean;
@@ -20,10 +21,11 @@ const LoginInput = React.forwardRef<HTMLInputElement, LoginInputProps>(
     {
       label,
       labelText,
+      labelColor = 'gray',
       placeholder,
       gap = '12',
-      fontSize = '16',
-      varient = 'default',
+      fontSize = '14',
+      variant = 'elevated',
       isError = false,
       errorMessage,
       inputProps,
@@ -47,8 +49,9 @@ const LoginInput = React.forwardRef<HTMLInputElement, LoginInputProps>(
           <label
             htmlFor={inputId}
             className={clsx('font-semibold', {
-              'text-point-label': varient === 'default',
-              'text-secondary-50': varient === 'elevated',
+              'text-point-label': labelColor === 'charcoal',
+              'text-secondary-50': labelColor === 'gray',
+              'text-white': labelColor === 'white',
             })}
           >
             {labelText || label}
@@ -62,9 +65,9 @@ const LoginInput = React.forwardRef<HTMLInputElement, LoginInputProps>(
             'w-full rounded-lg px-4 py-[10px] font-medium outline outline-1',
             {
               'bg-secondary-5 text-secondary-70 placeholder:text-secondary-50':
-                varient === 'default',
+                variant === 'default',
               'bg-secondary-100 text-text-default placeholder:text-secondary-70':
-                varient === 'elevated',
+                variant === 'elevated',
               'outline-transparent focus-within:outline-default-primary':
                 !isError,
               'outline-status-danger focus-within:outline-status-danger':
