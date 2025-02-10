@@ -9,7 +9,7 @@ export default function CreateGatheringBtn() {
   const router = useRouter();
 
   const navigateToEditPage = () => {
-    router.push('/gathering/edit');
+    router.push('/gathering/create');
   };
 
   const { checkAndNavigate } = useAuthNavigation('/login', navigateToEditPage);

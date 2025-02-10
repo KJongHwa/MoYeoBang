@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -224,8 +226,6 @@ export default function GatheringForm({
       dateTime: isoDateTime,
       registrationEnd: isoRegistrationEnd,
     };
-
-    console.log(submissionData);
 
     if (isEdit) {
       await updateGathering(submissionData);

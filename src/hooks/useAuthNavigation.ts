@@ -1,5 +1,5 @@
-import { ACCESS_TOKEN_KEY } from '@/axios/constants';
 import { useRouter } from 'next/navigation';
+import { ACCESS_TOKEN_KEY } from '@/axios/constants';
 
 /**
  * 로컬 스토리지 체크 및 리다이렉트
@@ -12,17 +12,19 @@ export function useAuthNavigation(redirectPath: string, onSuccess: () => void) {
   const router = useRouter();
 
   const checkAndNavigate = () => {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    const userInfo = localStorage.getItem('userInfo');
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+      const userInfo = localStorage.getItem('userInfo');
 
-    if (!token || !userInfo) {
-      // 둘 중 하나라도 없으면 모두 제거
-      localStorage.removeItem(ACCESS_TOKEN_KEY);
-      localStorage.removeItem('userInfo');
-      router.push(redirectPath);
-    } else {
-      onSuccess();
+      if (!token || !userInfo) {
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem('userInfo');
+        router.push(redirectPath);
+      } else {
+        onSuccess();
+      }
     }
   };
+
   return { checkAndNavigate };
 }

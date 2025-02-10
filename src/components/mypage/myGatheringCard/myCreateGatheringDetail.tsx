@@ -48,7 +48,7 @@ export default function MyCreateGatheringDetail({
     {
       label: '수정하기',
       clickHandler: () => {
-        router.push(`/gathering/edit?gatheringId=${gatheringId}`); // 수정 페이지로 이동
+        router.push(`/mypage/${gatheringId}`);
       },
     },
     { label: '모임삭제', clickHandler: openDeleteModal },
