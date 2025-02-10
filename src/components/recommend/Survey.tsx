@@ -11,53 +11,26 @@ import {
   levelMap,
   playTimeMap,
 } from '@/constants/questionList';
-import { SurveyUrlParams } from '@/types/gathering.types';
+import { RecommendUrlParams } from '@/types/theme.types';
 import { levelToKorean } from '@/constants/themeList';
 
 interface SurveyProps {
-  onComplete: (theme: SurveyUrlParams) => void;
+  onComplete: (result: RecommendUrlParams) => void;
 }
 
 export default function Survey({ onComplete }: SurveyProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<string[]>([]);
 
-  // 추천 테마
-  const recommendTheme = (selectedAnswers: string[]) => {
+  // 설문 조사 결과 설정
+  const surveyResult = (selectedAnswers: string[]) => {
     const [location, genre, playtime, level] = selectedAnswers;
 
-    const getRandomElement = (arr: string[]) => {
-      return arr[Math.floor(Math.random() * arr.length)];
-    };
-
-    const selectedLocation =
-      location === '🙂‍↔️ 상관없어요'
-        ? getRandomElement(
-            Object.keys(locationMap).filter((loc) => loc !== '🙂‍↔️ 상관없어요')
-          )
-        : location;
-
-    const selectedGenre =
-      genre === '🙂‍↔️ 상관없어요'
-        ? getRandomElement(genreMap[genre])
-        : genreMap[genre][Math.floor(Math.random() * genreMap[genre].length)];
-
-    const selectedPlaytime = getRandomElement(playTimeMap[playtime]);
-
-    const selectedLevel =
-      level === '🙂‍↔️ 상관없어요'
-        ? getRandomElement(
-            Object.keys(levelMap).filter((lev) => lev !== '상관없어요')
-          )
-        : level;
-
-    // 추천 테마 설정
     onComplete({
-      name: '아직 API 설계 중입니다.',
-      genre: selectedGenre,
-      playtime: selectedPlaytime,
-      level: levelMap[selectedLevel],
-      location: locationMap[selectedLocation],
+      genre: genreMap[genre],
+      playtime: playTimeMap[playtime],
+      level: levelMap[level],
+      location: locationMap[location],
     });
   };
 
@@ -69,7 +42,7 @@ export default function Survey({ onComplete }: SurveyProps) {
       setAnswers(newAnswers);
     } else {
       const finalAnswers = [...newAnswers, answer];
-      recommendTheme(finalAnswers);
+      surveyResult(finalAnswers);
     }
   };
 
