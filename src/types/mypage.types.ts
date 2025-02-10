@@ -31,8 +31,8 @@ export interface UserGatheringJoined {
   registrationEnd: string;
   capacity: number;
   participantCount: number;
-  isCompleted: boolean;
-  isCanceled: boolean;
+  completed: boolean;
+  canceled: boolean;
   review: {
     reviewId: number;
     score: number;

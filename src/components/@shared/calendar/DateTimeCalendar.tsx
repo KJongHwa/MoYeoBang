@@ -38,7 +38,7 @@ export default function DateTimeCalendar({
   );
   const [selectedHour, setSelectedHour] = useState(9);
   const [selectedMinute, setSelectedMinute] = useState(0);
-  const [selectedPeriod, setSelectedPeriod] = useState('PM');
+  const [selectedPeriod, setSelectedPeriod] = useState('AM');
 
   // 날짜만 hyphenYearMonthDay로 변환
   const formatDate = () => {

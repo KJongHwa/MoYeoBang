@@ -1,6 +1,7 @@
-export const INIT_GATHRING = {
+export const INIT_GATHERING = {
   POST: {
     name: '',
+    message: '',
     location: '',
     themeName: '',
     dateTime: '',
@@ -10,6 +11,7 @@ export const INIT_GATHRING = {
   PATCH: {
     gatheringId: 0,
     name: '',
+    message: '',
     location: '',
     themeName: '',
     dateTime: '',

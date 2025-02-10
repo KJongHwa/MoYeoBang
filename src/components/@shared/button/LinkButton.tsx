@@ -1,5 +1,7 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import clsx from 'clsx';
 
 const arrowIcons = {
@@ -26,10 +28,17 @@ export default function LinkButton({
   disabled,
   ...props
 }: LinkButtonProps) {
+  const router = useRouter();
   const { src, alt } = arrowIcons[variant];
 
+  const handleClick = () => {
+    if (!disabled) {
+      router.push(href);
+    }
+  };
+
   return (
-    <Link href={href}>
+    <div>
       <button
         // eslint-disable-next-line react/button-has-type
         type={type}
@@ -45,11 +54,12 @@ export default function LinkButton({
           }
         )}
         disabled={disabled}
+        onClick={handleClick}
         {...props}
       >
         {children}
         <Image src={src} width={24} height={24} alt={alt} quality={100} />
       </button>
-    </Link>
+    </div>
   );
 }

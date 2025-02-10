@@ -11,6 +11,9 @@ export const API_PATH = {
     sendEmail: '/auth/email/send', // 이메일 인증 코드 전송
     verifyEmail: '/auth/email/verify', // 이메일 인증 코드 확인
   },
+  theme: {
+    recommend: '/theme/recommend', // 추천 테마 조회
+  },
   gathering: {
     default: '/gather', // 모임 목록 조회 && 생성
     joined: '/gather/joined', // 나의 모임 조회

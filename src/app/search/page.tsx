@@ -1,6 +1,8 @@
 'use client';
 
+import CardMotion from '@/components/@shared/animation/CardMotion';
 import EmptyElement from '@/components/@shared/EmptyElement';
+import Spinner from '@/components/@shared/Spinner';
 import Toast from '@/components/@shared/Toast';
 import GatheringCard from '@/components/gathering/GatheringCard';
 import { useSearchGathering } from '@/hooks/useSearchGathering';
@@ -8,7 +10,7 @@ import useToast from '@/hooks/useToast';
 import Image from 'next/image';
 import { useState } from 'react';
 
-const searchWords = ['미스터리', '방탈모집중', '방'];
+const searchWords = ['모여방', '팀이', '짱이다'];
 export default function Search() {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -32,9 +34,7 @@ export default function Search() {
   };
 
   if (isGatheringLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">Loading...</div>
-    );
+    return <Spinner />;
   }
 
   return (
@@ -59,16 +59,21 @@ export default function Search() {
             className="w-full bg-secondary-bg pr-3 text-base outline-none"
             value={searchKeyword}
             onChange={handleSearchKeywordChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearchGatheringGet();
+              }
+            }}
           />
         </section>
         <section className="flex justify-center text-base">
           <div className="flex-col items-center justify-center">
-            <p className="text-secondary-60">추천 검색어</p>
+            <p className="text-center text-secondary-60">추천 검색어</p>
             <div className="flex w-full justify-center gap-3">
               {searchWords.map((searchWord) => (
-                // eslint-disable-next-line react/button-has-type
                 <button
                   key={searchWord}
+                  type="button"
                   className="rounded-lg bg-secondary-100 px-2 py-1 text-secondary-50"
                   onClick={() => {
                     setSearchKeyword(searchWord);
@@ -81,24 +86,24 @@ export default function Search() {
             </div>
           </div>
         </section>
-        <section className="pt-6 ">
+        <section className="mb-[180px] pt-6">
           {searchQuery && searchGatherings?.length !== 0 && (
             <>
               <p className="pb-3">{searchQuery} 검색 결과 입니다.</p>
-              <div className="grid h-full w-full grid-cols-1 gap-3 text-white">
+              <div className="grid h-full w-full grid-cols-1 gap-5 text-white">
                 {searchGatherings?.map((searchGathering) => (
-                  <GatheringCard
-                    key={searchGathering.gatheringId}
-                    {...searchGathering}
-                  />
+                  <CardMotion key={searchGathering.gatheringId}>
+                    <GatheringCard {...searchGathering} />
+                  </CardMotion>
                 ))}
               </div>
             </>
           )}
+          {searchQuery && searchGatherings?.length === 0 && (
+            <EmptyElement>해당 검색 결과가 없어요.</EmptyElement>
+          )}
         </section>
-        {searchQuery && searchGatherings?.length === 0 && (
-          <EmptyElement>해당 검색 결과가 없어요.</EmptyElement>
-        )}
+
         {toastVisible && <Toast message={toastMessage} type={toastType} />}
       </div>
     </div>
