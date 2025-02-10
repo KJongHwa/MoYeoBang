@@ -11,7 +11,7 @@ export const formatDate = (dateString: string) => {
 export const extractHour = (dateString: string) => {
   const date = new Date(dateString);
 
-  return date.getUTCHours();
+  return date.getHours();
 };
 
 // Ex) 2025.01.08
@@ -77,10 +77,11 @@ export const convertToISO = (
   dateString: string,
   timeString: string
 ): string => {
-  const [hourString, minuteString] = timeString.split(':');
-  const [period] = minuteString.split(' ');
+  const [time, period] = timeString.split(' ');
+  const [hourString, minuteString] = time.split(':');
 
   const adjustedHour = adjustHour(parseInt(hourString, 10), period);
   const finalDateTimeString = `${dateString}T${adjustedHour.toString().padStart(2, '0')}:${minuteString.split(' ')[0].padStart(2, '0')}:00Z`;
+
   return new Date(finalDateTimeString).toISOString();
 };

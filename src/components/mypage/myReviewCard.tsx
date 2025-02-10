@@ -1,20 +1,19 @@
-/* eslint-disable prettier/prettier */
-
-import { ReviewDto } from '@/types/review.types';
+import { useState } from 'react';
 import Image from 'next/image';
 import { useDropdown } from '@/hooks/useDropdown';
 import { useModal } from '@/hooks/useModal';
+import { MyReviewParmas } from '@/types/mypage.types';
 import Rating from '../@shared/rating/Rating';
 import MyReviewModal from './myReviewModal';
 import DeleteModal from './deleteModal';
 
 export default function MyReviewCard({
-  score,
+  reviewId,
+  themeName,
+  image,
   comment,
-  createdAt,
-  Gathering,
-  User,
-}: ReviewDto['get']) {
+  score,
+}: MyReviewParmas) {
   const {
     isOpen: isMenuOpen,
     openDropdown,
@@ -31,6 +30,13 @@ export default function MyReviewCard({
     openModal: openDeleteModal,
     closeModal: closeDeleteModal,
   } = useModal();
+  const [isError, setIsError] = useState(false);
+  const [imgSrc, setImgSrc] = useState(image);
+
+  const handleError = () => {
+    setIsError(true);
+    setImgSrc('/images/theme_default.png');
+  };
 
   const liDropdowns = [
     { label: '수정하기', clickHandler: openEditModal },
@@ -38,14 +44,15 @@ export default function MyReviewCard({
   ];
 
   return (
-    <article className="bg-default-tertiary relative flex w-full flex-col gap-2 rounded-xl md:max-h-[200px] md:flex-row xl:max-h-[170px]">
+    <article className="relative flex w-full flex-col gap-2 rounded-xl bg-default-tertiary md:max-h-[200px] md:flex-row xl:max-h-[170px]">
       <Image
-        src={Gathering.image}
-        alt={Gathering.themeName}
+        src={imgSrc}
+        onError={handleError}
+        alt={themeName}
         width={240}
         height={170}
         quality={100}
-        className="bg-default-tertiary w-full rounded-t-xl md:w-60 md:max-w-[192px] md:rounded-l-xl md:rounded-r-none"
+        className={`h-[343px] w-full rounded-t-xl bg-default-tertiary  md:h-[170px] md:w-60 md:max-w-[192px] md:rounded-l-xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
       />
 
       <div className="mx-4 my-5 flex flex-1 flex-col justify-between md:mx-6 md:my-5">
@@ -62,7 +69,7 @@ export default function MyReviewCard({
                 />
               </button>
               {isMenuOpen && (
-                <ul className="bg-secondary-80 absolute -right-6 z-50 mt-2 w-32 rounded-md shadow-md md:-right-20">
+                <ul className="absolute -right-6 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md md:-right-20">
                   {liDropdowns.map((liDropdown) => (
                     <li key={liDropdown.label}>
                       <button
@@ -71,7 +78,7 @@ export default function MyReviewCard({
                           closeDropdown();
                         }}
                         type="button"
-                        className="hover:bg-secondary-60 w-full rounded-md px-4 py-2 text-left"
+                        className="w-full rounded-md px-4 py-2 text-left hover:bg-secondary-60"
                       >
                         {liDropdown.label}
                       </button>
@@ -82,9 +89,7 @@ export default function MyReviewCard({
             </div>
           </div>
 
-          <h2 className="text-secondary-40 text-xs font-medium">
-            {Gathering.themeName}
-          </h2>
+          <h2 className="text-xs font-medium text-secondary-40">{themeName}</h2>
           <p className="text-sm font-medium text-white md:mt-5">{comment}</p>
         </div>
       </div>
@@ -93,11 +98,13 @@ export default function MyReviewCard({
         setIsModal={closeEditModal}
         comment={comment}
         score={score}
+        id={reviewId}
       />
       <DeleteModal
+        id={reviewId}
         isModal={isDeleteModal}
         setIsModal={closeDeleteModal}
-        classification="delete"
+        classification="review_delete"
       />
     </article>
   );

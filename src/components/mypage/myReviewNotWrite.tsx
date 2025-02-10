@@ -1,22 +1,45 @@
-import { mockGatherings } from '@/data/mockGatherings';
+import { UseReviews } from '@/hooks/useReviews';
 import MyGatheringCard from './myGatheringCard';
 import MyReviewNotWriteDetail from './myGatheringCard/myReviewNotWriteDetail';
 import EmptyElement from '../@shared/EmptyElement';
+import Spinner from '../@shared/Spinner';
 
 export default function MyReviewNotWrite() {
-  if (mockGatherings.length === 0) {
+  const { data: notWriteMyReviews, isLoading: isNotWriteMyReviewsLoading } =
+    UseReviews({ reviewed: false });
+  if (isNotWriteMyReviewsLoading) {
+    return (
+      <div className="flex h-dvh items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!notWriteMyReviews) {
+    return (
+      <div className="flex h-dvh items-center justify-center">
+        작성 가능한 모임 정보를 불러올 수 없습니다.
+      </div>
+    );
+  }
+  if (notWriteMyReviews.length === 0) {
     return <EmptyElement>아직 작성 가능한 리뷰가 없어요</EmptyElement>;
   }
   return (
     <div className="flex flex-col gap-5">
-      {mockGatherings.map((gathering: any) => (
-        <MyGatheringCard key={gathering.gatheringId} image={gathering.image}>
+      {notWriteMyReviews.map((notWriteMyReview: any) => (
+        <MyGatheringCard
+          key={notWriteMyReview.gatheringId}
+          image={notWriteMyReview.image}
+          gatheringId={notWriteMyReview.gatheringId}
+        >
           <MyReviewNotWriteDetail
-            dateTime={gathering.dateTime}
-            name={gathering.name}
-            themeName={gathering.themeName}
-            capacity={gathering.capacity}
-            participantCount={gathering.participantCount}
+            gatheringId={notWriteMyReview.gatheringId}
+            dateTime={notWriteMyReview.dateTime}
+            name={notWriteMyReview.name}
+            themeName={notWriteMyReview.themeName}
+            capacity={notWriteMyReview.capacity}
+            participantCount={notWriteMyReview.participantCount}
           />
         </MyGatheringCard>
       ))}

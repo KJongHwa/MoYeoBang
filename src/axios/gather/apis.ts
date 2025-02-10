@@ -1,9 +1,9 @@
-import { publicAxiosInstance } from '@/axios/axiosInstance';
+import { authAxiosInstance } from '@/axios/axiosInstance';
+import { apiCall } from '@/utils/apiCall';
 import type {
   GatheringRequestBody,
   GatheringUrlParams,
 } from '@/types/gathering.types';
-import qs from 'qs';
 import { API_PATH } from '../config/path';
 
 // 홈페이지 모임 목록 (registrationEnd 기준)
@@ -13,16 +13,7 @@ export const getGatheringsByRegistrationEnd = async () => {
     sortBy: 'registrationEnd',
   };
 
-  const queryString = qs.stringify(params, {
-    skipNulls: true,
-    arrayFormat: 'brackets',
-    filter: (prefix, value) => (value === '' ? undefined : value),
-  });
-
-  const response = await publicAxiosInstance.get(
-    `${API_PATH.gathering.default}?${queryString}`
-  );
-  return response.data;
+  return apiCall('get', API_PATH.gathering.default, null, { params });
 };
 
 // 홈페이지 모임 목록 (participantCount 기준)
@@ -32,37 +23,58 @@ export const getGatheringsByParticipantCount = async () => {
     sortBy: 'participantCount',
   };
 
-  const queryString = qs.stringify(params, {
-    skipNulls: true,
-    arrayFormat: 'brackets',
-    filter: (prefix, value) => (value === '' ? undefined : value),
-  });
-
-  const response = await publicAxiosInstance.get(
-    `${API_PATH.gathering.default}?${queryString}`
-  );
-  return response.data;
+  return apiCall('get', API_PATH.gathering.default, null, { params });
 };
 
 // 모임 목록
 export const getGatherings = async (params: GatheringUrlParams) => {
-  const queryString = qs.stringify(params, {
-    skipNulls: true,
-    arrayFormat: 'brackets',
-    filter: (prefix, value) => (value === '' ? undefined : value),
-  });
-
-  const response = await publicAxiosInstance.get(
-    `${API_PATH.gathering.default}?${queryString}`
-  );
-  return response.data;
+  return apiCall('get', API_PATH.gathering.default, null, { params });
 };
 
 // 모임 생성
 export const postGathering = async (data: GatheringRequestBody['post']) => {
-  const response = await publicAxiosInstance.post(
-    API_PATH.gathering.default,
-    data
+  return authAxiosInstance.post(API_PATH.gathering.default, data);
+};
+
+// 모임 상세 정보 조회
+export const getGatheringDetail = (gatheringId: number) => {
+  return apiCall(
+    'get',
+    `${API_PATH.gathering.default}/${gatheringId}`,
+    null,
+    {}
   );
-  return response.data;
+};
+
+// 모임 주최자 프로필 조회
+export const getHostProfile = (hostId: number) => {
+  return apiCall('get', `${API_PATH.user}/${hostId}/profile`, null, {});
+};
+
+export const getGatheringReviews = (gatheringId: number) => {
+  return apiCall(
+    'get',
+    `${API_PATH.review.default}?gatheringId=${gatheringId}`,
+    null,
+    {}
+  );
+};
+
+export const checkParticipationStatus = (gatheringId: number) => {
+  return apiCall(
+    'get',
+    `${API_PATH.gathering.participant(gatheringId)}/status`,
+    null,
+    {}
+  );
+};
+
+// 모임 참여하기
+export const participateGathering = async (gatheringId: number) => {
+  return authAxiosInstance.post(API_PATH.gathering.participant(gatheringId));
+};
+
+// 모임 참여 취소하기
+export const cancelParticipation = async (gatheringId: number) => {
+  return authAxiosInstance.delete(API_PATH.gathering.participant(gatheringId));
 };

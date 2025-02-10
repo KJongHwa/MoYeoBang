@@ -1,71 +1,67 @@
 'use client';
 
-import GatheringDetailSection from '@/components/gatheringDetail/GatheringDetailSection';
-import GatheringMainSection from '@/components/gatheringDetail/GatheringMainSection';
-import GatheringReviewSection from '@/components/gatheringDetail/GatheringReviewSection';
-import JoinBoxSection from '@/components/gatheringDetail/JoinBoxSection';
-import ProfileSection from '@/components/gatheringDetail/ProfileSection';
-import { mockGatheringCreater } from '@/data/mockGatheringCreater';
-import { mockGatheringDetails } from '@/data/mockGatheringDetail';
+import { useGatheringWithHost } from '@/hooks/queries/useGathering';
 import { useModal } from '@/hooks/useModal';
+import GatheringMainSection from '@/components/gatheringDetail/GatheringMainSection';
+import JoinBoxSection from '@/components/gatheringDetail/JoinBoxSection';
+import GatheringDetailSection from '@/components/gatheringDetail/GatheringDetailSection';
+import ProfileSection from '@/components/gatheringDetail/ProfileSection';
+import GatheringReviewSection from '@/components/gatheringDetail/GatheringReviewSection';
 
-export default function GatheringDetail({ params }: any) {
-  const { id } = params;
-  const gatheringData = mockGatheringDetails.find(
-    (gathering) => gathering.gatheringId === Number(id)
-  );
-  const createrProfile = mockGatheringCreater;
+export default function GatheringDetail({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { isOpen, openModal, closeModal } = useModal();
+  const { gatheringData, hostData, isLoading, isError } = useGatheringWithHost(
+    Number(params.id)
+  );
 
-  if (!gatheringData) return null;
+  if (isLoading)
+    return (
+      <div className="flex h-dvh items-center justify-center">로딩중...</div>
+    );
+  if (isError)
+    return (
+      <div className="flex h-dvh items-center justify-center">
+        에러가 발생했습니다
+      </div>
+    );
+  if (!gatheringData)
+    return (
+      <div className="flex h-dvh items-center justify-center">
+        모임을 찾을 수 없습니다
+      </div>
+    );
 
   return (
     <div className="mx-auto max-w-screen-xl px-4">
       <div className="mt-36">
-        {/* 1. 이미지와 기본 정보를 포함하는 섹션 */}
-        <div className="flex gap-6">
-          <GatheringMainSection
-            image={gatheringData.image}
-            name={gatheringData.name}
-            themeName={gatheringData.themeName}
-            synopsis={gatheringData.synopsis}
-            location={gatheringData.location}
-          />
-          <JoinBoxSection
-            name={gatheringData.name}
-            themeName={gatheringData.themeName}
-            participantCount={gatheringData.participantCount}
-            capacity={gatheringData.capacity}
-          />
-        </div>
-        {/* 2. 모임 세부 정보 섹션 */}
-        <div className="mt-16">
-          <GatheringDetailSection
-            level={gatheringData.level}
-            genre={gatheringData.genre}
-            themeName={gatheringData.themeName}
-            playtime={gatheringData.playtime}
-            dateTime={gatheringData.dateTime}
-            registrationEnd={gatheringData.registrationEnd}
-            capacity={gatheringData.capacity}
-            participantCount={gatheringData.participantCount}
-            map={gatheringData.map}
-          />
+        <div className="flex flex-col gap-6 md:flex-row">
+          <div className="flex-1">
+            <GatheringMainSection {...gatheringData} />
+          </div>
+          <JoinBoxSection {...gatheringData} gatheringId={Number(params.id)} />
         </div>
 
-        {/* 3. 프로필 섹션 */}
         <div className="mt-16">
-          <ProfileSection
-            createrProfile={createrProfile}
-            isOpen={isOpen}
-            openModal={openModal}
-            closeModal={closeModal}
-          />
+          <GatheringDetailSection {...gatheringData} />
         </div>
 
-        {/* 4. 리뷰 섹션 */}
+        {hostData ? (
+          <div className="mt-16">
+            <ProfileSection
+              createrProfile={hostData}
+              isOpen={isOpen}
+              openModal={openModal}
+              closeModal={closeModal}
+            />
+          </div>
+        ) : null}
+
         <div className="mb-20 mt-16">
-          <GatheringReviewSection gatheringId={Number(id)} />
+          <GatheringReviewSection gatheringId={Number(params.id)} />
         </div>
       </div>
     </div>

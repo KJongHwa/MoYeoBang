@@ -7,23 +7,31 @@ import useToast from '@/hooks/useToast';
 import TextArea from '@/components/@shared/input/TextArea';
 import RatingInput from '@/components/@shared/rating/RatingInput';
 import Toast from '@/components/@shared/Toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { EditReviewParams, ReviewParams } from '@/types/mypage.types';
+import { editGatheringReview, postGatheringReview } from '@/axios/mypage/api';
 
 interface MyReviewModalProps {
   isModal: boolean;
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
+  id: number; // reviewId 또는 gatheringId
   score?: number;
   comment?: string;
 }
 
 export default function MyReviewModal({
   isModal,
+  id,
   setIsModal,
   score,
   comment,
 }: MyReviewModalProps) {
   const [updatedScore, setUpdatedScore] = useState<number>(score || 0);
   const [updatedComment, setUpdatedComment] = useState<string>(comment || '');
-  const { toastMessage, toastVisible, toastType, handleError } = useToast();
+  const { toastMessage, toastVisible, toastType, handleError, handleSuccess } =
+    useToast();
+  const queryClient = useQueryClient();
+
   const closeModalhandler = () => {
     setIsModal(false);
   };
@@ -39,6 +47,49 @@ export default function MyReviewModal({
   const isModified =
     (updatedComment?.trim() !== '' && comment !== updatedComment) ||
     (updatedScore > 0 && score !== updatedScore);
+
+  // score||comment가 있을 때의 id는 reviewId => 리뷰 수정
+  const { mutate: editReview } = useMutation({
+    mutationFn: async ({
+      reviewId,
+      ...submissData
+    }: { reviewId: number } & EditReviewParams) =>
+      editGatheringReview(reviewId, submissData),
+    onSuccess: () => {
+      handleSuccess('리뷰가 수정되었습니다!');
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['myReviews', true] });
+    },
+    onError: (error: any) => {
+      console.error('editReview Error:', error);
+      handleError('리뷰 수정에 실패하였습니다. 다시 시도해주세요.');
+    },
+  });
+
+  // score&&comment가 없을 때의 id는 gatheringId => 리뷰 작성
+  const { mutate: writeReview } = useMutation({
+    mutationFn: async (submissData: ReviewParams) =>
+      postGatheringReview(submissData),
+    onSuccess: () => {
+      handleSuccess('리뷰를 작성했습니다!');
+      setTimeout(() => {
+        closeModalhandler();
+      }, 500);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['myReviews', false] });
+      queryClient.invalidateQueries({ queryKey: ['myReviews', true] });
+    },
+    onError: (error: any) => {
+      console.log('postReview Error:', error);
+      handleError('리뷰 작성에 실패하였습니다. 다시 시도해주세요.');
+    },
+  });
+
   return (
     <Modal
       isOpen={isModal}
@@ -83,7 +134,22 @@ export default function MyReviewModal({
             disabled={!isModified}
             className="w-full"
             onClick={() => {
-              handleError('아직 구현되지 않은 기능입니다.');
+              // 리뷰 작성
+              if (!(score && comment)) {
+                const submissionData = {
+                  gatheringId: id,
+                  score: updatedScore,
+                  comment: updatedComment,
+                };
+                writeReview(submissionData);
+                // 리뷰 수정
+              } else {
+                editReview({
+                  reviewId: id,
+                  score: updatedScore,
+                  comment: updatedComment,
+                });
+              }
             }}
           >
             리뷰등록
