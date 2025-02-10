@@ -32,7 +32,6 @@ export default function GatheringList() {
     queryFn: async ({ pageParam = 0 }) => {
       const response = await getGatherings({
         limit: 10,
-        sortOrder: 'asc',
         sortBy: selectedSort,
         level: filters.level,
         location: filters.location,
@@ -57,12 +56,10 @@ export default function GatheringList() {
 
   const handleFilterChange = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
-    fetchNextPage();
   };
 
   const onSortingChange = (sortOption: string) => {
     setSelectedSort(sortOption);
-    fetchNextPage();
   };
 
   // 추가 데이터 요청 함수
