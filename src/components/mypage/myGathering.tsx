@@ -23,7 +23,7 @@ export default function MyGathering() {
   return (
     <div className="flex flex-col gap-5">
       {myJoinedGatherings.map((gathering: any) => (
-        <CardMotion key={gathering.gatheringId}>
+        <CardMotion borderRadius="24px" key={gathering.gatheringId}>
           <MyGatheringCard
             gatheringId={gathering.gatheringId}
             image={gathering.image}
