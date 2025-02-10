@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 
+import { useRouter } from 'next/navigation';
 import GatheringBadge from '@/components/gathering/UI/GatheringBadge';
 import { formatDate } from '@/utils/dateUtils';
 import Image from 'next/image';
-import GatheringModal from '@/components/gathering/GatheringModal';
 import { useModal } from '@/hooks/useModal';
 import { useDropdown } from '@/hooks/useDropdown';
 import { findLabelByValue } from '@/utils/mappingUtils';
@@ -29,17 +29,14 @@ export default function MyCreateGatheringDetail({
   participantCount,
   gatheringId,
 }: MyCreateGatheringDetailProps) {
+  const router = useRouter();
+
   const {
     isOpen: isDeleteModal,
     openModal: openDeleteModal,
     closeModal: closeDeleteModal,
   } = useModal();
 
-  const {
-    isOpen: isGatheringEditModal,
-    openModal: openGatheringEditModal,
-    closeModal: closeGatheringEditModal,
-  } = useModal();
   const {
     isOpen: isMenuOpen,
     openDropdown,
@@ -48,7 +45,12 @@ export default function MyCreateGatheringDetail({
   } = useDropdown();
 
   const liDropdowns = [
-    { label: '수정하기', clickHandler: openGatheringEditModal },
+    {
+      label: '수정하기',
+      clickHandler: () => {
+        router.push(`/mypage/${gatheringId}`);
+      },
+    },
     { label: '모임삭제', clickHandler: openDeleteModal },
   ];
 
@@ -64,7 +66,7 @@ export default function MyCreateGatheringDetail({
           </GatheringBadge>
           <GatheringBadge variant="secondary" fontColor="primary">
             {participantCount === capacity ? (
-              <span>
+              <div className="flex">
                 <Image
                   src="/icons/check.svg"
                   width={16}
@@ -72,7 +74,7 @@ export default function MyCreateGatheringDetail({
                   alt="체크 이미지"
                 />
                 일정 확정
-              </span>
+              </div>
             ) : (
               '일정 미확정'
             )}
@@ -109,7 +111,7 @@ export default function MyCreateGatheringDetail({
           />
         </button>
         {isMenuOpen && (
-          <ul className="absolute -right-2 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md md:-right-16">
+          <ul className="absolute -right-2 z-50 mt-2 w-32 rounded-md bg-secondary-80 shadow-md xl:-right-16">
             {liDropdowns.map((liDropdown) => (
               <li key={liDropdown.label}>
                 <button
@@ -128,12 +130,6 @@ export default function MyCreateGatheringDetail({
         )}
       </div>
 
-      <GatheringModal
-        isOpen={isGatheringEditModal}
-        onClose={closeGatheringEditModal}
-        gatheringId={gatheringId}
-        isEdit
-      />
       <DeleteModal
         isModal={isDeleteModal}
         setIsModal={closeDeleteModal}

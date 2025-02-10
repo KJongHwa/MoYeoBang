@@ -52,6 +52,7 @@ export interface GatheringDto {
 export interface GatheringRequestBody {
   post: {
     name: string;
+    message: string;
     location: string;
     themeName: string;
     dateTime: string;
@@ -61,6 +62,7 @@ export interface GatheringRequestBody {
   patch: {
     gatheringId: number;
     name: string;
+    message: string;
     location: string;
     themeName: string;
     dateTime: string;
