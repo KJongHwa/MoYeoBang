@@ -19,9 +19,9 @@ import TextArea from '@/components/@shared/input/TextArea';
 import DateInput from '@/components/@shared/input/DateInput';
 import DateTimeCalendar from '@/components/@shared/calendar/DateTimeCalendar';
 import { editMyCreateGathering } from '@/axios/mypage/api';
-import LocationSelector from '@/components/gathering/selector/LocationSelector';
-import CapacitySelector from '@/components/gathering/selector/CapacitySelector';
-import ThemeSelector from '@/components/gathering/selector/ThemeSelector';
+import LocationSelector from '@/components/gatheringEdit/LocationSelector';
+import CapacitySelector from '@/components/gatheringEdit/CapacitySelector';
+import ThemeSelector from '@/components/gatheringEdit/ThemeSelector';
 
 interface GatheringFormProps {
   isEdit?: boolean;
@@ -242,9 +242,9 @@ export default function GatheringForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex w-screen flex-col gap-12"
+      className="flex w-full flex-col gap-12"
     >
-      <main className="flex h-full w-full max-w-[1166px] flex-col gap-12 px-4 pb-24 pt-5 md:gap-12 md:px-6 md:pb-32 md:pt-8 xl:mx-auto xl:px-0 xl:pt-12">
+      <main className="flex h-full w-full flex-col gap-12 px-4 pb-24 pt-5 md:gap-12 md:px-6 md:pb-32 md:pt-8 xl:mx-auto xl:max-w-[1166px] xl:px-0 xl:pt-12">
         <Input
           variant="elevated"
           label="name"
