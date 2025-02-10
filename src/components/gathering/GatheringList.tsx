@@ -32,6 +32,7 @@ export default function GatheringList() {
     queryFn: async ({ pageParam = 0 }) => {
       const response = await getGatherings({
         limit: 10,
+        sortOrder: 'asc',
         sortBy: selectedSort,
         level: filters.level,
         location: filters.location,
