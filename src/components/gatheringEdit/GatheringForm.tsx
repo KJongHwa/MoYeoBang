@@ -106,6 +106,10 @@ export default function GatheringForm({
     setFilteredThemes(filtered);
     setSearchMessage(searchErrorMessage);
     setShowThemeDropdown(true);
+
+    if (searchErrorMessage) {
+      setValue('themeName', '');
+    }
   };
 
   // 방탈출 테마 전체보기

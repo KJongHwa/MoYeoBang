@@ -130,7 +130,7 @@ export default function ThemeSelector({
         </Button>
       </div>
 
-      {!selectedThemeName && searchAttempted && searchMessage && (
+      {searchAttempted && searchMessage && (
         <p className="w-full py-2 text-status-danger">{searchMessage}</p>
       )}
     </div>
