@@ -22,9 +22,9 @@ import TextArea from '@/components/@shared/input/TextArea';
 import DateInput from '@/components/@shared/input/DateInput';
 import DateTimeCalendar from '@/components/@shared/calendar/DateTimeCalendar';
 import { editMyCreateGathering } from '@/axios/mypage/api';
-import LocationSelector from '@/components/gatheringEdit/LocationSelector';
-import CapacitySelector from '@/components/gatheringEdit/CapacitySelector';
-import ThemeSelector from '@/components/gatheringEdit/ThemeSelector';
+import LocationSelector from '@/components/gatheringEdit/selector/LocationSelector';
+import CapacitySelector from '@/components/gatheringEdit/selector/CapacitySelector';
+import ThemeSelector from '@/components/gatheringEdit/selector/ThemeSelector';
 
 interface GatheringFormProps {
   isEdit?: boolean;

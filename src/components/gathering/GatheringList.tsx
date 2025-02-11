@@ -57,12 +57,10 @@ export default function GatheringList() {
 
   const handleFilterChange = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
-    fetchNextPage();
   };
 
   const onSortingChange = (sortOption: string) => {
     setSelectedSort(sortOption);
-    fetchNextPage();
   };
 
   // 추가 데이터 요청 함수

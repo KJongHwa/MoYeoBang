@@ -5,7 +5,7 @@ import SkeletonSlotList from '@/components/@shared/skeleton/SkeletonSlotList';
 import Carousel from '@/components/home/UI/Carousel';
 import Links from '@/components/home/Links';
 import LinkButton from '@/components/@shared/button/LinkButton';
-import NearFullCapacities from '@/components/home/NearFullCapacities';
+import NearRecent from '@/components/home/NearRecent';
 import NearDeadlines from '@/components/home/NearDeadlines';
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
             <h1 className="text-2xl font-semibold">지금 여기로 모여방</h1>
           </div>
           <Suspense fallback={<SkeletonCardList />}>
-            <NearFullCapacities />
+            <NearRecent />
           </Suspense>
           <div className="mt-12 md:mt-20">
             <LinkButton href="/gathering" variant="dark" size="long">

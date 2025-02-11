@@ -10,7 +10,7 @@ import { getRecommendTheme } from '@/axios/theme/apis';
 
 import Button from '@/components/@shared/button/Button';
 import TextFadeInMotion from '@/components/@shared/animation/TextFadeInMotion';
-import RecommendCard from '@/components/recommend/RecommendCard';
+import RecommendCard from '@/components/recommend/UI/RecommendCard';
 import SlideUpMotion from '@/components/@shared/animation/SlideUpMotion';
 
 interface SurveyResultProps {
@@ -72,10 +72,17 @@ export default function SurveyResult({
               quality={100}
               className="h-1/2 w-1/2 xl:h-[321px] xl:w-[295px]"
             />
-            <div className="w-full md:px-4 xl:w-1/2">
-              <p className="rounded-md bg-badge-default px-6 py-2 text-center text-sm font-medium md:text-lg">
+            <div className="relative w-full md:px-4 xl:w-1/2">
+              <p className="z rounded-md bg-badge-default px-6 py-2 text-center text-sm font-medium md:text-lg">
                 [상관없어요]를 선택하면 테마를 찾을 확률이 증가해요!
               </p>
+              <Image
+                src="/icons/arrow_purple.svg"
+                alt="보라색 화살표 아이콘"
+                width={24}
+                height={16}
+                className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform"
+              />
             </div>
           </section>
           <section className="flex w-full flex-col gap-2 xl:w-1/2">
@@ -113,13 +120,10 @@ export default function SurveyResult({
               <RecommendCard themeResult={currentTheme} />
             </section>
             <section className="flex w-full flex-col gap-2">
-              <Link
-                href={`/search/keyword=${encodeURIComponent(currentTheme.name)}`}
-              >
+              <Link href={`/search/${encodeURIComponent(currentTheme.name)}`}>
                 <Button
                   shape="default"
                   className="w-full border-2 border-primary-5 bg-secondary-90 py-3 text-sm md:border-4 md:py-6 md:text-2xl"
-                  onClick={() => resetSurvey(false)}
                 >
                   추천 테마 참여하기
                 </Button>
