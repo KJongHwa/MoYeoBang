@@ -6,12 +6,12 @@ import { QueryProvider } from '@/components/@shared/QueryProvider';
 import EmptyElement from '@/components/@shared/EmptyElement';
 import GatheringCard from '@/components/gathering/GatheringCard';
 
-import { getGatheringsByParticipantCount } from '@/axios/gather/apis';
+import { getGatheringsDateTime } from '@/axios/gather/apis';
 
-export default function NearFullCapacities() {
+export default function NearRecent() {
   const { data: gatherings } = useSuspenseQuery({
-    queryKey: ['gatherings/participantcount'],
-    queryFn: getGatheringsByParticipantCount,
+    queryKey: ['gatherings/dateTime'],
+    queryFn: getGatheringsDateTime,
   });
 
   return (
