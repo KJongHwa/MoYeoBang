@@ -13,7 +13,7 @@ import { locationList, levelToKorean } from '@/constants/themeList';
 import AlarmBadge from './UI/AlarmBadge';
 import LevelBadge from './UI/LevelBadge';
 import GatheringBadge from './UI/GatheringBadge';
-import PuzzleButton from './PuzzleButton';
+import PuzzleButton from './UI/PuzzleButton';
 
 export default function GatheringCard({
   gatheringId,
