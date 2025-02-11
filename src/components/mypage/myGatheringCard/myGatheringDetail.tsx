@@ -48,7 +48,7 @@ export default function MyGatheringDetail({
           </GatheringBadge>
           <GatheringBadge variant="secondary" fontColor="primary">
             {participantCount === capacity ? (
-              <span>
+              <div className="flex">
                 <Image
                   src="/icons/check.svg"
                   width={16}
@@ -56,7 +56,7 @@ export default function MyGatheringDetail({
                   alt="체크 이미지"
                 />
                 일정 확정
-              </span>
+              </div>
             ) : (
               '일정 미확정'
             )}
@@ -85,10 +85,10 @@ export default function MyGatheringDetail({
             padding="10"
             fontSize="14"
             onClick={openDeleteModal}
-            className="absolute right-4 border-secondary-80 bg-secondary-70"
+            className="absolute bottom-4 right-4 w-[120px] border-secondary-80 bg-secondary-70"
             disabled={isCanceled}
           >
-            예약취소하기
+            예약 취소하기
           </Button>
           <DeleteModal
             id={gatheringId}

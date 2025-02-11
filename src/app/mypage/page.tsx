@@ -5,8 +5,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import IconButton from '@/components/@shared/button/IconButton';
 import { useModal } from '@/hooks/useModal';
-import { updateMyProfile } from '@/axios/mypage/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { UseReviews } from '@/hooks/useReviews';
 import Spinner from '@/components/@shared/Spinner';
@@ -21,37 +19,13 @@ export default function MyPage() {
     closeModal: closeEditModal,
   } = useModal();
 
-  const queryClient = useQueryClient();
+  const { data: user, isLoading: userProfileLoading } = useUserProfile();
 
-  const { data: user, isLoading: isUserLoading } = useUserProfile();
-
-  const { data: myWriteReviews, isLoading: isReviewLoading } = UseReviews({
-    reviewed: true,
-  });
-
-  const mutation = useMutation({
-    mutationFn: updateMyProfile,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
-    },
-    onError: (error) => {
-      console.error('프로필 업데이트 실패:', error);
-    },
-  });
-
-  const handleProfileUpdate = async (
-    updatedNickname: string,
-    updatedImage: string
-  ) => {
-    try {
-      await mutation.mutateAsync({
-        nickname: updatedNickname,
-        image: updatedImage,
-      });
-    } catch (error) {
-      console.error('프로필 업데이트 중 오류가 발생했습니다.', error);
+  const { data: myWriteReviews, isLoading: myWriteReviewsLoading } = UseReviews(
+    {
+      reviewed: true,
     }
-  };
+  );
 
   const navLinks = [
     { label: '나의 모임', component: <MyGathering /> },
@@ -73,27 +47,16 @@ export default function MyPage() {
     return activeLink?.component;
   };
 
+  if (!user || !myWriteReviews || userProfileLoading || myWriteReviewsLoading) {
+    return <Spinner />;
+  }
+
   const levelImage = Math.min(Math.max(1, myWriteReviews?.length || 0), 6); // levelImage는 최소 1부터 최대 6까지만
-
-  if (isUserLoading || isReviewLoading) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="flex h-dvh items-center justify-center">
-        유저 정보를 불러올 수 없습니다.
-      </div>
-    );
-  }
 
   return (
     <main className="relative top-[100px] mx-4 md:mx-6 xl:mx-auto xl:w-[1166px]">
       <p className="text-[18px] font-bold">{`안녕하세요 ${user?.nickname}님!`}</p>
+
       <div className="relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] bg-primary-30 px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
@@ -144,13 +107,12 @@ export default function MyPage() {
             setIsModal={closeEditModal}
             nickname={user.nickname}
             image={user.image}
-            onProfileUpdate={handleProfileUpdate}
           />
         </div>
       </div>
 
       <hr className="mb-9 border-[#646464]" />
-      <div className="">
+      <div className="mb-[180px] h-full">
         <nav className="ml-3 flex items-center gap-8 md:gap-6">
           {navLinks.map((link) => (
             <button
@@ -158,8 +120,8 @@ export default function MyPage() {
               type="button"
               className={`pb-2 text-[18px] font-bold text-secondary-60 ${
                 activeTab === link.label
-                  ? 'border-b-2 border-white !text-white'
-                  : ''
+                  ? 'customUnderline text-white'
+                  : 'hover:text-secondary-30'
               }`}
               onClick={() => navClick(link.label)}
             >
@@ -167,7 +129,7 @@ export default function MyPage() {
             </button>
           ))}
         </nav>
-        <div className=" mb-10 mt-8">{renderActiveComponent()}</div>
+        <div className="mb-10 mt-8">{renderActiveComponent()}</div>
       </div>
     </main>
   );

@@ -50,7 +50,7 @@ export default function DeleteModal({
       handleSuccess('모임이 삭제 되었습니다!');
       setTimeout(() => {
         closeModalhandler();
-      }, 500);
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
@@ -68,7 +68,7 @@ export default function DeleteModal({
       handleSuccess('리뷰가 삭제 되었습니다!');
       setTimeout(() => {
         closeModalhandler();
-      }, 500);
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myReviews', false] });
@@ -88,7 +88,7 @@ export default function DeleteModal({
       handleSuccess('참여가 취소 되었습니다');
       setTimeout(() => {
         closeModalhandler();
-      }, 500);
+      }, 3500);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['myGatheringJoined'] });
@@ -103,10 +103,10 @@ export default function DeleteModal({
     <Modal
       isOpen={isModal}
       onClose={closeModalhandler}
-      customDimStyle="w-[400px]"
+      customDimStyle="w-[300px] md:w-[400px]"
     >
-      <div className="flex flex-col gap-10">
-        <p className="text-xl font-bold">
+      <div className="flex flex-col gap-12">
+        <p className="mt-10 text-center text-base ">
           {getActionText(classification)} 하시겠습니까?
         </p>
         <div className="flex justify-center gap-3">
@@ -128,7 +128,7 @@ export default function DeleteModal({
               } else if (classification === 'review_delete') {
                 deleteReview(id);
               } else {
-                handleError('아직 구현되지 않은 기능입니다!');
+                deleteCancelGathering(id);
               }
             }}
           >

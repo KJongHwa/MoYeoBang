@@ -28,7 +28,7 @@ export default function GatheringReviewSection({
           <Image
             key={star}
             src={
-              star <= score ? '/icons/heart_full.svg' : '/icons/heart_empty.svg'
+              star <= score ? '/icons/HeartFull.svg' : '/icons/heart_empty.svg'
             }
             width={16}
             height={16}
@@ -87,14 +87,14 @@ export default function GatheringReviewSection({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Image
-                    src={review.User.image || '/profile_image_default.png'}
+                    src={review.user.image || '/profile_image_default.png'}
                     width={40}
                     height={40}
                     alt="프로필 이미지"
                     className="rounded-full"
                   />
                   <div>
-                    <p className="font-medium">{review.User.nickname}</p>
+                    <p className="font-medium">{review.user.nickname}</p>
                     {renderStars(review.score)}
                   </div>
                 </div>

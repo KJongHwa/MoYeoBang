@@ -30,7 +30,7 @@ export default function ProgressPuzzleBar({
           alt="보라색 퍼즐 아이콘"
           width={53}
           height={53}
-          className="absolute -right-6 -top-5"
+          className="absolute -right-6 -top-3 h-9 w-9 md:-top-5 md:h-12 md:w-12"
         />
       </div>
     </div>

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 interface HeaderTitleProps {
   title: string;
-  content: string;
+  content?: string;
   order?: 'inverse';
 }
 

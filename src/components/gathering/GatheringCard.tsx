@@ -11,8 +11,9 @@ import { GatheringProps } from '@/types/gathering.types';
 import { locationList, levelToKorean } from '@/constants/themeList';
 
 import AlarmBadge from './UI/AlarmBadge';
+import LevelBadge from './UI/LevelBadge';
 import GatheringBadge from './UI/GatheringBadge';
-import PuzzleButton from './PuzzleButton';
+import PuzzleButton from './UI/PuzzleButton';
 
 export default function GatheringCard({
   gatheringId,
@@ -54,15 +55,7 @@ export default function GatheringCard({
           <div className="mx-3 my-2 flex flex-1 flex-col justify-between md:mx-6 md:my-4">
             <div className="flex justify-between">
               <div className="flex items-center gap-1 text-sm md:gap-[6px]">
-                <GatheringBadge
-                  icon={level as 'high' | 'middle' | 'low'}
-                  variant="secondary"
-                  shape="round"
-                  border="primary"
-                  fontColor="primary"
-                >
-                  {levelToKorean[level]}
-                </GatheringBadge>
+                <LevelBadge level={level}>{levelToKorean[level]}</LevelBadge>
                 <GatheringBadge variant="primary" fontColor="secondary">
                   {findLabelByValue(location, locationList)}
                 </GatheringBadge>

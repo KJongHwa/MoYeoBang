@@ -1,8 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import clsx from 'clsx';
 
 type TextAreaProps = {
+  size?: 'large' | 'small';
+  variant?: 'light' | 'dark';
   label?: string;
   labelText?: string;
+  labelColor?: 'charcoal' | 'white';
   placeholder?: string;
   isError?: boolean;
   errorMessage?: string;
@@ -19,8 +23,11 @@ type TextAreaProps = {
  */
 
 export default function TextArea({
+  size = 'small',
   label,
   labelText,
+  labelColor = 'charcoal',
+  variant = 'light',
   placeholder,
   isError = false,
   errorMessage = '',
@@ -40,18 +47,43 @@ export default function TextArea({
   return (
     <div className="flex w-full flex-col items-start gap-3" {...props}>
       {label && (
-        <label htmlFor={textAreaId} className="font-semibold text-gray-800">
+        <label
+          htmlFor={textAreaId}
+          className={clsx('font-semibold', {
+            'text-gray-800': labelColor === 'charcoal',
+            'text-white': labelColor === 'white',
+          })}
+        >
           {labelText || label}
         </label>
       )}
       <div
-        className={`relative h-[120px] w-full overflow-hidden rounded-lg bg-secondary-5 px-4 py-[10px] outline outline-1 ${isError ? 'outline-status-danger focus-within:outline-status-danger' : 'outline-transparent focus-within:outline-default-primary'}`}
+        className={clsx(
+          'textarea-wrapper relative  w-full overflow-hidden rounded-lg px-4 outline outline-1',
+          {
+            'outline-status-danger focus-within:outline-status-danger': isError,
+            'outline-transparent focus-within:outline-default-primary':
+              !isError,
+            'bg-secondary-5': variant === 'light',
+            'bg-default-tertiary': variant === 'dark',
+            'h-[120px] py-[10px]': size === 'small',
+            'h-64 py-4 md:h-[472px] md:px-5': size === 'large',
+          }
+        )}
       >
         <textarea
           ref={textAreaRef}
           id={textAreaId}
           placeholder={placeholder}
-          className="min-h-[100px] w-full resize-none overflow-auto bg-transparent font-medium leading-6 text-secondary-70 outline-none placeholder:text-secondary-50"
+          className={clsx(
+            'w-full resize-none overflow-auto bg-transparent font-medium leading-6 outline-none ',
+            {
+              'textarea-light-scrollbar min-h-[100px] text-secondary-70 placeholder:text-secondary-50':
+                variant === 'light',
+              'textarea-dark-scrollbar h-full text-white placeholder:text-secondary-50':
+                variant === 'dark',
+            }
+          )}
           {...inputProps}
         />
       </div>
