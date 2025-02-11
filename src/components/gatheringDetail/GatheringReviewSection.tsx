@@ -28,7 +28,7 @@ export default function GatheringReviewSection({
           <Image
             key={star}
             src={
-              star <= score ? '/icons/heart_full.svg' : '/icons/heart_empty.svg'
+              star <= score ? '/icons/HeartFull.svg' : '/icons/heart_empty.svg'
             }
             width={16}
             height={16}
