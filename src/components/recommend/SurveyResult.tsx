@@ -10,7 +10,7 @@ import { getRecommendTheme } from '@/axios/theme/apis';
 
 import Button from '@/components/@shared/button/Button';
 import TextFadeInMotion from '@/components/@shared/animation/TextFadeInMotion';
-import RecommendCard from '@/components/recommend/RecommendCard';
+import RecommendCard from '@/components/recommend/UI/RecommendCard';
 import SlideUpMotion from '@/components/@shared/animation/SlideUpMotion';
 
 interface SurveyResultProps {

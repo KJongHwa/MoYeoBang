@@ -7,7 +7,7 @@ import { GatheringProps } from '@/types/gathering.types';
 
 import SlotMotion from '@/components/@shared/animation/SlotMotion';
 import AlarmBadge from '@/components/gathering/UI/AlarmBadge';
-import PuzzleButton from '@/components/gathering/PuzzleButton';
+import PuzzleButton from '@/components/gathering/UI/PuzzleButton';
 
 export default function GatheringSlot({
   gatheringId,
