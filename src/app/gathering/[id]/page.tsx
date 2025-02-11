@@ -37,7 +37,7 @@ export default function GatheringDetail({
 
   return (
     <div className="mx-auto max-w-screen-xl px-4">
-      <div className="mt-36">
+      <div className="mt-24 md:mt-32">
         <div className="flex flex-col gap-6 md:flex-row">
           <div className="flex-1">
             <GatheringMainSection {...gatheringData} />

@@ -263,7 +263,7 @@ export default function GatheringForm({
       onSubmit={handleSubmit(onSubmit)}
       className="flex w-full flex-col gap-12"
     >
-      <main className="flex h-full w-full flex-col gap-12 px-4 pb-24 pt-5 md:gap-12 md:px-6 md:pb-32 md:pt-8 xl:mx-auto xl:max-w-[1166px] xl:px-0 xl:pt-12">
+      <main className="flex h-full w-full flex-col gap-12 px-4 pb-32 pt-5 md:gap-12 md:px-6 md:pb-40 md:pt-8 xl:mx-auto xl:max-w-[1166px] xl:px-0 xl:pt-12">
         <Input
           variant="elevated"
           label="name"
