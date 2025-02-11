@@ -120,12 +120,7 @@ export default function SurveyResult({
               <RecommendCard themeResult={currentTheme} />
             </section>
             <section className="flex w-full flex-col gap-2">
-              <Link
-                href={{
-                  pathname: '/search',
-                  // query: { keyword: encodeURIComponent(currentTheme.name) },
-                }}
-              >
+              <Link href={`/search/${encodeURIComponent(currentTheme.name)}`}>
                 <Button
                   shape="default"
                   className="w-full border-2 border-primary-5 bg-secondary-90 py-3 text-sm md:border-4 md:py-6 md:text-2xl"
