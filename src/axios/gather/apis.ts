@@ -10,17 +10,19 @@ import { API_PATH } from '../config/path';
 export const getGatheringsByRegistrationEnd = async () => {
   const params: GatheringUrlParams = {
     limit: 6,
+    sortOrder: 'asc',
     sortBy: 'registrationEnd',
   };
 
   return apiCall('get', API_PATH.gathering.default, null, { params });
 };
 
-// 홈페이지 모임 목록 (participantCount 기준)
-export const getGatheringsByParticipantCount = async () => {
+// 홈페이지 모임 목록 (dateTime 기준)
+export const getGatheringsDateTime = async () => {
   const params: GatheringUrlParams = {
     limit: 4,
-    sortBy: 'participantCount',
+    sortOrder: 'asc',
+    sortBy: 'dateTime',
   };
 
   return apiCall('get', API_PATH.gathering.default, null, { params });

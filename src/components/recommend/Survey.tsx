@@ -63,7 +63,7 @@ export default function Survey({ onComplete }: SurveyProps) {
       </section>
       <ul className="flex w-full flex-col flex-wrap justify-center gap-4">
         {questions[currentStep - 1].options.map((option, index) => (
-          <FadeInListMotion key={option} delay={index * 0.25} duration={0.5}>
+          <FadeInListMotion key={option} delay={index * 0.2} duration={0.3}>
             <Button
               type="button"
               padding="12"

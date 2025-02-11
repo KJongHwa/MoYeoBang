@@ -11,13 +11,17 @@ import ArrowButton from './ArrowButton';
 
 const bannerLinks = {
   1: {
-    image: '/images/banner_default.png',
     alt: '홈 상단 배너',
+    src: {
+      pc: '/images/banner_default_pc.png',
+    },
   },
   2: {
     href: '/recommend',
-    image: '/images/banner_recommend.png',
     alt: '방탈출 테마 추천 배너',
+    src: {
+      pc: '/images/banner_recommend_pc.png',
+    },
   },
 };
 
@@ -38,33 +42,33 @@ export default function Carousel() {
   };
 
   return (
-    <header className="relative">
-      <Slider {...settings}>
-        <div className="h-40 w-full rounded-3xl px-1 md:h-60 md:px-2 xl:h-72">
+    <section className="relative">
+      <Slider {...settings} className="h-40 md:h-60 xl:h-72">
+        <div className="w-full rounded-3xl px-1 md:px-2">
           <Image
-            src={bannerLinks[1].image}
+            src={bannerLinks[1].src.pc}
             alt={bannerLinks[1].alt}
             width={1200}
             height={288}
             quality={100}
             priority
-            className="X h-full max-h-72 min-h-40 rounded-3xl object-cover"
+            className="h-40 rounded-3xl object-cover md:h-60 xl:h-72"
           />
         </div>
         <Link href={bannerLinks[2].href} passHref>
-          <div className="h-40 w-full rounded-3xl px-1 md:h-60 md:px-2 xl:h-72">
+          <div className="w-full rounded-3xl px-1 md:px-2">
             <Image
-              src={bannerLinks[2].image}
+              src={bannerLinks[2].src.pc}
               alt={bannerLinks[2].alt}
               width={1200}
               height={288}
               quality={100}
               priority
-              className="X h-full max-h-72 min-h-40 rounded-3xl object-cover"
+              className="h-40 rounded-3xl object-cover md:h-60 xl:h-72"
             />
           </div>
         </Link>
       </Slider>
-    </header>
+    </section>
   );
 }

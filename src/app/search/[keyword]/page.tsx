@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import CardMotion from '@/components/@shared/animation/CardMotion';
 import EmptyElement from '@/components/@shared/EmptyElement';
 import Spinner from '@/components/@shared/Spinner';
@@ -8,16 +10,23 @@ import GatheringCard from '@/components/gathering/GatheringCard';
 import { useSearchGathering } from '@/hooks/useSearchGathering';
 import useToast from '@/hooks/useToast';
 import Image from 'next/image';
-import { useState } from 'react';
 
 const searchWords = ['모여방', '팀이', '짱이다'];
-export default function Search() {
-  const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+
+export default function Search({ params }: { params: { keyword: string } }) {
+  const initialKeyword =
+    params?.keyword && decodeURIComponent(params.keyword) !== 'default-keyword'
+      ? decodeURIComponent(params.keyword)
+      : '';
+
+  const [searchKeyword, setSearchKeyword] = useState<string>(initialKeyword);
+  const [searchQuery, setSearchQuery] = useState<string>(initialKeyword);
 
   const { toastMessage, toastVisible, toastType, handleError } = useToast();
+
   const { data: searchGatherings, isLoading: isGatheringLoading } =
     useSearchGathering(searchQuery);
+
   const handleSearchKeywordChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {

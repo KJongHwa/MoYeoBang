@@ -102,7 +102,7 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center gap-5">
-              <Link href="/search">
+              <Link href="/search/default-keyword">
                 <Image
                   src="/icons/search.svg"
                   width={24}

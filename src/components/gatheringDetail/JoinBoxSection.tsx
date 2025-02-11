@@ -5,12 +5,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Button from '@/components/@shared/button/Button';
 import Modal from '@/components/@shared/Modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  cancelParticipation,
-  participateGathering,
-  checkParticipationStatus,
-} from '@/axios/gather/apis';
-import { useState } from 'react';
+import { cancelParticipation, participateGathering } from '@/axios/gather/apis';
+import { useState, useEffect } from 'react';
 
 interface JoinBoxSectionProps {
   gatheringId: number;
@@ -34,13 +30,30 @@ export default function JoinBoxSection({
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
 
-  const [isParticipating, setIsParticipating] = useState(false);
+  // localStorage에서 참여 상태를 관리
+  const storageKey = `participation-${gatheringId}`;
+  const [isParticipating, setIsParticipating] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(storageKey) === 'true';
+    }
+    return false;
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentParticipantCount, setCurrentParticipantCount] = useState(
+    initialParticipantCount
+  );
 
-  const participationRate = (initialParticipantCount / capacity) * 100;
-  const isRecruiting = initialParticipantCount < capacity;
+  const participationRate = (currentParticipantCount / capacity) * 100;
+  const isRecruiting = currentParticipantCount < capacity;
   const isExpanded = searchParams.has('joinbox');
   const isExpired = new Date(registrationEnd) < new Date();
+
+  // 참여 상태가 변경될 때마다 localStorage 업데이트
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(storageKey, isParticipating.toString());
+    }
+  }, [isParticipating, storageKey]);
 
   const getStatusConfig = () => {
     if (isExpired) {
@@ -71,6 +84,7 @@ export default function JoinBoxSection({
           participantCount: oldData.participantCount + 1,
         })
       );
+      setCurrentParticipantCount((prev) => prev + 1);
       setIsParticipating(true);
     },
   });
@@ -85,6 +99,7 @@ export default function JoinBoxSection({
           participantCount: oldData.participantCount - 1,
         })
       );
+      setCurrentParticipantCount((prev) => prev - 1);
       setIsParticipating(false);
     },
   });
@@ -126,6 +141,12 @@ export default function JoinBoxSection({
     return '모집완료';
   };
 
+  const isButtonDisabled = () => {
+    if (isExpired) return true;
+    if (isParticipating) return false; // 참여 중인 경우 항상 활성화
+    return !isRecruiting; // 모집 중이 아닐 때만 비활성화
+  };
+
   const status = getStatusConfig();
 
   return (
@@ -154,7 +175,7 @@ export default function JoinBoxSection({
                         className="mr-1"
                       />
                       <span>
-                        {initialParticipantCount}/{capacity}
+                        {currentParticipantCount}/{capacity}
                       </span>
                       <span className="mx-2">·</span>
                       <span className={status.className}>{status.text}</span>
@@ -191,7 +212,7 @@ export default function JoinBoxSection({
                     variant="primary"
                     onClick={handleParticipation}
                     className="h-11 w-full text-base font-semibold"
-                    disabled={!isRecruiting || isExpired}
+                    disabled={isButtonDisabled()}
                   >
                     {getButtonText()}
                   </Button>
@@ -222,7 +243,7 @@ export default function JoinBoxSection({
                     className="mr-1"
                   />
                   <span>
-                    {initialParticipantCount}/{capacity}
+                    {currentParticipantCount}/{capacity}
                   </span>
                   <span className="mx-2">·</span>
                   <span className={status.className}>{status.text}</span>
@@ -239,7 +260,7 @@ export default function JoinBoxSection({
                 variant="primary"
                 onClick={handleParticipation}
                 className="h-11 w-full text-base font-semibold"
-                disabled={!isRecruiting || isExpired}
+                disabled={isButtonDisabled()}
               >
                 {getButtonText()}
               </Button>
