@@ -121,12 +121,14 @@ export default function SurveyResult({
             </section>
             <section className="flex w-full flex-col gap-2">
               <Link
-                href={`/search/keyword=${encodeURIComponent(currentTheme.name)}`}
+                href={{
+                  pathname: '/search',
+                  // query: { keyword: encodeURIComponent(currentTheme.name) },
+                }}
               >
                 <Button
                   shape="default"
                   className="w-full border-2 border-primary-5 bg-secondary-90 py-3 text-sm md:border-4 md:py-6 md:text-2xl"
-                  onClick={() => resetSurvey(false)}
                 >
                   추천 테마 참여하기
                 </Button>
