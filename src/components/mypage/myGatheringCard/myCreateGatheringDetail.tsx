@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import { useRouter } from 'next/navigation';
 import GatheringBadge from '@/components/gathering/UI/GatheringBadge';
 import { formatDate } from '@/utils/dateUtils';
