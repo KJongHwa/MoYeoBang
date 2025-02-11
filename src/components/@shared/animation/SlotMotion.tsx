@@ -15,7 +15,7 @@ export default function SlotMotion({ children, className }: SlotMotionProps) {
       }}
       whileHover={{
         borderRadius: '24px',
-        boxShadow: '0px 0px 0px 3px rgba(232, 230, 254, 1)',
+        boxShadow: '0px 0px 12px 4px rgba(102, 89, 244, 1)',
       }}
       transition={{ duration: 0.2 }}
       whileTap={{

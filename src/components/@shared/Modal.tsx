@@ -1,5 +1,5 @@
-import DeleteIcon from '@/public/icons/delete.svg';
 import { ReactNode, useEffect, useRef } from 'react';
+import DeleteIcon from '@/public/icons/delete.svg';
 
 interface ModalProps {
   children: ReactNode;
@@ -53,7 +53,7 @@ export default function Modal({
       )}
       <dialog
         ref={dialogRef}
-        className={`fixed inset-0 z-50 rounded-lg bg-white p-6 shadow-lg ${customDimStyle}`}
+        className={`fixed inset-0 z-50 rounded-lg bg-white p-6 shadow-lg ${customDimStyle} slide-up`}
       >
         {children}
         <button

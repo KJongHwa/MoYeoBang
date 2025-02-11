@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import ButtonMotion from '@/components/@shared/animation/ButtonMotion';
 
 type IconButtonProps = {
   type?: 'button' | 'submit' | 'reset';
@@ -26,7 +27,7 @@ export default function IconButton({
   ...props
 }: IconButtonProps) {
   return (
-    <button
+    <ButtonMotion
       // eslint-disable-next-line react/button-has-type
       type={type}
       className="flex items-center justify-center gap-1 rounded-lg bg-default-tertiary px-[10px] py-[5px] text-xs text-text-default md:gap-2 md:px-4 md:py-3 md:text-sm"
@@ -35,6 +36,6 @@ export default function IconButton({
     >
       <Image src={src} width={14} height={14} alt={alt} />
       {children}
-    </button>
+    </ButtonMotion>
   );
 }
