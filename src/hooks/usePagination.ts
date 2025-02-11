@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const usePagination = (items: any[], itemsPerPage: number) => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [currentItems, setCurrentItems] = useState<any[]>([]);
 
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const totalPages = Math.ceil((items.length || 1) / itemsPerPage);
 
-  const currentItems = items.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
-  );
+  useEffect(() => {
+    setCurrentItems(
+      items.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+    );
+  }, [items, currentPage, itemsPerPage]);
 
-  // 페이지 변경 함수
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
   };
