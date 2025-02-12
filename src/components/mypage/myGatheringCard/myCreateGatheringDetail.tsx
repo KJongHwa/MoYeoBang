@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import { useRouter } from 'next/navigation';
 import GatheringBadge from '@/components/gathering/UI/GatheringBadge';
 import { formatDate } from '@/utils/dateUtils';
@@ -57,7 +55,7 @@ export default function MyCreateGatheringDetail({
   return (
     <div className="flex w-full justify-between md:pr-3 md:pt-3">
       <div className="flex flex-col gap-5 px-4 py-5 md:py-3">
-        <div className="flex items-center gap-1 text-sm md:gap-[6px]">
+        <div className="flex items-center justify-between gap-1 text-sm md:gap-[6px]">
           <GatheringBadge variant="primary" fontColor="secondary">
             {findLabelByValue(location, locationList)}
           </GatheringBadge>
@@ -101,7 +99,7 @@ export default function MyCreateGatheringDetail({
         </div>
       </div>
 
-      <div className="group relative">
+      <div className="group relative pr-1 pt-3">
         <button type="button" onClick={toggleDropdown}>
           <Image
             src="/icons/see_more_icon.svg"

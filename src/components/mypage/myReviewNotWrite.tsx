@@ -1,23 +1,30 @@
 import { UseReviews } from '@/hooks/useReviews';
+import usePagination from '@/hooks/usePagination';
 import MyGatheringCard from './myGatheringCard';
 import MyReviewNotWriteDetail from './myGatheringCard/myReviewNotWriteDetail';
 import EmptyElement from '../@shared/EmptyElement';
 import Spinner from '../@shared/Spinner';
+import Pagination from '../@shared/Pagination';
 
 export default function MyReviewNotWrite() {
-  const { data: notWriteMyReviews, isLoading: isNotWriteMyReviewsLoading } =
-    UseReviews({ reviewed: false });
+  const itemsPerPage = 5;
+  const {
+    data: totalNotWriteMyReviews,
+    isLoading: isNotWriteMyReviewsLoading,
+  } = UseReviews({ reviewed: false, offset: 0, limit: 50 });
+
+  const {
+    currentItems: notWriteMyReviews,
+    currentPage,
+    handleNextPage,
+    handlePrevPage,
+    totalPages,
+  } = usePagination(totalNotWriteMyReviews ?? [], itemsPerPage);
   if (isNotWriteMyReviewsLoading) {
     return <Spinner />;
   }
-
-  if (!notWriteMyReviews) {
-    return (
-      <EmptyElement>작성 가능한 모임 정보를 불러올 수 없습니다.</EmptyElement>
-    );
-  }
-  if (notWriteMyReviews.length === 0) {
-    return <EmptyElement>아직 작성 가능한 리뷰가 없어요</EmptyElement>;
+  if (!totalNotWriteMyReviews || totalNotWriteMyReviews.length === 0) {
+    return <EmptyElement>아직 리뷰를 작성 가능한 모임이 없어요</EmptyElement>;
   }
   return (
     <div className="flex flex-col gap-5">
@@ -37,6 +44,14 @@ export default function MyReviewNotWrite() {
           />
         </MyGatheringCard>
       ))}
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalNotWriteMyReviews?.length || 1}
+        itemsPerPage={itemsPerPage}
+        onNext={handleNextPage}
+        onPrev={handlePrevPage}
+        className="mt-4 flex items-center justify-center gap-3"
+      />
     </div>
   );
 }
