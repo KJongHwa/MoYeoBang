@@ -5,7 +5,7 @@ import AllReviewList from '@/components/allReview/AllReviewList';
 export default function AllReview() {
   return (
     <PageContainer>
-      <HeaderTitle title="모든 리뷰" content="모여방 리뷰를 확인해 보세요" />
+      <HeaderTitle h1="모든 리뷰" content="모여방 리뷰를 확인해 보세요" />
       <AllReviewList />
     </PageContainer>
   );
