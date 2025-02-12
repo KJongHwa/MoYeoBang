@@ -6,6 +6,7 @@ export const mockGatheringDetails: GatheringDetailDTO['get'] = [
     hostId: 101,
     name: '코드를 그려드립니다',
     location: 'gangnam',
+    message: '와따시와',
     themeName: '마음을 그려그립니다',
     synopsis: `모든 감정에는 고유의 색이 있다는 것을 아시나요?
     지치는 일상 속에서 점점 바래져가는 마음들.
@@ -25,6 +26,7 @@ export const mockGatheringDetails: GatheringDetailDTO['get'] = [
     hostId: 102,
     name: 'And I met Error',
     location: 'hongdae',
+    message: '와따시와',
     themeName: 'And I met E',
     synopsis: `'배송 완료!'
     SHINY POST가 편지 배송을 완료했다는 소리예요.
@@ -46,6 +48,7 @@ export const mockGatheringDetails: GatheringDetailDTO['get'] = [
     hostId: 103,
     name: '13동 안살아서 다행이다',
     location: 'geondae',
+    message: '와따시와',
     themeName: 'B아파트 13동 1313',
     synopsis: `미스테리 동호회 '블랙홀'의 특별회원인 당신
       오늘밤 '블랙홀'의 첫 전국 정모가 열린다

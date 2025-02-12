@@ -1,11 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { locationList } from '@/constants/themeList';
 import Button from '@/components/@shared/button/Button';
 import Toast from '@/components/@shared/Toast';
-import { useState, useEffect } from 'react';
 import GatheringBadge from '../gathering/UI/GatheringBadge';
+
+const STORAGE_KEYS = {
+  ACCESS_TOKEN: 'accessToken',
+  FAVORITES: 'favorites',
+} as const;
 
 interface GatheringMainSectionProps {
   gatheringId: number;
@@ -28,40 +33,39 @@ export default function GatheringMainSection({
 }: GatheringMainSectionProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const locationLabel =
     locationList.find((item) => item.value === location)?.label || location;
 
   useEffect(() => {
-    const favorites = localStorage.getItem('favorites');
+    const favorites = localStorage.getItem(STORAGE_KEYS.FAVORITES);
     if (favorites) {
       const favoritesList = JSON.parse(favorites);
       setIsLiked(favoritesList.includes(gatheringId));
     }
   }, [gatheringId]);
 
-  useEffect(
-    function T() {
-      if (showToast) {
-        const timer = setTimeout(() => {
-          setShowToast(false);
-        }, 3000);
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
 
-        return function cleanup() {
-          clearTimeout(timer);
-        };
-      }
-    },
-    [showToast]
-  );
+      return function cleanup() {
+        clearTimeout(timer);
+      };
+    }
+  }, [showToast]);
 
   const handleLike = () => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
     if (!token) {
       return;
     }
 
-    const favorites = localStorage.getItem('favorites');
+    const favorites = localStorage.getItem(STORAGE_KEYS.FAVORITES);
     let favoritesList = favorites ? JSON.parse(favorites) : [];
 
     if (isLiked) {
@@ -70,7 +74,7 @@ export default function GatheringMainSection({
       favoritesList.push(gatheringId);
     }
 
-    localStorage.setItem('favorites', JSON.stringify(favoritesList));
+    localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(favoritesList));
     setIsLiked(!isLiked);
   };
 
@@ -79,7 +83,6 @@ export default function GatheringMainSection({
       await navigator.clipboard.writeText(window.location.href);
       setShowToast(true);
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('공유하기 실패:', error);
     }
   };
@@ -97,30 +100,57 @@ export default function GatheringMainSection({
   } as const;
 
   return (
-    <>
-      <div className="flex gap-6">
-        <section className="flex-1">
-          <div className="relative h-[415px] w-[805px] overflow-hidden rounded-xl">
-            <Image
-              src={image}
-              alt={themeName}
-              layout="fill"
-              sizes="(max-width: 800px) 100vw"
-              className="object-cover"
-              priority
-            />
-          </div>
+    <div className="flex w-full justify-center gap-6 min-[1111px]:justify-start">
+      <section
+        className="w-full max-w-[326px] flex-1
+        min-[376px]:max-w-[688px]
+        lg:max-w-[805px]"
+      >
+        {/* 이미지 컨테이너 */}
+        <div
+          className="relative h-[196px] w-full 
+            overflow-hidden rounded-xl 
+            min-[376px]:h-[415px]  
+            lg:h-[415px]"
+        >
+          <Image
+            src={!image || imageError ? '/images/theme_default_xl.png' : image}
+            alt={themeName}
+            fill
+            sizes="(max-width: 375px) 326px, (max-width: 744px) 688px, 805px"
+            className="object-cover"
+            priority
+            onError={() => setImageError(true)}
+          />
+        </div>
 
-          <div className="mt-4 flex items-center justify-between">
-            <div className="flex gap-2">
+        {/* 뱃지 및 버튼 컨테이너 */}
+        <div
+          className="mt-4 w-full 
+            max-w-[326px]
+            min-[376px]:max-w-[688px]
+            lg:max-w-[805px]"
+        >
+          <div className=" flex items-center justify-between md:px-[15.88px]">
+            {/* 뱃지 그룹 */}
+            <div className="flex flex-shrink-0 items-center gap-2">
               <GatheringBadge
                 shape="round"
                 icon={level as keyof typeof levelIcons}
+                className="text-xs md:text-sm lg:text-base"
               >
                 {levelLabels[level as keyof typeof levelLabels]}
               </GatheringBadge>
-              <GatheringBadge shape="round">{locationLabel}</GatheringBadge>
-              <GatheringBadge shape="round">
+              <GatheringBadge
+                shape="round"
+                className="text-xs md:text-sm lg:text-base"
+              >
+                {locationLabel}
+              </GatheringBadge>
+              <GatheringBadge
+                shape="round"
+                className="text-xs md:text-sm lg:text-base"
+              >
                 {new Date(dateTime).toLocaleDateString('ko-KR', {
                   month: 'long',
                   day: 'numeric',
@@ -128,7 +158,8 @@ export default function GatheringMainSection({
               </GatheringBadge>
             </div>
 
-            <div className="flex items-center gap-4">
+            {/* 버튼 그룹 */}
+            <div className="flex flex-shrink-0 items-center gap-4">
               <Button variant="icon" onClick={handleLike}>
                 <Image
                   src={
@@ -137,6 +168,7 @@ export default function GatheringMainSection({
                   width={24}
                   height={24}
                   alt={isLiked ? '찜하기 취소' : '찜하기'}
+                  className="h-[18px] w-[18px] md:h-[20px] md:w-[20px] lg:h-[24px] lg:w-[24px]"
                 />
               </Button>
               <Button variant="icon" onClick={handleShare}>
@@ -145,33 +177,41 @@ export default function GatheringMainSection({
                   width={24}
                   height={24}
                   alt="공유하기"
+                  className="h-[18px] w-[18px] md:h-[20px] md:w-[20px] lg:h-[24px] lg:w-[24px]"
                 />
               </Button>
             </div>
           </div>
+        </div>
 
-          <div className="mt-6 border-b border-secondary-80" />
+        {/* 구분선 */}
+        <div className="mb-[19px] mt-[19px] w-full max-w-[326px] border-t border-secondary-80 min-[376px]:max-w-[688px] lg:max-w-[805px]" />
+        {/* 제목 */}
+        <h1
+          className="font-noto mt-6 text-xl
+            leading-6 text-white
+            md:text-2xl md:leading-7
+            lg:text-[26px] lg:leading-[28px]"
+        >
+          {name}
+        </h1>
 
-          <h1 className="font-noto mt-6 text-[26px] leading-[28px] text-white">
-            {name}
-          </h1>
-
-          <div className="mt-6 space-y-6">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/icons/location.svg"
-                width={24}
-                height={24}
-                alt="위치 아이콘"
-              />
-              <span className="text-white">{locationLabel}</span>
-            </div>
+        {/* 위치 정보 */}
+        <div className="mt-6 space-y-6">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/icons/location.svg"
+              width={24}
+              height={24}
+              alt="위치 아이콘"
+            />
+            <span className="text-white">{locationLabel}</span>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       {/* Toast 알림 */}
       {showToast && <Toast message="URL이 복사되었습니다" type="success" />}
-    </>
+    </div>
   );
 }
