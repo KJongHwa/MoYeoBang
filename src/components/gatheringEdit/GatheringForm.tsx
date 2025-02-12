@@ -29,11 +29,21 @@ import ThemeSelector from '@/components/gatheringEdit/selector/ThemeSelector';
 interface GatheringFormProps {
   isEdit?: boolean;
   gatheringId?: number;
+  editName?: string;
+  editLocation?: string;
+  editThemeName?: string;
+  editDateTime?: string;
+  editRegistrationEnd?: string;
 }
 
 export default function GatheringForm({
   isEdit = false,
   gatheringId,
+  editName,
+  editLocation,
+  editThemeName,
+  editDateTime,
+  editRegistrationEnd,
 }: GatheringFormProps) {
   const queryClient = useQueryClient();
   const { trigger, register, handleSubmit, setValue, watchFields, formState } =
@@ -62,6 +72,37 @@ export default function GatheringForm({
       'dateTime',
       'registrationEnd',
     ]);
+
+  // 모임 수정시 해당 pro을 default로
+  useEffect(() => {
+    if (isEdit) {
+      if (editName) {
+        setValue('name', editName);
+      }
+      if (editLocation) {
+        setLocation(editLocation);
+        setValue('location', editLocation);
+      }
+      if (editThemeName) {
+        setSelectedThemeName(editThemeName);
+        setValue('themeName', editThemeName);
+      }
+      if (editDateTime) {
+        setValue('dateTime', editDateTime);
+      }
+      if (editRegistrationEnd) {
+        setValue('registrationEnd', editRegistrationEnd);
+      }
+    }
+  }, [
+    isEdit,
+    editName,
+    editLocation,
+    editThemeName,
+    editDateTime,
+    editRegistrationEnd,
+    setValue,
+  ]);
 
   // 모임 날짜 캘린더
   const {
@@ -263,7 +304,7 @@ export default function GatheringForm({
       onSubmit={handleSubmit(onSubmit)}
       className="flex w-full flex-col gap-12"
     >
-      <main className="flex h-full w-full flex-col gap-12 px-4 pb-24 pt-5 md:gap-12 md:px-6 md:pb-32 md:pt-8 xl:mx-auto xl:max-w-[1166px] xl:px-0 xl:pt-12">
+      <main className="flex h-full w-full flex-col gap-12 px-4 pb-32 pt-5 md:gap-12 md:px-6 md:pb-40 md:pt-8 xl:mx-auto xl:max-w-[1166px] xl:px-0 xl:pt-12">
         <Input
           variant="elevated"
           label="name"
