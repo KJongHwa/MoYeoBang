@@ -48,6 +48,11 @@ export default function Search({ params }: { params: { keyword: string } }) {
 
   return (
     <div className="mx-auto flex h-full w-full justify-center gap-12 py-24 md:py-32">
+      <title>
+        {searchQuery
+          ? `모여방 | ${searchQuery} 검색 결과`
+          : '모여방 | 방탈출 검색'}
+      </title>
       <div className="flex flex-col gap-5">
         <section className="relative flex h-[50px] w-[335px] items-center rounded-md border-[1px] border-secondary-60 md:w-[644px] xl:w-[657px]">
           <button

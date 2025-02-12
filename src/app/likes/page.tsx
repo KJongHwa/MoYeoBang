@@ -36,7 +36,7 @@ export default function LikeGathering() {
     <QueryProvider>
       <PageContainer>
         <HeaderTitle
-          title="찜한 모임"
+          h1="찜한 모임"
           content="마감되기 전에 지금 바로 참여해보세요"
         />
         <LikesGatheringList likesGatherings={likes} />

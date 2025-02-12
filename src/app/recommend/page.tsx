@@ -46,6 +46,7 @@ export default function Recommend() {
 
   return (
     <div className="mx-auto flex h-dvh max-w-[1166px] flex-col px-4 md:px-6 xl:px-0">
+      <title>모여방 | 방탈출 테마 취향 테스트</title>
       <header
         className={`relative flex w-full items-center justify-center  ${
           surveyResult ? 'mt-[50px] md:mt-20 xl:mt-16' : 'mt-32 md:mt-24'
