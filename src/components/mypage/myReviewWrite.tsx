@@ -27,7 +27,6 @@ export default function MyReviewWrite() {
   if (!totalReviews || totalReviews.length === 0) {
     return <EmptyElement>아직 작성한 리뷰가 없어요</EmptyElement>;
   }
-
   return (
     <div className="mt-10 flex flex-col gap-6">
       {writeMyReviews.map((writeMyReview) => (
@@ -38,6 +37,7 @@ export default function MyReviewWrite() {
             comment={writeMyReview.review.comment}
             themeName={writeMyReview.themeName}
             image={writeMyReview.image}
+            gatheringId={writeMyReview.gatheringId}
           />
         </div>
       ))}
