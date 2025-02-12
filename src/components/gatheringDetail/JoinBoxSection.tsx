@@ -151,13 +151,16 @@ export default function JoinBoxSection({
 
   return (
     <>
-      <aside className="w-full min-[1000px]:w-[369px]">
+      <aside className="w-full min-[1111px]:w-[369px]">
         {/* 모바일 뷰 */}
-        <div className="min-[1000px]:hidden">
+        <div className="min-[1111px]:hidden">
           <div className="fixed bottom-0 left-0 right-0 z-50">
             <div className="mx-auto w-full max-w-screen-xl">
               {isExpanded && (
-                <div className="mx-[17px] rounded-lg border border-secondary-70 bg-[#17171C] p-4 min-[420px]:mx-[104px]">
+                <div
+                  className="mx-[17px] rounded-lg border border-secondary-70 bg-[#17171C] p-4 
+                min-[420px]:mx-[104px]"
+                >
                   <div className="mb-6">
                     <h2 className="mb-2 text-xl font-bold text-text-default">
                       {name}
@@ -190,14 +193,17 @@ export default function JoinBoxSection({
                 </div>
               )}
 
-              <div className="mx-[17px] flex items-center justify-between gap-4 py-4 min-[420px]:mx-[104px]">
+              <div
+                className="mx-[17px] flex items-center justify-between gap-4 py-4 
+              min-[420px]:mx-[104px]"
+              >
                 <Button
                   onClick={toggleExpand}
                   className="flex h-11 items-center justify-center rounded-lg p-2"
                   aria-label={isExpanded ? '접기' : '펼치기'}
                 >
                   <Image
-                    src="/icons/gathering_chevron.svg"
+                    src="/icons/chevron_vector.svg"
                     alt="toggle button"
                     width={24}
                     height={24}
@@ -223,7 +229,7 @@ export default function JoinBoxSection({
         </div>
 
         {/* 데스크톱 뷰 */}
-        <div className="hidden min-[1000px]:block">
+        <div className="hidden min-[1111px]:block">
           <div className="rounded-xl border border-secondary-70 bg-[#17171C]">
             <div className="p-6">
               <div className="mb-6">

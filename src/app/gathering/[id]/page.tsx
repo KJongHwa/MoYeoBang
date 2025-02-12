@@ -38,19 +38,23 @@ export default function GatheringDetail({
   return (
     <div className="mx-auto max-w-screen-xl px-4">
       <div className="mt-36">
-        <div className="flex flex-col gap-6 md:flex-row">
-          <div className="flex-1">
+        {/* Main section과 JoinBox를 포함하는 컨테이너 */}
+        <div className="flex flex-col gap-6 min-[1111px]:flex-row">
+          {/* Main section 컨테이너 */}
+          <div className="flex flex-1 justify-center min-[1111px]:justify-start">
             <GatheringMainSection {...gatheringData} />
           </div>
           <JoinBoxSection {...gatheringData} gatheringId={Number(params.id)} />
         </div>
 
-        <div className="mt-16">
+        {/* Detail section */}
+        <div className="mt-16 flex justify-center min-[1111px]:justify-start">
           <GatheringDetailSection {...gatheringData} />
         </div>
 
-        {hostData ? (
-          <div className="mt-16">
+        {/* Profile section */}
+        {hostData && (
+          <div className="mt-16 flex justify-center min-[1111px]:justify-start">
             <ProfileSection
               createrProfile={hostData}
               isOpen={isOpen}
@@ -58,9 +62,10 @@ export default function GatheringDetail({
               closeModal={closeModal}
             />
           </div>
-        ) : null}
+        )}
 
-        <div className="mb-20 mt-16">
+        {/* Review section */}
+        <div className="mb-20 mt-16 flex justify-center min-[1111px]:justify-start">
           <GatheringReviewSection gatheringId={Number(params.id)} />
         </div>
       </div>
