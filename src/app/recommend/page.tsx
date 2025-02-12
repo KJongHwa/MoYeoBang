@@ -47,11 +47,11 @@ export default function Recommend() {
   return (
     <div className="mx-auto flex h-dvh max-w-[1166px] flex-col px-4 md:px-6 xl:px-0">
       <header
-        className={`relative flex w-full items-center justify-center  ${
-          surveyResult ? 'mt-[50px] md:mt-20 xl:mt-16' : 'mt-32 md:mt-24'
+        className={`relative ml-8 flex w-full items-center md:ml-16 xl:ml-28  ${
+          surveyResult ? 'mt-[50px] md:mt-20 xl:mt-16' : 'mt-24 md:mt-24'
         }`}
       >
-        <div className="flex gap-2">
+        <div className="flex gap-4 md:gap-12 xl:gap-24">
           {!surveyResult ? (
             <Image
               src="/images/puzzle_wow.png"
@@ -59,7 +59,7 @@ export default function Recommend() {
               width={152}
               height={152}
               quality={100}
-              className="static mt-auto h-16 w-16 md:absolute md:bottom-0 md:left-1/5 md:h-32 md:w-32 xl:h-[152px] xl:w-[152px]"
+              className="static mt-auto h-16 w-16 md:h-32 md:w-32 xl:h-[152px] xl:w-[152px]"
             />
           ) : (
             <FadeInMotion>
@@ -69,11 +69,11 @@ export default function Recommend() {
                 width={154}
                 height={168}
                 quality={100}
-                className="static mt-auto h-[97px] w-[89px] md:absolute md:bottom-0 md:left-1/5 md:h-[148px] md:w-[136px] xl:h-[168px] xl:w-[154px]"
+                className="static mt-auto h-[97px] w-[89px] md:h-[148px] md:w-[136px] xl:h-[168px] xl:w-[154px]"
               />
             </FadeInMotion>
           )}
-          <h1 className="my-auto text-lg font-semibold md:py-12 md:text-2xl xl:py-16">
+          <h1 className="my-auto mr-4 text-lg font-semibold md:mr-0 md:py-12 md:text-2xl xl:py-16">
             방탈출 취향 테스트
           </h1>
         </div>
