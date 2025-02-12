@@ -76,34 +76,38 @@ export default function Search({ params }: { params: { keyword: string } }) {
           />
         </section>
         <section className="flex justify-center text-base">
-          <div className="flex-col items-center justify-center">
-            <p className="text-center text-secondary-60">추천 검색어</p>
-            <div className="flex w-full justify-center gap-3">
-              {searchWords.map((searchWord) => (
-                <button
-                  key={searchWord}
-                  type="button"
-                  className="rounded-lg bg-secondary-100 px-2 py-1 text-secondary-50"
-                  onClick={() => {
-                    setSearchKeyword(searchWord);
-                    setSearchQuery(searchWord);
-                  }}
-                >
-                  {searchWord}
-                </button>
-              ))}
+          {!searchQuery && !searchGatherings && (
+            <div className="flex-col items-center justify-center">
+              <p className="py-3 text-center text-secondary-60">추천 검색어</p>
+              <div className="flex w-full justify-center gap-3">
+                {searchWords.map((searchWord) => (
+                  <button
+                    key={searchWord}
+                    type="button"
+                    className="rounded-lg bg-secondary-100 px-2 py-1 text-secondary-50"
+                    onClick={() => {
+                      setSearchKeyword(searchWord);
+                      setSearchQuery(searchWord);
+                    }}
+                  >
+                    {searchWord}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </section>
+
         <section className="mb-[180px] pt-6">
           {searchQuery && searchGatherings?.length !== 0 && (
             <>
-              <p className="pb-3">{searchQuery} 검색 결과 입니다.</p>
-              <div className="grid h-full w-full grid-cols-1 gap-5 text-white">
+              <p className="pb-8">{searchQuery} 검색 결과 입니다.</p>
+              <div className=" flex h-full w-full flex-col gap-8 text-white">
                 {searchGatherings?.map((searchGathering) => (
-                  <CardMotion key={searchGathering.gatheringId}>
-                    <GatheringCard {...searchGathering} />
-                  </CardMotion>
+                  <GatheringCard
+                    key={searchGathering.gatheringId}
+                    {...searchGathering}
+                  />
                 ))}
               </div>
             </>

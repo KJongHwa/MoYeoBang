@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useDropdown } from '@/hooks/useDropdown';
 import { useModal } from '@/hooks/useModal';
 import { MyReviewParmas } from '@/types/mypage.types';
+import Link from 'next/link';
 import Rating from '../@shared/rating/Rating';
 import MyReviewModal from './myReviewModal';
 import DeleteModal from './deleteModal';
@@ -13,6 +14,7 @@ export default function MyReviewCard({
   image,
   comment,
   score,
+  gatheringId,
 }: MyReviewParmas) {
   const {
     isOpen: isMenuOpen,
@@ -45,16 +47,17 @@ export default function MyReviewCard({
 
   return (
     <article className="relative flex w-full flex-col gap-2 rounded-2xl bg-default-tertiary xs:max-h-[170px] xs:flex-row">
-      <Image
-        src={imgSrc}
-        onError={handleError}
-        alt={themeName}
-        width={240}
-        height={170}
-        quality={100}
-        className={`h-[292px] w-full rounded-t-2xl bg-default-tertiary xs:h-[170px] xs:w-[192px] md:rounded-l-2xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
-      />
-
+      <Link href={`/gathering/${gatheringId}`}>
+        <Image
+          src={imgSrc}
+          onError={handleError}
+          alt={themeName}
+          width={240}
+          height={170}
+          quality={100}
+          className={`h-[292px] w-full rounded-t-2xl bg-default-tertiary xs:h-[170px] xs:w-[192px] md:rounded-l-2xl md:rounded-r-none ${isError ? 'object-cover' : ''}`}
+        />
+      </Link>
       <div className="mx-4 my-5 flex flex-1 flex-col justify-between md:mx-6 md:my-5">
         <div className="flex flex-col gap-[7px]">
           <div className="group relative flex items-center justify-between">
