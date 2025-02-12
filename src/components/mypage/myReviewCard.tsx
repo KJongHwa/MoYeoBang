@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { useDropdown } from '@/hooks/useDropdown';
 import { useModal } from '@/hooks/useModal';
 import { MyReviewParmas } from '@/types/mypage.types';
+import Link from 'next/link';
 import Rating from '../@shared/rating/Rating';
 import MyReviewModal from './myReviewModal';
 import DeleteModal from './deleteModal';
-import Link from 'next/link';
 
 export default function MyReviewCard({
   reviewId,
