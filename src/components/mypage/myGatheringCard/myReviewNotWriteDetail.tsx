@@ -53,7 +53,7 @@ export default function MyReviewNotWriteDetail({
             onClick={openEditModal}
             style={{
               position: 'absolute',
-              right: '10px',
+              right: '18px',
             }}
             className="w-[120px]"
           >

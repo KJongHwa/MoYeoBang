@@ -37,7 +37,7 @@ export default function GatheringDetail({
 
   return (
     <div className="mx-auto max-w-screen-xl px-4">
-      <div className="mt-36">
+      <div className="mt-24 md:mt-32">
         {/* Main section과 JoinBox를 포함하는 컨테이너 */}
         <div className="flex flex-col gap-6 min-[1111px]:flex-row">
           {/* Main section 컨테이너 */}

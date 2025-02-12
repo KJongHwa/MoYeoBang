@@ -5,11 +5,13 @@ interface CardMotionProps {
   children: ReactNode;
   className?: string;
   borderRadius?: string;
+  onClick?: () => void;
 }
 
 export default function CardMotion({
   children,
   className,
+  onClick,
   borderRadius = '16px',
 }: CardMotionProps) {
   return (
@@ -30,6 +32,7 @@ export default function CardMotion({
         },
       }}
       className={className}
+      onClick={onClick}
     >
       {children}
     </motion.figure>
