@@ -168,7 +168,6 @@ export interface GatheringDetailDTO {
     location: string;
     themeName: string;
     synopsis: string;
-    message: string;
     image: string;
     level: string;
     genre: string;
