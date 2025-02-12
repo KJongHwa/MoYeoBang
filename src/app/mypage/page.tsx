@@ -55,8 +55,8 @@ export default function MyPage() {
 
   return (
     <main className="relative top-[100px] mx-4 md:mx-6 xl:mx-auto xl:w-[1166px]">
+      <title>모여방 | 마이페이지</title>
       <p className="text-[18px] font-bold">{`안녕하세요 ${user?.nickname}님!`}</p>
-
       <div className="relative z-0 mb-4 mt-8 flex justify-between overflow-hidden rounded-[25px] bg-primary-30 px-3 py-8 md:mb-7 md:px-10">
         <div className="text-text-primary z-10 flex flex-col gap-3">
           <Image
