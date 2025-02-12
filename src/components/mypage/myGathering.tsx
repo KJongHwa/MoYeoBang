@@ -1,23 +1,27 @@
 import { useUserGatherings } from '@/hooks/useUserGatherings';
+import usePagination from '@/hooks/usePagination';
 import MyGatheringCard from './myGatheringCard';
 import MyGatheringDetail from './myGatheringCard/myGatheringDetail';
 import EmptyElement from '../@shared/EmptyElement';
 import Spinner from '../@shared/Spinner';
 import CardMotion from '../@shared/animation/CardMotion';
+import Pagination from '../@shared/Pagination';
 
 export default function MyGathering() {
-  const { data: myJoinedGatherings, isLoading: isJoinedLoading } =
-    useUserGatherings({ isHost: false });
-
+  const itemsPerPage = 5;
+  const { data: totalMyJoinedGatherings, isLoading: isJoinedLoading } =
+    useUserGatherings({ isHost: false, offset: 0, limit: 50 });
+  const {
+    currentItems: myJoinedGatherings,
+    currentPage,
+    handleNextPage,
+    handlePrevPage,
+    totalPages,
+  } = usePagination(totalMyJoinedGatherings ?? [], itemsPerPage);
   if (isJoinedLoading) {
     return <Spinner />;
   }
-
-  if (!myJoinedGatherings) {
-    return <EmptyElement>모임 정보를 불러올 수 없습니다.</EmptyElement>;
-  }
-
-  if (myJoinedGatherings.length === 0) {
+  if (!totalMyJoinedGatherings || totalMyJoinedGatherings.length === 0) {
     return <EmptyElement>신청한 모임이 아직 없어요</EmptyElement>;
   }
   return (
@@ -42,6 +46,14 @@ export default function MyGathering() {
           </MyGatheringCard>
         </CardMotion>
       ))}
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalMyJoinedGatherings?.length || 1}
+        itemsPerPage={itemsPerPage}
+        onNext={handleNextPage}
+        onPrev={handlePrevPage}
+        className="mt-4 flex items-center justify-center gap-3"
+      />
     </div>
   );
 }

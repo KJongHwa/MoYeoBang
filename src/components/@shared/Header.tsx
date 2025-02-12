@@ -143,7 +143,7 @@ export default function Header() {
                     />
                   </button>
                   {isMenuOpen && (
-                    <ul className="absolute -right-12 z-50 mt-8 w-32 rounded-md bg-secondary-80 text-[16px] font-normal shadow-md md:top-3">
+                    <ul className="absolute right-0 z-50 mt-8 w-32 rounded-md bg-secondary-80 text-[16px] font-normal shadow-md md:top-3 xl:left-0">
                       <li>
                         <Link href="/mypage" onClick={closeDropdown}>
                           <button

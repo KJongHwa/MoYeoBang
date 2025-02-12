@@ -50,14 +50,14 @@ export default function Survey({ onComplete }: SurveyProps) {
   const progressPercentage = ((currentStep - 1) / questions.length) * 100;
 
   return (
-    <div className="flex flex-col items-center gap-32 px-8 py-24 md:gap-44 md:px-14 md:py-32">
-      <section className="flex w-full flex-col gap-16">
+    <div className="flex flex-col items-center gap-32 px-8 py-12 md:gap-44 md:px-14 md:py-16 xl:py-20">
+      <section className="flex w-full flex-col gap-12 md:gap-16 xl:gap-20">
         <ProgressPuzzleBar
           bgColor="bg-secondary-80"
           progressColor="bg-primary-60"
           value={progressPercentage}
         />
-        <h2 className="flex flex-col gap-2 text-center text-base font-bold md:gap-6 md:text-2xl">
+        <h2 className="flex flex-col gap-4 text-balance text-center text-base font-bold md:gap-6 md:text-2xl">
           <span>Q.</span> <p>{questions[currentStep - 1]?.text}</p>
         </h2>
       </section>
@@ -66,7 +66,7 @@ export default function Survey({ onComplete }: SurveyProps) {
           <FadeInListMotion key={option} delay={index * 0.2} duration={0.3}>
             <Button
               type="button"
-              padding="12"
+              padding="10"
               key={option}
               onClick={() => handleAnswer(option)}
               className="w-full py-4 text-xs md:py-5 md:text-2xl"

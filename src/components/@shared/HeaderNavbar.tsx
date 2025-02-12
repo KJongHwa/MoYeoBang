@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-
 import Link from 'next/link';
 
 export default function HeaderNavBar({ onClose }: { onClose: () => void }) {
@@ -10,15 +9,19 @@ export default function HeaderNavBar({ onClose }: { onClose: () => void }) {
   ];
 
   return (
-    <div className="bg-secondary-bg fixed inset-0 z-20 flex flex-col">
+    <div className="fixed inset-0 z-20 flex flex-col bg-secondary-bg">
       <div className="mt-16 flex flex-col">
         {navLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
-            className="hover:bg-primary-40 mb-4 rounded-xl px-7 py-4 text-xl font-bold transition duration-300"
+            className="mx-3 mb-4 rounded-xl px-7 py-4 text-xl font-bold transition duration-300 hover:bg-primary-40"
           >
-            <button onClick={onClose} type="button">
+            <button
+              onClick={onClose}
+              type="button"
+              className="w-full text-left"
+            >
               {link.label}
             </button>
           </Link>

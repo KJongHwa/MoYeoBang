@@ -71,28 +71,46 @@ export default function MyPage() {
             <p className="text-sm md:text-base">{user?.email}</p>
           </div>
         </div>
+        {/*  1024px~ */}
         <Image
           src={`/images/myprofile_bg/l/${levelImage}.svg`}
           width={612}
           height={224}
           alt="프로필 배경"
-          className="pointer-events-none absolute left-16 top-3 -z-10 hidden lg:-top-1 lg:left-64 lg:block"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden lg:-top-0 lg:left-64 lg:block"
         />
+        {/*  768px~ 1023px */}
         <Image
-          src={`/images//myprofile_bg/l/${levelImage}.svg`}
+          src={`/images/myprofile_bg/l/${levelImage}.svg`}
           width={540}
           height={224}
           alt="프로필 배경"
-          className="pointer-events-none absolute left-16 top-3 -z-10 hidden md:-top-1 md:left-40 md:block lg:hidden"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden xs:hidden md:-top-1 md:left-36 md:block lg:hidden"
         />
+        {/* 640px ~ 767px  */}
         <Image
-          src={`/images//myprofile_bg/s/${levelImage}.svg`}
+          src={`/images/myprofile_bg/l/${levelImage}.svg`}
+          width={540}
+          height={224}
+          alt="프로필 배경"
+          className=" pointer-events-none absolute left-16 top-3 -z-10 hidden xs:hidden sm:top-1 sm:block md:hidden lg:hidden"
+        />
+        {/* 476px ~ 639px  */}
+        <Image
+          src={`/images/myprofile_bg/s/${levelImage}.svg`}
           width={241}
           height={121}
           alt="프로필 배경"
-          className="pointer-events-none absolute left-12 top-2 -z-10 md:hidden"
+          className="pointer-events-none absolute left-16 top-3 -z-10 hidden xs:left-36 xs:top-8 xs:block sm:hidden md:hidden lg:hidden"
         />
-
+        {/* ~ 475px  */}
+        <Image
+          src={`/images/myprofile_bg/s/${levelImage}.svg`}
+          width={241}
+          height={121}
+          alt="프로필 배경"
+          className="pointer-events-none absolute left-24 top-6 -z-10 xs:hidden"
+        />
         <div className="mt-20">
           <IconButton
             src="/icons/pencil.svg"
