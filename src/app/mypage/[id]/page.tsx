@@ -16,7 +16,7 @@ export default function GatheringEdit({ params }: { params: { id: string } }) {
   if (!gatheringDetail) {
     return <EmptyElement>모임 정보를 가져올 수 없습니다.</EmptyElement>;
   }
-  // console.log(gatheringDetail);
+  console.log(gatheringDetail);
   return (
     <>
       <div className="flex h-full w-full flex-col gap-12 overflow-x-hidden px-4 pb-5 pt-24 md:px-6 md:pb-12 md:pt-32 xl:mx-auto xl:max-w-[1166px] xl:px-0">
@@ -30,6 +30,7 @@ export default function GatheringEdit({ params }: { params: { id: string } }) {
         editThemeName={gatheringDetail.themeName}
         editDateTime={gatheringDetail.dateTime}
         editRegistrationEnd={gatheringDetail.registrationEnd}
+        editMessage={gatheringDetail.message}
       />
     </>
   );

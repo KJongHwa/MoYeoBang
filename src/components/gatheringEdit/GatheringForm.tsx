@@ -34,6 +34,7 @@ interface GatheringFormProps {
   editThemeName?: string;
   editDateTime?: string;
   editRegistrationEnd?: string;
+  editMessage?: string;
 }
 
 export default function GatheringForm({
@@ -44,6 +45,7 @@ export default function GatheringForm({
   editThemeName,
   editDateTime,
   editRegistrationEnd,
+  editMessage,
 }: GatheringFormProps) {
   const queryClient = useQueryClient();
   const { trigger, register, handleSubmit, setValue, watchFields, formState } =
@@ -92,6 +94,9 @@ export default function GatheringForm({
       }
       if (editRegistrationEnd) {
         setValue('registrationEnd', editRegistrationEnd);
+      }
+      if (editMessage) {
+        setValue('message', editMessage);
       }
     }
   }, [

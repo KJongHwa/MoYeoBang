@@ -166,6 +166,7 @@ export interface GatheringDetailDTO {
     hostId: number;
     name: string;
     location: string;
+    message: string;
     themeName: string;
     synopsis: string;
     image: string;

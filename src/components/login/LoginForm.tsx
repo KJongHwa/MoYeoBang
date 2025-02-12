@@ -58,8 +58,14 @@ function LoginForm() {
         window.dispatchEvent(event);
         router.push('/');
       }
-    } catch (error) {
-      handleError('로그인 실패');
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        handleError('등록된 회원 정보가 없습니다.');
+      } else if (error.response?.status === 404) {
+        handleError('비밀번호가 틀렸습니다.');
+      } else {
+        handleError('로그인에 실패했습니다.');
+      }
     }
   };
 
