@@ -48,6 +48,7 @@ export default function MyReviewWrite() {
         onNext={handleNextPage}
         onPrev={handlePrevPage}
         className="mt-4 flex items-center justify-center gap-3"
+        mypage={true}
       />
     </div>
   );
