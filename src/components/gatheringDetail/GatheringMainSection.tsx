@@ -102,17 +102,16 @@ export default function GatheringMainSection({
   return (
     <div className="flex w-full justify-center gap-6 min-[1111px]:justify-start">
       <section
-        className="w-full max-w-[326px]
-      flex-1
-      md:max-w-[688px]
-      lg:max-w-[805px]"
+        className="w-full max-w-[326px] flex-1
+        min-[376px]:max-w-[688px]
+        lg:max-w-[805px]"
       >
         {/* 이미지 컨테이너 */}
         <div
           className="relative h-[196px] w-full 
             overflow-hidden rounded-xl 
-            md:h-[415px]  
-            lg:h-[415px] "
+            min-[376px]:h-[415px]  
+            lg:h-[415px]"
         >
           <Image
             src={!image || imageError ? '/images/theme_default_xl.png' : image}
@@ -127,9 +126,9 @@ export default function GatheringMainSection({
 
         {/* 뱃지 및 버튼 컨테이너 */}
         <div
-          className="mt-4 w-full
+          className="mt-4 w-full 
             max-w-[326px]
-            md:max-w-[688px]
+            min-[376px]:max-w-[688px]
             lg:max-w-[805px]"
         >
           <div className=" flex items-center justify-between md:px-[15.88px]">
@@ -186,13 +185,7 @@ export default function GatheringMainSection({
         </div>
 
         {/* 구분선 */}
-        <div
-          className="mt-6 w-full max-w-[326px] border-b
-           border-secondary-80 
-             md:max-w-[688px] 
-             lg:max-w-[805px]"
-        />
-
+        <div className="mb-[19px] mt-[19px] w-full max-w-[326px] border-t border-secondary-80 min-[376px]:max-w-[688px] lg:max-w-[805px]" />
         {/* 제목 */}
         <h1
           className="font-noto mt-6 text-xl

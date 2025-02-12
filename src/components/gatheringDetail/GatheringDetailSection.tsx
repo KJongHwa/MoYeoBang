@@ -42,7 +42,7 @@ export default function GatheringDetailSection({
       className="mt-8 w-full 
       max-w-[326px] 
       space-y-6 
-      md:max-w-[688px] 
+      min-[376px]:max-w-[688px] 
       lg:max-w-[805px]"
     >
       {/* 방탈출 정보 섹션 */}

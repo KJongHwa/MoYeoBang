@@ -151,7 +151,7 @@ export default function JoinBoxSection({
 
   return (
     <>
-      <aside className="w-full min-[1111px]:w-[369px]">
+      <aside className="h-[2500px] max-h-[2500px] w-full min-[376px]:h-auto min-[1111px]:w-[369px]">
         {/* 모바일 뷰 */}
         <div className="min-[1111px]:hidden">
           <div className="fixed bottom-0 left-0 right-0 z-50">
