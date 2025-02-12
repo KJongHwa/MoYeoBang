@@ -1,21 +1,30 @@
 import { UseReviews } from '@/hooks/useReviews';
+import usePagination from '@/hooks/usePagination';
 import MyReviewCard from './myReviewCard';
 import EmptyElement from '../@shared/EmptyElement';
 import Spinner from '../@shared/Spinner';
+import Pagination from '../@shared/Pagination';
 
 export default function MyReviewWrite() {
-  const { data: writeMyReviews, isLoading: isWriteMyReviewsLoading } =
-    UseReviews({ reviewed: true });
-  if (isWriteMyReviewsLoading) {
+  const itemsPerPage = 5;
+  const { data: totalReviews, isLoading: isTotalReviewsLoading } = UseReviews({
+    reviewed: true,
+    offset: 0,
+    limit: 50,
+  });
+
+  const {
+    currentItems: writeMyReviews,
+    currentPage,
+    handleNextPage,
+    handlePrevPage,
+    totalPages,
+  } = usePagination(totalReviews ?? [], itemsPerPage);
+
+  if (isTotalReviewsLoading) {
     return <Spinner />;
   }
-
-  if (!writeMyReviews) {
-    return (
-      <EmptyElement>내가 쓴 리뷰의 정보를 불러올 수 없습니다.</EmptyElement>
-    );
-  }
-  if (writeMyReviews.length === 0) {
+  if (!totalReviews || totalReviews.length === 0) {
     return <EmptyElement>아직 작성한 리뷰가 없어요</EmptyElement>;
   }
   return (
@@ -28,9 +37,18 @@ export default function MyReviewWrite() {
             comment={writeMyReview.review.comment}
             themeName={writeMyReview.themeName}
             image={writeMyReview.image}
+            gatheringId={writeMyReview.gatheringId}
           />
         </div>
       ))}
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalReviews?.length || 1}
+        itemsPerPage={itemsPerPage}
+        onNext={handleNextPage}
+        onPrev={handlePrevPage}
+        className="mt-4 flex items-center justify-center gap-3"
+      />
     </div>
   );
 }

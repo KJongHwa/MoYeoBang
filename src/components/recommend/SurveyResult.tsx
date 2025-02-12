@@ -56,7 +56,7 @@ export default function SurveyResult({
   return (
     <SlideUpMotion
       distance={40}
-      className="flex flex-col items-center justify-center gap-12 px-8 pb-24 font-bold text-primary-5 md:px-14 md:pb-32"
+      className="flex flex-col items-center justify-center gap-8 px-8 pb-24 font-bold text-primary-5 md:gap-12 md:px-14 md:pb-32"
     >
       {!currentTheme || !recommendTheme || recommendTheme.length === 0 ? (
         <div className="flex w-full flex-col items-center justify-center gap-12 pt-8">

@@ -1,8 +1,10 @@
+import { useState } from 'react';
+import Image from 'next/image';
+
 import { ReviewDto } from '@/types/review.types';
 import { yearMonthDay } from '@/utils/dateUtils';
-import Image from 'next/image';
 import Rating from '@/components/@shared/rating/Rating';
-import { useState } from 'react';
+import CardMotion from '@/components/@shared/animation/CardMotion';
 
 export default function ReviewCard({
   score,
@@ -23,7 +25,7 @@ export default function ReviewCard({
   };
 
   return (
-    <div
+    <CardMotion
       className="flex w-full cursor-pointer flex-col rounded-[20px] bg-secondary-100 md:flex-row"
       onClick={handleMoreReview}
     >
@@ -72,6 +74,6 @@ export default function ReviewCard({
           </p>
         </div>
       </div>
-    </div>
+    </CardMotion>
   );
 }

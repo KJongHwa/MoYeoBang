@@ -65,6 +65,7 @@ export interface MyReviewParmas {
   image: string;
   comment: string;
   score: number;
+  gatheringId: number;
 }
 
 export interface ReviewParams {
