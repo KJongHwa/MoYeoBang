@@ -2,13 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/PretendardVariable.woff2') format('woff2');
+}
+
+:root {
+  --font-pretendard: 'Pretendard', sans-serif;
+}
+
 @layer base {
   html {
     @apply antialiased;
   }
-  
+
   body {
-    @apply bg-white text-gray-900;
+    @apply bg-secondary-bg text-text-default;
   }
 }
 
@@ -16,12 +25,66 @@
   .container {
     @apply mx-auto px-4;
   }
-  
+
   .btn {
-    @apply px-4 py-2 rounded-md transition-colors duration-200;
+    @apply rounded-md px-4 py-2 transition-colors duration-200;
   }
-  
+
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-dark;
+    @apply hover:bg-primary-dark bg-primary text-white;
   }
+}
+
+@layer utilities {
+  .bg-secondary-80 {
+    background-color: #3e404c;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.35s ease forwards;
+}
+
+/* text style */
+.customUnderline,
+.customUnderlineHover {
+  position: relative;
+  display: block;
+}
+
+.customUnderlineHover {
+  overflow: hidden;
+}
+
+.customUnderline::after,
+.customUnderlineHover::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+}
+
+.customUnderlineHover::after {
+  background-color: #cdced6;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.customUnderlineHover:hover::after {
+  transform: translateX(0);
 }

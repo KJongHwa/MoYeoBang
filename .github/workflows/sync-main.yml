@@ -1,0 +1,27 @@
+name: Sync forked dev branch with upstream dev
+
+on:
+  push:
+    branches:
+      - dev # 원본 레포지토리의 dev 브랜치가 업데이트될 때 실행
+
+jobs:
+  sync-forked-dev:
+    runs-on: ubuntu-latest
+    steps:
+      # 개인 레포지토리의 dev 브랜치를 체크아웃
+      - name: Checkout forked repository
+        uses: actions/checkout@v3
+        with:
+          repository: KJongHwa/MoYeoBang
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: dev
+
+      # 원본 레포지토리의 dev 브랜치를 동기화
+      - name: Add upstream repository and sync
+        run: |
+          git remote add upstream https://github.com/Codeit-FESI-06-Team2/Project.git
+          git fetch upstream dev
+          git checkout dev
+          git merge upstream/dev --allow-unrelated-histories --no-edit
+          git push origin dev

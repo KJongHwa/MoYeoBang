@@ -1,7 +1,9 @@
-export default function SignUp() {
+import SignUpForm from '@/components/signup/SignUpForm';
+
+export default function SignUpPage() {
   return (
-    <div>
-      <p>오정협 - 회원가입</p>
-    </div>
+    <main className="flex min-h-screen bg-[#17171c]">
+      <SignUpForm />
+    </main>
   );
 }
