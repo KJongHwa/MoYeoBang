@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 
-import CardMotion from '@/components/@shared/animation/CardMotion';
 import EmptyElement from '@/components/@shared/EmptyElement';
 import Spinner from '@/components/@shared/Spinner';
 import Toast from '@/components/@shared/Toast';
